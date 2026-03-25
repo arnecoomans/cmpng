@@ -13,6 +13,7 @@ venv/
 *.log
 db.sqlite3
 media/
+mediafiles/
 staticfiles/
 */fixtures/*.json
 # Seed/reference data is safe to commit (taxonomy, not personal data)
