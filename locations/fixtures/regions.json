@@ -590,7 +590,7 @@
     "fields": {
       "slug": "fr",
       "name": "France",
-      "cached_average_distance_to_center": 528.0131557742144,
+      "cached_average_distance_to_center": 539.498721250405,
       "parent": null,
       "date_created": "2023-10-20T20:14:02.975061+00:00",
       "date_modified": "2025-09-10T12:56:19.989100+00:00",
@@ -954,7 +954,7 @@
     "fields": {
       "slug": "lot",
       "name": "Lot",
-      "cached_average_distance_to_center": 868.95,
+      "cached_average_distance_to_center": 867.3333333333334,
       "parent": 21,
       "date_created": "2023-10-21T11:54:31.171573+00:00",
       "date_modified": "2023-10-21T11:54:31.171615+00:00",
@@ -984,6 +984,19 @@
       "parent": 57,
       "date_created": "2023-12-17T08:44:08.410915+00:00",
       "date_modified": "2023-12-17T08:44:08.410982+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 146,
+    "fields": {
+      "slug": "manche",
+      "name": "Manche",
+      "cached_average_distance_to_center": 835.0,
+      "parent": 54,
+      "date_created": "2026-03-22T19:37:13.073560+00:00",
+      "date_modified": "2026-03-22T19:37:13.073590+00:00",
       "user": 1
     }
   },
@@ -1162,7 +1175,7 @@
     "fields": {
       "slug": "normandy",
       "name": "Normandy",
-      "cached_average_distance_to_center": 513.0,
+      "cached_average_distance_to_center": 674.0,
       "parent": 1,
       "date_created": "2023-12-01T19:04:22.064956+00:00",
       "date_modified": "2023-12-01T19:04:22.064997+00:00",
@@ -1188,7 +1201,7 @@
     "fields": {
       "slug": "occitanie",
       "name": "Occitanie",
-      "cached_average_distance_to_center": 923.6738095238095,
+      "cached_average_distance_to_center": 923.4717261904761,
       "parent": 1,
       "date_created": "2023-10-21T11:54:06.426255+00:00",
       "date_modified": "2023-10-21T11:54:06.426291+00:00",
