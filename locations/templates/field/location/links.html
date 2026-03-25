@@ -1,0 +1,37 @@
+<div class="k">
+  {% if ajax.editable %}{% translate 'edit links'|capfirst %}{% else %}{% translate "links"|capfirst %}{% endif %}
+   {% include 'element/reusable_edit_button.html' with field='links' %}
+</div>
+<div class="links">
+  {% for link in location.links.all%}
+    {% include 'field/location/link.html' with link=link %}
+  {% empty%}
+    <span class="muted">{% translate "no links available"|capfirst %}</span>
+  {% endfor %}
+  {% if ajax.editable and perms.locations.change_location %}
+    <form class="cmnd-autosuggest"
+        action="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'links' %}"
+        data-action
+        data-method="POST"
+        data-body="form"
+        data-map='{"links":"#links"}'
+      >
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-plus"></i></span>
+        <input type="hidden" name="editable" value="true">
+        <input 
+          class="form-control" 
+          placeholder="{% translate 'start typing'|capfirst %}..."
+          type="text"
+          name="links__url"
+          {% comment %} 
+          Removed autosuggest because 
+          - A link requires a location
+          - A link can only be assigned to one location
+          {% endcomment %}
+        >
+        <button class="btn btn-outline-success" type="submit" id="add-{{ field }}-btn"><i class="bi bi-check"></i></button>
+      </div>
+    </form>
+  {% endif %}
+</div>

@@ -1,0 +1,19 @@
+<button 
+  class="btn btn--ghost" 
+  type="button"
+  {% if user.is_authenticated %}
+    data-action="modal"
+    data-url="{% url 'locations:manage_lists' location.slug %}"
+    data-title="{% translate 'lists with'|capfirst %} {{ location.name }}"
+  {% else %}
+    data-bs-toggle="popover" 
+    data-bs-title="{% translate 'login or register'|capfirst %}" 
+    data-bs-content="{% blocktranslate %}You need an account to store this location in a list. Please login or register.{% endblocktranslate %}"
+  {% endif %}
+  >
+  <i  class="bi bi-collection cmpng-icons {% if location.owned_lists %}cmpng-icons-active{% elif location.filtered_comments|length > 0 %}cmpng-icons-inactive{% endif %}"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      data-bs-title="{% if location.owned_lists %}{% translate 'you have this location in your lists'|capfirst %}{% elif location.filtered_comments|length > 0 %}{% translate 'this location is in someones lists'|capfirst %}{% else %}{% translate 'this location is not in any list'|capfirst %}{% endif %}"
+  ></i>
+</button>

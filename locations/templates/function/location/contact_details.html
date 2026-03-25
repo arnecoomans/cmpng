@@ -1,0 +1,46 @@
+<!-- ADDRESS & CONTACT PANEL -->
+<section class="card card--pad">
+  <h2 class="card__title">{% translate "address"|capfirst %} & {% translate "contact"|capfirst %}</h2>
+  {% if ajax.editable %}
+    <form
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'address,owners_name,email,phone' %}"
+    data-body="form"
+    data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'contact_details' %}"
+    data-refresh-map='{"contact_details":"#contact_details"}'
+    >
+  {% endif %}
+  <div id="address">
+    {% include 'field/location/address.html' %}
+  </div>
+  
+  {% if location.is_accommodation or user.is_authenticated %}
+    {% if ajax.editable or location.owners_name or location.phone or location.email %}
+      <div class="field-view">
+        <div class="k">{% translate "contact"|capfirst %}</div>
+        {% if location.is_accommodation %}
+          <div class="v">
+            {% include 'field/location/owners_name.html' %}
+          </div>
+        {% endif %}
+        {% if user.is_authenticated%}
+          <div class="v" id="phone">
+            {% include 'field/location/phone.html' %}
+          </div>
+          <div class="v" id="email">
+            {% include 'field/location/email.html' %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if ajax.editable %}
+      <button class="btn btn--primary btn--save" type="submit"><i class="bi bi-check-lg"></i> {% translate "save these changes"|capfirst %}</button>
+    </form>
+  {% endif %}
+
+  {% include 'function/location/navigation_apps.html' %}
+
+  
+</section>

@@ -1,0 +1,15 @@
+<span class="chip">
+  {% translate tag.name %}
+  {% if ajax.editable %}
+    <a href="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'tags' %}"
+      data-action
+      data-method="PATCH"
+      data-body='{"tags__id": "{{ tag.id }}", "editable": "true" }'
+      data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'filtered_tags' %}?editable"
+      data-refresh-map= '{"filtered_tags":"#filtered_tags"}'
+      data-confirm="{% translate 'are you sure you want to remove this tag'|capfirst %}"
+      >
+      <i class="bi bi-x"></i>
+    </a>
+  {% endif %}
+</span>

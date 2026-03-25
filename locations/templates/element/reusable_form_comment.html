@@ -1,0 +1,43 @@
+{% if user.is_authenticated %}
+  <form class="card card--pad comment-form"
+      data-action
+      data-method="POST"
+      data-body="form"
+      data-url="{% if comment %}{% url 'cmnsd:dispatch_object_by_id_and_slug' 'comment' comment.id comment.token %}{% else %}{% url 'cmnsd:dispatch' 'comment' %}{% endif %}"
+      data-refresh-url="{% if comment %}{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' comment.content_type.model comment.object_id comment.content_object.slug 'filtered_comments' %}{% else %}{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'filtered_comments' %}{% endif %}"
+      data-refresh-map='{"filtered_comments": "#comments"}'
+      
+    <input type="hidden" name="model" value="comment">
+    <input type="hidden" name="content_for" value="location">
+    <input type="hidden" name="content_token" value="{{ location.token }}">
+
+    {% if not comment %}<div class="card__title">{% translate "add a comment"|capfirst %}</div>{% endif %}
+    <textarea class="comment-form__textarea" name="text" rows="3" required
+      placeholder="{% translate 'your comment'|capfirst %}… {% translate 'markdown is supported'|capfirst %}">{% if comment %}{{ comment.text }}{% endif %}</textarea>
+    <div class="comment-form__foot">
+      <div class="segmented comment-form__meta">
+        <div class="segmented__cell">
+          <span class="segmented__label">{% translate "title"|capfirst %} <span class="muted">({% translate "optional" %})</span></span>
+          <input class="segmented__input" type="text" name="title" maxlength="255"
+            placeholder="{% translate 'short subject'|capfirst %}" {% if comment.title %}value="{{ comment.title }}"{% endif %}>
+        </div>
+        <div class="segmented__cell">
+          <span class="segmented__label">{% translate "visible to"|capfirst %}</span>
+          <select class="segmented__input" name="visibility">
+            {% if comment %}
+              {% for value, label in comment.visibility_choices %}
+                <option value="{{ value }}"{% if value == comment.visibility %} selected{% endif %}>{{ label|capfirst }}</option>
+              {% endfor %}
+            {% endif %}
+            {% for value, label in vis_choices.items %}
+              <option value="{{ value }}"{% if value == 'c' %} selected{% endif %}>{{ label|capfirst }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <button class="btn btn--primary comment-form__submit" type="submit">
+        <i class="bi bi-{% if comment %}pencil-fill{% else %}send{% endif %}"></i> {% if comment %}{% translate "update"|capfirst %}{% else %}{% translate "post"|capfirst %}{% endif %}
+      </button>
+    </div>
+  </form>
+{% endif %}

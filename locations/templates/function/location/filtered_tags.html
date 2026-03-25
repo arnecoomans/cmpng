@@ -1,0 +1,82 @@
+<section class="card card--pad">
+  <h2 class="card__title">{% translate "tags"|capfirst %}</h2>
+  <div class="field-view tag--list">
+    <div class="k">{% include 'element/reusable_edit_button.html' with field='filtered_tags' field_name="tags" %}</div>
+    <div class="tag-groups">
+      <div class="tag-groups">
+
+        {# Regroup tags by parent (NULL parents will be grouped together) #}
+        {% regroup location.filtered_tags by parent as tags_by_parent %}
+
+        {# Empty state: if no tags at all #}
+        {% if not tags_by_parent %}
+          <span class="muted">{% translate "no tags selected"|capfirst %}</span>
+        {% else %}
+          {# 1) Root/orphan tags: group where parent is None #}
+          {% for group in tags_by_parent %}
+            {% if group.grouper == None %}
+              <div class="tag-group tag-group--flat">
+                <div class="chips">
+                  {% for tag in group.list %}
+                    {% include 'object/tag.html' with tag=tag %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {# 2) Child tags under their parent header #}
+          {% for group in tags_by_parent %}
+            {% if group.grouper != None %}
+              <div class="tag-group">
+                <div class="tag-group__title">{% translate group.grouper.name %}</div>
+
+                <div class="chips">
+                  {% for tag in group.list %}
+                    {% include 'object/tag.html' with tag=tag %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+        {% endif %}
+
+      </div>
+      {% if ajax.editable %}
+        <form
+          action="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'tags' %}"
+          data-action
+          data-method="POST"
+          data-body="form"
+          data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'filtered_tags' %}?editable"
+          data-refresh-map= '{"filtered_tags":"#filtered_tags"}'
+        >
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{% translate 'select a tag'|capfirst %}"
+              data-autosuggest
+              data-url="{% url 'cmnsd:dispatch' 'tags' %}"
+              data-param="{{ search_query_character|default:'q'}}"
+              data-extra-params='{"format":"json", "exclude": "locations__slug:{{ location.slug }}", "children__isnull": "true"}'
+              data-field-input="name"
+              data-field-hidden="slug"
+              data-field-prefix="tags__"
+              data-container="tag"
+              data-allow-create="1"
+              data-min="0"
+            >
+            <button type="submit" 
+                    class="btn btn-outline-secondary show-autocomplete"
+                    title="{% translate 'add tag'|capfirst %}"
+                    >
+                    <i class="bi bi-plus"></i>
+            </button>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</section>

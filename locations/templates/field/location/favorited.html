@@ -1,0 +1,6 @@
+{% with favorited=location.favorited.all %}
+  <i class="bi bi-heart{% if user.preferences in favorited %}-fill{% endif %} cmpng-favorite{% if favorited %}-active{% else %} cmpng-icons-inactive{% endif %}"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    data-bs-title="{% if user.preferences in favorited %}{% translate 'is your favorite'|capfirst %}{% elif favorited %}{% translate 'is someone&apos;s favorite'|capfirst %}{% else %}{% translate 'no one has marked this as favorite yet'|capfirst %}{% endif %}"></i>
+{% endwith %}

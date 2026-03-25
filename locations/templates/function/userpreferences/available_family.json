@@ -1,0 +1,9 @@
+{
+  {% for user in available_family %}
+    "{{ user.id }}": {
+      "id": {{ user.id }},
+      "username": "{{ user.username }}",
+      "display_name": "{{ user.get_full_name|default:user.username }}"
+    }{% if not forloop.last %},{% endif %}
+  {% endfor %}
+}

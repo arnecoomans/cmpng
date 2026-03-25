@@ -1,0 +1,15 @@
+<button 
+  class="btn btn--ghost" 
+  type="button"
+  data-action
+  data-method="GET"
+  data-url	="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'topactions,name,summary,description,contact_details' %}"
+  {% if not ajax.editable %}data-params	= "editable"{% endif %} 
+  data-map	= '{
+    "topactions":"#topactions",
+    "name":"#name",
+    "summary":"#summary",
+    "description":"#description",
+    "contact_details":"#contact_details"
+    }'
+><i class="bi {% if ajax.editable %}bi-x{% else %}bi-pencil{% endif %}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% if ajax.editable %}{% translate 'stop editing location'|capfirst %}. {% translate 'unsaved changes will be lost'|capfirst %}.{% else %}{% translate 'edit'|capfirst %} {% translate location.type %}{% endif %}"></i></button>

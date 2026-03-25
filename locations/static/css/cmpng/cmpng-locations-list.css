@@ -1,0 +1,78 @@
+/* Location-list-specific styles.
+   Generic layout + component classes live in cmpng.css (loaded globally). */
+
+/* ---------- Active filter chips ---------- */
+
+.cmpng-active-filters {
+  background: rgba(249, 250, 251, 0.7);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 1rem;
+  padding: 0.75rem 0.75rem;
+  gap: 0.5rem;
+}
+.cmpng-active-filters .badge {
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  background: #fff !important;
+  color: rgba(17, 24, 39, 0.85) !important;
+  font-weight: 600;
+  padding: 0.45rem 0.65rem;
+  border-radius: 999px;
+}
+.cmpng-active-filters .badge:hover {
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.12);
+}
+.cmpng-active-filters .cmpng-clear-all {
+  color: rgba(17, 24, 39, 0.7);
+  font-weight: 600;
+}
+.cmpng-active-filters .cmpng-clear-all:hover {
+  color: rgba(17, 24, 39, 0.95);
+}
+
+/* ---------- Boxed location rows ---------- */
+
+.cmpng-row.cmpng-row--location {
+  display: block;
+  padding: 0;
+  border-top: 0;
+  background: transparent;
+}
+.cmpng-location-card {
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  margin: 10px 12px;
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.03);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  padding-left: calc(var(--location_indent) * 3) !important;
+}
+.cmpng-location-card:hover,
+.cmpng-location-card:focus-within {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.10);
+  transform: translateY(-1px);
+}
+.cmpng-location-name {
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--primary-darkest);
+  text-decoration: none;
+  border-bottom: 2px solid rgba(16, 185, 129, 0.20);
+}
+.cmpng-location-name:hover,
+.cmpng-location-name:focus {
+  color: var(--primary-extra-dark);
+  border-bottom-color: rgba(16, 185, 129, 0.60);
+}
+
+/* ---------- Responsive (list-specific) ---------- */
+
+@media (max-width: 575.98px) {
+  .cmpng-location-card {
+    margin: 10px 10px;
+    padding: 0.85rem 0.9rem;
+  }
+}

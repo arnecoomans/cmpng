@@ -1,0 +1,16 @@
+{
+  "arnecoomans": {
+    "email": "you@example.com",
+    "password_hash": "pbkdf2_sha256$1200000$<salt>$<hash>"
+  },
+  "ingecoomans": {
+    "password_hash": "pbkdf2_sha256$1200000$<salt>$<hash>"
+  },
+  "sandracoomans": {
+    "password_hash": "pbkdf2_sha256$1200000$<salt>$<hash>"
+  },
+  "morice": {
+    "email": "you@example.com",
+    "password_hash": "pbkdf2_sha256$1200000$<salt>$<hash>"
+  }
+}

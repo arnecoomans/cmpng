@@ -1,0 +1,22 @@
+/* Favorites */
+i.cmpng-icons {
+  font-size: 1.2rem;
+  color: rgba(17, 24, 39, 0.35);
+  transition: color 150ms ease, transform 120ms ease;
+  /* cursor: auto; */
+}
+i.cmpng-icons-active {
+  color: var(--primary);
+}
+i.cmpng-icons-inactive {
+  color: var(--gray-300) !important;
+}
+i.cmpng-favorite {
+  font-size: 1.2rem;
+  color: rgba(17, 24, 39, 0.35);
+  transition: color 150ms ease, transform 120ms ease;
+  /* cursor: auto; */
+}
+i.cmpng-favorite-active {
+  color: rgba(220, 38, 38, 0.85);
+}

@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Preferences" %}{% endblock %}
+
+{% block content %}
+<div class="cmpng-page">
+
+  <div class="mb-3">
+    <div class="cmpng-header-bar p-3">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-person-circle fs-4"></i>
+        <h1 class="h3 mb-0">{% trans "Preferences" %}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack">
+
+    <!-- Identity -->
+    <div class="card card--pad">
+      <div class="d-flex align-items-start justify-content-between gap-3">
+        <div>
+          <div class="fw-semibold fs-5">
+            {{ user.get_full_name|default:user.username }}
+          </div>
+          <div class="cmpng-muted small">{{ user.username }}</div>
+          {% if user.email %}
+            <div class="cmpng-muted small">{{ user.email }}</div>
+          {% endif %}
+        </div>
+        <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary flex-shrink-0">
+          <i class="bi bi-pencil me-1"></i>{% trans "Account settings" %}
+        </a>
+      </div>
+    </div>
+
+    <!-- Home location -->
+    <div class="card card--pad" id="home">
+      {% include 'field/userpreferences/home.html' with home=preferences.home %}
+    </div>
+
+    <!-- External maps -->
+    <div class="card card--pad" id="external_maps_consent">
+      {% include 'field/userpreferences/external_maps_consent.html' with external_maps_consent=preferences.external_maps_consent %}
+    </div>
+
+    <!-- Navigation apps -->
+    {% if available_apps %}
+      <div class="card card--pad" id="apps">
+        {% include 'field/userpreferences/all_apps.html' with all_apps=preferences.all_apps %}
+      </div>
+    {% endif %}
+
+    <!-- Family -->
+    <div class="card card--pad" id="family">
+      {% include 'field/userpreferences/family.html' with family=preferences.family %}
+    </div>
+
+    <!-- Quick links -->
+    <div class="card card--pad">
+      <div class="card__title">{% translate "my links"|capfirst %}</div>
+      <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'locations:all' %}?is_visited=true" class="cmpng-badge cmpng-badge--tag">
+          <i class="bi bi-check2-circle me-1"></i>{% translate "been there"|capfirst %}
+        </a>
+        <a href="{% url 'locations:all' %}?is_favorite=true" class="cmpng-badge cmpng-badge--tag">
+          <i class="bi bi-heart me-1"></i>{% translate "loved"|capfirst %}
+        </a>
+        <a href="{% url 'locations:comments' %}?user__username={{ user.username }}" class="cmpng-badge cmpng-badge--tag">
+          <i class="bi bi-chat-left-text me-1"></i>{% translate "my comments"|capfirst %}
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'index.html' %}
+
+{% block title %}{{ location.name|title }}{% endblock %}
+
+{% block template_css %}
+  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-location-detail.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-location-map.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <!-- Breadcrumbs + actions -->
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}">{% translate location.country.name %}</a>
+        <span class="sep">›</span>
+        <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}&region={{ location.region.slug }}">{% translate location.region.name %}</a>
+        <span class="sep">›</span>
+        <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}&region={{ location.region.slug }}&department={{ location.department.slug }}">{% translate location.department.name %}</a>
+        <span class="sep">›</span>
+        <span aria-current="page">{{ location.name }}</span>
+      </nav>
+      <div id="topactions">
+        {% include 'function/location/topactions.html' %}
+      </div>
+    </div>
+
+    <!-- Header with Name -->
+    <div id="name">
+      {% include 'field/location/name.html' %}
+    </div>
+    <!-- Summary -->
+    <div id="summary">
+      {% include 'field/location/summary.html' %}
+    </div>
+    <!-- Description -->
+    <div id="description">
+      {% include 'field/location/description.html' %}
+    </div>
+
+    <!-- Near the fold -->
+    <section class="fold">
+
+      <!-- LEFT COLUMN -->
+      <div class="stack">
+
+        <!-- Hero image -->
+        <div id="ordered_media">
+          {% if lazy_load_media %}
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">{% translate 'loading nearby accomodations and activities'|capfirst %}...</span>
+            </div>
+          {% else %}
+            {% include 'function/location/ordered_media.html' %}
+          {% endif %}
+        </div>
+
+        <div id="contact_details">
+          {% include 'function/location/contact_details.html' %}
+        </div>
+
+        <!-- SUMMARY PANEL -->
+        <section class="card card--pad">
+          <h2 class="card__title">Summary</h2>
+
+          <div class="info-grid">
+            <div class="info-item" id="links">
+              {% include 'field/location/links.html' %}
+            </div>
+            <div class="info-item" id="categories">
+              {% include 'field/location/categories.html' %}
+            </div>
+            {% if location.can_have_size %}
+              <div class="info-item" id="size">
+                {% include 'field/location/size.html' %}
+              </div>
+            {% endif %}
+            
+            {% if user.is_authenticated %}
+              <div class="info-item" id="visibility">
+                {% include 'field/location/visibility.html' %}
+              </div>
+            {% endif %}
+
+            <div class="info-item" id="chain">
+              {% include 'field/location/chain.html' %}
+            </div>
+          </div>
+        </section>
+
+        
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="stack">
+        {% include 'function/location/map.html' %}
+
+        <!-- TAGS PANEL -->
+        <div id="filtered_tags">
+          {% include 'function/location/filtered_tags.html' with filtered_tags=location.filtered_tags fieldname="tags"%}
+        </div>
+        
+      </div>
+
+    </section>
+
+    <!-- BELOW THE FOLD -->
+    <section class="below">
+    <!-- COMMENTS -->
+    <div id="comments">
+      {% include 'function/location/filtered_comments.html' %}
+    </div>
+      <div id="nearby">
+        {% if lazy_load_nearby %}
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">{% translate 'loading nearby accomodations and activities'|capfirst %}...</span>
+          </div>
+        {% else %}
+          {% include 'function/location/nearby.html' %}
+        {% endif %}
+      </div>
+    </section>
+
+  </div>
+</main>
+{% endblock%}
+
+{% block scriptfooter %}
+  {% include 'function/location/google_maps_script.html' %}
+  {% comment %} {% include 'function/location/osm_script.html' %} {% endcomment %}
+{% endblock %}
+
+{% block cmnsdPostInit %}
+  {% if lazy_load_media %}
+    cmnsd.loadContent({
+      url: '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "ordered_media" %}?format=html',
+      map: {
+        ordered_media: '#ordered_media',
+      }
+    });
+  {% endif %}
+  {% if lazy_load_nearby %}
+    cmnsd.loadContent({
+      url: '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "nearby" %}?format=html',
+      map: {
+        nearby: '#nearby',
+      }
+    });
+  {% endif %}
+
+  // Description read-more toggle — deferred so CSS clamp is applied before measuring
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.description__body').forEach(body => {
+      if (body.scrollHeight <= body.clientHeight) return;
+      const btn = document.createElement('button');
+      btn.className = 'description__toggle';
+      btn.textContent = '{% translate "read more"|capfirst %}';
+      btn.addEventListener('click', () => {
+        const expanded = body.classList.toggle('is-expanded');
+        btn.textContent = expanded ? '{% translate "read less"|capfirst %}' : '{% translate "read more"|capfirst %}';
+      });
+      body.insertAdjacentElement('afterend', btn);
+    });
+  });
+
+  // Nearby filters — delegated so they work on both server-rendered and lazy-loaded content
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#section-nearby [data-filter]');
+    if (!btn) return;
+    const section = btn.closest('#section-nearby');
+    const list = section && section.querySelector('#nearby-list');
+    if (!list) return;
+
+    section.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('btn--active'));
+    btn.classList.add('btn--active');
+
+    const filter = btn.dataset.filter;
+    list.querySelectorAll('.list-item').forEach(item => {
+      item.style.display = filter === 'all' || item.dataset.type.includes(filter) ? '' : 'none';
+    });
+  });
+{% endblock %}

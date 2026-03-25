@@ -1,0 +1,182 @@
+[
+  {
+    "model": "locations.chain",
+    "pk": 1,
+    "fields": {
+      "slug": "accor",
+      "name": "Accor",
+      "parent": null,
+      "date_created": "2023-10-20T20:32:19.225885+00:00",
+      "date_modified": "2023-10-20T20:32:19.225913+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 2,
+    "fields": {
+      "slug": "novotel",
+      "name": "Novotel",
+      "parent": 1,
+      "date_created": "2023-10-20T20:32:32.759782+00:00",
+      "date_modified": "2023-10-20T20:32:32.759813+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 3,
+    "fields": {
+      "slug": "capfun",
+      "name": "Capfun",
+      "parent": null,
+      "date_created": "2023-10-20T20:32:47.472821+00:00",
+      "date_modified": "2023-10-20T20:32:47.472848+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 4,
+    "fields": {
+      "slug": "mercure",
+      "name": "Mercure",
+      "parent": 1,
+      "date_created": "2023-10-20T20:33:45.224693+00:00",
+      "date_modified": "2023-10-20T20:33:45.224736+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 5,
+    "fields": {
+      "slug": "huttopia",
+      "name": "Huttopia",
+      "parent": null,
+      "date_created": "2023-11-15T18:25:39.387652+00:00",
+      "date_modified": "2023-11-15T18:25:39.393506+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 6,
+    "fields": {
+      "slug": "les-petites-perles",
+      "name": "les Petites Perles",
+      "parent": null,
+      "date_created": "2023-11-18T14:56:47.836831+00:00",
+      "date_modified": "2023-11-18T14:56:47.842947+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 7,
+    "fields": {
+      "slug": "siblu-vilages",
+      "name": "Siblu Vilages",
+      "parent": null,
+      "date_created": "2024-06-15T19:08:35.819404+00:00",
+      "date_modified": "2024-06-15T19:08:35.819460+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 8,
+    "fields": {
+      "slug": "universiteit-utrecht",
+      "name": "Universiteit Utrecht",
+      "parent": null,
+      "date_created": "2024-06-18T12:12:53.965894+00:00",
+      "date_modified": "2024-06-18T12:12:53.965949+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 9,
+    "fields": {
+      "slug": "ibis",
+      "name": "Ibis",
+      "parent": 1,
+      "date_created": "2024-06-23T07:27:29.600287+00:00",
+      "date_modified": "2024-06-23T07:27:29.600310+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 10,
+    "fields": {
+      "slug": "thermen-resorts",
+      "name": "Thermen Resorts",
+      "parent": null,
+      "date_created": "2024-10-14T08:32:14.837304+00:00",
+      "date_modified": "2024-10-14T08:32:14.837329+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 11,
+    "fields": {
+      "slug": "ardoer",
+      "name": "Ardoer",
+      "parent": null,
+      "date_created": "2024-11-16T14:09:04.838649+00:00",
+      "date_modified": "2024-11-16T14:09:04.838705+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 12,
+    "fields": {
+      "slug": "ushuaia-villages",
+      "name": "Ushua\u00efa Villages",
+      "parent": null,
+      "date_created": "2024-12-15T21:21:55.273998+00:00",
+      "date_modified": "2024-12-15T21:21:55.274032+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 13,
+    "fields": {
+      "slug": "sunelia",
+      "name": "Sun\u00ealia",
+      "parent": null,
+      "date_created": "2025-08-29T07:20:15.904565+00:00",
+      "date_modified": "2025-08-29T07:20:15.904614+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 14,
+    "fields": {
+      "slug": "yelloh",
+      "name": "Yelloh",
+      "parent": null,
+      "date_created": "2025-09-01T14:18:52.397780+00:00",
+      "date_modified": "2025-09-01T14:18:52.397821+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.chain",
+    "pk": 15,
+    "fields": {
+      "slug": "landal",
+      "name": "Landal",
+      "parent": null,
+      "date_created": "2025-09-04T16:43:28.691837+00:00",
+      "date_modified": "2025-09-04T16:43:28.691877+00:00",
+      "user": 1
+    }
+  }
+]

@@ -1,0 +1,47 @@
+<div class="card card--pad comment" id="comment-{{ comment.token }}">
+  {% if ajax.editable %}
+    {% include 'element/reusable_form_comment.html' %}
+  {% else %}
+    {% if comment.title %}
+      <h3 class="comment__title">{{ comment.title }}</h3>
+    {% endif %}
+    <div class="comment__text">{{ comment.text|markdown|safe }}</div>
+  {% endif %}
+  <div class="meta">
+    <span class="muted">
+      {% translate "by"|capfirst %} {{ comment.user.get_full_name|default:comment.user.username }}
+      — {{ comment.date_created|date:"M d, Y" }}
+      {% if user.is_authenticated %}
+        · {% translate "visible to" %} {{ comment.get_visibility_display }}
+      {% endif %}
+    </span>
+    {% if user == comment.user or user.is_staff %}
+      <span class="comment__actions">
+        <!-- Edit/Cancel icon -->
+        <a class="comment__action" 
+          title="{% if ajax.editable %}{% translate 'stop editing'|capfirst %}{% else %}{% translate 'edit'|capfirst %}{% endif %}"
+          data-action
+          data-method="GET"
+          data-url	="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'comment' comment.id comment.token %}"
+          data-map	= '{"comment":"#comment-{{ comment.id }}"}'
+          {% if not ajax.editable %}data-params	= "editable"{% endif %}
+          ><i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i></a>
+        <!-- Delete icon -->
+        {% if not ajax.editable %}
+          <a class="comment__action comment__action--delete" 
+            title="{% translate 'delete'|capfirst %}"
+            <button type="button" 
+            data-action
+            data-method="DELETE"
+            data-url	="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'comment' comment.id comment.token %}"
+            data-confirm="{% translate 'are you sure you want to delete this comment?'|capfirst %}"
+            data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' comment.content_type.model comment.object_id comment.content_object.slug 'filtered_comments' %}"
+            data-refresh-map='{"filtered_comments":"#comments"}'
+            data-refresh-mode="update"
+            ><i class="bi bi-trash"></i></a>
+        {% endif %}
+      </span>
+    {% endif %}
+  </div>
+  
+</div>

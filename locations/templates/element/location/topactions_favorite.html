@@ -1,0 +1,19 @@
+<button
+  class="btn btn--ghost toggable"
+  type="button"
+  {% if user.is_authenticated %}
+    id="favorited"
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'favorited' %}"
+    data-method="PATCH"
+    data-body='{"favorited__id": "{{ user.preferences.id }}" }'
+    data-map='{"favorited":"#favorited"}'
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+  {% else %}
+    data-bs-toggle="popover" 
+    data-bs-title="{% translate 'login or register'|capfirst %}" 
+    data-bs-content="{% blocktranslate %}You need an account to love this location. Please login or register.{% endblocktranslate %}"
+  {% endif %}
+  >{% include 'field/location/favorited.html' %}
+</button>

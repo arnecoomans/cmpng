@@ -1,0 +1,181 @@
+{% extends 'index.html' %}
+
+{% block title %}{% translate 'add location'|capfirst %}{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{% url 'locations:all' %}">{% translate 'locations'|capfirst %}</a>
+        <span class="sep">›</span>
+        <span aria-current="page">{% translate 'add location'|capfirst %}</span>
+      </nav>
+    </div>
+
+    <h1>{% translate 'add location'|capfirst %}</h1>
+
+    <form method="post" class="add-location-form">
+      {% csrf_token %}
+
+      <div class="input-group">
+        <div class="input-group-text">{% translate 'name'|capfirst %}</div>
+        <input
+          type="text"
+          name="name"
+          class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+          value="{{ form.name.value|default:'' }}"
+          placeholder="{% translate 'e.g. Camping de Bron'|capfirst %}"
+          required
+          autofocus
+        >
+        {% if form.name.errors %}
+          <div class="invalid-feedback">{{ form.name.errors.as_text }}</div>
+        {% endif %}
+      </div>
+      <span class="form-text">{% translate 'required'|capfirst %}.</span>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text">{% translate 'address'|capfirst %}</div>
+        <input
+          type="text"
+          name="address"
+          class="form-control{% if form.address.errors %} is-invalid{% endif %}"
+          value="{{ form.address.value|default:'' }}"
+          placeholder="{% translate 'leave blank to look up automatically'|capfirst %}"
+        >
+        {% if form.address.errors %}
+          <div class="invalid-feedback">{{ form.address.errors.as_text }}</div>
+        {% endif %}
+      </div>
+      <span class="form-text">{% translate 'optional — if left blank the address will be searched by name'|capfirst %}.</span>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text">{% translate 'summary'|capfirst %}</div>
+        <textarea
+          name="summary"
+          class="form-control{% if form.summary.errors %} is-invalid{% endif %}"
+          data-autoresize
+          placeholder="{% translate 'short description (optional)'|capfirst %}"
+        >{{ form.summary.value|default:'' }}</textarea>
+        {% if form.summary.errors %}
+          <div class="invalid-feedback">{{ form.summary.errors.as_text }}</div>
+        {% endif %}
+      </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text">{% translate 'categories'|capfirst %}</div>
+        <input
+          type="text"
+          id="category-autosuggest"
+          class="form-control"
+          placeholder="{% translate 'start typing'|capfirst %}..."
+          autocomplete="off"
+          data-autosuggest
+          data-url="{% url 'cmnsd:dispatch' 'categories' %}"
+          data-param="{{ search_query_character }}"
+          data-extra-params='{"format": "json"}'
+          data-field-input="name"
+          data-field-hidden="slug"
+          data-field-prefix="cat_stage__"
+          data-allow-create="0"
+          data-container="category"
+        >
+      </div>
+      <div id="category-chips" class="mt-1 d-flex flex-wrap gap-1"></div>
+      <span class="form-text">{% translate 'optional — select one or more categories'|capfirst %}.</span>
+
+      <div class="mt-3">
+        <button type="submit" id="add-location-submit" class="btn btn--primary">
+          <span id="add-location-submit-label">{% translate 'add location'|capfirst %}</span>
+          <span id="add-location-submit-spinner" class="spinner-border spinner-border-sm ms-1" role="status" aria-hidden="true" hidden></span>
+        </button>
+        <a href="{% url 'locations:all' %}" class="btn btn--secondary">{% translate 'cancel'|capfirst %}</a>
+      </div>
+
+    </form>
+
+    <script>
+    (function () {
+      const textInput = document.getElementById('category-autosuggest');
+      const chipsEl   = document.getElementById('category-chips');
+      const form      = textInput.closest('form');
+      const added     = new Set();
+
+      function getHidden() {
+        return form.querySelector('input[type="hidden"][name="cat_stage__slug"]');
+      }
+
+      function commit() {
+        const hidden = getHidden();
+        const slug   = hidden?.value;
+        const name   = textInput.value.trim();
+        if (!slug || !name || added.has(slug)) return;
+
+        added.add(slug);
+
+        // Chip
+        const chip = document.createElement('span');
+        chip.className = 'cmpng-badge';
+        chip.dataset.slug = slug;
+        const label = document.createTextNode(name + ' ');
+        const btn   = document.createElement('button');
+        btn.type      = 'button';
+        btn.className = 'btn-close';
+        btn.style.cssText = 'font-size:.6rem;vertical-align:middle';
+        btn.setAttribute('aria-label', '{% translate "remove" %}');
+        btn.addEventListener('click', () => {
+          added.delete(slug);
+          chip.remove();
+          form.querySelector(`input[type="hidden"][name="categories"][value="${slug}"]`)?.remove();
+        });
+        chip.appendChild(label);
+        chip.appendChild(btn);
+        chipsEl.appendChild(chip);
+
+        // Hidden input for form submit
+        const h = document.createElement('input');
+        h.type  = 'hidden';
+        h.name  = 'categories';
+        h.value = slug;
+        form.appendChild(h);
+
+        // Reset autosuggest
+        textInput.value = '';
+        if (hidden) hidden.value = '';
+      }
+
+      // Auto-commit on dropdown click.
+      // Use capture phase because autosuggest calls e.stopPropagation() on the item click,
+      // which would prevent a bubble-phase listener from ever firing.
+      // setTimeout defers the commit until after autosuggest has written the hidden value.
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('#cmnsd-overlays .list-group-item-action')) {
+          setTimeout(commit, 10);
+        }
+      }, true);
+
+      // Commit on Enter (autosuggest already handled the selection before this fires)
+      textInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          setTimeout(commit, 10);
+        }
+      });
+
+      // Disable submit button and show spinner on form submit
+      const submitBtn     = document.getElementById('add-location-submit');
+      const submitLabel   = document.getElementById('add-location-submit-label');
+      const submitSpinner = document.getElementById('add-location-submit-spinner');
+      form.addEventListener('submit', function () {
+        submitBtn.disabled       = true;
+        submitSpinner.hidden     = false;
+        submitLabel.textContent  = '{% translate "adding…" %}';
+      });
+    })();
+    </script>
+
+  </div>
+</main>
+{% endblock %}

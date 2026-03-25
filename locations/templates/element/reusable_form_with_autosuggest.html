@@ -1,0 +1,29 @@
+{% if ajax.editable and perms.locations.change_location %}
+  <form
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug field %}"
+    data-body="form"
+    data-method="POST"
+    data-map='{"{{ field }}":"#{{ field }}"}'
+  >
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-plus"></i></span>
+      <input type="hidden" name="editable" value="true">
+      <input 
+        class="form-control" 
+        placeholder="{% translate 'start typing'|capfirst %}..."
+        type="text"
+        data-autosuggest
+        data-url="{% url 'cmnsd:dispatch' field %}?format=json"
+        data-param="{{ search_query_character }}"
+        data-field-input="{{ input_field|default:'label' }}"
+        data-field-hidden="{{ hidden_field|default:'id' }}"
+        data-container="{{ display_field }}"
+        {% if display_fields %}data-display-fields={{ display_fields }}{% endif %}
+        data-field-prefix="{{ field }}__"
+        data-allow-create="{{ allow_create|default:1 }}"
+      >
+      <button class="btn btn-outline-success" type="submit" id="add-{{ field }}-btn"><i class="bi bi-check"></i></button>
+    </div>
+  </form>
+{% endif %}

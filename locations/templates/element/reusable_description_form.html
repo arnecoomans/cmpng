@@ -1,0 +1,25 @@
+<form
+  data-action
+  data-url="{% if description %}{% url 'cmnsd:dispatch_object_by_id_and_slug' 'description' description.id description.token %}{% else %}{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'descriptions' %}{% endif %}"
+  data-body="form"
+  data-method="post"
+  data-map='{"descriptions":"#filtered_descriptions"}'
+  data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'filtered_descriptions' %}"
+  data-refresh-map='{"filtered_descriptions":"#filtered_descriptions"}'
+>
+  <textarea 
+    class="form-control" 
+    name="text" 
+    placeholder="{% translate 'enter description here'|capfirst %}..."
+    data-autoresize
+  >{{ description.text|default:'' }}</textarea>
+  <div class="input-group mt-2">
+    <span class="input-group-text">{% translate 'visibility'|capfirst %}</span>
+    <select class="form-select" name="visibility">
+      {% for key, value in location.get_visibility_choices.items %}
+        <option value="{{ key }}" {% if description %}{% if description.visibility == key %}selected{% endif %}{% elif location.visibility == key %}selected{% endif %}>{% translate value|capfirst %}</option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-outline-success" type="submit"><i class="bi bi-check"></i> {% if description %}{% translate 'save'|capfirst %}{% else %}{% translate 'add'|capfirst %}{% endif %}</button>
+  </div>
+</form>

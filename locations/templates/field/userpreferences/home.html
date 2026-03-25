@@ -1,0 +1,56 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <div class="card__title mb-0">{% translate "home"|capfirst %}</div>
+    <button 
+      class="pref-edit-btn iconbtn" 
+      aria-label="{% translate 'stop editing'|capfirst %}"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'home' %}"
+      {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+      data-map='{"home": "#home"}'
+    >
+      <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+    </button>
+</div>
+<div>
+  {% if ajax.editable %}
+    <form
+      action="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'home' %}"
+      data-action
+      data-method="POST"
+      data-body="form"
+      data-map='{"home":"#home"}'
+    >
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-house"></i></span>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="home" 
+          value="{{ home.name|default:'' }}" 
+          placeholder="{% translate "start typing" %}..."
+          data-autosuggest
+          data-url="{% url 'cmnsd:dispatch' 'locations'%}"
+          data-param="{{ search_query_character}}"
+          data-extra-params='{"format":"json", "category__slug":"home"}'
+          data-container="location"
+          data-field-input="name"
+          data-field-hidden="id"
+          data-field-prefix="home__"
+          data-allow-create="0"
+          >
+        <button class="btn btn-outline-success" type="submit"><i class="bi bi-check2"></i></button>
+      </div>
+    </form>
+  {% else %}
+    {% if home %}
+      <a href="{{ home.get_absolute_url }}" class="fw-semibold">
+        {{ home.name }}
+      </a>
+      <div class="cmpng-muted small">
+        {% if home.geo %}{{ home.geo.name }}{% endif %}
+      </div>
+    {% else %}
+      <span class="cmpng-muted">{% trans "No home location set" %}</span>
+    {% endif %}
+  {% endif %}
+</div>

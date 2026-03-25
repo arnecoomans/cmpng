@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="{{ language_code|default:'en' }}">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ meta_description }}">
+
+    <link rel="shortcut icon" type="image/ico" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="http://localhost:8000/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Cmnsd CSS -->
+    <link rel="stylesheet" href="{% static 'css/cmnsd/messages.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmnsd/cmnsd.branding.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmnsd/cmsd.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmnsd/autosuggest.css' %}">
+    <!-- Cmpng CSS-->
+    <link rel="stylesheet" href="http://localhost:8000/static/css/cmpng/root.css">
+    <link rel="stylesheet" href="http://localhost:8000/static/css/cmpng/cmpng.css">
+    
+    
+    <title>{% block title %}{{ site_name|default:"a cmnsd site" }}{% endblock %}</title>
+  </head>
+  <body>
+    <header class="site-header position-relative">
+      <!-- Content -->
+      <div class="container h-100">
+          <div class="row h-100 align-items-center justify-content-end">
+              <div class="col-auto text-end">
+                  <div class="d-flex align-items-center justify-content-end gap-4">
+                      <div>
+                          <h1 class="display-2 fw-bold text-white mb-3">
+                              Vakantieplanner
+                          </h1>
+                          
+                          <p class="lead text-white fs-4 mb-0" style="opacity: 0.95;">
+                              Ontdek campings en vakantieverblijven in heel Europa
+                          </p>
+                      </div>
+                      
+                      <!-- A-shaped tent icon -->
+                      <div>
+                          <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <!-- Outer triangle with curved bottom -->
+                              <path d="M50 10 L10 90 Q50 95 90 90 Z" fill="white"/>
+                              <!-- Inner triangle cutout with curved bottom -->
+                              <path d="M50 35 L35 90 Q50 93 65 90 Z" fill="#059669"/>
+                          </svg>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
+
+  <nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Vakantieplanner</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <span class="navbar-text">
+            Go somewhere
+          </span>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">...to stay</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">...to see</a>
+            </li>
+            <li class="mx-3"><!-- Spacer --></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Tags</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Comments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Lists</a>
+            </li>
+            <li class="mx-3"><!-- Spacer --></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><img src="http://localhost:8000/static/img/bootstrap-icons/plus.svg"></a>
+            </li>
+            <li class="mx-3"><!-- Spacer --></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+  </nav>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<hr>
+
+  
+
+
+
+  </body>
+  <!-- Bootstrap Bundle with Popper -->
+<script src="http://localhost:8000/static/js/bootstrap/bootstrap.bundle.min.js" ></script>
+</html>

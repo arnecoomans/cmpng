@@ -1,0 +1,6 @@
+{
+  {% for list in lists %}
+    {% include 'model/list.json' %}
+    {% if not forloop.last %},{% endif %}
+  {% endfor %}
+}

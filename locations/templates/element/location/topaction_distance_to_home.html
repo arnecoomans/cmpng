@@ -1,0 +1,15 @@
+{% if user.is_authenticated %}
+  <button class="btn btn--ghost" type="button">
+    {% if user.preferences.home %}
+      {% distance_between location user.preferences.home as dist %}
+      {% if dist %}
+        <i class="bi bi-house-fill cmpng-icons cmpng-icons-active" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'distance to your home is'|capfirst %}: {{ dist.distance_km|floatformat:0 }} km, {{ dist.duration_hr|floatformat:0 }} {% translate 'hours' %}"></i>
+      {% else %}
+        <i class="bi bi-house" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'placeholder for calculate distance to home'|capfirst %}"></i>
+      {% endif %}
+    {% else %}
+      {# User has no home configured in preferences, show popover#}
+      <i class="bi bi-house-add" data-bs-toggle="popover" data-bs-title="{% translate 'where do you live'|capfirst %}?" data-bs-content="{% translate 'please set your home address in your preferences to see the distance'|capfirst %}."></i>
+    {% endif %}
+  </button>
+{% endif %}

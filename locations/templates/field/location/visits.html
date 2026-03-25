@@ -1,0 +1,13 @@
+<button 
+  class="btn btn--ghost" 
+  type="button"
+  {% if user.is_authenticated %}
+    data-action="modal"
+    data-url="{% url 'locations:manage_visits_location' location.slug %}"
+    data-title="{% translate 'visits to'|capfirst %} {{ location.name }}"
+  {% else %}
+    data-bs-toggle="popover" 
+    data-bs-title="{% translate 'login or register'|capfirst %}" 
+    data-bs-content="{% blocktranslate %}You need an account to love this location. Please login or register.{% endblocktranslate %}"
+  {% endif %}
+  >{% include 'field/location/visitors.html' %}</button>

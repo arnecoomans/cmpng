@@ -1,0 +1,156 @@
+{% with hidden_locations=user.preferences.hidden_locations.all %}
+{% regroup locations by geo.parent.parent as countries_list %}
+
+  {% for country_group in countries_list %}
+    {# ------------------------------- #}
+    {# Country (section header row)    #}
+    {# ------------------------------- #}
+    <div class="list-group-item cmpng-section cmpng-section--country">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <h2 class="cmpng-section-title mb-0">
+          <a href="{% update_query_params request add=country_group.grouper.slug to='country' %}">{% translate country_group.grouper.name %}</a>
+        </h2>
+
+        {# optional: show count #}
+        <span class="cmpng-section-meta text-muted small">
+          {% comment %} {{ country_group.list|length }} {% translate "locations" %} {% endcomment %}
+        </span>
+      </div>
+    </div>
+
+    {% regroup country_group.list by geo.parent as regions_list %}
+
+    {% for region_group in regions_list %}
+      {# ------------------------------- #}
+      {# Region (sub-section header row) #}
+      {# ------------------------------- #}
+      <div class="list-group-item cmpng-section cmpng-section--region">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <h3 class="cmpng-section-title mb-0">
+            <a href="{% update_query_params request add=region_group.grouper.slug to='region' %}">{% translate region_group.grouper.name %}</a>
+          </h3>
+
+          <span class="cmpng-section-meta text-muted small">
+            {% comment %} {{ region_group.list|length }} {% translate "locations" %} {% endcomment %}
+          </span>
+        </div>
+      </div>
+
+      {% regroup region_group.list by geo.department as departments_list %}
+
+      {% for department_group in departments_list %}
+        {# ---------------------------------- #}
+        {# Department (small section row)      #}
+        {# ---------------------------------- #}
+        <div class="list-group-item cmpng-section cmpng-section--department">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="cmpng-department-name">
+              <a href="{% update_query_params request add=department_group.grouper.slug to='department' %}">{% translate department_group.grouper.name %}</a>
+            </div>
+
+            <span class="cmpng-section-meta text-muted small">
+              {% comment %} {{ department_group.list|length }} {% endcomment %}
+            </span>
+          </div>
+        </div>
+
+        {# ------------------------------- #}
+        {# Locations (result rows)         #}
+        {# ------------------------------- #}
+        {% for location in department_group.list %}
+          <div class="list-group-item cmpng-row cmpng-row--location">
+            <div class="cmpng-location-card">
+              <div class="d-flex align-items-start justify-content-between gap-3">
+
+                {# Left: main content #}
+                <div class="flex-grow-1 min-w-0">
+
+                  {# Name + tags should behave like one flowing line #}
+                  <div class="cmpng-title-inline">
+                    <a href="{{ location.get_absolute_url|default:'#' }}" class="cmpng-location-name">
+                      {{ location.name }}
+                    </a>
+
+                    <span class="cmpng-tags">
+                      {% if location.chain %}
+                        <span class="badge cmpng-badge cmpng-badge--tag" title="{% translate 'part of chain'|capfirst %} {{ location.chain }}">
+                          {{ location.chain.name }}
+                        </span>
+                      {% endif %}
+                      
+                      {% if location.size %}
+                        <span class="badge cmpng-badge cmpng-badge--size" data-bs-toggle="tooltip" data-bs-delay="1000" data-bs-title="{{ location.size.name }}{% if location.size.description %} - {% translate location.size.description %}{% endif %}">
+                          {{ location.size.name }}
+                        </span>
+                      {% endif %}
+
+                      {% if location.is_accommodation %}
+                        <span class="badge cmpng-badge cmpng-badge--type">
+                          {% translate 'accommodation'|capfirst %}
+                        </span>
+                      {% endif %}
+
+                      {% if location.is_activity %}
+                        <span class="badge cmpng-badge cmpng-badge--type">
+                          {% translate 'activity'|capfirst %}
+                        </span>
+                      {% endif %}
+
+                      {% for category in location.categories.all %}
+                        <span class="badge cmpng-badge cmpng-badge--tag">
+                          {% translate category.name %}
+                        </span>
+                      {% endfor %}
+                    </span>
+                  </div>
+
+                  {# Secondary meta line (optional) #}
+                  {% if location.city or location.address %}
+                    <div class="cmpng-location-meta text-muted small mt-1">
+                      {% if location.summary %}
+                        {{ location.summary }}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+                </div>
+
+                {# Right Icon List #}
+                <div class="cmpng-row-actions d-flex align-items-center gap-2">
+                  <!-- Home Icon-->
+                  {% if user.preferences in location.home_of.all %}<!-- Home Icon-->
+                    <i class="bi bi-house-fill cmpng-icons" title="{% translate 'is your home'|capfirst %}"></i>
+                  {% else %}
+                    <!-- Highlight private locations -->
+                    {% if location.visibility == 'q' %}
+                      <i class="bi bi-incognito cmpng-icons" title="{% translate 'this is a private location'|capfirst %}"></i>
+                    {% endif %}
+                    <!-- Comments -->
+                    {% if location.prefetched_comments %}
+                      <i class="bi bi-chat-dots cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has comments'|capfirst %}"></i>
+                    {% endif %}
+                    <!-- Images -->
+                    {% if user.is_staff and location.media.all %}
+                      <i class="bi bi-image cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has images'|capfirst %}"></i>
+                    {% endif %}
+                    <!-- Visitors -->
+                    {% include 'field/location/visitors.html' %}
+                    <!-- This location is not loved at all -->
+                    {% if location in hidden_locations %}
+                      <i class="bi bi-eye-slash cmpng-favorite cmpng-favorite--hidden" title="{% translate 'you have hidden this location'|capfirst %}"></i>
+                    {% else %}
+                      <!-- Love Icon-->
+                      {% include 'field/location/favorited.html' %}
+                    {% endif  %}
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+{% endwith %}

@@ -1,0 +1,70 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <div class="card__title mb-0">{% translate "family"|capfirst %}</div>
+  <button 
+      class="pref-edit-btn iconbtn" 
+      aria-label="{% translate 'stop editing'|capfirst %}"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'family' %}"
+      {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+      data-map='{"family": "#family"}'
+    >
+      <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+    </button>
+</div>
+<div class="cmpng-muted small">{% blocktranslate %}Family members can see what you have marked as visible to family. This way you can share locations, comments, images and lists with your loved ones. Marking someone as family does not make their content visible to you.{% endblocktranslate %}</div>
+<div>
+  {% if family.exists %}
+    <div class="d-flex flex-wrap gap-2">
+      {% for member in family.all %}
+        <span class="cmpng-badge cmpng-badge--type">
+          <i class="bi bi-person me-1"></i>{{ member.get_full_name|default:member.username }}
+          {% if ajax.editable %}
+            <a href="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'family' %}"
+                        data-action
+                        data-method="PATCH"
+                        data-body='{"family__id": "{{ member.id }}", "editable": "true" }'
+                        data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'family' %}?editable"
+                        data-refresh-map= '{"family":"#family"}'
+                        data-confirm="{% translate 'are you sure you want to remove this family member'|capfirst %}"
+                        >
+                        <i class="bi bi-person-dash" title="{% translate 'remove family member'|capfirst %}"></i>
+                      </a>
+          {% endif %}
+        </span>
+      {% endfor %}
+    </div>
+  {% elif not ajax.editable %}
+    <span class="cmpng-muted">{% translate "no family members added"|capfirst %}</span>
+  {% endif %}
+  {% if ajax.editable %}
+  <form>
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{% translate 'select a family member'|capfirst %}"
+        data-autosuggest
+        data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'available_family' %}?format=json"
+        data-param="{{ search_query_character|default:'q'}}"
+        data-field-input="display_name"
+        data-field-hidden="username"
+        data-container="available_family"
+        data-allow-create="0"
+        data-min="4"
+        data-field-prefix="family__"
+      >
+      <button type="button" 
+              class="btn btn-outline-secondary show-autocomplete"
+              title="{% translate 'add family member'|capfirst %}"
+              data-action
+              data-method="POST"
+              data-body="form"
+              data-params="editable"
+              data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'family' %}"
+              data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'family' %}?editable"
+              data-refresh-map= '{"family":"#family"}'
+              ><img src="{% static 'img/bootstrap-icons/person-plus.svg' %}"></button>
+    </div>
+  </form>
+  {% endif %}
+</div>

@@ -1,0 +1,4 @@
+<div class="link" id="link-{{ link.id }}">
+  {% include "object/link.html" %}
+  {% include 'element/reusable_delete_button.html' with field='links' map_id='id' map_value=link.id %}
+</div>

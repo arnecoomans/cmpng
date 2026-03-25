@@ -1,0 +1,12 @@
+{% if location.address or ajax.editable %}
+  <div class="field-view">
+    <div class="k">{% translate "address"|capfirst %}</div>
+    <div class="v">
+      {% if ajax.editable %}
+        <input type="text" name="address" class="form-control form-control--ghost" value="{{ location.address|default:'' }}" placeholder="{% translate 'address of this'|capfirst %} {{ location.type }}">
+      {% else %}
+        {{ location.get_address_display|safe }}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

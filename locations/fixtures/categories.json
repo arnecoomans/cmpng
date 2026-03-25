@@ -1,0 +1,350 @@
+[
+  {
+    "model": "locations.category",
+    "pk": 7,
+    "fields": {
+      "slug": "activity",
+      "name": "Activity",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.041177+00:00",
+      "date_modified": "2023-10-20T20:10:53.041197+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 4,
+    "fields": {
+      "slug": "bed-breakfast",
+      "name": "Bed & Breakfast",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.025818+00:00",
+      "date_modified": "2023-10-20T20:10:53.025838+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 2,
+    "fields": {
+      "slug": "camping",
+      "name": "Camping",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.017596+00:00",
+      "date_modified": "2023-10-20T20:10:53.017619+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 24,
+    "fields": {
+      "slug": "chalet",
+      "name": "Chalet",
+      "parent": null,
+      "date_created": "2024-09-15T09:49:36.403174+00:00",
+      "date_modified": "2024-09-15T09:49:36.403197+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 5,
+    "fields": {
+      "slug": "chambre-dhotes",
+      "name": "Chambre D'H\u00f4tes",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.029982+00:00",
+      "date_modified": "2023-10-20T20:23:28.437461+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 6,
+    "fields": {
+      "slug": "gite",
+      "name": "Gite",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.036943+00:00",
+      "date_modified": "2023-10-20T20:10:53.036963+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 17,
+    "fields": {
+      "slug": "glamping",
+      "name": "Glamping (Safaritent)",
+      "parent": null,
+      "date_created": "2023-10-20T20:23:44.786087+00:00",
+      "date_modified": "2023-10-20T20:23:44.786118+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 1,
+    "fields": {
+      "slug": "home",
+      "name": "Home",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.013019+00:00",
+      "date_modified": "2023-10-20T20:10:53.013041+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 3,
+    "fields": {
+      "slug": "hotel",
+      "name": "Hotel",
+      "parent": null,
+      "date_created": "2023-10-20T20:10:53.021878+00:00",
+      "date_modified": "2023-10-20T20:10:53.021900+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 18,
+    "fields": {
+      "slug": "mobilehome",
+      "name": "Mobile Home",
+      "parent": null,
+      "date_created": "2023-10-29T11:44:23.714679+00:00",
+      "date_modified": "2024-11-01T08:21:20.843884+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 27,
+    "fields": {
+      "slug": "resort",
+      "name": "Resort",
+      "parent": null,
+      "date_created": "2024-11-01T08:21:43.779407+00:00",
+      "date_modified": "2024-11-01T08:21:43.779435+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 20,
+    "fields": {
+      "slug": "transit",
+      "name": "Transit (one nighter)",
+      "parent": null,
+      "date_created": "2024-01-01T10:20:43.237063+00:00",
+      "date_modified": "2024-06-27T09:31:28.859213+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 26,
+    "fields": {
+      "slug": "villa",
+      "name": "Villa",
+      "parent": null,
+      "date_created": "2024-11-01T08:21:40.500281+00:00",
+      "date_modified": "2024-11-01T08:21:40.500313+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 14,
+    "fields": {
+      "slug": "beach",
+      "name": "Beach",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.073784+00:00",
+      "date_modified": "2023-10-20T20:10:53.073805+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 8,
+    "fields": {
+      "slug": "city",
+      "name": "City",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.047869+00:00",
+      "date_modified": "2023-10-20T20:10:53.047889+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 12,
+    "fields": {
+      "slug": "museum",
+      "name": "Museum",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.065000+00:00",
+      "date_modified": "2023-10-20T20:10:53.065020+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 13,
+    "fields": {
+      "slug": "park",
+      "name": "Park",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.069433+00:00",
+      "date_modified": "2023-10-20T20:10:53.069451+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 22,
+    "fields": {
+      "slug": "rest-stop",
+      "name": "Rest-stop",
+      "parent": 7,
+      "date_created": "2024-06-27T09:30:59.243713+00:00",
+      "date_modified": "2024-06-27T09:30:59.243748+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 21,
+    "fields": {
+      "slug": "restaurant",
+      "name": "Restaurant",
+      "parent": 7,
+      "date_created": "2024-06-27T09:30:43.732827+00:00",
+      "date_modified": "2024-06-27T09:30:43.732859+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 25,
+    "fields": {
+      "slug": "sauna",
+      "name": "Sauna",
+      "parent": 7,
+      "date_created": "2024-10-14T08:30:58.557779+00:00",
+      "date_modified": "2024-10-14T08:30:58.557817+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 19,
+    "fields": {
+      "slug": "shop",
+      "name": "Shop",
+      "parent": 7,
+      "date_created": "2023-11-05T10:59:11.710726+00:00",
+      "date_modified": "2023-11-05T10:59:11.710752+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 16,
+    "fields": {
+      "slug": "sight-to-see",
+      "name": "Sight-to-see",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.082885+00:00",
+      "date_modified": "2023-10-20T20:10:53.082904+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 29,
+    "fields": {
+      "slug": "sport",
+      "name": "Sport",
+      "parent": 7,
+      "date_created": "2025-08-20T12:41:35.960938+00:00",
+      "date_modified": "2025-08-20T12:41:35.960999+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 15,
+    "fields": {
+      "slug": "swimmingpool",
+      "name": "Swimmingpool",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.078674+00:00",
+      "date_modified": "2023-10-20T20:10:53.078694+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 11,
+    "fields": {
+      "slug": "theme-park",
+      "name": "Theme-park",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.059583+00:00",
+      "date_modified": "2023-10-20T20:10:53.059603+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 9,
+    "fields": {
+      "slug": "village",
+      "name": "Village",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.051838+00:00",
+      "date_modified": "2023-10-20T20:10:53.051859+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 28,
+    "fields": {
+      "slug": "walk",
+      "name": "Walk",
+      "parent": 7,
+      "date_created": "2025-01-25T15:30:59.088736+00:00",
+      "date_modified": "2025-01-25T15:30:59.088777+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 23,
+    "fields": {
+      "slug": "wijndomein",
+      "name": "Wijndomein",
+      "parent": 7,
+      "date_created": "2024-07-06T08:06:36.398204+00:00",
+      "date_modified": "2025-08-31T08:57:12.177731+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.category",
+    "pk": 10,
+    "fields": {
+      "slug": "zoo",
+      "name": "Zoo",
+      "parent": 7,
+      "date_created": "2023-10-20T20:10:53.055751+00:00",
+      "date_modified": "2023-10-20T20:10:53.055771+00:00",
+      "user": 1
+    }
+  }
+]

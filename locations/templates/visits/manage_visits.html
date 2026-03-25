@@ -1,0 +1,93 @@
+<div class="modal__body">
+  {% if visits|length > 0 %}
+    <!-- Section: existing visits -->
+    <section class="modal-section" aria-labelledby="yourVisitsTitle">
+      <div class="modal-section__head">
+        <h3 class="modal-section__title" id="yourVisitsTitle">{% translate 'your visits to'|capfirst %} {{ visits.first.location.name }}</h3>
+        <span class="badge badge--muted">{{ visits|length }}</span>
+      </div>
+
+      <ul class="visit-list">
+        {% for visit in visits %}
+          <li class="visit-item">
+            <span class="visit-item__dot"></span>
+            <span class="visit-item__label">
+              {% if visit.day%}{{ visit.day }} {% endif %} 
+              {% if visit.month%}{% translate visit.get_month_display %} {% endif %}
+              {{ visit.year }}</span>
+              {% if user == visit.user %}
+                <span class="visit-item__actions">
+                  <a href="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'visits' visit.id visit.token%}" class="btn btn--small btn--danger" 
+                    data-action
+                    data-method="DELETE"
+                    data-body='{"visits__id": "{{ visit.id }}"}'
+                    data-action 
+                    data-method="DELETE" 
+                    data-confirm="{% translate 'are you sure you want to delete this visit'|capfirst %}?"
+                    data-refresh-url="{% url 'locations:manage_visits_location' location.slug %}" 
+                    data-refresh-mode="update" 
+                    data-refresh-map='{"content": "#cmnsd-modal-body"}'>
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </span>
+              {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <div class="modal-divider"></div>
+
+  <!-- Section: add visit -->
+  <section class="modal-section" aria-labelledby="addVisitTitle">
+    <div class="modal-section__head">
+      <h3 class="modal-section__title" id="addVisitTitle">Add a visit</h3>
+      <span class="hint">Stored on this location</span>
+    </div>
+
+    <form class="visit-form"
+        action="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'visited_by' %}?editable"
+        data-action
+        data-method="POST"
+        data-body="form"
+        data-map='{"visitors":"#visitors"}'
+        data-refresh-url="{% url 'locations:manage_visits_location' location.slug %}"
+        data-refresh-mode="update"
+        data-refresh-map='{"content": "#cmnsd-modal-body"}'
+      >
+      {% csrf_token %} {# visited_by #}
+      <input type="hidden" name="editable" value="true">
+      <input type="hidden" name="visited_by__location__id" value="{{ location.id }}">
+      <input type="hidden" name="visited_by__user__id" value="{{ request.user.id }}">
+      <input type="hidden" name="visited_by__location__slug" value="{{ location.slug }}">
+      <div class="segmented">
+        <label class="segmented__cell">
+          <span class="segmented__label">Day</span>
+          <input class="segmented__input" name="visited_by__day" type="number" min="1" max="31" placeholder="—">
+        </label>
+
+        <label class="segmented__cell">
+          <span class="segmented__label">Month</span>
+          <select class="segmented__input" name="visited_by__month">
+            <option value="">Select month</option>
+            {% for month_num, month_name in months %}
+              <option value="{{ month_num }}">{% translate month_name %}</option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <label class="segmented__cell">
+          <span class="segmented__label">Year</span>
+          <input class="segmented__input" name="visited_by__year" type="number" min="1900" max="2100" value="2026" required>
+        </label>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--primary" type="submit">
+          <span class="btn__icon"><i class="bi bi-plus-circle"></i> </span> Add visit
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

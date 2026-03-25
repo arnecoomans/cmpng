@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <div class="card__title mb-0">{% translate "links to apps"|capfirst %}</div>
+  <button 
+      class="pref-edit-btn iconbtn" 
+      aria-label="{% translate 'stop editing'|capfirst %}"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'all_apps' %}"
+      {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+      data-map='{"all_apps": "#apps"}'
+    >
+      <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+    </button>
+</div>
+<div>
+<div class="cmpng-muted small">{% translate "enable links to third-party apps to open locations in those apps directly from this site"|capfirst %}.</div>
+  <div class="d-flex flex-wrap gap-2">
+    {% for app in all_apps %}
+      <span class="cmpng-badge cmpng-badge--{% if app.enabled %}type{% else %}tag{% endif %}">
+        {{ app.label }}
+        {% if ajax.editable %}
+          <a 
+            {% comment %} class="btn btn-sm btn-outline-secondary ms-2"  {% endcomment %}
+            data-action
+            data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'apps' %}"
+            data-params='{"apps__id": {{ app.id }}}'
+            data-method="POST"
+            data-refresh-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'all_apps' %}"
+            data-refresh-params="editable"
+            data-refresh-map='{"all_apps": "#apps"}'
+            data-map='{"all_apps": "#apps"}'
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="{% if app.enabled %}{% translate 'disable'|capfirst %}{% else %}{% translate 'enable'|capfirst %}{% endif %} {{ app.label }}"
+          >
+            {% if app.enabled %}
+              <i class="bi bi-x"></i>
+            {% else %}
+              <i class="bi bi-plus"></i>
+            {% endif %}
+      </a>
+        {% endif %}
+      </span>
+    {% endfor %}
+  </div>
+</div>

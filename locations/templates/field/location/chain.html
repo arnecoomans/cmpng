@@ -1,0 +1,50 @@
+<div class="k">
+  {% if ajax.editable %}{% translate 'edit'|capfirst %}{% endif %}
+  {% translate "chain"|capfirst %}
+  {% include 'element/reusable_edit_button.html' with field='chain' %}
+</div>
+<div class="v">
+  {% if ajax.editable and perms.locations.change_location %}
+    <form
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'chain' %}"
+      data-body="form"
+      data-method="POST"
+      data-map='{"chain":"#chain"}'
+    >
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-plus"></i></span>
+        <input 
+          class="form-control" 
+          placeholder="{% translate 'start typing'|capfirst %}..."
+          type="text"
+          {% if location.chain %}value="{{ location.chain.name }}"{% endif %}
+          data-autosuggest
+          data-url="{% url 'cmnsd:dispatch' 'chain' %}"
+          data-param="{{ search_query_character }}"
+          data-extra-params='{"format": "json", "exclude": "locations__slug:{{ location.slug }}"}'
+          data-field-input="name"
+          data-field-hidden="slug"
+          data-container="chain"
+          data-field-prefix="chain__"
+          data-allow-create="{% if user.is_staff %}1{% else %}0{% endif %}"
+          data-autosuggest-allow-empty="1"
+        >
+        {% if chain %}<button class="btn btn-outline-primary" 
+          type="button" 
+          data-bs-toggle="tooltip" 
+          data-bs-title="{% translate "clear value"|capfirst %}"
+          data-action
+          data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'chain' %}"
+          data-method="PATCH"
+          data-body='{"chain__id": "{{ chain.id }}"}'
+          data-map='{"chain":"#chain"}'
+          data-confirm="{% translate 'are you sure you want to remove this value'|capfirst %}?"
+        ><i class="bi bi-file-x"></i></button>{% endif %}
+        <button class="btn btn-outline-success" type="submit" id="add-{{ field }}-btn"><i class="bi bi-check"></i></button>
+      </div>
+    </form>
+  {% else %}
+    {% if location.chain %}<a href="{% url 'locations:all' %}?chain__slug={{ location.chain.slug }}" class="internal">{{ location.chain|default:'' }}</a>{% endif %}
+  {% endif %}
+</div>

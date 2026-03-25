@@ -1,0 +1,6 @@
+{
+  {% for location in location.nearby %}
+    {% include 'object/location.map.json' %}
+    {% if not forloop.last %},{% endif %}
+  {% endfor %}
+}

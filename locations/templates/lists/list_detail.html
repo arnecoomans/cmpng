@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block title %}{{ list.name }}{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{% url 'locations:lists' %}">{% translate 'lists'|capfirst %}</a>
+        <span class="sep">›</span>
+        <span aria-current="page">{{ list.name }}</span>
+      </nav>
+    </div>
+
+    <h1 class="page-title">{{ list.name }}</h1>
+
+    <div class="list-meta">
+      <span class="badge badge--muted">{{ list.get_template_display }}</span>
+      <span class="badge badge--muted">{{ items|length }} {% translate 'locations'|capfirst %}</span>
+      {% if list.is_archived %}
+        <span class="badge badge--muted">{% translate 'archived'|capfirst %}</span>
+      {% endif %}
+    </div>
+
+    {% if list.description %}
+      <p class="list-description">{{ list.description }}</p>
+    {% endif %}
+
+    {% if items %}
+      <ol class="list-items">
+        {% for item in items %}
+          <li class="list-item" style="grid-template-columns: auto 1fr auto;">
+            <span class="list-item__order">{{ item.order }}</span>
+            <a class="list-item__name" href="{% url 'locations:location_detail' item.location.slug %}">{{ item.location.name }}</a>
+            {% if item.leg_distance %}
+              <span class="list-item__leg badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">
+                {{ item.leg_distance.distance_km|floatformat:0 }} km
+              </span>
+            {% else %}
+              <span></span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="hint">{% translate 'this list has no locations yet'|capfirst %}.</p>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}

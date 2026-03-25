@@ -1,0 +1,122 @@
+<!-- Leaflet for OSM-->
+<script src="{% static 'js/leaflet/leaflet.js' %}"></script>
+<script>
+(function () {
+  const lat = {{ location.coord_lat|default:'null' }};
+  const lon = {{ location.coord_lon|default:'null' }};
+  if (!lat || !lon) return;
+
+  const map = L.map('map').setView([lat, lon], {% if location.is_accommodation %}10{% else %}13{% endif %});
+
+  const street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18,
+  });
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+    maxZoom: 18,
+  });
+
+  street.addTo(map);
+
+  // POI categories: label → Overpass amenity/leisure/tourism tags + emoji icon
+  // Radii sized for zoom 10 (accommodation default) — visible area ≈ 60km across
+  const POI_CATEGORIES = [
+    { label: 'Supermarkets',  emoji: '🛒', query: `node["shop"~"supermarket|convenience"](around:20000,LAT,LON);` },
+    { label: 'Restaurants',   emoji: '🍽️', query: `node["amenity"~"restaurant|cafe|fast_food"](around:15000,LAT,LON);` },
+    { label: 'Fuel',          emoji: '⛽',  query: `node["amenity"="fuel"](around:25000,LAT,LON);` },
+    { label: 'Swimming',      emoji: '🏊',  query: `node["leisure"~"swimming_pool|water_park"](around:20000,LAT,LON);way["natural"~"beach|swimming_area"](around:20000,LAT,LON);` },
+    { label: 'Hiking',        emoji: '🥾',  query: `node["tourism"="information"]["information"="guidepost"](around:20000,LAT,LON);node["highway"="trailhead"](around:20000,LAT,LON);` },
+    { label: 'Pharmacies',    emoji: '💊',  query: `node["amenity"="pharmacy"](around:15000,LAT,LON);` },
+  ];
+
+  const poiLayers = {};
+
+  function fetchPOIs(category) {
+    const query = category.query.replaceAll('LAT', lat).replaceAll('LON', lon);
+    const overpassQuery = `[out:json][timeout:10];(${query});out body;`;
+    const url = `{% url 'locations:overpass_proxy' %}?data=${encodeURIComponent(overpassQuery)}`;
+
+    const layer = L.layerGroup();
+    poiLayers[category.label] = layer;
+
+    fetch(url)
+      .then(r => r.json())
+      .then(data => {
+        data.elements.forEach(el => {
+          const elLat = el.lat ?? el.center?.lat;
+          const elLon = el.lon ?? el.center?.lon;
+          if (!elLat || !elLon) return;
+          const name = el.tags?.name || category.label.slice(0, -1);
+          L.marker([elLat, elLon], {
+            icon: L.divIcon({
+              className: '',
+              html: `<span style="font-size:18px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">${category.emoji}</span>`,
+              iconSize: [22, 22],
+              iconAnchor: [11, 11],
+              popupAnchor: [0, -14],
+            })
+          })
+          .addTo(layer)
+          .bindPopup(`<strong>${name}</strong>`);
+        });
+      })
+      .catch(err => console.warn(`POI fetch failed (${category.label}):`, err));
+
+    return layer;
+  }
+
+  // Build overlay layers object for layer control
+  const overlays = {};
+  POI_CATEGORIES.forEach(cat => {
+    overlays[`${cat.emoji} ${cat.label}`] = fetchPOIs(cat);
+  });
+
+  L.control.layers(
+    { 'Street': street, 'Satellite': satellite },
+    overlays
+  ).addTo(map);
+
+  function makePin(cssClass, size) {
+    return L.divIcon({
+      className: '',
+      html: `<div class="map-pin ${cssClass}"></div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+      popupAnchor: [0, -(size / 2 + 6)],
+    });
+  }
+
+  L.marker([lat, lon], { icon: makePin('map-pin--current', 16) })
+    .addTo(map)
+    .bindPopup('<strong>{{ location.name|escapejs }}</strong>');
+
+  // Map markers — fetch nearby JSON
+  fetch('{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "nearby" %}?format=json')
+    .then(r => r.json())
+    .then(data => {
+      Object.values(data.payload.nearby).forEach(loc => {
+        if (!loc.coord_lat || !loc.coord_lon) return;
+        const pinClass = loc.is_accommodation
+          ? (loc.visited ? 'map-pin--acc-visited' : 'map-pin--acc')
+          : (loc.visited ? 'map-pin--act-visited' : 'map-pin--act');
+        L.marker([loc.coord_lat, loc.coord_lon], { icon: makePin(pinClass, 12) })
+          .addTo(map)
+          .bindPopup(`<a href="${loc.url}">${loc.name}</a><br><small>${loc.nearby_distance} km</small>`);
+      });
+    })
+    .catch(err => console.warn('Nearby locations unavailable:', err));
+
+  // Nearby list filter buttons
+  document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('btn--active'));
+      btn.classList.add('btn--active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('#nearby-list .list-item').forEach(item => {
+        item.style.display = (filter === 'all' || item.dataset.type.includes(filter)) ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>

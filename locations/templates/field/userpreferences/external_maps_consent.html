@@ -1,0 +1,54 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <div>
+    <div class="fw-semibold">{% translate "external maps"|capfirst %}</div>
+    <div class="cmpng-muted small">{% translate "allow opening locations in third-party navigation apps"|capfirst %}. {% translate 'loading external maps shares your data with the maps provider'|capfirst %}.</div>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <div id="pref-external-maps">
+      {% if ajax.editable %}
+        <div class="form-check form-switch">
+          <input  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  name="maps_permission"
+                  {% if external_maps_consent %}checked{% endif %}
+                  data-action
+                  data-body='{"external_maps_consent":"{% if external_maps_consent %}false{% else %}true{% endif %}"}'
+                  data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'external_maps_consent' %}"
+                  data-method="POST"
+                  data-map='{"external_maps_consent":"#external_maps_consent"}'
+                  >
+        </div>
+      {% else %}
+        {% if external_maps_consent %}
+          <span class="cmpng-badge cmpng-badge--type">{% translate "enabled"|capfirst %}</span>
+        {% else %}
+          <span class="cmpng-badge cmpng-badge--type cmpng-muted">{% translate "disabled"|capfirst %}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <button
+      class="pref-edit-btn iconbtn"
+      aria-label="{% translate 'stop editing'|capfirst %}"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'external_maps_consent' %}"
+      {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+      data-map='{"external_maps_consent": "#external_maps_consent"}'
+    >
+      <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+    </button>
+  </div>
+</div>
+{% if request.session.external_maps_consent %}
+  <div class="d-flex align-items-center justify-content-between mt-1">
+    <div class="cmpng-muted small">
+      <i class="bi bi-clock-history me-1"></i>{% translate "session consent active"|capfirst %}
+    </div>
+    <form method="post" action="{% url 'locations:revoke_maps_session' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm btn-link text-danger p-0 small">
+        {% translate "revoke"|capfirst %}
+      </button>
+    </form>
+  </div>
+{% endif %}

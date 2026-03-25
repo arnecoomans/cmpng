@@ -1,0 +1,11 @@
+<!-- Only for authenticated users: show navigation apps -->
+{% if user.is_authenticated %}
+  <div class="field-view">
+    <div class="k">Navigate</div>
+    <div class="links">
+      {% for app in user.preferences.apps.all %}
+        <a href={% objreplace app.url_format "{address}" location.address|urlencode %} rel="nofollow" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate 'navigate to'|capfirst %} {{ location.name }} {% translate 'using' %} {{ app.label }}">{{ app.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

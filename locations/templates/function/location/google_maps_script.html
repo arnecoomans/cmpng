@@ -1,0 +1,157 @@
+{% if location.coord_lat and location.coord_lon %}
+<!-- Google Maps bootstrap loader (dynamic library import, no compatibility layer) -->
+<script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({key:"{{ GOOGLE_MAPS_API_KEY }}",v:"weekly"});</script>
+<script>
+(async function () {
+  const mapEl = document.getElementById('map');
+  if (!mapEl) return;
+
+  const lat = parseFloat(mapEl.dataset.lat);
+  const lon = parseFloat(mapEl.dataset.lon);
+  const name = mapEl.dataset.name;
+
+  {
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary('marker');
+
+    const position = { lat, lng: lon };
+
+    const map = new Map(mapEl, {
+      center: position,
+      zoom: {% if location.is_accommodation %}10{% else %}13{% endif %},
+      mapId: '{{ location.slug }}',
+      mapTypeControl: true,
+      fullscreenControl: true,
+      streetViewControl: false,
+    });
+
+    // Main location marker — styled pin
+    const pin = new PinElement({
+      background: '#E53935',
+      borderColor: '#B71C1C',
+      glyphColor: '#fff',
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div style="max-width:220px;font-family:inherit">
+          <strong style="font-size:14px">{{ location.name|escapejs }}</strong>
+          {% if location.summary %}<p style="margin:6px 0 0;font-size:12px;color:#555">{{ location.summary|truncatechars:100|escapejs }}</p>{% endif %}
+          {% if location.address %}<p style="margin:6px 0 0;font-size:12px;color:#777">{{ location.address|escapejs }}</p>{% endif %}
+        </div>
+      `,
+    });
+
+    const marker = new AdvancedMarkerElement({
+      position,
+      map,
+      title: name,
+      content: pin,
+    });
+
+    marker.addListener('click', () => {
+      infoWindow.open({ anchor: marker, map });
+    });
+
+    // Nearby markers
+    const nearbyBaseUrl = '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "nearby" %}?format=json';
+    const sharedInfoWindow = new google.maps.InfoWindow();
+    let nearbyMarkers = [];
+
+    function makeDotElement(fill, outline) {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        width: 16px; height: 16px; border-radius: 50%;
+        background: ${fill};
+        border: 2px solid ${outline ? '#E53935' : '#fff'};
+        box-shadow: 0 1px 4px rgba(0,0,0,.3);
+      `;
+      return el;
+    }
+
+    const FILLS = {
+      acc:         'rgba(0, 102, 255, 1)',
+      acc_visited: 'rgba(0, 70, 180, 1)',
+      act:         'rgba(255, 223, 70, 1)',
+      act_visited: 'rgba(225, 190, 18, 0.8)',
+    };
+
+    function clearNearbyMarkers() {
+      nearbyMarkers.forEach(m => { m.map = null; });
+      nearbyMarkers = [];
+    }
+
+    function loadNearbyMarkers(radiusKm) {
+      const url = nearbyBaseUrl + (radiusKm ? `&radius_km=${Math.round(radiusKm)}` : '');
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          clearNearbyMarkers();
+          Object.values(data.payload.nearby).forEach(loc => {
+            if (!loc.coord_lat || !loc.coord_lon) return;
+
+            const fillKey = loc.is_accommodation
+              ? (loc.visited ? 'acc_visited' : 'acc')
+              : (loc.visited ? 'act_visited' : 'act');
+
+            const nearbyMarker = new AdvancedMarkerElement({
+              position: { lat: loc.coord_lat, lng: loc.coord_lon },
+              map,
+              title: loc.name,
+              content: makeDotElement(FILLS[fillKey], loc.loved),
+            });
+
+            nearbyMarker.addListener('click', () => {
+              sharedInfoWindow.setContent(`
+                <div style="max-width:220px;font-family:inherit">
+                  <strong style="font-size:14px">${loc.name}</strong>
+                  ${loc.summary ? `<p style="margin:6px 0 0;font-size:12px;color:#555">${loc.summary}</p>` : ''}
+                  <p style="margin:6px 0 0;font-size:12px;color:#777">${loc.nearby_distance} km</p>
+                  <p style="margin:8px 0 0"><a href="${loc.url}" style="font-size:12px">{% translate "view details"|capfirst %}</a></p>
+                </div>
+              `);
+              sharedInfoWindow.open({ anchor: nearbyMarker, map });
+            });
+
+            nearbyMarkers.push(nearbyMarker);
+          });
+        })
+        .catch(err => console.warn('Nearby markers unavailable:', err));
+    }
+
+    // Initial load with default range
+    let loadedRadiusKm = null;
+
+    function loadNearbyMarkersTracked(radiusKm) {
+      loadedRadiusKm = radiusKm;
+      loadNearbyMarkers(radiusKm);
+    }
+
+    loadNearbyMarkersTracked(null);
+
+    {% if user.is_authenticated %}
+    // Reload markers only when zooming out beyond the already-loaded radius
+    let zoomDebounce;
+    map.addListener('zoom_changed', () => {
+      clearTimeout(zoomDebounce);
+      zoomDebounce = setTimeout(() => {
+        const bounds = map.getBounds();
+        if (!bounds) return;
+        const ne = bounds.getNorthEast();
+        const center = map.getCenter();
+        const R = 6371;
+        const dLat = (ne.lat() - center.lat()) * Math.PI / 180;
+        const dLon = (ne.lng() - center.lng()) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) ** 2
+          + Math.cos(center.lat() * Math.PI / 180) * Math.cos(ne.lat() * Math.PI / 180)
+          * Math.sin(dLon / 2) ** 2;
+        const radiusKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        if (loadedRadiusKm !== null && radiusKm <= loadedRadiusKm) return; // zoom in — skip
+        loadNearbyMarkersTracked(radiusKm);
+      }, 600);
+    });
+    {% endif %}
+  }
+})();
+</script>
+{% endif %}

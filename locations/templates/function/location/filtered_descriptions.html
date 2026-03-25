@@ -1,0 +1,35 @@
+<div class="k">
+  {% if ajax.editable %}
+    {% if location.filtered_descriptions.all.count == 0 %}
+      {% translate 'add'|capfirst %}
+    {% else %}
+      {% translate 'edit'|capfirst %}
+    {% endif %}
+  {% endif %}
+  {% if location.filtered_descriptions.all.count <= 1 %}{% translate "description"|capfirst %}{% else %}{% translate "descriptions"|capfirst %}{% endif %}
+</div>
+{% for description in location.filtered_descriptions.all %}
+  <div class="v description">
+    {% if ajax.editable and perms.location.change_location %}
+
+      {% include 'element/reusable_description_form.html' %}
+    {% else %}
+      <div class="description__body">{{ description.text|markdown|safe }}</div>
+    {% endif %}
+    <div class="meta">
+      <span class="muted">{% translate "added on"|capfirst %} {{ description.date_created|date:"M d, Y" }}{% if user.is_authenticated %} {% translate "by"|capfirst %} {{ description.user.get_full_name|default:description.user.username }}, {% translate "visible to" %} {{ description.get_visibility_display }}{% endif %}.</span>
+    </div>
+  </div>
+{% empty %}
+  {% if not ajax.editable %}
+    <div class="v muted">{% translate "no description entered"|capfirst %}</div>
+  {% endif %}
+{% endfor %}
+{% if ajax.editable %}
+  <div class="k">
+    {% translate 'add a description to'|capfirst %} {{ location.name }}
+  </div>
+  <div class="v">
+    {% include 'element/reusable_description_form.html' %}
+  </div>
+{% endif %}

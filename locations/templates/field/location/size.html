@@ -1,0 +1,25 @@
+<div class="k">
+  {% if ajax.editable %}{% translate 'edit'|capfirst %} {% endif %}{% translate "size"|capfirst %}
+  {% include 'element/reusable_edit_button.html' with field='size' %}
+</div>
+<div class="v">
+  {% if ajax.editable and perms.location.change_location %}
+    <form
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'size' %}"
+      data-method="POST"
+      data-body="form"
+      data-map='{"size": "#size"}'
+    >
+      <div class="input-group">
+        <select name="size__code" class="form-select" id="size-select">
+          {% for size in location.available_sizes %}
+            <option value="{{ size.code }}" {% if location.size and location.size.code == size.code %}selected{% endif %}>{{ size.name|upper }} - {% translate size.description|capfirst %}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary"><img src="{% static 'img/bootstrap-icons/floppy.svg' %}"></button>
+    </form>
+  {% else %}
+    {{ location.size.name }} {% if location.size.description %}<span class="text-muted small">({% translate location.size.description %})</span>{% endif %}
+  {% endif %}
+</div>

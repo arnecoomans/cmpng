@@ -1,0 +1,12 @@
+{% if ajax.editable and perms.location.change_location %}
+  <a 
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug field %}"
+    data-method="PATCH"
+    data-body='{"{{ field }}__{{ map_id|default:"slug" }}": "{{ map_value }}", "editable": true}'
+    data-map='{"{{ field }}":"#{{ field }}"}'
+    data-confirm="{% translate 'are you sure you want to delete this?'|capfirst %}"
+  >
+    <i class="bi bi-x"></i>
+  </a>
+{% endif %}

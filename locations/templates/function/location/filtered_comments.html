@@ -1,0 +1,30 @@
+<!-- COMMENTS -->
+{% visibility_choices as vis_choices %}
+{% with comments=location.filtered_comments %}
+<section id="section-comments">
+  <div class="section-head">
+    <h2 class="section-title">
+      {% translate "comments"|capfirst %}
+      <span class="text-muted">({{ comments.count }})</span>
+    </h2>
+  </div>
+
+  <div class="stack">
+    {% for comment in comments %}
+      <div id="comment-{{ comment.id }}">
+        {% include 'object/comment.html' %}
+      </div>
+    {% empty %}
+      <p class="muted">{% translate "no comments yet"|capfirst %}</p>
+    {% endfor %}
+  </div>
+
+  {% include 'element/reusable_form_comment.html' %}
+  {% if not user.is_authenticated %}
+    <p class="muted">
+      <a href="{% url 'login' %}?next={{ request.path }}" class="internal">{% translate "log in to leave a comment"|capfirst %}</a>
+    </p>
+  {% endif %}
+
+</section>
+{% endwith %}

@@ -1,0 +1,10 @@
+{% if user.is_authenticated and perms.locations.change_media %}
+  <button 
+    class="btn btn--ghost" 
+    type="button"
+    data-action="modal"
+    data-url="{% url 'locations:manage_media' location.slug %}"
+    data-title="{% translate 'manage media for'|capfirst %} {{ location.name }}"
+  
+    ><i class="bi bi-images"></i></button>
+{% endif %}

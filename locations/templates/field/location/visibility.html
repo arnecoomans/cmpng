@@ -1,0 +1,25 @@
+<div class="k">
+  {% if ajax.editable %}{% translate 'edit'|capfirst %} {% endif %}{% translate "visibility"|capfirst %}
+  {% include 'element/reusable_edit_button.html' with field='visibility' %}
+</div>
+<div class="v">
+  {% if ajax.editable and user.is_staff %}
+    <form
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'visibility' %}"
+      data-method="POST"
+      data-body="form"
+      data-map='{"visibility": "#visibility"}'
+    >
+      <div class="input-group">
+        <select name="visibility" class="form-select" id="visibility-select">
+          {% for key, value in location.available_visibilities.items %}
+            <option value="{{ key }}" {% if location.visibility == key %}selected{% endif %}>{% translate value|capfirst %}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary"><img src="{% static 'img/bootstrap-icons/floppy.svg' %}"></button>
+    </form>
+  {% else %}
+    {% translate location.get_visibility_display|capfirst %}
+  {% endif %}
+</div>

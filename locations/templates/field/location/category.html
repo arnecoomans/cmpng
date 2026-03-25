@@ -1,0 +1,4 @@
+<div class="v">
+  <a href="{{ category.get_absolute_url }}" class="internal">{{ category.name }}</a>
+  {% include 'element/reusable_delete_button.html' with field='categories' map_id='id' map_value=category.id %}
+</div>

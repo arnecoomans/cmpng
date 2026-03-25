@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'lists'|capfirst %}{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <h1 class="page-title">{% translate 'lists'|capfirst %} <span class="badge badge--muted">{{ lists|length }}</span></h1>
+    </div>
+
+    {% if lists %}
+      <ul class="list-list">
+        {% for lst in lists %}
+          <li class="list-item" style="grid-template-columns: 1fr auto auto;">
+            <a class="list-item__name" href="{% url 'locations:list_detail' lst.slug %}">{{ lst.name }}</a>
+            <span class="list-item__template badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">{{ lst.get_template_display }}</span>
+            <span class="badge badge--muted">{{ lst.items.count }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="hint">{% translate 'no lists found'|capfirst %}.</p>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}

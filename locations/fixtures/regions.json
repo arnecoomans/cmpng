@@ -1,0 +1,1874 @@
+[
+  {
+    "model": "locations.region",
+    "pk": 29,
+    "fields": {
+      "slug": "c",
+      "name": "A Coru\u00f1a",
+      "cached_average_distance_to_center": null,
+      "parent": 28,
+      "date_created": "2023-10-21T11:57:35.868880+00:00",
+      "date_modified": "2023-10-21T11:57:35.868903+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 62,
+    "fields": {
+      "slug": "aa-en-hunze",
+      "name": "Aa en Hunze",
+      "cached_average_distance_to_center": 148.0,
+      "parent": 61,
+      "date_created": "2023-12-17T09:43:38.008178+00:00",
+      "date_modified": "2023-12-17T09:43:38.008224+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 66,
+    "fields": {
+      "slug": "ain",
+      "name": "Ain",
+      "cached_average_distance_to_center": 661.0,
+      "parent": 2,
+      "date_created": "2024-06-01T12:19:29.074682+00:00",
+      "date_modified": "2024-06-01T12:19:29.074728+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 3,
+    "fields": {
+      "slug": "allier",
+      "name": "Allier",
+      "cached_average_distance_to_center": 663.0,
+      "parent": 2,
+      "date_created": "2023-10-20T20:14:02.988087+00:00",
+      "date_modified": "2023-10-20T20:14:02.988124+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 132,
+    "fields": {
+      "slug": "alpes-maritimes",
+      "name": "Alpes-Maritimes",
+      "cached_average_distance_to_center": 927.0,
+      "parent": 25,
+      "date_created": "2026-01-18T14:07:33.345947+00:00",
+      "date_modified": "2026-01-18T14:07:33.345993+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 26,
+    "fields": {
+      "slug": "alpes-de-haute-provence",
+      "name": "Alpes-de-Haute-Provence",
+      "cached_average_distance_to_center": 885.3333333333334,
+      "parent": 25,
+      "date_created": "2023-10-21T11:56:47.865975+00:00",
+      "date_modified": "2023-10-21T11:56:47.866000+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 53,
+    "fields": {
+      "slug": "amsterdam",
+      "name": "Amsterdam",
+      "cached_average_distance_to_center": 35.0,
+      "parent": 41,
+      "date_created": "2023-11-18T14:36:41.772260+00:00",
+      "date_modified": "2023-11-18T14:36:41.772295+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 37,
+    "fields": {
+      "slug": "apeldoorn",
+      "name": "Apeldoorn",
+      "cached_average_distance_to_center": 53.0,
+      "parent": 36,
+      "date_created": "2023-10-21T11:59:04.490408+00:00",
+      "date_modified": "2023-10-21T11:59:04.490432+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 90,
+    "fields": {
+      "slug": "ardeche",
+      "name": "Ard\u00e8che",
+      "cached_average_distance_to_center": 848.75,
+      "parent": 2,
+      "date_created": "2024-12-03T21:40:49.239970+00:00",
+      "date_modified": "2024-12-03T21:40:49.240002+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 91,
+    "fields": {
+      "slug": "ar",
+      "name": "Argentina",
+      "cached_average_distance_to_center": 0.0,
+      "parent": null,
+      "date_created": "2024-12-15T18:54:11.618389+00:00",
+      "date_modified": "2024-12-15T18:54:11.618432+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 81,
+    "fields": {
+      "slug": "arnhem",
+      "name": "Arnhem",
+      "cached_average_distance_to_center": 56.5,
+      "parent": 36,
+      "date_created": "2024-10-31T18:18:56.894106+00:00",
+      "date_modified": "2024-10-31T18:18:56.894143+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 100,
+    "fields": {
+      "slug": "aude",
+      "name": "Aude",
+      "cached_average_distance_to_center": 1008.0,
+      "parent": 21,
+      "date_created": "2025-01-25T15:37:10.065399+00:00",
+      "date_modified": "2025-01-25T15:37:10.065442+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 2,
+    "fields": {
+      "slug": "auvergne-rhone-alpes",
+      "name": "Auvergne-Rh\u00f4ne-Alpes",
+      "cached_average_distance_to_center": 655.1909722222222,
+      "parent": 1,
+      "date_created": "2023-10-20T20:14:02.982291+00:00",
+      "date_modified": "2023-10-20T20:14:02.982335+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 127,
+    "fields": {
+      "slug": "aveyron",
+      "name": "Aveyron",
+      "cached_average_distance_to_center": 855.0,
+      "parent": 21,
+      "date_created": "2026-01-16T08:19:44.557794+00:00",
+      "date_modified": "2026-01-16T08:19:44.557828+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 56,
+    "fields": {
+      "slug": "be",
+      "name": "Belgium",
+      "cached_average_distance_to_center": 102.75,
+      "parent": null,
+      "date_created": "2023-12-17T08:44:08.384782+00:00",
+      "date_modified": "2024-09-15T11:48:35.268264+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 42,
+    "fields": {
+      "slug": "bergen",
+      "name": "Bergen",
+      "cached_average_distance_to_center": 71.0,
+      "parent": 41,
+      "date_created": "2023-10-21T12:00:20.725186+00:00",
+      "date_modified": "2023-10-21T12:00:20.725218+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 109,
+    "fields": {
+      "slug": "bouches-du-rhone",
+      "name": "Bouches-du-Rh\u00f4ne",
+      "cached_average_distance_to_center": 922.0,
+      "parent": 25,
+      "date_created": "2025-05-30T12:50:33.427780+00:00",
+      "date_modified": "2025-05-30T12:50:33.427814+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 8,
+    "fields": {
+      "slug": "bourgogne-franche-comte",
+      "name": "Bourgogne-Franche-Comt\u00e9",
+      "cached_average_distance_to_center": 575.325,
+      "parent": 1,
+      "date_created": "2023-10-20T20:25:26.306220+00:00",
+      "date_modified": "2023-10-20T20:25:26.306253+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 79,
+    "fields": {
+      "slug": "bretagne",
+      "name": "Bretagne",
+      "cached_average_distance_to_center": 810.0,
+      "parent": 1,
+      "date_created": "2024-10-27T18:04:10.321154+00:00",
+      "date_modified": "2024-10-27T18:04:10.321191+00:00",
+      "user": 2
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 108,
+    "fields": {
+      "slug": "bunnik",
+      "name": "Bunnik",
+      "cached_average_distance_to_center": 7.0,
+      "parent": 51,
+      "date_created": "2025-04-02T11:17:09.895998+00:00",
+      "date_modified": "2025-04-02T11:17:09.896045+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 55,
+    "fields": {
+      "slug": "calvados",
+      "name": "Calvados",
+      "cached_average_distance_to_center": 513.0,
+      "parent": 54,
+      "date_created": "2023-12-01T19:04:22.073911+00:00",
+      "date_modified": "2023-12-01T19:04:22.073952+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 119,
+    "fields": {
+      "slug": "ca",
+      "name": "Canada",
+      "cached_average_distance_to_center": 636.75,
+      "parent": null,
+      "date_created": "2025-09-06T18:21:28.987327+00:00",
+      "date_modified": "2025-09-06T18:21:28.987368+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 134,
+    "fields": {
+      "slug": "cantal",
+      "name": "Cantal",
+      "cached_average_distance_to_center": 808.5,
+      "parent": 2,
+      "date_created": "2026-01-31T09:38:07.506122+00:00",
+      "date_modified": "2026-01-31T09:38:07.506153+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 10,
+    "fields": {
+      "slug": "centre-val-de-loire",
+      "name": "Centre-Val de Loire",
+      "cached_average_distance_to_center": 594.8333333333334,
+      "parent": 1,
+      "date_created": "2023-10-20T20:26:04.856291+00:00",
+      "date_modified": "2023-10-20T20:26:04.856320+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 48,
+    "fields": {
+      "slug": "charente-maritime",
+      "name": "Charente-Maritime",
+      "cached_average_distance_to_center": 833.0,
+      "parent": 5,
+      "date_created": "2023-11-15T18:25:24.526897+00:00",
+      "date_modified": "2023-11-15T18:25:24.526935+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 111,
+    "fields": {
+      "slug": "cher",
+      "name": "Cher",
+      "cached_average_distance_to_center": 590.5,
+      "parent": 10,
+      "date_created": "2025-08-08T08:55:32.962456+00:00",
+      "date_modified": "2025-08-08T08:55:32.962494+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 18,
+    "fields": {
+      "slug": "correze",
+      "name": "Corr\u00e8ze",
+      "cached_average_distance_to_center": 785.6666666666666,
+      "parent": 5,
+      "date_created": "2023-10-21T11:52:42.042786+00:00",
+      "date_modified": "2023-10-21T11:52:42.042822+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 46,
+    "fields": {
+      "slug": "creuse",
+      "name": "Creuse",
+      "cached_average_distance_to_center": 703.5,
+      "parent": 5,
+      "date_created": "2023-10-22T06:00:52.067523+00:00",
+      "date_modified": "2023-10-22T06:00:52.067575+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 44,
+    "fields": {
+      "slug": "culemborg",
+      "name": "Culemborg",
+      "cached_average_distance_to_center": 17.0,
+      "parent": 36,
+      "date_created": "2023-10-21T12:04:37.420627+00:00",
+      "date_modified": "2023-10-21T12:04:37.420662+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 87,
+    "fields": {
+      "slug": "cote-dor",
+      "name": "C\u00f4te-d'Or",
+      "cached_average_distance_to_center": 554.8,
+      "parent": 8,
+      "date_created": "2024-12-01T14:55:33.811038+00:00",
+      "date_modified": "2024-12-01T14:55:33.811082+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 103,
+    "fields": {
+      "slug": "den-haag",
+      "name": "Den Haag",
+      "cached_average_distance_to_center": 57.75,
+      "parent": 102,
+      "date_created": "2025-02-23T09:55:10.181451+00:00",
+      "date_modified": "2025-02-23T09:55:10.181500+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 68,
+    "fields": {
+      "slug": "deventer",
+      "name": "Deventer",
+      "cached_average_distance_to_center": 74.0,
+      "parent": 59,
+      "date_created": "2024-06-13T15:00:31.523260+00:00",
+      "date_modified": "2024-06-13T15:00:31.523321+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 77,
+    "fields": {
+      "slug": "district-de-la-gruyere",
+      "name": "District de la Gruy\u00e8re",
+      "cached_average_distance_to_center": null,
+      "parent": 1,
+      "date_created": "2024-10-13T08:56:00.538410+00:00",
+      "date_modified": "2024-10-13T08:56:00.538445+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 6,
+    "fields": {
+      "slug": "dordogne",
+      "name": "Dordogne",
+      "cached_average_distance_to_center": 852.9285714285714,
+      "parent": 5,
+      "date_created": "2023-10-20T20:21:55.589684+00:00",
+      "date_modified": "2023-10-20T20:21:55.589712+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 43,
+    "fields": {
+      "slug": "drechterland",
+      "name": "Drechterland",
+      "cached_average_distance_to_center": 65.0,
+      "parent": 41,
+      "date_created": "2023-10-21T12:00:45.271343+00:00",
+      "date_modified": "2023-10-21T12:00:45.271375+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 61,
+    "fields": {
+      "slug": "dr",
+      "name": "Drenthe",
+      "cached_average_distance_to_center": 145.5,
+      "parent": 35,
+      "date_created": "2023-12-17T09:43:37.997642+00:00",
+      "date_modified": "2023-12-17T09:43:37.997689+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 4,
+    "fields": {
+      "slug": "drome",
+      "name": "Dr\u00f4me",
+      "cached_average_distance_to_center": 819.5,
+      "parent": 2,
+      "date_created": "2023-10-20T20:21:22.661260+00:00",
+      "date_modified": "2023-10-20T20:21:22.661300+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 110,
+    "fields": {
+      "slug": "ede",
+      "name": "Ede",
+      "cached_average_distance_to_center": 48.0,
+      "parent": 36,
+      "date_created": "2025-06-09T07:44:16.135428+00:00",
+      "date_modified": "2025-06-09T07:44:16.135463+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 122,
+    "fields": {
+      "slug": "eindhoven",
+      "name": "Eindhoven",
+      "cached_average_distance_to_center": 75.0,
+      "parent": 106,
+      "date_created": "2025-09-24T18:29:02.522485+00:00",
+      "date_modified": "2025-09-24T18:29:02.522524+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 75,
+    "fields": {
+      "slug": "emmen",
+      "name": "Emmen",
+      "cached_average_distance_to_center": 143.0,
+      "parent": 61,
+      "date_created": "2024-08-24T10:03:00.870528+00:00",
+      "date_modified": "2024-08-24T10:03:00.870559+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 47,
+    "fields": {
+      "slug": "enkhuizen",
+      "name": "Enkhuizen",
+      "cached_average_distance_to_center": 69.5,
+      "parent": 41,
+      "date_created": "2023-11-05T20:00:15.823578+00:00",
+      "date_modified": "2023-11-05T20:00:15.823612+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 31,
+    "fields": {
+      "slug": "essonne",
+      "name": "Essonne",
+      "cached_average_distance_to_center": 428.0,
+      "parent": 98,
+      "date_created": "2023-10-21T11:58:12.529097+00:00",
+      "date_modified": "2026-02-28T18:51:00.756868+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 114,
+    "fields": {
+      "slug": "eure",
+      "name": "Eure",
+      "cached_average_distance_to_center": null,
+      "parent": 113,
+      "date_created": "2025-08-31T11:13:53.872771+00:00",
+      "date_modified": "2025-08-31T11:13:53.872816+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 80,
+    "fields": {
+      "slug": "finistere",
+      "name": "Finist\u00e8re",
+      "cached_average_distance_to_center": 810.0,
+      "parent": 79,
+      "date_created": "2024-10-27T18:04:10.328392+00:00",
+      "date_modified": "2024-10-27T18:04:10.328430+00:00",
+      "user": 2
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 49,
+    "fields": {
+      "slug": "fl",
+      "name": "Flevoland",
+      "cached_average_distance_to_center": 45.0,
+      "parent": 35,
+      "date_created": "2023-11-18T14:33:57.675223+00:00",
+      "date_modified": "2023-11-18T14:33:57.675261+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 1,
+    "fields": {
+      "slug": "fr",
+      "name": "France",
+      "cached_average_distance_to_center": 528.0131557742144,
+      "parent": null,
+      "date_created": "2023-10-20T20:14:02.975061+00:00",
+      "date_modified": "2025-09-10T12:56:19.989100+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 28,
+    "fields": {
+      "slug": "ga",
+      "name": "Galicia",
+      "cached_average_distance_to_center": 0.0,
+      "parent": 27,
+      "date_created": "2023-10-21T11:57:35.863457+00:00",
+      "date_modified": "2023-10-21T11:57:35.863486+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 96,
+    "fields": {
+      "slug": "gard",
+      "name": "Gard",
+      "cached_average_distance_to_center": 904.5833333333334,
+      "parent": 21,
+      "date_created": "2025-01-03T20:43:46.718686+00:00",
+      "date_modified": "2025-01-03T20:43:46.718730+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 36,
+    "fields": {
+      "slug": "ge",
+      "name": "Gelderland",
+      "cached_average_distance_to_center": 54.166666666666664,
+      "parent": 35,
+      "date_created": "2023-10-21T11:59:04.483827+00:00",
+      "date_modified": "2023-10-21T11:59:04.483853+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 116,
+    "fields": {
+      "slug": "de",
+      "name": "Germany",
+      "cached_average_distance_to_center": 297.0,
+      "parent": null,
+      "date_created": "2025-09-04T14:28:50.680988+00:00",
+      "date_modified": "2025-09-10T12:56:37.182996+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 115,
+    "fields": {
+      "slug": "gers",
+      "name": "Gers",
+      "cached_average_distance_to_center": 968.0,
+      "parent": 21,
+      "date_created": "2025-09-01T14:18:28.974107+00:00",
+      "date_modified": "2025-09-01T14:18:28.974156+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 133,
+    "fields": {
+      "slug": "gironde",
+      "name": "Gironde",
+      "cached_average_distance_to_center": 863.0,
+      "parent": 5,
+      "date_created": "2026-01-22T17:49:12.402246+00:00",
+      "date_modified": "2026-01-22T17:49:12.402286+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 13,
+    "fields": {
+      "slug": "grand-est",
+      "name": "Grand Est",
+      "cached_average_distance_to_center": 420.08000000000004,
+      "parent": 1,
+      "date_created": "2023-10-20T20:30:25.401396+00:00",
+      "date_modified": "2023-10-20T20:30:25.401438+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 14,
+    "fields": {
+      "slug": "haut-rhin",
+      "name": "Haut-Rhin",
+      "cached_average_distance_to_center": 481.5,
+      "parent": 13,
+      "date_created": "2023-10-20T20:30:25.414072+00:00",
+      "date_modified": "2023-10-20T20:30:25.414119+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 73,
+    "fields": {
+      "slug": "haute-marne",
+      "name": "Haute-Marne",
+      "cached_average_distance_to_center": 440.5,
+      "parent": 13,
+      "date_created": "2024-06-23T07:39:07.110415+00:00",
+      "date_modified": "2024-06-23T07:39:07.110452+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 19,
+    "fields": {
+      "slug": "haute-vienne",
+      "name": "Haute-Vienne",
+      "cached_average_distance_to_center": 783.0,
+      "parent": 5,
+      "date_created": "2023-10-21T11:53:04.712376+00:00",
+      "date_modified": "2023-10-21T11:53:04.712410+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 45,
+    "fields": {
+      "slug": "hautes-alpes",
+      "name": "Hautes-Alpes",
+      "cached_average_distance_to_center": 825.0,
+      "parent": 25,
+      "date_created": "2023-10-21T12:11:13.137565+00:00",
+      "date_modified": "2023-10-21T12:11:13.137602+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 88,
+    "fields": {
+      "slug": "hauts-de-france",
+      "name": "Hauts-de-France",
+      "cached_average_distance_to_center": 0.0,
+      "parent": 1,
+      "date_created": "2024-12-03T21:40:10.348064+00:00",
+      "date_modified": "2024-12-03T21:40:10.348139+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 104,
+    "fields": {
+      "slug": "hilversum",
+      "name": "Hilversum",
+      "cached_average_distance_to_center": 16.0,
+      "parent": 41,
+      "date_created": "2025-02-23T09:59:57.162933+00:00",
+      "date_modified": "2025-02-23T09:59:57.162975+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 82,
+    "fields": {
+      "slug": "hoorn",
+      "name": "Hoorn",
+      "cached_average_distance_to_center": 61.0,
+      "parent": 41,
+      "date_created": "2024-10-31T18:21:05.920248+00:00",
+      "date_modified": "2024-10-31T18:21:05.920279+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 124,
+    "fields": {
+      "slug": "houten",
+      "name": "Houten",
+      "cached_average_distance_to_center": 12.0,
+      "parent": 51,
+      "date_created": "2025-10-04T08:30:02.746608+00:00",
+      "date_modified": "2025-10-04T08:30:02.746662+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 22,
+    "fields": {
+      "slug": "herault",
+      "name": "H\u00e9rault",
+      "cached_average_distance_to_center": 936.8571428571429,
+      "parent": 21,
+      "date_created": "2023-10-21T11:54:06.431500+00:00",
+      "date_modified": "2023-10-21T11:54:06.431530+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 11,
+    "fields": {
+      "slug": "indre",
+      "name": "Indre",
+      "cached_average_distance_to_center": 666.0,
+      "parent": 10,
+      "date_created": "2023-10-20T20:26:04.864798+00:00",
+      "date_modified": "2023-10-20T20:26:04.864823+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 94,
+    "fields": {
+      "slug": "isere",
+      "name": "Is\u00e8re",
+      "cached_average_distance_to_center": null,
+      "parent": 2,
+      "date_created": "2024-12-31T11:55:11.330843+00:00",
+      "date_modified": "2024-12-31T11:55:11.330901+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 32,
+    "fields": {
+      "slug": "it",
+      "name": "Italy",
+      "cached_average_distance_to_center": 1107.0,
+      "parent": null,
+      "date_created": "2023-10-21T11:58:39.164772+00:00",
+      "date_modified": "2025-09-10T12:56:31.798566+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 84,
+    "fields": {
+      "slug": "jura",
+      "name": "Jura",
+      "cached_average_distance_to_center": 567.0,
+      "parent": 8,
+      "date_created": "2024-11-01T16:17:57.497920+00:00",
+      "date_modified": "2024-11-01T16:17:57.497949+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 121,
+    "fields": {
+      "slug": "laurentides",
+      "name": "Laurentides",
+      "cached_average_distance_to_center": null,
+      "parent": 120,
+      "date_created": "2025-09-06T18:21:29.005143+00:00",
+      "date_modified": "2025-09-06T18:21:29.005177+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 50,
+    "fields": {
+      "slug": "lelystad",
+      "name": "Lelystad",
+      "cached_average_distance_to_center": 51.0,
+      "parent": 49,
+      "date_created": "2023-11-18T14:33:57.682202+00:00",
+      "date_modified": "2023-11-18T14:33:57.682239+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 39,
+    "fields": {
+      "slug": "li",
+      "name": "Limburg",
+      "cached_average_distance_to_center": 159.33333333333334,
+      "parent": 35,
+      "date_created": "2023-10-21T11:59:59.822332+00:00",
+      "date_modified": "2023-10-21T11:59:59.822364+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 126,
+    "fields": {
+      "slug": "lg",
+      "name": "Li\u00e8ge",
+      "cached_average_distance_to_center": null,
+      "parent": 125,
+      "date_created": "2025-10-20T11:02:41.175904+00:00",
+      "date_modified": "2025-10-20T11:02:41.175952+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 38,
+    "fields": {
+      "slug": "lochem",
+      "name": "Lochem",
+      "cached_average_distance_to_center": 85.0,
+      "parent": 36,
+      "date_created": "2023-10-21T11:59:27.899423+00:00",
+      "date_modified": "2023-10-21T11:59:27.899457+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 12,
+    "fields": {
+      "slug": "loiret",
+      "name": "Loiret",
+      "cached_average_distance_to_center": 528.0,
+      "parent": 10,
+      "date_created": "2023-10-20T20:27:01.121537+00:00",
+      "date_modified": "2023-10-20T20:27:01.121573+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 105,
+    "fields": {
+      "slug": "losser",
+      "name": "Losser",
+      "cached_average_distance_to_center": 133.0,
+      "parent": 59,
+      "date_created": "2025-02-23T10:02:01.619295+00:00",
+      "date_modified": "2025-02-23T10:02:01.619366+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 23,
+    "fields": {
+      "slug": "lot",
+      "name": "Lot",
+      "cached_average_distance_to_center": 868.95,
+      "parent": 21,
+      "date_created": "2023-10-21T11:54:31.171573+00:00",
+      "date_modified": "2023-10-21T11:54:31.171615+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 20,
+    "fields": {
+      "slug": "lot-et-garonne",
+      "name": "Lot-et-Garonne",
+      "cached_average_distance_to_center": 905.6666666666666,
+      "parent": 5,
+      "date_created": "2023-10-21T11:53:27.487852+00:00",
+      "date_modified": "2023-10-21T11:53:27.487882+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 58,
+    "fields": {
+      "slug": "lx",
+      "name": "Luxemburg",
+      "cached_average_distance_to_center": 214.0,
+      "parent": 57,
+      "date_created": "2023-12-17T08:44:08.410915+00:00",
+      "date_modified": "2023-12-17T08:44:08.410982+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 135,
+    "fields": {
+      "slug": "mb",
+      "name": "Manitoba",
+      "cached_average_distance_to_center": 810.0,
+      "parent": 119,
+      "date_created": "2026-02-01T11:46:26.486370+00:00",
+      "date_modified": "2026-02-01T11:46:26.486412+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 33,
+    "fields": {
+      "slug": "marche",
+      "name": "Marche",
+      "cached_average_distance_to_center": 1107.0,
+      "parent": 32,
+      "date_created": "2023-10-21T11:58:39.172193+00:00",
+      "date_modified": "2023-10-21T11:58:39.172226+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 72,
+    "fields": {
+      "slug": "meurthe-et-moselle",
+      "name": "Meurthe-et-Moselle",
+      "cached_average_distance_to_center": 391.0,
+      "parent": 13,
+      "date_created": "2024-06-23T06:46:08.309641+00:00",
+      "date_modified": "2024-06-23T06:46:08.309673+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 142,
+    "fields": {
+      "slug": "montferland",
+      "name": "Montferland",
+      "cached_average_distance_to_center": 81.0,
+      "parent": 36,
+      "date_created": "2026-02-27T14:19:21.509916+00:00",
+      "date_modified": "2026-02-27T14:19:21.509950+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 131,
+    "fields": {
+      "slug": "monteregie",
+      "name": "Mont\u00e9r\u00e9gie",
+      "cached_average_distance_to_center": 927.0,
+      "parent": 120,
+      "date_created": "2026-01-18T14:05:32.076949+00:00",
+      "date_modified": "2026-01-18T14:05:32.076989+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 71,
+    "fields": {
+      "slug": "moselle",
+      "name": "Moselle",
+      "cached_average_distance_to_center": 328.0,
+      "parent": 13,
+      "date_created": "2024-06-23T06:38:38.428094+00:00",
+      "date_modified": "2024-06-23T06:38:38.428127+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 97,
+    "fields": {
+      "slug": "na",
+      "name": "Namen",
+      "cached_average_distance_to_center": 197.0,
+      "parent": 57,
+      "date_created": "2025-01-20T09:34:34.817973+00:00",
+      "date_modified": "2025-01-20T09:34:34.818012+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 35,
+    "fields": {
+      "slug": "nl",
+      "name": "Netherlands",
+      "cached_average_distance_to_center": 74.87654320987654,
+      "parent": null,
+      "date_created": "2023-10-21T11:59:04.477335+00:00",
+      "date_modified": "2024-09-15T11:48:52.173127+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 138,
+    "fields": {
+      "slug": "nj",
+      "name": "New Jersey",
+      "cached_average_distance_to_center": 56.0,
+      "parent": 137,
+      "date_created": "2026-02-03T07:56:33.630677+00:00",
+      "date_modified": "2026-02-03T07:56:33.630711+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 63,
+    "fields": {
+      "slug": "nievre",
+      "name": "Ni\u00e8vre",
+      "cached_average_distance_to_center": 582.0,
+      "parent": 8,
+      "date_created": "2023-12-17T09:58:19.956776+00:00",
+      "date_modified": "2023-12-17T09:58:19.956815+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 106,
+    "fields": {
+      "slug": "nb",
+      "name": "Noord-Brabant",
+      "cached_average_distance_to_center": 44.666666666666664,
+      "parent": 35,
+      "date_created": "2025-03-22T09:04:52.829851+00:00",
+      "date_modified": "2025-03-22T09:04:52.829893+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 41,
+    "fields": {
+      "slug": "nh",
+      "name": "Noord-Holland",
+      "cached_average_distance_to_center": 52.5,
+      "parent": 35,
+      "date_created": "2023-10-21T12:00:20.717427+00:00",
+      "date_modified": "2023-10-21T12:00:20.717468+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 113,
+    "fields": {
+      "slug": "normandie",
+      "name": "Normandie",
+      "cached_average_distance_to_center": 0.0,
+      "parent": 1,
+      "date_created": "2025-08-31T11:13:53.857275+00:00",
+      "date_modified": "2025-08-31T11:13:53.857306+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 54,
+    "fields": {
+      "slug": "normandy",
+      "name": "Normandy",
+      "cached_average_distance_to_center": 513.0,
+      "parent": 1,
+      "date_created": "2023-12-01T19:04:22.064956+00:00",
+      "date_modified": "2023-12-01T19:04:22.064997+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 5,
+    "fields": {
+      "slug": "nouvelle-aquitaine",
+      "name": "Nouvelle-Aquitaine",
+      "cached_average_distance_to_center": 818.1088435374149,
+      "parent": 1,
+      "date_created": "2023-10-20T20:21:55.584830+00:00",
+      "date_modified": "2023-10-20T20:21:55.584862+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 21,
+    "fields": {
+      "slug": "occitanie",
+      "name": "Occitanie",
+      "cached_average_distance_to_center": 923.6738095238095,
+      "parent": 1,
+      "date_created": "2023-10-21T11:54:06.426255+00:00",
+      "date_modified": "2023-10-21T11:54:06.426291+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 95,
+    "fields": {
+      "slug": "ommen",
+      "name": "Ommen",
+      "cached_average_distance_to_center": 106.0,
+      "parent": 59,
+      "date_created": "2024-12-31T14:32:28.915169+00:00",
+      "date_modified": "2024-12-31T14:32:28.915216+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 141,
+    "fields": {
+      "slug": "oosterhout",
+      "name": "Oosterhout",
+      "cached_average_distance_to_center": null,
+      "parent": 106,
+      "date_created": "2026-02-23T18:22:48.090611+00:00",
+      "date_modified": "2026-02-23T18:22:48.090643+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 59,
+    "fields": {
+      "slug": "ov",
+      "name": "Overijssel",
+      "cached_average_distance_to_center": 101.25,
+      "parent": 35,
+      "date_created": "2023-12-17T09:41:11.301728+00:00",
+      "date_modified": "2023-12-17T09:41:11.301785+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 99,
+    "fields": {
+      "slug": "paris",
+      "name": "Paris",
+      "cached_average_distance_to_center": 411.0,
+      "parent": 98,
+      "date_created": "2025-01-24T11:33:08.987061+00:00",
+      "date_modified": "2025-01-24T11:33:08.987108+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 89,
+    "fields": {
+      "slug": "pas-de-calais",
+      "name": "Pas-de-Calais",
+      "cached_average_distance_to_center": null,
+      "parent": 88,
+      "date_created": "2024-12-03T21:40:10.365384+00:00",
+      "date_modified": "2024-12-03T21:40:10.365432+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 139,
+    "fields": {
+      "slug": "passaic-county",
+      "name": "Passaic County",
+      "cached_average_distance_to_center": 56.0,
+      "parent": 138,
+      "date_created": "2026-02-03T07:56:33.638856+00:00",
+      "date_modified": "2026-02-03T07:56:33.638889+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 16,
+    "fields": {
+      "slug": "pays-de-la-loire",
+      "name": "Pays de la Loire",
+      "cached_average_distance_to_center": 766.75,
+      "parent": 1,
+      "date_created": "2023-10-21T11:48:15.087850+00:00",
+      "date_modified": "2023-10-21T11:48:15.087885+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 143,
+    "fields": {
+      "slug": "pa",
+      "name": "Pennsylvania",
+      "cached_average_distance_to_center": 81.0,
+      "parent": 137,
+      "date_created": "2026-02-28T10:01:01.319850+00:00",
+      "date_modified": "2026-02-28T10:01:01.319927+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 144,
+    "fields": {
+      "slug": "philadelphia-county",
+      "name": "Philadelphia County",
+      "cached_average_distance_to_center": 81.0,
+      "parent": 143,
+      "date_created": "2026-02-28T10:01:01.331548+00:00",
+      "date_modified": "2026-02-28T10:01:01.331601+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 25,
+    "fields": {
+      "slug": "provence-alpes-cote-dazur",
+      "name": "Provence-Alpes-C\u00f4te d'Azur",
+      "cached_average_distance_to_center": 904.2222222222222,
+      "parent": 1,
+      "date_created": "2023-10-21T11:56:47.857325+00:00",
+      "date_modified": "2023-10-21T11:56:47.857352+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 34,
+    "fields": {
+      "slug": "pu",
+      "name": "Provincia di Pesaro e Urbino",
+      "cached_average_distance_to_center": 1107.0,
+      "parent": 33,
+      "date_created": "2023-10-21T11:58:39.181237+00:00",
+      "date_modified": "2023-10-21T11:58:39.181268+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 145,
+    "fields": {
+      "slug": "purmerend",
+      "name": "Purmerend",
+      "cached_average_distance_to_center": 50.0,
+      "parent": 41,
+      "date_created": "2026-03-06T08:28:11.624885+00:00",
+      "date_modified": "2026-03-06T08:28:11.624934+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 7,
+    "fields": {
+      "slug": "puy-de-dome",
+      "name": "Puy-de-D\u00f4me",
+      "cached_average_distance_to_center": 712.7777777777778,
+      "parent": 2,
+      "date_created": "2023-10-20T20:22:36.367294+00:00",
+      "date_modified": "2023-10-20T20:22:36.367351+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 120,
+    "fields": {
+      "slug": "qc",
+      "name": "Qu\u00e9bec",
+      "cached_average_distance_to_center": 463.5,
+      "parent": 119,
+      "date_created": "2025-09-06T18:21:28.995019+00:00",
+      "date_modified": "2025-09-06T18:21:28.995063+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 117,
+    "fields": {
+      "slug": "rp",
+      "name": "Rheinland-Pfalz",
+      "cached_average_distance_to_center": 297.0,
+      "parent": 116,
+      "date_created": "2025-09-04T14:28:50.693506+00:00",
+      "date_modified": "2025-09-04T14:28:50.693552+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 74,
+    "fields": {
+      "slug": "rhenen",
+      "name": "Rhenen",
+      "cached_average_distance_to_center": 34.0,
+      "parent": 51,
+      "date_created": "2024-08-24T10:01:18.395371+00:00",
+      "date_modified": "2024-08-24T10:01:18.395402+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 60,
+    "fields": {
+      "slug": "rijssen-holten",
+      "name": "Rijssen-Holten",
+      "cached_average_distance_to_center": 92.0,
+      "parent": 59,
+      "date_created": "2023-12-17T09:41:11.314626+00:00",
+      "date_modified": "2023-12-17T09:41:11.314697+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 65,
+    "fields": {
+      "slug": "savoie",
+      "name": "Savoie",
+      "cached_average_distance_to_center": 728.0,
+      "parent": 2,
+      "date_created": "2024-06-01T12:17:55.190753+00:00",
+      "date_modified": "2024-06-01T12:17:55.190792+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 9,
+    "fields": {
+      "slug": "saone-et-loire",
+      "name": "Sa\u00f4ne-et-Loire",
+      "cached_average_distance_to_center": 597.5,
+      "parent": 8,
+      "date_created": "2023-10-20T20:25:26.311241+00:00",
+      "date_modified": "2023-10-20T20:25:26.311272+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 64,
+    "fields": {
+      "slug": "seine-et-marne",
+      "name": "Seine-et-Marne",
+      "cached_average_distance_to_center": 453.0,
+      "parent": 98,
+      "date_created": "2024-01-28T12:49:24.444345+00:00",
+      "date_modified": "2026-02-24T16:57:55.646735+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 129,
+    "fields": {
+      "slug": "sierre",
+      "name": "Sierre",
+      "cached_average_distance_to_center": 681.0,
+      "parent": 128,
+      "date_created": "2026-01-16T08:52:24.769653+00:00",
+      "date_modified": "2026-01-16T08:52:24.769687+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 52,
+    "fields": {
+      "slug": "soest",
+      "name": "Soest",
+      "cached_average_distance_to_center": 11.0,
+      "parent": 51,
+      "date_created": "2023-11-18T14:35:34.089411+00:00",
+      "date_modified": "2023-11-18T14:35:34.089446+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 27,
+    "fields": {
+      "slug": "es",
+      "name": "Spain",
+      "cached_average_distance_to_center": 0.0,
+      "parent": null,
+      "date_created": "2023-10-21T11:57:35.855207+00:00",
+      "date_modified": "2024-09-15T11:49:06.992827+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 78,
+    "fields": {
+      "slug": "stichtse-vecht",
+      "name": "Stichtse Vecht",
+      "cached_average_distance_to_center": 7.0,
+      "parent": 51,
+      "date_created": "2024-10-14T08:31:37.522686+00:00",
+      "date_modified": "2024-10-14T08:31:37.522714+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 76,
+    "fields": {
+      "slug": "ch",
+      "name": "Switzerland",
+      "cached_average_distance_to_center": 681.0,
+      "parent": null,
+      "date_created": "2024-10-13T08:56:00.531013+00:00",
+      "date_modified": "2024-10-13T08:56:00.531053+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 130,
+    "fields": {
+      "slug": "tarn",
+      "name": "Tarn",
+      "cached_average_distance_to_center": 934.0,
+      "parent": 21,
+      "date_created": "2026-01-17T10:21:02.233100+00:00",
+      "date_modified": "2026-01-17T10:21:02.233187+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 24,
+    "fields": {
+      "slug": "tarn-et-garonne",
+      "name": "Tarn-et-Garonne",
+      "cached_average_distance_to_center": 914.0,
+      "parent": 21,
+      "date_created": "2023-10-21T11:56:26.964792+00:00",
+      "date_modified": "2023-10-21T11:56:26.964824+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 136,
+    "fields": {
+      "slug": "the-pas",
+      "name": "The Pas",
+      "cached_average_distance_to_center": 810.0,
+      "parent": 135,
+      "date_created": "2026-02-01T11:46:26.498066+00:00",
+      "date_modified": "2026-02-01T11:46:26.498273+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 92,
+    "fields": {
+      "slug": "tierra-del-fuego-province",
+      "name": "Tierra del Fuego Province",
+      "cached_average_distance_to_center": 0.0,
+      "parent": 91,
+      "date_created": "2024-12-15T18:54:11.628621+00:00",
+      "date_modified": "2024-12-15T18:54:11.628697+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 107,
+    "fields": {
+      "slug": "tilburg",
+      "name": "Tilburg",
+      "cached_average_distance_to_center": 59.0,
+      "parent": 106,
+      "date_created": "2025-03-22T09:04:52.838039+00:00",
+      "date_modified": "2025-03-22T09:04:52.838077+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 118,
+    "fields": {
+      "slug": "trier-saarburg",
+      "name": "Trier-Saarburg",
+      "cached_average_distance_to_center": 297.0,
+      "parent": 117,
+      "date_created": "2025-09-04T14:54:20.177176+00:00",
+      "date_modified": "2025-09-04T14:54:20.177213+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 137,
+    "fields": {
+      "slug": "us",
+      "name": "United States",
+      "cached_average_distance_to_center": 68.5,
+      "parent": null,
+      "date_created": "2026-02-03T07:56:33.622188+00:00",
+      "date_modified": "2026-02-03T07:56:33.622238+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 93,
+    "fields": {
+      "slug": "ushuaia-department",
+      "name": "Ushuaia Department",
+      "cached_average_distance_to_center": null,
+      "parent": 92,
+      "date_created": "2024-12-15T18:54:11.636741+00:00",
+      "date_modified": "2024-12-15T18:54:11.636789+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 51,
+    "fields": {
+      "slug": "ut",
+      "name": "Utrecht",
+      "cached_average_distance_to_center": 13.722222222222221,
+      "parent": 35,
+      "date_created": "2023-11-18T14:35:34.082559+00:00",
+      "date_modified": "2023-11-18T14:35:34.082596+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 69,
+    "fields": {
+      "slug": "utrecht",
+      "name": "Utrecht",
+      "cached_average_distance_to_center": 3.5,
+      "parent": 51,
+      "date_created": "2024-06-18T10:04:02.527160+00:00",
+      "date_modified": "2024-06-18T10:04:02.527209+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 67,
+    "fields": {
+      "slug": "utrechtse-heuvelrug",
+      "name": "Utrechtse Heuvelrug",
+      "cached_average_distance_to_center": 21.0,
+      "parent": 51,
+      "date_created": "2024-06-02T17:32:22.799660+00:00",
+      "date_modified": "2024-06-02T17:32:22.799699+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 40,
+    "fields": {
+      "slug": "vaals",
+      "name": "Vaals",
+      "cached_average_distance_to_center": 159.33333333333334,
+      "parent": 39,
+      "date_created": "2023-10-21T11:59:59.827597+00:00",
+      "date_modified": "2023-10-21T11:59:59.827625+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 128,
+    "fields": {
+      "slug": "vs",
+      "name": "Valais",
+      "cached_average_distance_to_center": 681.0,
+      "parent": 76,
+      "date_created": "2026-01-16T08:52:24.761094+00:00",
+      "date_modified": "2026-01-16T08:52:24.761195+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 101,
+    "fields": {
+      "slug": "var",
+      "name": "Var",
+      "cached_average_distance_to_center": 970.5,
+      "parent": 25,
+      "date_created": "2025-01-29T12:59:50.969785+00:00",
+      "date_modified": "2025-01-29T12:59:50.969831+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 112,
+    "fields": {
+      "slug": "vaucluse",
+      "name": "Vaucluse",
+      "cached_average_distance_to_center": 895.5,
+      "parent": 25,
+      "date_created": "2025-08-30T10:32:33.505381+00:00",
+      "date_modified": "2025-08-30T10:32:33.505425+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 123,
+    "fields": {
+      "slug": "veenendaal",
+      "name": "Veenendaal",
+      "cached_average_distance_to_center": 28.0,
+      "parent": 51,
+      "date_created": "2025-10-04T08:21:35.533330+00:00",
+      "date_modified": "2025-10-04T08:21:35.533368+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 17,
+    "fields": {
+      "slug": "vendee",
+      "name": "Vend\u00e9e",
+      "cached_average_distance_to_center": 766.75,
+      "parent": 16,
+      "date_created": "2023-10-21T11:48:15.093432+00:00",
+      "date_modified": "2023-10-21T11:48:15.093464+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 83,
+    "fields": {
+      "slug": "voorst",
+      "name": "Voorst",
+      "cached_average_distance_to_center": 68.0,
+      "parent": 36,
+      "date_created": "2024-10-31T18:22:22.084882+00:00",
+      "date_modified": "2024-10-31T18:22:22.084915+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 15,
+    "fields": {
+      "slug": "vosges",
+      "name": "Vosges",
+      "cached_average_distance_to_center": 459.4,
+      "parent": 13,
+      "date_created": "2023-10-21T11:47:42.757531+00:00",
+      "date_modified": "2023-10-21T11:47:42.757561+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 57,
+    "fields": {
+      "slug": "waals-gewest",
+      "name": "Waals Gewest",
+      "cached_average_distance_to_center": 205.5,
+      "parent": 56,
+      "date_created": "2023-12-17T08:44:08.403379+00:00",
+      "date_modified": "2023-12-17T08:44:08.403427+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 125,
+    "fields": {
+      "slug": "wallonia",
+      "name": "Wallonia",
+      "cached_average_distance_to_center": 0.0,
+      "parent": 56,
+      "date_created": "2025-10-20T11:02:41.165682+00:00",
+      "date_modified": "2025-10-20T11:02:41.165720+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 70,
+    "fields": {
+      "slug": "west-betuwe",
+      "name": "West Betuwe",
+      "cached_average_distance_to_center": 24.0,
+      "parent": 36,
+      "date_created": "2024-06-18T10:05:15.131117+00:00",
+      "date_modified": "2024-06-18T10:05:15.131166+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 86,
+    "fields": {
+      "slug": "wijchen",
+      "name": "Wijchen",
+      "cached_average_distance_to_center": 55.0,
+      "parent": 36,
+      "date_created": "2024-11-09T12:44:59.052997+00:00",
+      "date_modified": "2024-11-09T12:44:59.053028+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 85,
+    "fields": {
+      "slug": "zeewolde",
+      "name": "Zeewolde",
+      "cached_average_distance_to_center": 39.0,
+      "parent": 49,
+      "date_created": "2024-11-09T12:36:22.013366+00:00",
+      "date_modified": "2024-11-09T12:36:22.013413+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 140,
+    "fields": {
+      "slug": "zeist",
+      "name": "Zeist",
+      "cached_average_distance_to_center": null,
+      "parent": 51,
+      "date_created": "2026-02-08T13:37:37.784339+00:00",
+      "date_modified": "2026-02-08T13:37:37.784379+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 102,
+    "fields": {
+      "slug": "zh",
+      "name": "Zuid-Holland",
+      "cached_average_distance_to_center": 57.75,
+      "parent": 35,
+      "date_created": "2025-02-23T09:55:10.171063+00:00",
+      "date_modified": "2025-02-23T09:55:10.171109+00:00",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.region",
+    "pk": 98,
+    "fields": {
+      "slug": "ile-de-france",
+      "name": "\u00cele-de-France",
+      "cached_average_distance_to_center": 411.0,
+      "parent": 1,
+      "date_created": "2025-01-24T11:33:08.976137+00:00",
+      "date_modified": "2025-01-24T11:33:08.976183+00:00",
+      "user": 1
+    }
+  }
+]

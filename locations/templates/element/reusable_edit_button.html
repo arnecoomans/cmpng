@@ -1,0 +1,10 @@
+{% if user.is_authenticated and perms.locations.change_location and perms.locations.change_links %}
+  <button class="btn-edit" 
+    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% if ajax.editable %}{% translate 'stop editing'|capfirst %}{% else %}{% translate 'edit'|capfirst %}{% endif %} {% translate field_name|default:field|capfirst %}"
+    data-action data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug field %}"
+    {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+    data-map='{"{{ field }}": "#{{ field }}"}'
+  >
+    <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+  </button>
+{% endif %}

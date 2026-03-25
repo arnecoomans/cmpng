@@ -1,0 +1,114 @@
+[
+  {
+    "model": "locations.size",
+    "pk": 1,
+    "fields": {
+      "token": "size_xxs_01",
+      "status": "p",
+      "code": "xxs",
+      "name": "XXS",
+      "description": "1-10 camping spots",
+      "order": 1,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 2,
+    "fields": {
+      "token": "size_xs_002",
+      "status": "p",
+      "code": "xs",
+      "name": "XS",
+      "description": "10-25 camping spots",
+      "order": 2,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 3,
+    "fields": {
+      "token": "size_s_0003",
+      "status": "p",
+      "code": "s",
+      "name": "S",
+      "description": "25-50 camping spots",
+      "order": 3,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 4,
+    "fields": {
+      "token": "size_m_0004",
+      "status": "p",
+      "code": "m",
+      "name": "M",
+      "description": "50-100 camping spots",
+      "order": 4,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 5,
+    "fields": {
+      "token": "size_l_0005",
+      "status": "p",
+      "code": "l",
+      "name": "L",
+      "description": "100-150 camping spots",
+      "order": 5,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 6,
+    "fields": {
+      "token": "size_xl_006",
+      "status": "p",
+      "code": "xl",
+      "name": "XL",
+      "description": "150-250 camping spots",
+      "order": 6,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "locations.size",
+    "pk": 7,
+    "fields": {
+      "token": "size_xxl_07",
+      "status": "p",
+      "code": "xxl",
+      "name": "XXL",
+      "description": "250+ camping spots",
+      "order": 7,
+      "categories": [2],
+      "date_created": "2026-02-28T12:00:00Z",
+      "date_modified": "2026-02-28T12:00:00Z",
+      "user": 1
+    }
+  }
+]

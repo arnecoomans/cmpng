@@ -1,0 +1,72 @@
+<div class="modal__body">
+  {% if location_lists %}
+    <section class="modal-section" aria-labelledby="inListsTitle">
+      <div class="modal-section__head">
+        <h3 class="modal-section__title" id="inListsTitle">{% translate 'lists containing'|capfirst %} {{ location.name }}</h3>
+        <span class="badge badge--muted">{{ location_lists|length }}</span>
+      </div>
+
+      <ul class="list-list">
+        {% for lst in location_lists %}
+          <li class="list-item" style="grid-template-columns: 1fr auto auto;">
+            <span class="list-item__name">{{ lst.name }}</span>
+            <span class="list-item__template badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">{{ lst.get_template_display }}</span>
+            {% if lst in user_lists %}
+              <a href="{% url 'locations:list_detail' slug=lst.slug %}" class="btn btn--ghost">
+                <i class="bi bi-pencil list-item__owned-icon"
+                   data-bs-toggle="tooltip"
+                   data-bs-title="{% translate 'edit your list'|capfirst %}"></i>
+              </a>
+            {% else %}
+              <span><i class="bi bi-person list-item__owned-icon"
+                   title="{% translate 'this list is from'|capfirst %} {{ lst.user.get_full_name|default:lst.user.username }}"></i></span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% else %}
+    <p class="hint">{% translate 'this location has not been added to any list'|capfirst %}.</p>
+  {% endif %}
+  
+  <div class="modal-divider"></div>
+  
+  <!-- Add to list -->
+  <section class="modal-section">
+    <div class="modal-section__head">
+      <h3 class="modal-section__title">{% translate 'add to list'|capfirst %}</h3>
+    </div>
+    <form
+      data-action
+      data-url="{% url 'cmnsd:dispatch' 'listitem' %}"
+      data-body="form"
+      data-method="POST"
+      data-refresh-url="{% url 'locations:manage_lists' location.slug %}"
+      data-refresh-mode="update"
+      data-refresh-map='{"content": "#cmnsd-modal-body"}'
+    >
+      <input type="hidden" name="location__id" value="{{ location.id }}">
+      <input type="hidden" name="location__slug" value="{{ location.slug }}">
+      
+      <div class="input-group">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="{% translate 'search or create a list'|capfirst %}"
+          data-autosuggest
+          data-url="{% url 'cmnsd:dispatch' 'lists' %}"
+          data-param="{{ search_query_character|default:'q'}}"
+          data-extra-params='{"format":"json", "exclude": "locations__slug:{{ location.slug }}", "user__id": "{{ user.id }}"}'
+          data-field-input="name"
+          data-field-hidden="slug"
+          data-field-prefix="list__"
+          data-display-fields="name,description,user"
+          data-container="list"
+          data-allow-create="1"
+          data-min="0"
+        >
+        <button class="btn btn-outline-success" type="submit"><i class="bi bi-check"></i></button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="{{ language_code|default:'en' }}">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ meta_description }}">
+
+    <link rel="shortcut icon" type="image/ico" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <!-- Cmnsd CSS -->
+    <link rel="stylesheet" href="{% static 'css/cmnsd/messages.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmnsd/cmnsd.branding.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/cmnsd/cmnsd.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/cmnsd/autosuggest.css' %}">
+    <!-- Cmpng CSS-->
+    <link rel="stylesheet" href="{% static 'css/cmpng/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmpng/cmpng.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-icons.css' %}">
+    <!-- Template CSS -->
+    {% block template_css %}{% endblock %}
+
+    {% comment %} <script src="{% static 'bootstrap/polyfill.min.js' %}"></script> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}"> {% endcomment %}
+    
+    <title>{% block title %}{{ site_name|default:"a cmnsd site" }}{% endblock %}</title>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    {% include 'messages.html' %}
+    
+    <!-- Main content -->
+    <main>
+      <div class="container py-4">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    
+    {% include 'footer.html' %}
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}" ></script>
+
+    <!-- Bootstrap Components -->
+    <script>
+      // Tooltips
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+      // Popovers
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+      const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    </script>
+
+    <!-- CMNSD.JS -->
+    <script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui/jquery-ui.js' %}"></script>
+    <script type="module">
+    import cmnsd from "{% static 'js/cmnsd/index.js' %}";
+    import { initAutosuggest } from "{% static 'js/cmnsd/autosuggest.js' %}";
+    import { initLightbox, initGalleryNav } from '/static/js/cmnsd/lightbox.js'; // Auto-initializes lightbox on elements with [data-lightbox]
+    import { initModal } from '/static/js/cmnsd/modal.js'; // Auto-initializes modals on elements with [data-modal], and modal containers with [data-modal-container]
+
+    cmnsd.init({
+      baseURL: '',
+      debug: {{ debug|lower|default:'false' }}, // enable console.debug tracing when django DEBUG=True
+      messages: { container: '#messages', dismissible: true, clearBefore: false, max: 5 }, // message container, see messages.html
+      actions: { autoBind: true } // bind delegated [data-action] on document
+
+      {% block cmnsdInit %}{% endblock %}
+    });
+    {% block cmnsdPostInit %}{% endblock %}
+
+    initAutosuggest();
+    </script>
+    {% block scriptfooter %}{% endblock %}
+  </body>
+  
+</html>

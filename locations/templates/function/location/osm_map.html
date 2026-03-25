@@ -1,0 +1,28 @@
+<aside class="card map">
+
+        <div class="map__head">
+          <div>
+            <div class="map__title">{% translate "map"|capfirst %}</div>
+            <div class="map__subtitle">{% translate "nearby locations and activities"|capfirst %} ({% if user.is_authenticated %}{{ nearby_range }}{% else %}{{ guest_nearby_range }}{% endif %} km)</div>
+          </div>
+        </div>
+
+        <div class="map__canvas">
+          <div id="map"></div>
+        </div>
+
+        <div class="map__foot">
+          <span class="map__legend">
+            <span class="map-pin map-pin--current"></span> {{ location.name }}
+          </span>
+          <span class="map__legend">
+            <span class="map-pin map-pin--acc"></span>
+            <span class="map-pin map-pin--acc-visited"></span> {% translate "accommodation"|capfirst %}
+          </span>
+          <span class="map__legend">
+            <span class="map-pin map-pin--act"></span>
+            <span class="map-pin map-pin--act-visited"></span> {% translate "activity"|capfirst %}
+          </span>
+        </div>
+
+      </aside>

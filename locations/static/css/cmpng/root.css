@@ -1,0 +1,32 @@
+:root {
+  /** Colours */
+  --primary-extra-light: #d1fae5; /* Extra light green (Tailwind green-100) */
+  --primary-lighter: #a7f3d0;      /* Lighter green (Tailwind green-200) */
+  --primary-light: #6ee7b7;   /* Light green (Tailwind green-400) */
+  --primary: #10b981;           /* Modern green (Tailwind green-500) */
+  --primary-dark: #059669;      /* Darker green (Tailwind green-600) */
+  --primary-extra-dark: #047857; /* Extra dark green (Tailwind green-700) */
+  --primary-darker: #065f46;     /* Even darker green (Tailwind green-800) */
+  --primary-darkest: #064e3b;    /* Darkest green (Tailwind green-900) */
+  --accent: #3b82f6;       /* Blue for activity badges */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  /** Fonts */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-size: 16px;
+  /** Navbar */
+  --navbar-height: 56px;
+  /** Font weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}

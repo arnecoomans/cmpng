@@ -1,0 +1,8 @@
+{% if ajax.editable %}
+  <div class="input-group">
+    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+    <input type="text" name="phone" class="form-control form-control--ghost" value="{{ location.phone|default:'' }}" placeholder="{% translate 'phone number of this'|capfirst %} {% translate location.type %}">
+  </div>
+{% elif location.phone %}
+  <span class="text-muted">{% translate "phone"|capfirst %}:</span> {{ location.phone|default:'-' }}
+{% endif %}

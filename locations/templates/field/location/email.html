@@ -1,0 +1,8 @@
+{% if ajax.editable %}
+  <div class="input-group">
+    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+    <input type="email" name="email" class="form-control form-control--ghost" value="{{ location.email|default:'' }}" placeholder="{% translate 'email address of this'|capfirst %} {% translate location.type %}">
+  </div>
+{% elif location.email %}
+  <span class="text-muted">{% translate "email"|capfirst %}:</span> {{ location.email|default:'-' }}
+{% endif %}

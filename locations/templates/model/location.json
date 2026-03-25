@@ -1,0 +1,5 @@
+"{{ location.slug }}": {
+  "id": "{{ location.id }}",
+  "name": "{{ location.name|highlight:query|safe }}",
+  "url": "{{ location.get_absolute_url }}"
+}

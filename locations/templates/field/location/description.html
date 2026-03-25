@@ -1,0 +1,23 @@
+{% if user.is_authenticated %}
+  {% if ajax.editable %}
+    <form
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'description' %}"
+      data-body="form"
+      data-map='{"description":"#description"}'
+      class="location-description-form"
+    >
+      <div class="input-group">
+        <div class="input-group-text">{% translate 'description'|capfirst%}</div>
+        <textarea name="description" class="form-control" data-autoresize placeholder="{% translate 'write a longer more detaild description of this'|capfirst %} {% translate location.type %}...">{{ location.description|default:'' }}</textarea>
+        <button type="submit" class="btn btn--primary"><i class="bi bi-floppy"></i></button>
+      </div>
+      <span class="form-text">{% translate 'supports markdown formatting'|capfirst %}.</span>
+      <span class="form-text">{% translate 'description is visibile to community members'|capfirst %}.</span>
+    </form>
+  {% elif location.description %}
+    <div class="field-view location-description" id="description">
+      <div class="description__body">{{ location.description|markdown|safe }}</div>
+    </div>
+  {% endif %}
+{% endif %}

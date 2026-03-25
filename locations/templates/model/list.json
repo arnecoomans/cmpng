@@ -1,0 +1,7 @@
+"{{ list.id }}": {
+  "id": "{{ list.id }}",
+  "name": "{{ list.name|highlight:query|safe }}",
+  "description": "{{ list.description|highlight:query|safe }}",
+  "user": "{{ user.get_full_name|default:user.username }}"
+  
+}

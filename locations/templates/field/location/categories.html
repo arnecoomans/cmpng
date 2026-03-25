@@ -1,0 +1,37 @@
+<div class="k">
+  {% if ajax.editable %}{% translate 'edit'|capfirst %}{% endif %}
+  {% if location.categories.all.count == 1 %}{% translate "category"|capfirst %}{% else %}{% translate "categories"|capfirst %}{% endif %}
+  {% include 'element/reusable_edit_button.html' with field='categories' %}
+</div>
+{% for category in location.categories.all %}
+  {% include 'field/location/category.html' with category=category %}
+{% endfor %}
+{% if ajax.editable and perms.locations.change_location %}
+  <form
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'categories' %}"
+    data-body="form"
+    data-method="POST"
+    data-map='{"categories":"#categories"}'
+  >
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-plus"></i></span>
+      <input type="hidden" name="editable" value="true">
+      <input 
+        class="form-control" 
+        placeholder="{% translate 'start typing'|capfirst %}..."
+        type="text"
+        data-autosuggest
+        data-url="{% url 'cmnsd:dispatch' 'categories' %}"
+        data-param="{{ search_query_character }}"
+        data-extra-params='{"format": "json", "exclude": "locations__slug:{{ location.slug }}"}'
+        data-field-input="name"
+        data-field-hidden="slug"
+        data-container="category"
+        data-field-prefix="categories__"
+        data-allow-create="{% if user.is_staff %}1{% else %}0{% endif %}"
+      >
+      <button class="btn btn-outline-success" type="submit" id="add-{{ field }}-btn"><i class="bi bi-check"></i></button>
+    </div>
+  </form>
+{% endif %}

@@ -1,0 +1,84 @@
+<nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'locations:home' %}">{% translate site_name|default:"vakantieplanner"|capfirst %}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate "toggle navigation"|capfirst %}">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <span class="navbar-text">
+        {% translate "go somewhere"|capfirst %}
+      </span>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'locations:accommodations' %}">...{% translate "to stay" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'locations:activities' %}">...{% translate "to do" %}</a>
+        </li>
+        <li class="mx-3"><!-- Spacer --></li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'locations:tags' %}">{% translate "tags"|capfirst %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'locations:comments' %}">{% translate "comments"|capfirst %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'locations:lists' %}">{% translate "lists"|capfirst %}</a>
+        </li>
+        <li class="mx-3"><!-- Spacer --></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'locations:add_location' %}"><i class="bi bi-plus-circle"></i></a>
+          </li>
+          <li class="mx-3"><!-- Spacer --></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {% translate "your account"|capfirst %}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'locations:preferences' %}">{% translate 'preferences'|capfirst %}</a></li>
+              {% if user.is_staff and location %}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/admin/locations/location/{{ location.id }}/change/" target="_blank">{% blocktranslate %}Edit "{{ location }}" in admin{% endblocktranslate %}</a></li>
+                <li><a class="dropdown-item" href="/admin/" target="_blank">{% translate "open django admin"|capfirst %}</a></li>
+              {% endif %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">{% translate "edit profile of"|capfirst %} {{ user.full_name|default:user.username }}</a></li>
+              <li>
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">{% translate "log out"|capfirst %}</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">{% translate "register"|capfirst %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% translate "login"|capfirst %}</a>
+          </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" method="get" action="{% url 'locations:all' %}">
+        <input 
+          class="form-control me-2" 
+          name="{{ search_query_character }}" 
+          type="search" placeholder="{% translate "start typing"|capfirst %}..." 
+          aria-label="Search" 
+          value="{{ request.GET|get_item:search_query_character|default:'' }}"
+          data-autosuggest
+          data-url="{% url 'cmnsd:dispatch' 'locations' %}?format=json"
+          data-container="location"
+          data-field-input="name"
+          data-field-hidden="slug"
+          data-field-prefix=""
+          data-search-mode="true" 
+          data-onclick-follow="url"
+        >
+        <button class="btn btn-outline-success" type="submit"><img src="{% static 'img/bootstrap-icons/search.svg' %}" alt="{% translate "search"|capfirst %}"></button>
+      </form>
+    </div>
+  </div>
+</nav>

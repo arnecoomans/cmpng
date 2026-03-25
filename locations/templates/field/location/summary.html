@@ -1,0 +1,19 @@
+{% if ajax.editable %}
+  <form
+    data-action
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'summary' %}"
+    data-body="form"
+    data-map='{"summary":"#summary"}'
+    class="location-summary-form"
+  >
+    <div class="input-group">
+      <div class="input-group-text">{% translate 'summary'|capfirst%}</div>
+      <textarea name="summary" class="form-control" data-autoresize placeholder="{% translate 'write a short descriptive text about this'|capfirst %} {% translate location.type %}...">{{ location.summary|default:'' }}</textarea>
+      <button type="submit" class="btn btn--primary"><i class="bi bi-floppy"></i></button>
+    </div>
+    <span class="form-text">{% translate 'supports markdown formatting'|capfirst %}.</span>
+      <span class="form-text">{% translate 'summary is visibile to all visitors'|capfirst %}.</span>
+  </form>
+{% elif location.summary %}
+  <p class="location-summary">{{ location.summary }}</p>
+{% endif %}

@@ -1,0 +1,25 @@
+<!-- Hero image) -->
+<section class="card hero">
+  <!-- If image exists -->
+  {% if location.ordered_media %}
+    <div data-gallery-nav="location-photos" class="position-relative">
+
+      {% for media in location.ordered_media %}
+        <a data-action="lightbox"
+          data-src="/media/{{ media.source }}"
+          data-gallery="location-photos"
+          data-caption="{{ media.title|default:location.name }}{% if user.is_authenticated %} ({% translate media.get_visibility_display|lower %}) - {% translate 'shared by'|capfirst %} {{ media.user.get_full_name|default:media.user.username }}{% endif %}"
+          href="/media/{{ media.source }}"
+          {% if not forloop.first %}style="display:none"{% endif %}>
+          <img class="hero__img" src="/media/{{ media.source }}" alt="{{ media.title }}" title="{{ filtered_media.first.title|default:location.name }} ({% translate filtered_media.first.get_visibility_display|lower %})">
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <!-- If no image -->
+    <div class="hero__placeholder">
+      {% comment %} <div class="hero__badge">Camping</div> {% endcomment %}
+      <div class="hero__hint">{% translate 'no image available'|capfirst %}</div>
+    </div>
+  {% endif %}
+</section>
