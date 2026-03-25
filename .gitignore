@@ -25,6 +25,7 @@ staticfiles/
 
 # Environment variables
 .env
+acc.env
 .env.local
 settings_local.py
 
