@@ -1,0 +1,109 @@
+<div class="modal__body">
+
+  {% if media %}
+    <!-- Existing media -->
+    <section class="modal-section" aria-labelledby="mediaListTitle">
+      <div class="modal-section__head">
+        <h3 class="modal-section__title" id="mediaListTitle">{% translate 'media for'|capfirst %} {{ location.name }}</h3>
+        <span class="badge badge--muted">{{ media|length }}</span>
+      </div>
+
+      <ul class="media-list">
+        {% for item in media %}
+          <li class="media-item">
+            <a data-action="lightbox"
+               data-src="{{ item.source.url }}"
+               data-gallery="manage-media-{{ location.slug }}"
+               data-caption="{{ item.title }}"
+               href="{{ item.source.url }}"
+               class="media-item__thumb-link">
+              <img src="{{ item.source.url }}" alt="{{ item.title }}" class="media-item__thumb">
+            </a>
+            <span class="media-item__label">{{ item.title|default:item.source.name }}</span>
+            <form class="media-item__visibility-form"
+              data-action
+              data-method="POST"
+              data-body="form"
+              data-url="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'media' item.id item.token %}"
+              data-refresh-url="{% url 'locations:manage_media' location.slug %}"
+              data-refresh-mode="update"
+              data-refresh-map='{"content": "#cmnsd-modal-body"}'
+            >
+              {% visibility_choices as vis_choices %}
+              <select class="media-item__visibility-select" name="visibility"
+                onchange="const li=this.closest('.media-item'); li.querySelector('.media-item__actions').style.display='none'; this.form.querySelector('[type=submit]').style.display='inline-flex'">
+                {% for value, label in vis_choices.items %}
+                  <option value="{{ value }}"{% if value == item.visibility %} selected{% endif %}>{{ label|capfirst }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn-edit" style="display:none" aria-label="{% translate 'save visibility'|capfirst %}">
+                <i class="bi bi-check"></i>
+              </button>
+            </form>
+            <span class="media-item__actions">
+              <a class="btn btn--small btn--danger"
+                data-action
+                data-method="DELETE"
+                data-url="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'media' item.id item.token %}"
+                data-confirm="{% translate 'are you sure you want to delete this image'|capfirst %}?"
+                data-refresh-url="{% url 'locations:manage_media' location.slug %}"
+                data-refresh-mode="update"
+                data-refresh-map='{"content": "#cmnsd-modal-body"}'>
+                <i class="bi bi-trash"></i>
+              </a>
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <div class="modal-divider"></div>
+  {% endif %}
+
+  <!-- Upload form -->
+  <section class="modal-section" aria-labelledby="uploadMediaTitle">
+    <div class="modal-section__head">
+      <h3 class="modal-section__title" id="uploadMediaTitle">{% translate 'upload image'|capfirst %}</h3>
+    </div>
+
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'locations:manage_media' location.slug %}"
+      data-action
+      data-method="POST"
+      data-body="form"
+      data-refresh-url="{% url 'locations:manage_media' location.slug %}"
+      data-refresh-mode="update"
+      data-refresh-map='{"content": "#cmnsd-modal-body"}'
+    >
+      {% csrf_token %}
+      <div class="visit-form">
+        <label class="segmented__cell">
+          <span class="segmented__label">{% translate 'title'|capfirst %}</span>
+          <input class="segmented__input" type="text" name="title" placeholder="{% translate 'optional'|capfirst %}">
+        </label>
+        <label class="segmented__cell">
+          <span class="segmented__label">{% translate 'visibility'|capfirst %}</span>
+          {% visibility_choices as vis_choices %}
+          <select class="segmented__input" name="visibility">
+            {% for value, label in vis_choices.items %}
+              <option value="{{ value }}"{% if value == 'c' %} selected{% endif %}>{{ label|capfirst }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label class="segmented__cell">
+          <span class="segmented__label">{% translate 'image'|capfirst %}</span>
+          <input class="segmented__input" type="file" name="source" accept="image/*" required>
+        </label>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--primary" type="submit">
+          <span class="btn__icon"><i class="bi bi-upload"></i></span> {% translate 'upload'|capfirst %}
+        </button>
+      </div>
+    </form>
+  </section>
+
+</div>
