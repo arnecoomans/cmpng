@@ -1,0 +1,38 @@
+# Python
+pip >= 26.0.1
+
+# Django
+Django >= 6.0.3
+Pillow >= 12.1.1
+gunicorn >= 25.1.0
+django-environ >= 0.13.0
+
+# TDD Test Driven Development
+pytest >= 9.0.2
+pytest-django >= 4.12.0
+factory-boy >= 3.3.3
+Faker >= 40.11.0
+pytest-cov >= 7.0.0
+
+# Location Services
+geopy >= 2.4.1
+googlemaps >= 4.10.0
+
+# Markdown
+Markdown >= 3.10.2
+
+# Dateutil
+python-dateutil >= 2.9.0
+
+# Heic to JPG
+pillow-heif >= 1.3.0
+
+# Sendfile for Attachments
+django-sendfile2 >= 0.7.2
+
+# HTML Output
+beautifulsoup4 >= 4.14.3
+django-minify-html >= 1.14.0
+
+# Django Toolbar
+django-debug-toolbar >= 6.2.0

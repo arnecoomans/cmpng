@@ -1,0 +1,71 @@
+# Python
+*.py[cod]
+__pycache__/
+*.so
+.Python
+*.pyc
+*.pyo
+env/
+venv/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+*/fixtures/*.json
+# Seed/reference data is safe to commit (taxonomy, not personal data)
+!*/fixtures/regions.json
+!*/fixtures/categories.json
+!*/fixtures/tags.json
+!*/fixtures/chains.json
+!*/fixtures/sizes.json
+
+# Environment variables
+.env
+.env.local
+settings_local.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Documentation sessions (optional - these can be personal/exploratory)
+documentation/claude-session-*.md
+documentation/scratch/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Ignore hidden and backup files
+*~
+*.bak
+old*.*
+*.old
+*.*.old
+
+# Keep any database outside repo
+*.sqlite3
+
+# Keep custom files outside repo
+pato.sh
+custom_*.css
+
+# Keep logs outside repo
+/logs
+/gunicorn
+/run
+
+locations/fixtures/fixture_users.json

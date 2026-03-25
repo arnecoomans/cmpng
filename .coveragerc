@@ -1,0 +1,15 @@
+[run]
+omit =
+    manage.py
+    */asgi.py
+    */wsgi.py
+    */migrations/*
+    */tests/*
+    */management/commands/*
+    cmpng/urls.py
+    .venv/*
+    cmnsd/*
+
+[report]
+show_missing = True
+skip_covered = False
