@@ -36,7 +36,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cmnsd.middleware.html_output.HtmlOutputMiddleware',
 ]
-
+if env.bool('WHITENOISE', default=False):
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
 ROOT_URLCONF = 'cmpng.urls'
 
 TEMPLATES = [
