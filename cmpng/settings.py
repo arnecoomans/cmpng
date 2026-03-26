@@ -119,8 +119,8 @@ LAZY_LOAD_MEDIA = True
 LAZY_LOAD_NEARBY = True
 
 # CMNSD SETTINGS
-SITE_NAME = 'Vakantieplanner DEVELOPMENT'
-META_DESCRIPTION = 'A Django app for managing and sharing travel plans, locations and experiences.'
+SITE_NAME = env('SITE_NAME', default='Vakantieplanner DEVELOPMENT')
+META_DESCRIPTION = env('META_DESCRIPTION', default='A Django app for managing and sharing travel plans, locations and experiences.')
 AJAX_BLOCKED_MODELS = []
 AJAX_DEFAULT_DATA_SOURCES = ['kwargs', 'GET', 'POST', 'json', 'headers']
 AJAX_PROTECTED_FIELDS = []
