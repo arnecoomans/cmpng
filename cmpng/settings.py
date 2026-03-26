@@ -12,7 +12,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
-
 # Application definition
 INSTALLED_APPS = [
     # Local apps first so their templates take precedence over django.contrib.admin
@@ -39,7 +38,7 @@ MIDDLEWARE = [
 if env.bool('WHITENOISE', default=False):
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
+
 ROOT_URLCONF = 'cmpng.urls'
 
 TEMPLATES = [
