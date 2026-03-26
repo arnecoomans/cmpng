@@ -63,6 +63,7 @@ old*.*
 
 # Keep custom files outside repo
 pato.sh
+.pato
 custom_*.css
 
 # Keep logs outside repo
