@@ -48,7 +48,6 @@ htmlcov/
 .pytest_cache/
 
 # Translations
-*.mo
 *.pot
 
 # Ignore hidden and backup files
