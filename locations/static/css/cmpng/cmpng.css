@@ -489,5 +489,13 @@ a.internal:focus {
 }
 @media (max-width: 575.98px) {
   .cmpng-header-bar { padding: 1rem; border-radius: 0.9rem }
-  .cmpng-tags { overflow-x: auto; -webkit-overflow-scrolling: touch }
+  .cmpng-tags .cmpng-badge:nth-child(n+6) { display: none }
+  .cmpng-tags:has(.cmpng-badge:nth-child(6))::after {
+    content: "…";
+    font-size: calc(var(--font-size) * 0.75);
+    font-weight: 700;
+    color: rgba(17, 24, 39, 0.45);
+    margin-left: 0.35rem;
+  }
+  :root { --location_indent: 1rem }
 }
