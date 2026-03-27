@@ -482,6 +482,17 @@ a.internal:focus {
 @media (max-width: 980px) {
   .fold { grid-template-columns: 1fr }
 }
+@media (max-width: 767.98px) {
+  .toprow {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  #topactions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .crumb-name { display: none }
+}
 @media (max-width: 620px) {
   .list-item { grid-template-columns: 1fr; align-items: start }
   .thumb { width: 100% }

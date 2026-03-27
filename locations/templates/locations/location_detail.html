@@ -20,8 +20,8 @@
         <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}&region={{ location.region.slug }}">{% translate location.region.name %}</a>
         <span class="sep">›</span>
         <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}&region={{ location.region.slug }}&department={{ location.department.slug }}">{% translate location.department.name %}</a>
-        <span class="sep">›</span>
-        <span aria-current="page">{{ location.name }}</span>
+        <span class="sep crumb-name">›</span>
+        <span class="crumb-name" aria-current="page">{{ location.name }}</span>
       </nav>
       <div id="topactions">
         {% include 'function/location/topactions.html' %}
