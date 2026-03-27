@@ -28,9 +28,11 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'cmnsd.middleware.user_language.UserLanguageMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cmnsd.middleware.html_output.HtmlOutputMiddleware',
@@ -96,9 +98,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+  ('en', 'English'),
+  ('nl', 'Nederlands'),
+  ('fr', 'Français'),
+]
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 
 # Static & media files

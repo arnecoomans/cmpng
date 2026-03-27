@@ -1,0 +1,2370 @@
+# French translations for CMPNG.
+# Copyright (C) 2026 Arne Coomans
+# This file is distributed under the same license as the CMPNG package.
+# Arne Coomans, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-26 19:51+0000\n"
+"PO-Revision-Date: 2026-03-26 00:00+0000\n"
+"Last-Translator: Arne Coomans\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: cmnsd/forms/profile.py:7
+msgid "Email address"
+msgstr "Adresse e-mail"
+
+#: cmnsd/forms/profile.py:8
+msgid "First name"
+msgstr "Prénom"
+
+#: cmnsd/forms/profile.py:9
+msgid "Last name"
+msgstr "Nom de famille"
+
+#: cmnsd/forms/registration.py:9
+msgid "email address"
+msgstr "adresse e-mail"
+
+#: cmnsd/forms/registration.py:10
+msgid "first name"
+msgstr "prénom"
+
+#: cmnsd/forms/registration.py:11
+msgid "last name"
+msgstr "nom de famille"
+
+#: cmnsd/mixins/FilterMixin.py:75
+msgid "You must be logged in to view these items"
+msgstr "Tu dois être connecté pour voir ces éléments"
+
+#: cmnsd/mixins/FilterMixin.py:143
+#, python-brace-format
+msgid "Field '{}' is not allowed for searching due to security reasons."
+msgstr ""
+"Le champ '{}' n'est pas autorisé pour la recherche pour des raisons de "
+"sécurité."
+
+#: cmnsd/mixins/FilterMixin.py:176 cmnsd/mixins/FilterMixin.py:456
+#, python-brace-format
+msgid "An error occurred while searching{}"
+msgstr "Une erreur s'est produite lors de la recherche{}"
+
+#: cmnsd/mixins/FilterMixin.py:530
+#, python-brace-format
+msgid "An error occurred while filtering{}"
+msgstr "Une erreur s'est produite lors du filtrage{}"
+
+#: cmnsd/mixins/RequestMixin.py:26
+#, python-brace-format
+msgid "Invalid source(s): {}"
+msgstr "Source(s) invalide(s) : {}"
+
+#: cmnsd/mixins/RequestMixin.py:66
+msgid "No request object available"
+msgstr "Aucun objet de requête disponible"
+
+#: cmnsd/mixins/RequestMixin.py:94
+#, python-brace-format
+msgid "Error fetching value: {}"
+msgstr "Erreur lors de la récupération de la valeur : {}"
+
+#: cmnsd/mixins/RequestMixin.py:97
+#, python-brace-format
+msgid "Value '{}' not found in request."
+msgstr "La valeur '{}' n'a pas été trouvée dans la requête."
+
+#: cmnsd/mixins/RequestMixin.py:99
+#, python-brace-format
+msgid " Falling back to default: '{}'"
+msgstr " Retour à la valeur par défaut : '{}'"
+
+#: cmnsd/mixins/ResponseMixin.py:108
+#, python-brace-format
+msgid "error when encoding response to JSON{}"
+msgstr "erreur lors de l'encodage de la réponse en JSON{}"
+
+#: cmnsd/mixins/ResponseMixin.py:114
+#, python-brace-format
+msgid "unexpected error when encoding response to JSON: {}"
+msgstr "erreur inattendue lors de l'encodage de la réponse en JSON : {}"
+
+#: cmnsd/mixins/ResponseMixin.py:151
+#, python-brace-format
+msgid "error rendering template '{}'{}"
+msgstr "erreur lors du rendu du template '{}'{}"
+
+#: cmnsd/mixins/ResponseMixin.py:170
+#, python-brace-format
+msgid "error decoding JSON from rendered template '{}': {}"
+msgstr "erreur lors du décodage du JSON depuis le template rendu '{}' : {}"
+
+#: cmnsd/mixins/ResponseMixin.py:177
+#, python-brace-format
+msgid "searched for templates: {}"
+msgstr "templates recherchés : {}"
+
+#: cmnsd/mixins/ResponseMixin.py:178
+#, python-brace-format
+msgid "{} template for '{}:{}' not found in field/ when rendering field"
+msgstr ""
+"le template {} pour '{}:{}' est introuvable dans field/ lors du rendu du "
+"champ"
+
+#: cmnsd/mixins/ResponseMixin.py:193 cmnsd/views/ajax_dispatch.py:147
+#, python-brace-format
+msgid "field '{}' is not found in {} '{}'"
+msgstr "le champ '{}' est introuvable dans {} '{}'"
+
+#: cmnsd/mixins/ResponseMixin.py:195 cmnsd/mixins/ResponseMixin.py:197
+#, python-brace-format
+msgid "unexpected error retrieving field '{}' from {} '{}': {}"
+msgstr ""
+"erreur inattendue lors de la récupération du champ '{}' depuis {} '{}' : {}"
+
+#: cmnsd/mixins/ResponseMixin.py:324
+msgid "Message template not found when rendering message"
+msgstr "Template de message introuvable lors du rendu du message"
+
+#: cmnsd/models/BaseModel.py:40
+msgid "Short unique ID for public URL use"
+msgstr "Identifiant unique court pour usage dans les URL publiques"
+
+#: cmnsd/models/BaseModel.py:44
+msgid "Concept"
+msgstr "Brouillon"
+
+#: cmnsd/models/BaseModel.py:45
+msgid "Published"
+msgstr "Publié"
+
+#: cmnsd/models/BaseModel.py:46
+#, fuzzy
+#| msgid "revoke"
+msgid "Revoked"
+msgstr "révoquer"
+
+#: cmnsd/models/BaseModel.py:47
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/TagModel.py:11
+msgid "Identifier in URL"
+msgstr "Identifiant dans l'URL"
+
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/TagModel.py:11 locations/models/Category.py:14
+#: locations/models/Chain.py:14 locations/models/Region.py:10
+msgid "automatically generated"
+msgstr "généré automatiquement"
+
+#: cmnsd/models/Category.py:16 locations/models/Category.py:15
+msgid "Name of category"
+msgstr "Nom de la catégorie"
+
+#: cmnsd/models/Comment.py:50
+msgid "comment text"
+msgstr "texte du commentaire"
+
+#: cmnsd/models/Comment.py:51
+msgid "markdown supported"
+msgstr "markdown supporté"
+
+#: cmnsd/models/Comment.py:59
+#: locations/templates/element/reusable_form_comment.html:20
+#: locations/templates/media/manage_media.html:83
+msgid "title"
+msgstr "titre"
+
+#: cmnsd/models/Comment.py:79
+#, python-brace-format
+msgid "Comment: {preview}…"
+msgstr "Commentaire : {preview}…"
+
+#: cmnsd/models/Link.py:12
+msgid "URL of the link"
+msgstr "URL du lien"
+
+#: cmnsd/models/Link.py:17
+msgid "Optional display label for the link"
+msgstr "Étiquette d'affichage optionnelle pour le lien"
+
+#: cmnsd/models/Link.py:37
+msgid "Enter a valid URL."
+msgstr "Saisis une URL valide."
+
+#: cmnsd/models/MultiSiteBaseModel.py:27
+msgid "sites"
+msgstr "sites"
+
+#: cmnsd/models/Tag.py:12 cmnsd/models/TagModel.py:12
+msgid "Name of tag"
+msgstr "Nom du tag"
+
+#: cmnsd/models/Tag.py:14 cmnsd/models/TagModel.py:14
+msgid "description of this tag, why it is relevant"
+msgstr "description de ce tag, pourquoi il est pertinent"
+
+#: cmnsd/models/TagModel.py:50
+msgid "A tag with this name already exists under the same parent."
+msgstr "Un tag avec ce nom existe déjà sous le même parent."
+
+#: cmnsd/models/VisibilityModel.py:7
+msgid "public"
+msgstr "public"
+
+#: cmnsd/models/VisibilityModel.py:8
+msgid "commmunity"
+msgstr "communauté"
+
+#: cmnsd/models/VisibilityModel.py:9
+#: locations/templates/field/userpreferences/family.html:2
+msgid "family"
+msgstr "famille"
+
+#: cmnsd/models/VisibilityModel.py:10
+#: locations/templates/function/location/nearby.html:27
+msgid "private"
+msgstr "privé"
+
+#: cmnsd/templates/errorpages/400.html:4 cmnsd/templates/errorpages/400.html:6
+msgid "bad request"
+msgstr "requête invalide"
+
+#: cmnsd/templates/errorpages/400.html:7
+msgid "the server could not understand this request."
+msgstr "le serveur n'a pas pu comprendre cette requête."
+
+#: cmnsd/templates/errorpages/403.html:4 cmnsd/templates/errorpages/403.html:6
+msgid "access denied"
+msgstr "accès refusé"
+
+#: cmnsd/templates/errorpages/403.html:7
+msgid "you don't have permission to view this page."
+msgstr "tu n'as pas la permission de voir cette page."
+
+#: cmnsd/templates/errorpages/403.html:11
+#: cmnsd/templates/registration/login.html:4
+#: cmnsd/templates/registration/login.html:104
+#: cmnsd/templates/registration/login.html:137
+#: cmnsd/templates/registration/password_reset_complete.html:33
+#: cmnsd/templates/registration/register.html:171
+msgid "sign in"
+msgstr "se connecter"
+
+#: cmnsd/templates/errorpages/403.html:12
+#: cmnsd/templates/errorpages/403.html:14
+#: cmnsd/templates/errorpages/base_error.html:97
+#: cmnsd/templates/errorpages/private.html:10
+msgid "go to homepage"
+msgstr "aller à l'accueil"
+
+#: cmnsd/templates/errorpages/404.html:4 cmnsd/templates/errorpages/404.html:6
+msgid "page not found"
+msgstr "page introuvable"
+
+#: cmnsd/templates/errorpages/404.html:7
+msgid "the page you're looking for doesn't exist or has been moved."
+msgstr "la page que tu cherches n'existe pas ou a été déplacée."
+
+#: cmnsd/templates/errorpages/base_error.html:7
+msgid "error"
+msgstr "erreur"
+
+#: cmnsd/templates/errorpages/private.html:4
+msgid "not available"
+msgstr "non disponible"
+
+#: cmnsd/templates/errorpages/private.html:6
+msgid "this content is not available to you"
+msgstr "ce contenu ne t'est pas accessible"
+
+#: cmnsd/templates/errorpages/private.html:7
+msgid "this page exists but is private or restricted to specific people."
+msgstr "cette page existe mais est privée ou réservée à certaines personnes."
+
+#: cmnsd/templates/errorpages/private.html:11
+msgid "go back"
+msgstr "retour"
+
+#: cmnsd/templates/field/link.html:1
+#, python-format
+msgid "Open '%(linkname)s' in a new window"
+msgstr "Ouvrir '%(linkname)s' dans une nouvelle fenêtre"
+
+#: cmnsd/templates/registration/login.html:122
+msgid "show password"
+msgstr "afficher le mot de passe"
+
+#: cmnsd/templates/registration/login.html:141
+msgid "forgot password?"
+msgstr "mot de passe oublié ?"
+
+#: cmnsd/templates/registration/password_change_done.html:4
+#: cmnsd/templates/registration/password_change_done.html:31
+#: cmnsd/templates/registration/password_reset_complete.html:31
+msgid "password updated"
+msgstr "mot de passe mis à jour"
+
+#: cmnsd/templates/registration/password_change_done.html:32
+msgid "your password has been changed successfully."
+msgstr "ton mot de passe a été modifié avec succès."
+
+#: cmnsd/templates/registration/password_change_done.html:33
+#: cmnsd/templates/registration/password_change_form.html:82
+msgid "back to profile"
+msgstr "retour au profil"
+
+#: cmnsd/templates/registration/password_change_form.html:4
+#: cmnsd/templates/registration/password_change_form.html:45
+#: cmnsd/templates/registration/profile.html:74
+msgid "change password"
+msgstr "changer le mot de passe"
+
+#: cmnsd/templates/registration/password_change_form.html:76
+msgid "update password"
+msgstr "mettre à jour le mot de passe"
+
+#: cmnsd/templates/registration/password_reset_complete.html:4
+msgid "password reset complete"
+msgstr "réinitialisation du mot de passe terminée"
+
+#: cmnsd/templates/registration/password_reset_complete.html:32
+msgid "your password has been set. You can now sign in with your new password."
+msgstr ""
+"ton mot de passe a été défini. Tu peux maintenant te connecter avec ton "
+"nouveau mot de passe."
+
+#: cmnsd/templates/registration/password_reset_confirm.html:4
+#: cmnsd/templates/registration/password_reset_confirm.html:42
+msgid "choose new password"
+msgstr "choisir un nouveau mot de passe"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:43
+msgid "enter and confirm your new password"
+msgstr "saisis et confirme ton nouveau mot de passe"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:62
+msgid "set new password"
+msgstr "définir le nouveau mot de passe"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:66
+msgid "this reset link is invalid or has expired. Please request a new one."
+msgstr ""
+"ce lien de réinitialisation est invalide ou a expiré. Demandes-en un nouveau."
+
+#: cmnsd/templates/registration/password_reset_confirm.html:69
+msgid "request new link"
+msgstr "demander un nouveau lien"
+
+#: cmnsd/templates/registration/password_reset_done.html:4
+#: cmnsd/templates/registration/password_reset_done.html:27
+msgid "check your email"
+msgstr "vérifie tes e-mails"
+
+#: cmnsd/templates/registration/password_reset_done.html:29
+msgid ""
+"if an account exists for that address, we've sent a link to reset your "
+"password. Check your spam folder if it doesn't arrive shortly."
+msgstr ""
+"si un compte existe pour cette adresse, nous t'avons envoyé un lien pour "
+"réinitialiser ton mot de passe. Vérifie tes spams si tu ne le reçois pas "
+"rapidement."
+
+#: cmnsd/templates/registration/password_reset_done.html:32
+#: cmnsd/templates/registration/password_reset_form.html:54
+msgid "back to sign in"
+msgstr "retour à la connexion"
+
+#: cmnsd/templates/registration/password_reset_form.html:4
+#: cmnsd/templates/registration/password_reset_form.html:40
+msgid "reset password"
+msgstr "réinitialiser le mot de passe"
+
+#: cmnsd/templates/registration/password_reset_form.html:41
+msgid "enter your email address and we'll send you a reset link"
+msgstr ""
+"saisis ton adresse e-mail et nous t'enverrons un lien de réinitialisation"
+
+#: cmnsd/templates/registration/password_reset_form.html:50
+msgid "send reset link"
+msgstr "envoyer le lien de réinitialisation"
+
+#: cmnsd/templates/registration/profile.html:4
+#: cmnsd/templates/registration/profile.html:43
+msgid "my profile"
+msgstr "mon profil"
+
+#: cmnsd/templates/registration/profile.html:68
+msgid "save changes"
+msgstr "enregistrer les modifications"
+
+#: cmnsd/templates/registration/register.html:4
+#: cmnsd/templates/registration/register.html:115
+#: cmnsd/templates/registration/register.html:167
+msgid "create account"
+msgstr "créer un compte"
+
+#: cmnsd/templates/registration/register.html:150
+msgid "auto-generated from your name — you can change it"
+msgstr "généré automatiquement à partir de ton nom — tu peux le modifier"
+
+#: cmnsd/templates/registration/register.html:171
+msgid "already have an account"
+msgstr "tu as déjà un compte"
+
+#: cmnsd/templatetags/humanize_date.py:60
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d hour"
+msgstr "%(count)d heure"
+
+#: cmnsd/templatetags/humanize_date.py:61
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d hours"
+msgstr "%(count)d heures"
+
+#: cmnsd/templatetags/humanize_date.py:63
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d minute"
+msgstr "%(count)d minute"
+
+#: cmnsd/templatetags/humanize_date.py:64
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d minutes"
+msgstr "%(count)d minutes"
+
+#: cmnsd/templatetags/humanize_date.py:66
+msgctxt "time difference"
+msgid "just now"
+msgstr "à l'instant"
+
+#: cmnsd/templatetags/humanize_date.py:68
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d day"
+msgstr "%(count)d jour"
+
+#: cmnsd/templatetags/humanize_date.py:69
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d days"
+msgstr "%(count)d jours"
+
+#: cmnsd/templatetags/humanize_date.py:72
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d week"
+msgstr "%(count)d semaine"
+
+#: cmnsd/templatetags/humanize_date.py:73
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d weeks"
+msgstr "%(count)d semaines"
+
+#: cmnsd/templatetags/humanize_date.py:76
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d month"
+msgstr "%(count)d mois"
+
+#: cmnsd/templatetags/humanize_date.py:77
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d months"
+msgstr "%(count)d mois"
+
+#: cmnsd/templatetags/humanize_date.py:80
+#, python-format
+msgctxt "time difference future"
+msgid "in %(text)s"
+msgstr "dans %(text)s"
+
+#: cmnsd/templatetags/humanize_date.py:82
+#, python-format
+msgctxt "time difference past"
+msgid "%(text)s ago"
+msgstr "il y a %(text)s"
+
+#: cmnsd/views/ajax__crud__util.py:23
+msgid "no model detected for update"
+msgstr "aucun modèle détecté pour la mise à jour"
+
+#: cmnsd/views/ajax__crud__util.py:25
+msgid "no object detected for update"
+msgstr "aucun objet détecté pour la mise à jour"
+
+#: cmnsd/views/ajax__crud_delete.py:18
+#, python-brace-format
+msgid "object '{}' '{}' marked as deleted"
+msgstr "objet '{}' '{}' marqué comme supprimé"
+
+#: cmnsd/views/ajax__crud_delete.py:26
+#, python-brace-format
+msgid "failed to mark object as deleted{}"
+msgstr "échec du marquage de l'objet comme supprimé{}"
+
+#: cmnsd/views/ajax__crud_delete.py:27
+msgid "failed to mark object as deleted"
+msgstr "échec du marquage de l'objet comme supprimé"
+
+#: cmnsd/views/ajax__crud_delete.py:32
+#, python-brace-format
+msgid "object '{}' '{}' deleted"
+msgstr "objet '{}' '{}' supprimé"
+
+#: cmnsd/views/ajax__crud_delete.py:40
+#, python-brace-format
+msgid "failed to delete object{}"
+msgstr "échec de la suppression de l'objet{}"
+
+#: cmnsd/views/ajax__crud_delete.py:41
+msgid "failed to delete object"
+msgstr "échec de la suppression de l'objet"
+
+#: cmnsd/views/ajax__crud_update.py:40
+#, python-brace-format
+msgid "an unexpected error occured when updating fields of {}{}"
+msgstr ""
+"une erreur inattendue s'est produite lors de la mise à jour des champs de {}"
+"{}"
+
+#: cmnsd/views/ajax__crud_update.py:76
+#, python-brace-format
+msgid "'content_for' is required when creating a {}"
+msgstr "'content_for' est requis lors de la création d'un {}"
+
+#: cmnsd/views/ajax__crud_update.py:81
+#, python-brace-format
+msgid "'{}' is not an allowed content type for {}"
+msgstr "'{}' n'est pas un type de contenu autorisé pour {}"
+
+#: cmnsd/views/ajax__crud_update.py:98
+#, python-brace-format
+msgid "no {} with token '{}' found"
+msgstr "aucun {} avec le token '{}' trouvé"
+
+#: cmnsd/views/ajax__crud_update.py:105
+#, python-brace-format
+msgid "no {} with id '{}' found"
+msgstr "aucun {} avec l'id '{}' trouvé"
+
+#: cmnsd/views/ajax__crud_update.py:110
+msgid "'content_token' or 'content_id' is required when 'content_for' is set"
+msgstr ""
+"'content_token' ou 'content_id' est requis lorsque 'content_for' est défini"
+
+#: cmnsd/views/ajax__crud_update.py:177
+#, python-brace-format
+msgid "Malformed key '{}' skipped while building payload."
+msgstr "Clé malformée '{}' ignorée lors de la construction du payload."
+
+#: cmnsd/views/ajax__crud_update.py:231
+msgid "invalid model metadata — cannot initialize object"
+msgstr "métadonnées de modèle invalides — impossible d'initialiser l'objet"
+
+#: cmnsd/views/ajax__crud_update.py:278
+#, python-brace-format
+msgid "could not initialize object for model '{}': {}"
+msgstr "impossible d'initialiser l'objet pour le modèle '{}' : {}"
+
+#: cmnsd/views/ajax__crud_update.py:341
+#, python-brace-format
+msgid "field '{}' is of an unsupported type for update{}"
+msgstr "le champ '{}' est d'un type non supporté pour la mise à jour{}"
+
+#: cmnsd/views/ajax__crud_update.py:351 cmnsd/views/ajax__crud_update.py:359
+#: cmnsd/views/ajax__crud_update.py:366
+#, python-brace-format
+msgid "field '{}' does not exist on object {} '{}'"
+msgstr "le champ '{}' n'existe pas sur l'objet {} '{}'"
+
+#: cmnsd/views/ajax_dispatch.py:60
+#, python-brace-format
+msgid "an error occurred during request processing{}"
+msgstr "une erreur s'est produite lors du traitement de la requête{}"
+
+#: cmnsd/views/ajax_dispatch.py:67
+msgid "model is required"
+msgstr "le modèle est requis"
+
+#: cmnsd/views/ajax_dispatch.py:70
+msgid "object is required"
+msgstr "l'objet est requis"
+
+#: cmnsd/views/ajax_dispatch.py:99
+msgid "at least two identifiers are required for object lookup"
+msgstr "au moins deux identifiants sont requis pour la recherche d'objet"
+
+#: cmnsd/views/ajax_dispatch.py:132
+#, python-brace-format
+msgid "field '{}' could not be set in {} '{}'{}"
+msgstr "le champ '{}' n'a pas pu être défini dans {} '{}'{}"
+
+#: cmnsd/views/ajax_dispatch.py:143
+#, python-brace-format
+msgid "function '{}' could not be set in {} '{}'{}"
+msgstr "la fonction '{}' n'a pas pu être exécutée dans {} '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:69
+#, python-brace-format
+msgid "no field with the name '{}' could be found in model '{}'"
+msgstr "aucun champ avec le nom '{}' n'a été trouvé dans le modèle '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:120
+#, python-brace-format
+msgid "access to field '{}' is blocked in configuration"
+msgstr "l'accès au champ '{}' est bloqué dans la configuration"
+
+#: cmnsd/views/ajax_utils_meta_field.py:127
+#, python-brace-format
+msgid "access to field '{}' is restricted to staff users"
+msgstr "l'accès au champ '{}' est réservé aux utilisateurs staff"
+
+#: cmnsd/views/ajax_utils_meta_field.py:138
+#, python-brace-format
+msgid "access to field '{}' is blocked in model configuration"
+msgstr "l'accès au champ '{}' est bloqué dans la configuration du modèle"
+
+#: cmnsd/views/ajax_utils_meta_field.py:198
+#: cmnsd/views/ajax_utils_meta_function.py:114
+#, python-brace-format
+msgid "error occurred while fetching related objects for field '{}'{}"
+msgstr "erreur lors de la récupération des objets liés pour le champ '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:209
+#, python-brace-format
+msgid "error occurred while calling field '{}'{}"
+msgstr "erreur lors de l'appel du champ '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:348
+#, python-brace-format
+msgid "could not resolve display value for field '{}' with value '{}'{}"
+msgstr ""
+"impossible de résoudre la valeur d'affichage pour le champ '{}' avec la "
+"valeur '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:404
+#, python-brace-format
+msgid "invalid boolean value '{}'"
+msgstr "valeur booléenne invalide '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:424
+#, python-brace-format
+msgid "invalid JSON value for field '{}'"
+msgstr "valeur JSON invalide pour le champ '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:437
+#, python-brace-format
+msgid "error casting value '{}' to correct type for field '{}'{}"
+msgstr ""
+"erreur lors de la conversion de la valeur '{}' au bon type pour le champ "
+"'{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:493
+#, python-brace-format
+msgid "invalid choice '{}' for field '{}'"
+msgstr "choix invalide '{}' pour le champ '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:523
+#, python-brace-format
+msgid ""
+"cannot update {}'s simple field '{}' with value '{}' because value does not "
+"belong to a {}"
+msgstr ""
+"impossible de mettre à jour le champ simple '{}' de {} avec la valeur '{}' "
+"car la valeur n'appartient pas à un {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:593
+#, python-brace-format
+msgid ""
+"cannot update {}'s related field '{}' with value '{}' because value does not "
+"belong to a {}"
+msgstr ""
+"impossible de mettre à jour le champ lié '{}' de {} avec la valeur '{}' car "
+"la valeur n'appartient pas à un {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:596
+#, python-brace-format
+msgid ""
+"cannot update {}'s related field '{}' with value '{}' because related model "
+"could not be determined"
+msgstr ""
+"impossible de mettre à jour le champ lié '{}' de {} avec la valeur '{}' car "
+"le modèle lié n'a pas pu être déterminé"
+
+#: cmnsd/views/ajax_utils_meta_field.py:614
+#: cmnsd/views/ajax_utils_meta_field.py:703
+#, python-brace-format
+msgid "unable to update field '{}' on related object '{}'{}"
+msgstr "impossible de mettre à jour le champ '{}' sur l'objet lié '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:641
+#, python-brace-format
+msgid "removed '{}' '{}' from {} {}"
+msgstr "'{}' '{}' retiré de {} {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:645
+#, python-brace-format
+msgid "unable to remove value of {} to {}{}"
+msgstr "impossible de retirer la valeur de {} de {}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:655
+#, python-brace-format
+msgid "added '{}' '{}' to '{}' '{}'"
+msgstr "'{}' '{}' ajouté à '{}' '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:659
+#, python-brace-format
+msgid "unable to add value of {} to {}{}"
+msgstr "impossible d'ajouter la valeur de {} à {}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:721
+#, python-brace-format
+msgid "deleted '{}' '{}'"
+msgstr "'{}' '{}' supprimé"
+
+#: cmnsd/views/ajax_utils_meta_field.py:726
+#, python-brace-format
+msgid "unable to delete '{}' '{}'{}"
+msgstr "impossible de supprimer '{}' '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:739
+#, python-brace-format
+msgid "reassigned '{}' '{}' to '{}' '{}'"
+msgstr "'{}' '{}' réassigné à '{}' '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:746
+#, python-brace-format
+msgid "unable to reassign '{}' '{}'{}"
+msgstr "impossible de réassigner '{}' '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:780
+#, python-brace-format
+msgid "Invalid identifier format for related object lookup: {}"
+msgstr "Format d'identifiant invalide pour la recherche d'objet lié : {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:785
+#, python-brace-format
+msgid ""
+"Maximum recursion depth ({}) exceeded resolving related objects for '{}'."
+msgstr ""
+"Profondeur de récursion maximale ({}) dépassée lors de la résolution des "
+"objets liés pour '{}'."
+
+#: cmnsd/views/ajax_utils_meta_field.py:891
+#, python-brace-format
+msgid ""
+"maximum recursion depth ({}) exceeded while creating related objects for "
+"model '{}'"
+msgstr ""
+"profondeur de récursion maximale ({}) dépassée lors de la création d'objets "
+"liés pour le modèle '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:899
+#, python-brace-format
+msgid ""
+"creation of new related objects is not allowed for foreign key field '{}'"
+msgstr ""
+"la création de nouveaux objets liés n'est pas autorisée pour le champ de clé "
+"étrangère '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:905
+#, python-brace-format
+msgid "creation of new related objects is not allowed for related field '{}'"
+msgstr ""
+"la création de nouveaux objets liés n'est pas autorisée pour le champ lié "
+"'{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:948
+#, python-brace-format
+msgid "created new '{}' '{}'"
+msgstr "nouveau '{}' '{}' créé"
+
+#: cmnsd/views/ajax_utils_meta_field.py:957
+#, python-brace-format
+msgid "error creating new related object for the given arguments: {}{}"
+msgstr ""
+"erreur lors de la création d'un nouvel objet lié pour les arguments donnés : "
+"{}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:984
+#, python-brace-format
+msgid "invalid name '{}': no valid parts found"
+msgstr "nom invalide '{}' : aucune partie valide trouvée"
+
+#: cmnsd/views/ajax_utils_meta_function.py:54
+#, python-brace-format
+msgid "'{}' is not a valid function of model '{}'"
+msgstr "'{}' n'est pas une fonction valide du modèle '{}'"
+
+#: cmnsd/views/ajax_utils_meta_function.py:59
+#, python-brace-format
+msgid "no function with the name '{}' could be found in object of type '{}'{}"
+msgstr ""
+"aucune fonction avec le nom '{}' n'a été trouvée dans l'objet de type '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_function.py:138
+#, python-brace-format
+msgid "error occurred while calling function '{}'{}"
+msgstr "erreur lors de l'appel de la fonction '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_model.py:42
+#, python-brace-format
+msgid "access to model '{}' is blocked in application configuration"
+msgstr ""
+"l'accès au modèle '{}' est bloqué dans la configuration de l'application"
+
+#: cmnsd/views/ajax_utils_meta_model.py:79
+#, python-brace-format
+msgid "no model with the name '{}' could be found"
+msgstr "aucun modèle avec le nom '{}' n'a été trouvé"
+
+#: cmnsd/views/ajax_utils_meta_model.py:83
+#, python-brace-format
+msgid ""
+"multiple models with the name '{}' were found. specify 'app_label.modelname' "
+"instead."
+msgstr ""
+"plusieurs modèles avec le nom '{}' ont été trouvés. Spécifie "
+"'app_label.modelname' à la place."
+
+#: cmnsd/views/ajax_utils_meta_object.py:46
+msgid "no valid model supplied in meta_object.__init__"
+msgstr "aucun modèle valide fourni dans meta_object.__init__"
+
+#: cmnsd/views/ajax_utils_meta_object.py:63
+#, python-brace-format
+msgid "no valid identifiers supplied for object lookup in model '{}'"
+msgstr ""
+"aucun identifiant valide fourni pour la recherche d'objet dans le modèle '{}'"
+
+#: cmnsd/views/ajax_utils_meta_object.py:74
+#, python-brace-format
+msgid "multiple objects were found for the given arguments: {}"
+msgstr "plusieurs objets ont été trouvés pour les arguments donnés : {}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:77
+#, python-brace-format
+msgid ""
+"you do not have permission to access the requested {} with given arguments {}"
+msgstr ""
+"tu n'as pas la permission d'accéder au {} demandé avec les arguments donnés "
+"{}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:78
+#, python-brace-format
+msgid "no object could be found in this queryset for the given arguments: {}"
+msgstr ""
+"aucun objet n'a été trouvé dans ce queryset pour les arguments donnés : {}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:87
+msgid "no object to commit changes to"
+msgstr "aucun objet sur lequel valider les modifications"
+
+#: cmnsd/views/ajax_utils_meta_object.py:92
+#, python-brace-format
+msgid "error committing changes to {} '{}': {}{}"
+msgstr "erreur lors de la validation des modifications sur {} '{}' : {}{}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:106
+#, python-brace-format
+msgid "succesfully updated {} with the following change:"
+msgstr "{} mis à jour avec succès avec la modification suivante :"
+
+#: cmnsd/views/ajax_utils_meta_object.py:108
+#, python-brace-format
+msgid "succesfully updated {} with the following {} changes:"
+msgstr "{} mis à jour avec succès avec les {} modifications suivantes :"
+
+#: cmnsd/views/ajax_utils_meta_object.py:122
+#: cmnsd/views/ajax_utils_meta_object.py:129
+msgid "empty"
+msgstr "vide"
+
+#: cmnsd/views/ajax_utils_meta_object.py:132
+#, python-brace-format
+msgid "changed field '{}' from {} to {}"
+msgstr "champ '{}' modifié de {} à {}"
+
+#: cmnsd/views/auth/login.py:11
+msgid "You are already signed in."
+msgstr "Tu es déjà connecté."
+
+#: cmnsd/views/auth/login.py:17
+msgid "You have been signed in."
+msgstr "Tu es maintenant connecté."
+
+#: cmnsd/views/auth/logout.py:9
+msgid "You have been signed out."
+msgstr "Tu as été déconnecté."
+
+#: cmnsd/views/auth/profile.py:15
+msgid "Profile updated."
+msgstr "Profil mis à jour."
+
+#: locations/admin.py:29
+msgid "System Information"
+msgstr "Informations système"
+
+#: locations/admin.py:36
+msgid "Recalculate computed fields (run save on selected items)"
+msgstr ""
+"Recalculer les champs calculés (relancer la sauvegarde sur les éléments "
+"sélectionnés)"
+
+#: locations/admin.py:63 locations/admin.py:91 locations/admin.py:106
+#: locations/admin.py:119 locations/admin.py:149
+msgid "Basic Information"
+msgstr "Informations de base"
+
+#: locations/admin.py:66
+msgid "Contact Details"
+msgstr "Coordonnées"
+
+#: locations/admin.py:69
+msgid "Coordinates"
+msgstr "Coordonnées GPS"
+
+#: locations/admin.py:72
+msgid "Classification"
+msgstr "Classification"
+
+#: locations/admin.py:75 locations/admin.py:122 locations/admin.py:203
+#: locations/admin.py:219 locations/admin.py:252
+msgid "Visibility"
+msgstr "Visibilité"
+
+#: locations/admin.py:135
+msgid "Link Information"
+msgstr "Informations sur les liens"
+
+#: locations/admin.py:161
+msgid "App Information"
+msgstr "Informations de l'application"
+
+#: locations/admin.py:173
+msgid "User Preferences"
+msgstr "Préférences utilisateur"
+
+#: locations/admin.py:185
+msgid "Visit Information"
+msgstr "Informations de visite"
+
+#: locations/admin.py:197
+msgid "Comment"
+msgstr "Commentaire"
+
+#: locations/admin.py:200
+msgid "Attached to"
+msgstr "Attaché à"
+
+#: locations/admin.py:216
+msgid "Media"
+msgstr "Médias"
+
+#: locations/admin.py:249
+msgid "List"
+msgstr "Liste"
+
+#: locations/admin.py:267
+msgid "Item"
+msgstr "Élément"
+
+#: locations/admin.py:270
+msgid "Accommodation"
+msgstr "Hébergement"
+
+#: locations/admin.py:273
+msgid "Media & Routing"
+msgstr "Médias & Itinéraire"
+
+#: locations/admin.py:286
+msgid "Route"
+msgstr "Itinéraire"
+
+#: locations/admin.py:289
+msgid "Cached result"
+msgstr "Résultat en cache"
+
+#: locations/models/Category.py:14 locations/models/Chain.py:14
+#: locations/models/Region.py:10
+msgid "identifier in URL"
+msgstr "identifiant dans l'URL"
+
+#: locations/models/Chain.py:17
+msgid "name of location as it is identified by"
+msgstr "nom du lieu tel qu'il est identifié"
+
+#: locations/models/List.py:66
+msgid "Itinerary"
+msgstr "Itinéraire"
+
+#: locations/models/List.py:67
+msgid "Bucket list"
+msgstr "Liste de souhaits"
+
+#: locations/models/List.py:68
+msgid "Themed list"
+msgstr "Liste thématique"
+
+#: locations/models/List.py:69
+msgid "Logbook"
+msgstr "Carnet de voyage"
+
+#: locations/models/List.py:87
+msgid "Archived lists are read-only and hidden from active views."
+msgstr ""
+"Les listes archivées sont en lecture seule et masquées des vues actives."
+
+#: locations/models/List.py:133
+msgid "Number of nights"
+msgstr "Nombre de nuits"
+
+#: locations/models/Location.py:137
+msgid "Markdown is supported"
+msgstr "Le Markdown est supporté"
+
+#: locations/models/Location.py:183
+msgid "distance in km from departure center"
+msgstr "distance en km depuis le point de départ"
+
+#: locations/models/Location.py:280
+#: locations/templates/function/location/nearby.html:9
+#: locations/templates/function/location/nearby.html:26
+#: locations/templates/function/location/osm_map.html:24
+#: locations/templates/model/locations/list.html:98
+msgid "activity"
+msgstr "activité"
+
+#: locations/models/Location.py:282
+#: locations/templates/function/location/nearby.html:8
+#: locations/templates/function/location/nearby.html:25
+#: locations/templates/function/location/osm_map.html:20
+#: locations/templates/model/locations/list.html:92
+msgid "accommodation"
+msgstr "hébergement"
+
+#: locations/models/Location.py:284
+msgid "mixed"
+msgstr "mixte"
+
+#: locations/models/Preferences.py:16
+#, python-brace-format
+msgid "URL template with placeholders, e.g. https://waze.com/ul?ll={lat},{lon}"
+msgstr ""
+"Modèle d'URL avec des paramètres, ex. https://waze.com/ul?ll={lat},{lon}"
+
+#: locations/models/Preferences.py:18
+msgid "navigation"
+msgstr "navigation"
+
+#: locations/models/Preferences.py:40
+msgid "family members"
+msgstr "membres de la famille"
+
+#: locations/models/Preferences.py:87
+msgid "january"
+msgstr "janvier"
+
+#: locations/models/Preferences.py:88
+msgid "february"
+msgstr "février"
+
+#: locations/models/Preferences.py:89
+msgid "march"
+msgstr "mars"
+
+#: locations/models/Preferences.py:90
+msgid "april"
+msgstr "avril"
+
+#: locations/models/Preferences.py:91
+msgid "may"
+msgstr "mai"
+
+#: locations/models/Preferences.py:92
+msgid "june"
+msgstr "juin"
+
+#: locations/models/Preferences.py:93
+msgid "july"
+msgstr "juillet"
+
+#: locations/models/Preferences.py:94
+msgid "august"
+msgstr "août"
+
+#: locations/models/Preferences.py:95
+msgid "september"
+msgstr "septembre"
+
+#: locations/models/Preferences.py:96
+msgid "october"
+msgstr "octobre"
+
+#: locations/models/Preferences.py:97
+msgid "november"
+msgstr "novembre"
+
+#: locations/models/Preferences.py:98
+msgid "december"
+msgstr "décembre"
+
+#: locations/models/Preferences.py:100
+msgid "year of visit"
+msgstr "année de visite"
+
+#: locations/models/Preferences.py:102
+msgid "day of visit"
+msgstr "jour de visite"
+
+#: locations/models/Region.py:16
+msgid "country"
+msgstr "pays"
+
+#: locations/models/Region.py:17
+msgid "region"
+msgstr "région"
+
+#: locations/models/Region.py:18
+msgid "department"
+msgstr "département"
+
+#: locations/models/Region.py:19
+msgid "locality"
+msgstr "localité"
+
+#: locations/models/Region.py:25
+msgid "the level of the region based on its position in the hierarchy"
+msgstr "le niveau de la région en fonction de sa position dans la hiérarchie"
+
+#: locations/models/Region.py:25
+msgid "automatically calculated"
+msgstr "calculé automatiquement"
+
+#: locations/models/Region.py:31
+msgid "average distance of all locations/subregions in this region"
+msgstr "distance moyenne de tous les lieux/sous-régions dans cette région"
+
+#: locations/models/Region.py:109
+msgid "a region with this name already exists under the same parent."
+msgstr "une région avec ce nom existe déjà sous le même parent."
+
+#: locations/templates/comments/comments_list.html:4
+#: locations/templates/comments/comments_list.html:13
+msgid "Comments"
+msgstr "Commentaires"
+
+#: locations/templates/comments/comments_list.html:70
+#, python-format
+msgid ""
+"\n"
+"            Page %(current)s of %(total)s\n"
+"          "
+msgstr ""
+"\n"
+"            Page %(current)s sur %(total)s\n"
+"          "
+
+#: locations/templates/comments/comments_list.html:83
+msgid "No comments found."
+msgstr "Aucun commentaire trouvé."
+
+#: locations/templates/element/location/topaction_distance_to_home.html:6
+msgid "distance to your home is"
+msgstr "distance jusqu'à chez toi :"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:6
+msgid "hours"
+msgstr "heures"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:8
+msgid "placeholder for calculate distance to home"
+msgstr "calculer la distance jusqu'à chez toi"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:12
+msgid "where do you live"
+msgstr "où habites-tu"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:12
+msgid "please set your home address in your preferences to see the distance"
+msgstr ""
+"définis ton adresse domicile dans tes préférences pour voir la distance"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+msgid "stop editing location"
+msgstr "arrêter de modifier le lieu"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+msgid "unsaved changes will be lost"
+msgstr "les modifications non sauvegardées seront perdues"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+#: locations/templates/element/reusable_edit_button.html:3
+#: locations/templates/field/location/categories.html:2
+#: locations/templates/field/location/chain.html:2
+#: locations/templates/field/location/size.html:2
+#: locations/templates/field/location/visibility.html:2
+#: locations/templates/function/location/filtered_descriptions.html:6
+#: locations/templates/object/comment.html:22
+msgid "edit"
+msgstr "modifier"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:7
+msgid "lists with"
+msgstr "listes avec"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:10
+#: locations/templates/element/location/topactions_favorite.html:15
+#: locations/templates/field/location/visits.html:10
+msgid "login or register"
+msgstr "se connecter ou s'inscrire"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:11
+msgid ""
+"You need an account to store this location in a list. Please login or "
+"register."
+msgstr ""
+"Tu as besoin d'un compte pour ajouter ce lieu à une liste. Connecte-toi ou "
+"inscris-toi."
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "you have this location in your lists"
+msgstr "tu as ce lieu dans tes listes"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "this location is in someones lists"
+msgstr "ce lieu est dans les listes de quelqu'un"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "this location is not in any list"
+msgstr "ce lieu n'est dans aucune liste"
+
+#: locations/templates/element/location/topaction_manage_media.html:7
+msgid "manage media for"
+msgstr "gérer les médias pour"
+
+#: locations/templates/element/location/topactions_admin_view.html:1
+msgid "open this object in django&apos;s admin"
+msgstr "ouvrir cet objet dans l'admin Django"
+
+#: locations/templates/element/location/topactions_favorite.html:16
+#: locations/templates/field/location/visits.html:11
+msgid "You need an account to love this location. Please login or register."
+msgstr ""
+"Tu as besoin d'un compte pour aimer ce lieu. Connecte-toi ou inscris-toi."
+
+#: locations/templates/element/reusable_delete_button.html:8
+msgid "are you sure you want to delete this?"
+msgstr "es-tu sûr de vouloir supprimer ceci ?"
+
+#: locations/templates/element/reusable_description_form.html:13
+msgid "enter description here"
+msgstr "saisir une description ici"
+
+#: locations/templates/element/reusable_description_form.html:17
+#: locations/templates/field/location/visibility.html:2
+#: locations/templates/media/manage_media.html:87
+msgid "visibility"
+msgstr "visibilité"
+
+#: locations/templates/element/reusable_description_form.html:23
+msgid "save"
+msgstr "enregistrer"
+
+#: locations/templates/element/reusable_description_form.html:23
+#: locations/templates/function/location/filtered_descriptions.html:4
+msgid "add"
+msgstr "ajouter"
+
+#: locations/templates/element/reusable_edit_button.html:3
+#: locations/templates/field/userpreferences/all_apps.html:5
+#: locations/templates/field/userpreferences/external_maps_consent.html:32
+#: locations/templates/field/userpreferences/family.html:5
+#: locations/templates/field/userpreferences/home.html:5
+#: locations/templates/object/comment.html:22
+msgid "stop editing"
+msgstr "arrêter de modifier"
+
+#: locations/templates/element/reusable_form_comment.html:14
+msgid "add a comment"
+msgstr "ajouter un commentaire"
+
+#: locations/templates/element/reusable_form_comment.html:16
+msgid "your comment"
+msgstr "ton commentaire"
+
+#: locations/templates/element/reusable_form_comment.html:16
+msgid "markdown is supported"
+msgstr "le markdown est supporté"
+
+#: locations/templates/element/reusable_form_comment.html:20
+#: locations/templates/media/manage_media.html:84
+msgid "optional"
+msgstr "optionnel"
+
+#: locations/templates/element/reusable_form_comment.html:22
+msgid "short subject"
+msgstr "sujet court"
+
+#: locations/templates/element/reusable_form_comment.html:25
+#: locations/templates/function/location/filtered_descriptions.html:20
+#: locations/templates/object/comment.html:15
+msgid "visible to"
+msgstr "visible par"
+
+#: locations/templates/element/reusable_form_comment.html:39
+msgid "update"
+msgstr "mettre à jour"
+
+#: locations/templates/element/reusable_form_comment.html:39
+msgid "post"
+msgstr "publier"
+
+#: locations/templates/element/reusable_form_with_autosuggest.html:14
+#: locations/templates/field/location/categories.html:22
+#: locations/templates/field/location/chain.html:19
+#: locations/templates/field/location/links.html:24
+#: locations/templates/field/userpreferences/home.html:30
+#: locations/templates/locations/add_location.html:73
+#: templates/navigation.html:68
+msgid "start typing"
+msgstr "commence à taper"
+
+#: locations/templates/field/location/address.html:3
+#: locations/templates/function/location/contact_details.html:3
+#: locations/templates/locations/add_location.html:40
+msgid "address"
+msgstr "adresse"
+
+#: locations/templates/field/location/address.html:6
+msgid "address of this"
+msgstr "adresse de ce lieu"
+
+#: locations/templates/field/location/categories.html:3
+msgid "category"
+msgstr "catégorie"
+
+#: locations/templates/field/location/categories.html:3
+#: locations/templates/locations/add_location.html:68
+msgid "categories"
+msgstr "catégories"
+
+#: locations/templates/field/location/chain.html:3
+msgid "chain"
+msgstr "chaîne"
+
+#: locations/templates/field/location/chain.html:36
+msgid "clear value"
+msgstr "effacer la valeur"
+
+#: locations/templates/field/location/chain.html:42
+msgid "are you sure you want to remove this value"
+msgstr "es-tu sûr de vouloir supprimer cette valeur"
+
+#: locations/templates/field/location/description.html:11
+#: locations/templates/function/location/filtered_descriptions.html:9
+msgid "description"
+msgstr "description"
+
+#: locations/templates/field/location/description.html:12
+msgid "write a longer more detaild description of this"
+msgstr "rédige une description plus longue et détaillée de ce lieu"
+
+#: locations/templates/field/location/description.html:15
+#: locations/templates/field/location/summary.html:14
+msgid "supports markdown formatting"
+msgstr "supporte le formatage markdown"
+
+#: locations/templates/field/location/description.html:16
+msgid "description is visibile to community members"
+msgstr "la description est visible par les membres de la communauté"
+
+#: locations/templates/field/location/email.html:4
+msgid "email address of this"
+msgstr "adresse e-mail de ce lieu"
+
+#: locations/templates/field/location/email.html:7
+msgid "email"
+msgstr "e-mail"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "is your favorite"
+msgstr "est ton favori"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "is someone&apos;s favorite"
+msgstr "est le favori de quelqu'un"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "no one has marked this as favorite yet"
+msgstr "personne n'a encore marqué ceci comme favori"
+
+#: locations/templates/field/location/links.html:2
+msgid "edit links"
+msgstr "modifier les liens"
+
+#: locations/templates/field/location/links.html:2
+msgid "links"
+msgstr "liens"
+
+#: locations/templates/field/location/links.html:9
+msgid "no links available"
+msgstr "aucun lien disponible"
+
+#: locations/templates/field/location/name.html:13
+msgid "name of"
+msgstr "nom de"
+
+#: locations/templates/field/location/name.html:32
+msgid "added by"
+msgstr "ajouté par"
+
+#: locations/templates/field/location/owners_name.html:4
+msgid "owners of this"
+msgstr "propriétaires de ce lieu"
+
+#: locations/templates/field/location/owners_name.html:7
+msgid "owners"
+msgstr "propriétaires"
+
+#: locations/templates/field/location/phone.html:4
+msgid "phone number of this"
+msgstr "numéro de téléphone de ce lieu"
+
+#: locations/templates/field/location/phone.html:7
+msgid "phone"
+msgstr "téléphone"
+
+#: locations/templates/field/location/size.html:2
+msgid "size"
+msgstr "taille"
+
+#: locations/templates/field/location/summary.html:10
+#: locations/templates/locations/add_location.html:55
+msgid "summary"
+msgstr "résumé"
+
+#: locations/templates/field/location/summary.html:11
+msgid "write a short descriptive text about this"
+msgstr "rédige un court texte descriptif sur ce lieu"
+
+#: locations/templates/field/location/summary.html:15
+msgid "summary is visibile to all visitors"
+msgstr "le résumé est visible par tous les visiteurs"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "you have visited this place"
+msgstr "tu as visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "someone has visited this place"
+msgstr "quelqu'un a visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "no one has visited this place yet"
+msgstr "personne n'a encore visité cet endroit"
+
+#: locations/templates/field/location/visits.html:7
+msgid "visits to"
+msgstr "visites à"
+
+#: locations/templates/field/userpreferences/all_apps.html:2
+msgid "links to apps"
+msgstr "liens vers les apps"
+
+#: locations/templates/field/userpreferences/all_apps.html:15
+msgid ""
+"enable links to third-party apps to open locations in those apps directly "
+"from this site"
+msgstr ""
+"activer les liens vers des apps tierces pour ouvrir des lieux directement "
+"depuis ce site"
+
+#: locations/templates/field/userpreferences/all_apps.html:34
+msgid "disable"
+msgstr "désactiver"
+
+#: locations/templates/field/userpreferences/all_apps.html:34
+msgid "enable"
+msgstr "activer"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:3
+msgid "external maps"
+msgstr "cartes externes"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:4
+msgid "allow opening locations in third-party navigation apps"
+msgstr "autoriser l'ouverture des lieux dans des apps de navigation tierces"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:4
+msgid "loading external maps shares your data with the maps provider"
+msgstr ""
+"le chargement de cartes externes partage tes données avec le fournisseur de "
+"cartes"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:24
+msgid "enabled"
+msgstr "activé"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:26
+msgid "disabled"
+msgstr "désactivé"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:45
+msgid "session consent active"
+msgstr "consentement de session actif"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:50
+msgid "revoke"
+msgstr "révoquer"
+
+#: locations/templates/field/userpreferences/family.html:14
+msgid ""
+"Family members can see what you have marked as visible to family. This way "
+"you can share locations, comments, images and lists with your loved ones. "
+"Marking someone as family does not make their content visible to you."
+msgstr ""
+"Les membres de ta famille peuvent voir ce que tu as marqué comme visible "
+"pour la famille. Ainsi tu peux partager des lieux, commentaires, images et "
+"listes avec tes proches. Marquer quelqu'un comme famille ne rend pas son "
+"contenu visible pour toi."
+
+#: locations/templates/field/userpreferences/family.html:28
+msgid "are you sure you want to remove this family member"
+msgstr "es-tu sûr de vouloir retirer ce membre de la famille"
+
+#: locations/templates/field/userpreferences/family.html:30
+msgid "remove family member"
+msgstr "retirer le membre de la famille"
+
+#: locations/templates/field/userpreferences/family.html:37
+msgid "no family members added"
+msgstr "aucun membre de la famille ajouté"
+
+#: locations/templates/field/userpreferences/family.html:45
+msgid "select a family member"
+msgstr "sélectionner un membre de la famille"
+
+#: locations/templates/field/userpreferences/family.html:58
+msgid "add family member"
+msgstr "ajouter un membre de la famille"
+
+#: locations/templates/field/userpreferences/home.html:2
+msgid "home"
+msgstr "domicile"
+
+#: locations/templates/field/userpreferences/home.html:53
+msgid "No home location set"
+msgstr "Aucune adresse domicile définie"
+
+#: locations/templates/function/location/contact_details.html:3
+#: locations/templates/function/location/contact_details.html:20
+msgid "contact"
+msgstr "contact"
+
+#: locations/templates/function/location/contact_details.html:39
+msgid "save these changes"
+msgstr "enregistrer ces modifications"
+
+#: locations/templates/function/location/filtered_comments.html:7
+#: templates/navigation.html:23
+msgid "comments"
+msgstr "commentaires"
+
+#: locations/templates/function/location/filtered_comments.html:18
+msgid "no comments yet"
+msgstr "aucun commentaire pour l'instant"
+
+#: locations/templates/function/location/filtered_comments.html:25
+msgid "log in to leave a comment"
+msgstr "connecte-toi pour laisser un commentaire"
+
+#: locations/templates/function/location/filtered_descriptions.html:9
+msgid "descriptions"
+msgstr "descriptions"
+
+#: locations/templates/function/location/filtered_descriptions.html:20
+msgid "added on"
+msgstr "ajouté le"
+
+#: locations/templates/function/location/filtered_descriptions.html:20
+#: locations/templates/object/comment.html:12
+msgid "by"
+msgstr "par"
+
+#: locations/templates/function/location/filtered_descriptions.html:25
+msgid "no description entered"
+msgstr "aucune description saisie"
+
+#: locations/templates/function/location/filtered_descriptions.html:30
+msgid "add a description to"
+msgstr "ajouter une description à"
+
+#: locations/templates/function/location/filtered_tags.html:2
+#: templates/navigation.html:20
+msgid "tags"
+msgstr "tags"
+
+#: locations/templates/function/location/filtered_tags.html:13
+msgid "no tags selected"
+msgstr "aucun tag sélectionné"
+
+#: locations/templates/function/location/filtered_tags.html:59
+msgid "select a tag"
+msgstr "sélectionner un tag"
+
+#: locations/templates/function/location/filtered_tags.html:73
+msgid "add tag"
+msgstr "ajouter un tag"
+
+#: locations/templates/function/location/google_maps_script.html:110
+msgid "view details"
+msgstr "voir les détails"
+
+#: locations/templates/function/location/map.html:2
+#: locations/templates/function/location/osm_map.html:5
+msgid "map"
+msgstr "carte"
+
+#: locations/templates/function/location/map.html:15
+msgid "this map loads content from an external provider"
+msgstr "cette carte charge du contenu depuis un fournisseur externe"
+
+#: locations/templates/function/location/map.html:15
+msgid ""
+"to protect your privacy, you need to give your consent before loading the map"
+msgstr ""
+"pour protéger ta vie privée, tu dois donner ton consentement avant de "
+"charger la carte"
+
+#: locations/templates/function/location/map.html:19
+msgid "show maps"
+msgstr "afficher les cartes"
+
+#: locations/templates/function/location/map.html:22
+msgid "once"
+msgstr "une fois"
+
+#: locations/templates/function/location/map.html:25
+msgid "for this session"
+msgstr "pour cette session"
+
+#: locations/templates/function/location/map.html:29
+msgid "always"
+msgstr "toujours"
+
+#: locations/templates/function/location/navigation_apps.html:7
+msgid "navigate to"
+msgstr "naviguer vers"
+
+#: locations/templates/function/location/navigation_apps.html:7
+msgid "using"
+msgstr "avec"
+
+#: locations/templates/function/location/nearby.html:5
+msgid "nearby"
+msgstr "à proximité"
+
+#: locations/templates/function/location/nearby.html:7
+msgid "all"
+msgstr "tous"
+
+#: locations/templates/function/location/ordered_media.html:11
+msgid "shared by"
+msgstr "partagé par"
+
+#: locations/templates/function/location/ordered_media.html:23
+msgid "no image available"
+msgstr "aucune image disponible"
+
+#: locations/templates/function/location/osm_map.html:6
+msgid "nearby locations and activities"
+msgstr "lieux et activités à proximité"
+
+#: locations/templates/function/location/topactions.html:30
+msgid "refresh automatically detected data of"
+msgstr "actualiser les données détectées automatiquement de"
+
+#: locations/templates/lists/list_detail.html:12
+#: locations/templates/lists/lists_list.html:4
+#: locations/templates/lists/lists_list.html:11 templates/navigation.html:26
+msgid "lists"
+msgstr "listes"
+
+#: locations/templates/lists/list_detail.html:22
+#: locations/templates/locations/add_location.html:11
+msgid "locations"
+msgstr "lieux"
+
+#: locations/templates/lists/list_detail.html:24
+msgid "archived"
+msgstr "archivé"
+
+#: locations/templates/lists/list_detail.html:49
+msgid "this list has no locations yet"
+msgstr "cette liste ne contient encore aucun lieu"
+
+#: locations/templates/lists/lists_list.html:25
+msgid "no lists found"
+msgstr "aucune liste trouvée"
+
+#: locations/templates/lists/manage_lists.html:5
+msgid "lists containing"
+msgstr "listes contenant"
+
+#: locations/templates/lists/manage_lists.html:18
+msgid "edit your list"
+msgstr "modifier ta liste"
+
+#: locations/templates/lists/manage_lists.html:22
+msgid "this list is from"
+msgstr "cette liste vient de"
+
+#: locations/templates/lists/manage_lists.html:29
+msgid "this location has not been added to any list"
+msgstr "ce lieu n'a été ajouté à aucune liste"
+
+#: locations/templates/lists/manage_lists.html:37
+msgid "add to list"
+msgstr "ajouter à la liste"
+
+#: locations/templates/lists/manage_lists.html:55
+msgid "search or create a list"
+msgstr "rechercher ou créer une liste"
+
+#: locations/templates/locations/add_location.html:3
+#: locations/templates/locations/add_location.html:13
+#: locations/templates/locations/add_location.html:17
+#: locations/templates/locations/add_location.html:91
+msgid "add location"
+msgstr "ajouter un lieu"
+
+#: locations/templates/locations/add_location.html:23
+msgid "name"
+msgstr "nom"
+
+#: locations/templates/locations/add_location.html:29
+msgid "e.g. Camping de Bron"
+msgstr "ex. Camping de Bron"
+
+#: locations/templates/locations/add_location.html:37
+msgid "required"
+msgstr "obligatoire"
+
+#: locations/templates/locations/add_location.html:46
+msgid "leave blank to look up automatically"
+msgstr "laisser vide pour remplir automatiquement"
+
+#: locations/templates/locations/add_location.html:52
+msgid "optional — if left blank the address will be searched by name"
+msgstr "optionnel — si vide, l'adresse sera recherchée par le nom"
+
+#: locations/templates/locations/add_location.html:60
+msgid "short description (optional)"
+msgstr "description courte (optionnel)"
+
+#: locations/templates/locations/add_location.html:87
+msgid "optional — select one or more categories"
+msgstr "optionnel — sélectionne une ou plusieurs catégories"
+
+#: locations/templates/locations/add_location.html:94
+msgid "cancel"
+msgstr "annuler"
+
+#: locations/templates/locations/add_location.html:127
+msgid "remove"
+msgstr "retirer"
+
+#: locations/templates/locations/add_location.html:174
+msgid "adding…"
+msgstr "ajout en cours…"
+
+#: locations/templates/locations/location_detail.html:54
+#: locations/templates/locations/location_detail.html:120
+msgid "loading nearby accomodations and activities"
+msgstr "chargement des hébergements et activités à proximité"
+
+#: locations/templates/locations/location_detail.html:162
+#: locations/templates/locations/location_detail.html:165
+msgid "read more"
+msgstr "lire la suite"
+
+#: locations/templates/locations/location_detail.html:165
+msgid "read less"
+msgstr "lire moins"
+
+#: locations/templates/locations/locations_list.html:34
+#: locations/templates/locations/locations_list.html:103
+msgid "Filters"
+msgstr "Filtres"
+
+#: locations/templates/locations/locations_list.html:44
+msgid "Active filters:"
+msgstr "Filtres actifs :"
+
+#: locations/templates/locations/locations_list.html:58
+msgid "Clear all"
+msgstr "Tout effacer"
+
+#: locations/templates/locations/locations_list.html:79
+msgid "results"
+msgstr "résultats"
+
+#: locations/templates/locations/locations_list_sidebar.html:13
+msgid "type"
+msgstr "type"
+
+#: locations/templates/locations/locations_list_sidebar.html:17
+msgid "accommodations"
+msgstr "hébergements"
+
+#: locations/templates/locations/locations_list_sidebar.html:22
+msgid "activities"
+msgstr "activités"
+
+#: locations/templates/locations/locations_list_sidebar.html:29
+msgid "visited"
+msgstr "visité"
+
+#: locations/templates/locations/locations_list_sidebar.html:34
+#: locations/templates/preferences/preferences.html:81
+msgid "been there"
+msgstr "déjà visité"
+
+#: locations/templates/locations/locations_list_sidebar.html:40
+msgid "not yet"
+msgstr "pas encore"
+
+#: locations/templates/locations/locations_list_sidebar.html:48
+msgid "favorites"
+msgstr "favoris"
+
+#: locations/templates/locations/locations_list_sidebar.html:53
+#: locations/templates/preferences/preferences.html:84
+msgid "loved"
+msgstr "adoré"
+
+#: locations/templates/locations/locations_list_sidebar.html:59
+msgid "not yet loved"
+msgstr "pas encore adoré"
+
+#: locations/templates/media/manage_media.html:7
+msgid "media for"
+msgstr "médias pour"
+
+#: locations/templates/media/manage_media.html:39
+msgid "save visibility"
+msgstr "enregistrer la visibilité"
+
+#: locations/templates/media/manage_media.html:48
+msgid "are you sure you want to delete this image"
+msgstr "es-tu sûr de vouloir supprimer cette image"
+
+#: locations/templates/media/manage_media.html:66
+msgid "upload image"
+msgstr "téléverser une image"
+
+#: locations/templates/media/manage_media.html:96
+msgid "image"
+msgstr "image"
+
+#: locations/templates/media/manage_media.html:103
+msgid "upload"
+msgstr "téléverser"
+
+#: locations/templates/model/locations/list.html:79
+msgid "part of chain"
+msgstr "fait partie d'une chaîne"
+
+#: locations/templates/model/locations/list.html:125
+msgid "is your home"
+msgstr "c'est ton domicile"
+
+#: locations/templates/model/locations/list.html:129
+msgid "this is a private location"
+msgstr "ce lieu est privé"
+
+#: locations/templates/model/locations/list.html:133
+msgid "this location has comments"
+msgstr "ce lieu a des commentaires"
+
+#: locations/templates/model/locations/list.html:137
+msgid "this location has images"
+msgstr "ce lieu a des images"
+
+#: locations/templates/model/locations/list.html:143
+msgid "you have hidden this location"
+msgstr "tu as masqué ce lieu"
+
+#: locations/templates/object/comment.html:32
+msgid "delete"
+msgstr "supprimer"
+
+#: locations/templates/object/comment.html:37
+msgid "are you sure you want to delete this comment?"
+msgstr "es-tu sûr de vouloir supprimer ce commentaire ?"
+
+#: locations/templates/object/tag.html:10
+msgid "are you sure you want to remove this tag"
+msgstr "es-tu sûr de vouloir retirer ce tag"
+
+#: locations/templates/preferences/preferences.html:4
+#: locations/templates/preferences/preferences.html:13
+msgid "Preferences"
+msgstr "Préférences"
+
+#: locations/templates/preferences/preferences.html:33
+msgid "Account settings"
+msgstr "Paramètres du compte"
+
+#: locations/templates/preferences/preferences.html:40
+msgid "language"
+msgstr "langue"
+
+#: locations/templates/preferences/preferences.html:78
+msgid "my links"
+msgstr "mes liens"
+
+#: locations/templates/preferences/preferences.html:87
+msgid "my comments"
+msgstr "mes commentaires"
+
+#: locations/templates/tags/tags_list.html:4
+#: locations/templates/tags/tags_list.html:13
+msgid "Tags"
+msgstr "Tags"
+
+#: locations/templates/tags/tags_list.html:24
+msgid "General"
+msgstr "Général"
+
+#: locations/templates/tags/tags_list.html:49
+msgid "No tags found."
+msgstr "Aucun tag trouvé."
+
+#: locations/templates/visits/manage_visits.html:6
+msgid "your visits to"
+msgstr "tes visites à"
+
+#: locations/templates/visits/manage_visits.html:26
+msgid "are you sure you want to delete this visit"
+msgstr "es-tu sûr de vouloir supprimer cette visite"
+
+#: locations/views/Translations.py:12
+msgid "Netherlands"
+msgstr "Pays-Bas"
+
+#: locations/views/Translations.py:13
+msgid "Belgium"
+msgstr "Belgique"
+
+#: locations/views/Translations.py:14
+msgid "Germany"
+msgstr "Allemagne"
+
+#: locations/views/Translations.py:15
+msgid "France"
+msgstr "France"
+
+#: locations/views/Translations.py:16
+msgid "Spain"
+msgstr "Espagne"
+
+#: locations/views/Translations.py:17
+msgid "Italy"
+msgstr "Italie"
+
+#: locations/views/Translations.py:18
+msgid "United Kingdom"
+msgstr "Royaume-Uni"
+
+#: locations/views/Translations.py:19
+msgid "United States"
+msgstr "États-Unis"
+
+#: locations/views/Translations.py:20
+msgid "Canada"
+msgstr "Canada"
+
+#: locations/views/Translations.py:21
+msgid "Australia"
+msgstr "Australie"
+
+#: locations/views/Translations.py:22
+msgid "Indonesia"
+msgstr "Indonésie"
+
+#: locations/views/Translations.py:23
+msgid "Portugal"
+msgstr "Portugal"
+
+#: locations/views/Translations.py:24
+msgid "Switzerland"
+msgstr "Suisse"
+
+#: locations/views/Translations.py:25
+msgid "Austria"
+msgstr "Autriche"
+
+#: locations/views/Translations.py:26
+msgid "Denmark"
+msgstr "Danemark"
+
+#: locations/views/Translations.py:27
+msgid "Sweden"
+msgstr "Suède"
+
+#: locations/views/Translations.py:28
+msgid "Norway"
+msgstr "Norvège"
+
+#: locations/views/Translations.py:29
+msgid "Finland"
+msgstr "Finlande"
+
+#: locations/views/Translations.py:30
+msgid "Poland"
+msgstr "Pologne"
+
+#: locations/views/Translations.py:31
+msgid "Czech Republic"
+msgstr "République tchèque"
+
+#: locations/views/Translations.py:32
+msgid "Slovakia"
+msgstr "Slovaquie"
+
+#: locations/views/Translations.py:33
+msgid "Hungary"
+msgstr "Hongrie"
+
+#: locations/views/Translations.py:34
+msgid "Greece"
+msgstr "Grèce"
+
+#: locations/views/Translations.py:35
+msgid "Turkey"
+msgstr "Turquie"
+
+#: locations/views/Translations.py:36
+msgid "Croatia"
+msgstr "Croatie"
+
+#: locations/views/Translations.py:37
+msgid "Slovenia"
+msgstr "Slovénie"
+
+#: locations/views/Translations.py:38
+msgid "Luxembourg"
+msgstr "Luxembourg"
+
+#: locations/views/Translations.py:39
+msgid "Ireland"
+msgstr "Irlande"
+
+#: locations/views/Translations.py:40
+msgid "Russia"
+msgstr "Russie"
+
+#: locations/views/Translations.py:41
+msgid "Ukraine"
+msgstr "Ukraine"
+
+#: locations/views/Translations.py:42
+msgid "Romania"
+msgstr "Roumanie"
+
+#: locations/views/Translations.py:43
+msgid "Bulgaria"
+msgstr "Bulgarie"
+
+#: locations/views/Translations.py:44
+msgid "Serbia"
+msgstr "Serbie"
+
+#: locations/views/Translations.py:45
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnie-Herzégovine"
+
+#: locations/views/Translations.py:46
+msgid "North Macedonia"
+msgstr "Macédoine du Nord"
+
+#: locations/views/Translations.py:47
+msgid "Albania"
+msgstr "Albanie"
+
+#: locations/views/Translations.py:48
+msgid "Montenegro"
+msgstr "Monténégro"
+
+#: locations/views/Translations.py:49
+msgid "Cyprus"
+msgstr "Chypre"
+
+#: locations/views/Translations.py:50
+msgid "Moldova"
+msgstr "Moldavie"
+
+#: locations/views/Translations.py:51
+msgid "Belarus"
+msgstr "Biélorussie"
+
+#: locations/views/Translations.py:52
+msgid "Lithuania"
+msgstr "Lituanie"
+
+#: locations/views/Translations.py:53
+msgid "Latvia"
+msgstr "Lettonie"
+
+#: locations/views/Translations.py:54
+msgid "Estonia"
+msgstr "Estonie"
+
+#: locations/views/Translations.py:55
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: locations/views/Translations.py:56
+msgid "Andorra"
+msgstr "Andorre"
+
+#: locations/views/Translations.py:57
+msgid "Monaco"
+msgstr "Monaco"
+
+#: locations/views/Translations.py:58
+msgid "Vatican City"
+msgstr "Cité du Vatican"
+
+#: locations/views/Translations.py:59
+msgid "San Marino"
+msgstr "Saint-Marin"
+
+#: locations/views/Translations.py:62
+msgid "Vosges"
+msgstr "Vosges"
+
+#: locations/views/Translations.py:63
+msgid "Ardennes"
+msgstr "Ardennes"
+
+#: locations/views/Translations.py:64
+msgid "Eifel"
+msgstr "Eifel"
+
+#: locations/views/Translations.py:65
+msgid "Pyrenees"
+msgstr "Pyrénées"
+
+#: locations/views/Translations.py:68
+msgid "Bed & Breakfast"
+msgstr "Bed & Breakfast"
+
+#: locations/views/Translations.py:69
+msgid "Camping"
+msgstr "Camping"
+
+#: locations/views/Translations.py:70
+msgid "Hotel"
+msgstr "Hôtel"
+
+#: locations/views/Translations.py:71
+msgid "Chalet"
+msgstr "Chalet"
+
+#: locations/views/Translations.py:72
+msgid "Gite"
+msgstr "Gîte"
+
+#: locations/views/Translations.py:73
+msgid "Glamping (Safaritent)"
+msgstr "Glamping (Tente safari)"
+
+#: locations/views/Translations.py:74
+msgid "Mobile Home"
+msgstr "Mobil-home"
+
+#: locations/views/Translations.py:75 locations/views/Translations.py:77
+msgid "Resort"
+msgstr "Resort"
+
+#: locations/views/Translations.py:76
+msgid "Villa"
+msgstr "Villa"
+
+#: locations/views/Translations.py:80
+msgid "Sight-to-see"
+msgstr "Site à voir"
+
+#: locations/views/Translations.py:81
+msgid "Transit (one nighter)"
+msgstr "Étape (une nuit)"
+
+#: locations/views/Translations.py:82
+msgid "Beach"
+msgstr "Plage"
+
+#: locations/views/Translations.py:83
+msgid "City"
+msgstr "Ville"
+
+#: locations/views/Translations.py:84
+msgid "Museum"
+msgstr "Musée"
+
+#: locations/views/Translations.py:85
+msgid "Park"
+msgstr "Parc"
+
+#: locations/views/Translations.py:86
+msgid "Rest-stop"
+msgstr "Aire de repos"
+
+#: locations/views/Translations.py:87
+msgid "Restaurant"
+msgstr "Restaurant"
+
+#: locations/views/Translations.py:88
+msgid "Sauna"
+msgstr "Sauna"
+
+#: locations/views/Translations.py:89
+msgid "Shop"
+msgstr "Boutique"
+
+#: locations/views/Translations.py:90
+msgid "Swimmingpool"
+msgstr "Piscine"
+
+#: locations/views/Translations.py:91
+msgid "Theatre"
+msgstr "Théâtre"
+
+#: locations/views/Translations.py:92
+msgid "Theme-park"
+msgstr "Parc d'attractions"
+
+#: locations/views/Translations.py:93
+msgid "Village"
+msgstr "Village"
+
+#: locations/views/Translations.py:94
+msgid "Walk"
+msgstr "Randonnée"
+
+#: locations/views/Translations.py:95
+msgid "Winery"
+msgstr "Domaine viticole"
+
+#: locations/views/Translations.py:96
+msgid "Zoo"
+msgstr "Zoo"
+
+#: locations/views/locations/add_location.py:27
+msgid "location added successfully."
+msgstr "lieu ajouté avec succès."
+
+#: locations/views/locations/add_location.py:31
+msgid "please correct the errors below."
+msgstr "corrige les erreurs ci-dessous."
+
+#: locations/views/locations/location_detail.py:31
+msgid "this page is not available."
+msgstr "cette page n'est pas disponible."
+
+#: locations/views/locations/location_detail.py:31
+msgid "you might need to log in to see this."
+msgstr "tu dois peut-être te connecter pour voir ceci."
+
+#: locations/views/locations/reenrich_location.py:24
+msgid "action not allowed."
+msgstr "action non autorisée."
+
+#: templates/footer.html:3
+msgid "Arne Coomans on Github"
+msgstr "Arne Coomans sur Github"
+
+#: templates/footer.html:3
+msgid "CMPNG on GitHub"
+msgstr "CMPNG sur GitHub"
+
+#: templates/navigation.html:4
+msgid "toggle navigation"
+msgstr "afficher/masquer la navigation"
+
+#: templates/navigation.html:9
+#, fuzzy
+#| msgid "go somewhere"
+msgctxt "navigation-slogan"
+msgid "go somewhere"
+msgstr "partir quelque part"
+
+#: templates/navigation.html:13
+#, fuzzy
+#| msgid "to stay"
+msgctxt "navigation-slogan"
+msgid "to stay"
+msgstr "dormir"
+
+#: templates/navigation.html:16
+#, fuzzy
+#| msgid "to do"
+msgctxt "navigation-slogan"
+msgid "to do"
+msgstr "à faire"
+
+#: templates/navigation.html:36
+msgid "your account"
+msgstr "ton compte"
+
+#: templates/navigation.html:39
+msgid "preferences"
+msgstr "préférences"
+
+#: templates/navigation.html:42
+#, python-format
+msgid "Edit \"%(location)s\" in admin"
+msgstr "Modifier \"%(location)s\" dans l'admin"
+
+#: templates/navigation.html:43
+msgid "open django admin"
+msgstr "ouvrir l'admin Django"
+
+#: templates/navigation.html:46
+msgid "edit profile of"
+msgstr "modifier le profil de"
+
+#: templates/navigation.html:50
+msgid "log out"
+msgstr "se déconnecter"
+
+#: templates/navigation.html:57
+msgid "register"
+msgstr "s'inscrire"
+
+#: templates/navigation.html:60
+msgid "login"
+msgstr "connexion"
+
+#: templates/navigation.html:80
+msgid "search"
+msgstr "rechercher"
+
+#~ msgid "Révoqué"
+#~ msgstr "Révoqué"

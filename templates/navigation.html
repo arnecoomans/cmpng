@@ -6,14 +6,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <span class="navbar-text">
-        {% translate "go somewhere"|capfirst %}
+        {% translate "go somewhere"|capfirst context "navigation-slogan" %}
       </span>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'locations:accommodations' %}">...{% translate "to stay" %}</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'locations:accommodations' %}">...{% translate "to stay" context "navigation-slogan" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'locations:activities' %}">...{% translate "to do" %}</a>
+          <a class="nav-link" href="{% url 'locations:activities' %}">...{% translate "to do" context "navigation-slogan" %}</a>
         </li>
         <li class="mx-3"><!-- Spacer --></li>
         <li class="nav-item">

@@ -44,5 +44,6 @@ urlpatterns = [
   # Preferences View (views/profile/)
   path('preferences/', views.PreferencesView.as_view(), name='preferences'),
   path('preferences/maps-session/revoke/', views.RevokeMapsSessionView.as_view(), name='revoke_maps_session'),
+  path('preferences/language/', views.SetLanguageView.as_view(), name='set_language'),
 
 ]

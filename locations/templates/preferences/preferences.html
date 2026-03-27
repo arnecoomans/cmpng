@@ -35,6 +35,22 @@
       </div>
     </div>
 
+    <!-- Language -->
+    <div class="card card--pad" id="language">
+      <div class="card__title">{% translate "language"|capfirst %}</div>
+      <form method="post" action="{% url 'locations:set_language' %}">
+        {% csrf_token %}
+        <div class="d-flex align-items-center gap-2">
+          <select name="language" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+            {% get_available_languages as languages %}
+            {% for code, name in languages %}
+              <option value="{{ code }}" {% if code == preferences.language %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+    </div>
+
     <!-- Home location -->
     <div class="card card--pad" id="home">
       {% include 'field/userpreferences/home.html' with home=preferences.home %}

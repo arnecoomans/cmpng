@@ -35,6 +35,7 @@ class UserPreferences(models.Model):
     )
     
     # Preference fields
+    language = models.CharField(max_length=10, choices=settings.LANGUAGES, null=True, blank=True)
     home = models.ForeignKey('locations.Location', null=True, blank=True, on_delete=models.SET_NULL, related_name='home_of')
     family = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, help_text=_('family members'), related_name='family_of')
     external_maps_consent = models.BooleanField(default=False)

@@ -1,0 +1,2347 @@
+# Dutch translations for CMPNG.
+# Copyright (C) 2026 Arne Coomans
+# This file is distributed under the same license as the CMPNG package.
+# Arne Coomans, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-26 19:51+0000\n"
+"PO-Revision-Date: 2026-03-26 00:00+0100\n"
+"Last-Translator: Arne Coomans\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cmnsd/forms/profile.py:7
+msgid "Email address"
+msgstr "E-mailadres"
+
+#: cmnsd/forms/profile.py:8
+msgid "First name"
+msgstr "Voornaam"
+
+#: cmnsd/forms/profile.py:9
+msgid "Last name"
+msgstr "Achternaam"
+
+#: cmnsd/forms/registration.py:9
+#, fuzzy
+#| msgid "Email address"
+msgid "email address"
+msgstr "E-mailadres"
+
+#: cmnsd/forms/registration.py:10
+#, fuzzy
+#| msgid "First name"
+msgid "first name"
+msgstr "Voornaam"
+
+#: cmnsd/forms/registration.py:11
+#, fuzzy
+#| msgid "Last name"
+msgid "last name"
+msgstr "Achternaam"
+
+#: cmnsd/mixins/FilterMixin.py:75
+msgid "You must be logged in to view these items"
+msgstr "Je moet ingelogd zijn om deze items te bekijken"
+
+#: cmnsd/mixins/FilterMixin.py:143
+#, python-brace-format
+msgid "Field '{}' is not allowed for searching due to security reasons."
+msgstr "Veld '{}' mag om veiligheidsredenen niet worden doorzocht."
+
+#: cmnsd/mixins/FilterMixin.py:176 cmnsd/mixins/FilterMixin.py:456
+#, python-brace-format
+msgid "An error occurred while searching{}"
+msgstr "Er is een fout opgetreden tijdens het zoeken{}"
+
+#: cmnsd/mixins/FilterMixin.py:530
+#, python-brace-format
+msgid "An error occurred while filtering{}"
+msgstr "Er is een fout opgetreden tijdens het filteren{}"
+
+#: cmnsd/mixins/RequestMixin.py:26
+#, python-brace-format
+msgid "Invalid source(s): {}"
+msgstr "Ongeldige bron(nen): {}"
+
+#: cmnsd/mixins/RequestMixin.py:66
+msgid "No request object available"
+msgstr "Geen request-object beschikbaar"
+
+#: cmnsd/mixins/RequestMixin.py:94
+#, python-brace-format
+msgid "Error fetching value: {}"
+msgstr "Fout bij ophalen van waarde: {}"
+
+#: cmnsd/mixins/RequestMixin.py:97
+#, python-brace-format
+msgid "Value '{}' not found in request."
+msgstr "Waarde '{}' niet gevonden in het verzoek."
+
+#: cmnsd/mixins/RequestMixin.py:99
+#, python-brace-format
+msgid " Falling back to default: '{}'"
+msgstr " Terugvallen op standaard: '{}'"
+
+#: cmnsd/mixins/ResponseMixin.py:108
+#, python-brace-format
+msgid "error when encoding response to JSON{}"
+msgstr "fout bij coderen van antwoord naar JSON{}"
+
+#: cmnsd/mixins/ResponseMixin.py:114
+#, python-brace-format
+msgid "unexpected error when encoding response to JSON: {}"
+msgstr "onverwachte fout bij coderen van antwoord naar JSON: {}"
+
+#: cmnsd/mixins/ResponseMixin.py:151
+#, python-brace-format
+msgid "error rendering template '{}'{}"
+msgstr "fout bij renderen van template '{}'{}"
+
+#: cmnsd/mixins/ResponseMixin.py:170
+#, python-brace-format
+msgid "error decoding JSON from rendered template '{}': {}"
+msgstr "fout bij decoderen van JSON uit gerenderde template '{}': {}"
+
+#: cmnsd/mixins/ResponseMixin.py:177
+#, python-brace-format
+msgid "searched for templates: {}"
+msgstr "gezocht naar templates: {}"
+
+#: cmnsd/mixins/ResponseMixin.py:178
+#, python-brace-format
+msgid "{} template for '{}:{}' not found in field/ when rendering field"
+msgstr "{} template voor '{}:{}' niet gevonden in field/ bij renderen van veld"
+
+#: cmnsd/mixins/ResponseMixin.py:193 cmnsd/views/ajax_dispatch.py:147
+#, python-brace-format
+msgid "field '{}' is not found in {} '{}'"
+msgstr "veld '{}' niet gevonden in {} '{}'"
+
+#: cmnsd/mixins/ResponseMixin.py:195 cmnsd/mixins/ResponseMixin.py:197
+#, python-brace-format
+msgid "unexpected error retrieving field '{}' from {} '{}': {}"
+msgstr "onverwachte fout bij ophalen van veld '{}' uit {} '{}': {}"
+
+#: cmnsd/mixins/ResponseMixin.py:324
+msgid "Message template not found when rendering message"
+msgstr "Berichttemplate niet gevonden bij renderen van bericht"
+
+#: cmnsd/models/BaseModel.py:40
+msgid "Short unique ID for public URL use"
+msgstr "Korte unieke ID voor gebruik in publieke URL"
+
+#: cmnsd/models/BaseModel.py:44
+msgid "Concept"
+msgstr "Concept"
+
+#: cmnsd/models/BaseModel.py:45
+msgid "Published"
+msgstr "Gepubliceerd"
+
+#: cmnsd/models/BaseModel.py:46
+msgid "Revoked"
+msgstr "Ingetrokken"
+
+#: cmnsd/models/BaseModel.py:47
+msgid "Deleted"
+msgstr "Verwijderd"
+
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/TagModel.py:11
+msgid "Identifier in URL"
+msgstr "Identifier in URL"
+
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/TagModel.py:11 locations/models/Category.py:14
+#: locations/models/Chain.py:14 locations/models/Region.py:10
+msgid "automatically generated"
+msgstr "automatisch gegenereerd"
+
+#: cmnsd/models/Category.py:16 locations/models/Category.py:15
+msgid "Name of category"
+msgstr "Naam van categorie"
+
+#: cmnsd/models/Comment.py:50
+msgid "comment text"
+msgstr "commentaartekst"
+
+#: cmnsd/models/Comment.py:51
+msgid "markdown supported"
+msgstr "markdown ondersteund"
+
+#: cmnsd/models/Comment.py:59
+#: locations/templates/element/reusable_form_comment.html:20
+#: locations/templates/media/manage_media.html:83
+msgid "title"
+msgstr "titel"
+
+#: cmnsd/models/Comment.py:79
+#, python-brace-format
+msgid "Comment: {preview}…"
+msgstr "Reactie: {preview}…"
+
+#: cmnsd/models/Link.py:12
+msgid "URL of the link"
+msgstr "URL van de link"
+
+#: cmnsd/models/Link.py:17
+msgid "Optional display label for the link"
+msgstr "Optioneel weergavelabel voor de link"
+
+#: cmnsd/models/Link.py:37
+msgid "Enter a valid URL."
+msgstr "Voer een geldige URL in."
+
+#: cmnsd/models/MultiSiteBaseModel.py:27
+msgid "sites"
+msgstr "sites"
+
+#: cmnsd/models/Tag.py:12 cmnsd/models/TagModel.py:12
+msgid "Name of tag"
+msgstr "Naam van tag"
+
+#: cmnsd/models/Tag.py:14 cmnsd/models/TagModel.py:14
+msgid "description of this tag, why it is relevant"
+msgstr "omschrijving van deze tag en waarom die relevant is"
+
+#: cmnsd/models/TagModel.py:50
+msgid "A tag with this name already exists under the same parent."
+msgstr "Er bestaat al een tag met deze naam onder hetzelfde bovenliggend item."
+
+#: cmnsd/models/VisibilityModel.py:7
+msgid "public"
+msgstr "openbaar"
+
+#: cmnsd/models/VisibilityModel.py:8
+msgid "commmunity"
+msgstr "community"
+
+#: cmnsd/models/VisibilityModel.py:9
+#: locations/templates/field/userpreferences/family.html:2
+msgid "family"
+msgstr "familie"
+
+#: cmnsd/models/VisibilityModel.py:10
+#: locations/templates/function/location/nearby.html:27
+msgid "private"
+msgstr "privé"
+
+#: cmnsd/templates/errorpages/400.html:4 cmnsd/templates/errorpages/400.html:6
+msgid "bad request"
+msgstr "ongeldig verzoek"
+
+#: cmnsd/templates/errorpages/400.html:7
+msgid "the server could not understand this request."
+msgstr "de server kon dit verzoek niet begrijpen."
+
+#: cmnsd/templates/errorpages/403.html:4 cmnsd/templates/errorpages/403.html:6
+msgid "access denied"
+msgstr "toegang geweigerd"
+
+#: cmnsd/templates/errorpages/403.html:7
+msgid "you don't have permission to view this page."
+msgstr "je hebt geen toegang tot deze pagina."
+
+#: cmnsd/templates/errorpages/403.html:11
+#: cmnsd/templates/registration/login.html:4
+#: cmnsd/templates/registration/login.html:104
+#: cmnsd/templates/registration/login.html:137
+#: cmnsd/templates/registration/password_reset_complete.html:33
+#: cmnsd/templates/registration/register.html:171
+msgid "sign in"
+msgstr "inloggen"
+
+#: cmnsd/templates/errorpages/403.html:12
+#: cmnsd/templates/errorpages/403.html:14
+#: cmnsd/templates/errorpages/base_error.html:97
+#: cmnsd/templates/errorpages/private.html:10
+msgid "go to homepage"
+msgstr "ga naar startpagina"
+
+#: cmnsd/templates/errorpages/404.html:4 cmnsd/templates/errorpages/404.html:6
+msgid "page not found"
+msgstr "pagina niet gevonden"
+
+#: cmnsd/templates/errorpages/404.html:7
+msgid "the page you're looking for doesn't exist or has been moved."
+msgstr "de pagina die je zoekt bestaat niet of is verplaatst."
+
+#: cmnsd/templates/errorpages/base_error.html:7
+msgid "error"
+msgstr "fout"
+
+#: cmnsd/templates/errorpages/private.html:4
+msgid "not available"
+msgstr "niet beschikbaar"
+
+#: cmnsd/templates/errorpages/private.html:6
+msgid "this content is not available to you"
+msgstr "deze inhoud is niet beschikbaar voor jou"
+
+#: cmnsd/templates/errorpages/private.html:7
+msgid "this page exists but is private or restricted to specific people."
+msgstr ""
+"deze pagina bestaat maar is privé of alleen toegankelijk voor bepaalde "
+"personen."
+
+#: cmnsd/templates/errorpages/private.html:11
+msgid "go back"
+msgstr "ga terug"
+
+#: cmnsd/templates/field/link.html:1
+#, python-format
+msgid "Open '%(linkname)s' in a new window"
+msgstr "Open '%(linkname)s' in een nieuw venster"
+
+#: cmnsd/templates/registration/login.html:122
+msgid "show password"
+msgstr "wachtwoord tonen"
+
+#: cmnsd/templates/registration/login.html:141
+msgid "forgot password?"
+msgstr "wachtwoord vergeten?"
+
+#: cmnsd/templates/registration/password_change_done.html:4
+#: cmnsd/templates/registration/password_change_done.html:31
+#: cmnsd/templates/registration/password_reset_complete.html:31
+msgid "password updated"
+msgstr "wachtwoord bijgewerkt"
+
+#: cmnsd/templates/registration/password_change_done.html:32
+msgid "your password has been changed successfully."
+msgstr "je wachtwoord is succesvol gewijzigd."
+
+#: cmnsd/templates/registration/password_change_done.html:33
+#: cmnsd/templates/registration/password_change_form.html:82
+msgid "back to profile"
+msgstr "terug naar profiel"
+
+#: cmnsd/templates/registration/password_change_form.html:4
+#: cmnsd/templates/registration/password_change_form.html:45
+#: cmnsd/templates/registration/profile.html:74
+msgid "change password"
+msgstr "wachtwoord wijzigen"
+
+#: cmnsd/templates/registration/password_change_form.html:76
+msgid "update password"
+msgstr "wachtwoord bijwerken"
+
+#: cmnsd/templates/registration/password_reset_complete.html:4
+msgid "password reset complete"
+msgstr "wachtwoord opnieuw ingesteld"
+
+#: cmnsd/templates/registration/password_reset_complete.html:32
+msgid "your password has been set. You can now sign in with your new password."
+msgstr ""
+"je wachtwoord is ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord."
+
+#: cmnsd/templates/registration/password_reset_confirm.html:4
+#: cmnsd/templates/registration/password_reset_confirm.html:42
+msgid "choose new password"
+msgstr "nieuw wachtwoord kiezen"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:43
+msgid "enter and confirm your new password"
+msgstr "voer je nieuwe wachtwoord in en bevestig het"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:62
+msgid "set new password"
+msgstr "nieuw wachtwoord instellen"
+
+#: cmnsd/templates/registration/password_reset_confirm.html:66
+msgid "this reset link is invalid or has expired. Please request a new one."
+msgstr "deze resetlink is ongeldig of verlopen. Vraag een nieuwe aan."
+
+#: cmnsd/templates/registration/password_reset_confirm.html:69
+msgid "request new link"
+msgstr "nieuwe link aanvragen"
+
+#: cmnsd/templates/registration/password_reset_done.html:4
+#: cmnsd/templates/registration/password_reset_done.html:27
+msgid "check your email"
+msgstr "controleer je e-mail"
+
+#: cmnsd/templates/registration/password_reset_done.html:29
+msgid ""
+"if an account exists for that address, we've sent a link to reset your "
+"password. Check your spam folder if it doesn't arrive shortly."
+msgstr ""
+"als er een account bestaat voor dat adres, hebben we een resetlink "
+"verstuurd. Controleer je spammap als het bericht niet snel aankomt."
+
+#: cmnsd/templates/registration/password_reset_done.html:32
+#: cmnsd/templates/registration/password_reset_form.html:54
+msgid "back to sign in"
+msgstr "terug naar inloggen"
+
+#: cmnsd/templates/registration/password_reset_form.html:4
+#: cmnsd/templates/registration/password_reset_form.html:40
+msgid "reset password"
+msgstr "wachtwoord opnieuw instellen"
+
+#: cmnsd/templates/registration/password_reset_form.html:41
+msgid "enter your email address and we'll send you a reset link"
+msgstr "voer je e-mailadres in en we sturen je een resetlink"
+
+#: cmnsd/templates/registration/password_reset_form.html:50
+msgid "send reset link"
+msgstr "resetlink versturen"
+
+#: cmnsd/templates/registration/profile.html:4
+#: cmnsd/templates/registration/profile.html:43
+msgid "my profile"
+msgstr "mijn profiel"
+
+#: cmnsd/templates/registration/profile.html:68
+msgid "save changes"
+msgstr "wijzigingen opslaan"
+
+#: cmnsd/templates/registration/register.html:4
+#: cmnsd/templates/registration/register.html:115
+#: cmnsd/templates/registration/register.html:167
+msgid "create account"
+msgstr "account aanmaken"
+
+#: cmnsd/templates/registration/register.html:150
+msgid "auto-generated from your name — you can change it"
+msgstr "automatisch gegenereerd op basis van je naam — je kunt het aanpassen"
+
+#: cmnsd/templates/registration/register.html:171
+msgid "already have an account"
+msgstr "al een account"
+
+#: cmnsd/templatetags/humanize_date.py:60
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d hour"
+msgstr "%(count)d uur"
+
+#: cmnsd/templatetags/humanize_date.py:61
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d hours"
+msgstr "%(count)d uur"
+
+#: cmnsd/templatetags/humanize_date.py:63
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d minute"
+msgstr "%(count)d minuut"
+
+#: cmnsd/templatetags/humanize_date.py:64
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d minutes"
+msgstr "%(count)d minuten"
+
+#: cmnsd/templatetags/humanize_date.py:66
+msgctxt "time difference"
+msgid "just now"
+msgstr "zojuist"
+
+#: cmnsd/templatetags/humanize_date.py:68
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d day"
+msgstr "%(count)d dag"
+
+#: cmnsd/templatetags/humanize_date.py:69
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d days"
+msgstr "%(count)d dagen"
+
+#: cmnsd/templatetags/humanize_date.py:72
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d week"
+msgstr "%(count)d week"
+
+#: cmnsd/templatetags/humanize_date.py:73
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d weeks"
+msgstr "%(count)d weken"
+
+#: cmnsd/templatetags/humanize_date.py:76
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d month"
+msgstr "%(count)d maand"
+
+#: cmnsd/templatetags/humanize_date.py:77
+#, python-format
+msgctxt "time difference"
+msgid "%(count)d months"
+msgstr "%(count)d maanden"
+
+#: cmnsd/templatetags/humanize_date.py:80
+#, python-format
+msgctxt "time difference future"
+msgid "in %(text)s"
+msgstr "over %(text)s"
+
+#: cmnsd/templatetags/humanize_date.py:82
+#, python-format
+msgctxt "time difference past"
+msgid "%(text)s ago"
+msgstr "%(text)s geleden"
+
+#: cmnsd/views/ajax__crud__util.py:23
+msgid "no model detected for update"
+msgstr "geen model gevonden voor bijwerken"
+
+#: cmnsd/views/ajax__crud__util.py:25
+msgid "no object detected for update"
+msgstr "geen object gevonden voor bijwerken"
+
+#: cmnsd/views/ajax__crud_delete.py:18
+#, python-brace-format
+msgid "object '{}' '{}' marked as deleted"
+msgstr "object '{}' '{}' gemarkeerd als verwijderd"
+
+#: cmnsd/views/ajax__crud_delete.py:26
+#, python-brace-format
+msgid "failed to mark object as deleted{}"
+msgstr "object markeren als verwijderd mislukt{}"
+
+#: cmnsd/views/ajax__crud_delete.py:27
+msgid "failed to mark object as deleted"
+msgstr "object markeren als verwijderd mislukt"
+
+#: cmnsd/views/ajax__crud_delete.py:32
+#, python-brace-format
+msgid "object '{}' '{}' deleted"
+msgstr "object '{}' '{}' verwijderd"
+
+#: cmnsd/views/ajax__crud_delete.py:40
+#, python-brace-format
+msgid "failed to delete object{}"
+msgstr "object verwijderen mislukt{}"
+
+#: cmnsd/views/ajax__crud_delete.py:41
+msgid "failed to delete object"
+msgstr "object verwijderen mislukt"
+
+#: cmnsd/views/ajax__crud_update.py:40
+#, python-brace-format
+msgid "an unexpected error occured when updating fields of {}{}"
+msgstr "onverwachte fout bij bijwerken van velden van {}{}"
+
+#: cmnsd/views/ajax__crud_update.py:76
+#, python-brace-format
+msgid "'content_for' is required when creating a {}"
+msgstr "'content_for' is verplicht bij het aanmaken van een {}"
+
+#: cmnsd/views/ajax__crud_update.py:81
+#, python-brace-format
+msgid "'{}' is not an allowed content type for {}"
+msgstr "'{}' is geen toegestaan inhoudstype voor {}"
+
+#: cmnsd/views/ajax__crud_update.py:98
+#, python-brace-format
+msgid "no {} with token '{}' found"
+msgstr "geen {} gevonden met token '{}'"
+
+#: cmnsd/views/ajax__crud_update.py:105
+#, python-brace-format
+msgid "no {} with id '{}' found"
+msgstr "geen {} gevonden met id '{}'"
+
+#: cmnsd/views/ajax__crud_update.py:110
+msgid "'content_token' or 'content_id' is required when 'content_for' is set"
+msgstr ""
+"'content_token' of 'content_id' is verplicht als 'content_for' is ingesteld"
+
+#: cmnsd/views/ajax__crud_update.py:177
+#, python-brace-format
+msgid "Malformed key '{}' skipped while building payload."
+msgstr "Ongeldige sleutel '{}' overgeslagen bij opbouwen van payload."
+
+#: cmnsd/views/ajax__crud_update.py:231
+msgid "invalid model metadata — cannot initialize object"
+msgstr "ongeldige model-metadata — kan object niet initialiseren"
+
+#: cmnsd/views/ajax__crud_update.py:278
+#, python-brace-format
+msgid "could not initialize object for model '{}': {}"
+msgstr "object voor model '{}' kon niet worden geïnitialiseerd: {}"
+
+#: cmnsd/views/ajax__crud_update.py:341
+#, python-brace-format
+msgid "field '{}' is of an unsupported type for update{}"
+msgstr "veld '{}' heeft een niet-ondersteund type voor bijwerken{}"
+
+#: cmnsd/views/ajax__crud_update.py:351 cmnsd/views/ajax__crud_update.py:359
+#: cmnsd/views/ajax__crud_update.py:366
+#, python-brace-format
+msgid "field '{}' does not exist on object {} '{}'"
+msgstr "veld '{}' bestaat niet op object {} '{}'"
+
+#: cmnsd/views/ajax_dispatch.py:60
+#, python-brace-format
+msgid "an error occurred during request processing{}"
+msgstr "er is een fout opgetreden bij het verwerken van het verzoek{}"
+
+#: cmnsd/views/ajax_dispatch.py:67
+msgid "model is required"
+msgstr "model is verplicht"
+
+#: cmnsd/views/ajax_dispatch.py:70
+msgid "object is required"
+msgstr "object is verplicht"
+
+#: cmnsd/views/ajax_dispatch.py:99
+msgid "at least two identifiers are required for object lookup"
+msgstr ""
+"minimaal twee identifiers zijn vereist voor het opzoeken van een object"
+
+#: cmnsd/views/ajax_dispatch.py:132
+#, python-brace-format
+msgid "field '{}' could not be set in {} '{}'{}"
+msgstr "veld '{}' kon niet worden ingesteld in {} '{}'{}"
+
+#: cmnsd/views/ajax_dispatch.py:143
+#, python-brace-format
+msgid "function '{}' could not be set in {} '{}'{}"
+msgstr "functie '{}' kon niet worden uitgevoerd in {} '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:69
+#, python-brace-format
+msgid "no field with the name '{}' could be found in model '{}'"
+msgstr "geen veld met de naam '{}' gevonden in model '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:120
+#, python-brace-format
+msgid "access to field '{}' is blocked in configuration"
+msgstr "toegang tot veld '{}' is geblokkeerd in de configuratie"
+
+#: cmnsd/views/ajax_utils_meta_field.py:127
+#, python-brace-format
+msgid "access to field '{}' is restricted to staff users"
+msgstr "toegang tot veld '{}' is beperkt tot medewerkers"
+
+#: cmnsd/views/ajax_utils_meta_field.py:138
+#, python-brace-format
+msgid "access to field '{}' is blocked in model configuration"
+msgstr "toegang tot veld '{}' is geblokkeerd in de modelconfiguratie"
+
+#: cmnsd/views/ajax_utils_meta_field.py:198
+#: cmnsd/views/ajax_utils_meta_function.py:114
+#, python-brace-format
+msgid "error occurred while fetching related objects for field '{}'{}"
+msgstr "fout bij ophalen van gerelateerde objecten voor veld '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:209
+#, python-brace-format
+msgid "error occurred while calling field '{}'{}"
+msgstr "fout bij aanroepen van veld '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:348
+#, python-brace-format
+msgid "could not resolve display value for field '{}' with value '{}'{}"
+msgstr ""
+"weergavewaarde voor veld '{}' met waarde '{}' kon niet worden bepaald{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:404
+#, python-brace-format
+msgid "invalid boolean value '{}'"
+msgstr "ongeldige booleaanse waarde '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:424
+#, python-brace-format
+msgid "invalid JSON value for field '{}'"
+msgstr "ongeldige JSON-waarde voor veld '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:437
+#, python-brace-format
+msgid "error casting value '{}' to correct type for field '{}'{}"
+msgstr ""
+"fout bij omzetten van waarde '{}' naar het juiste type voor veld '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:493
+#, python-brace-format
+msgid "invalid choice '{}' for field '{}'"
+msgstr "ongeldige keuze '{}' voor veld '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:523
+#, python-brace-format
+msgid ""
+"cannot update {}'s simple field '{}' with value '{}' because value does not "
+"belong to a {}"
+msgstr ""
+"kan het eenvoudige veld '{}' van {} niet bijwerken met waarde '{}' omdat de "
+"waarde niet behoort tot een {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:593
+#, python-brace-format
+msgid ""
+"cannot update {}'s related field '{}' with value '{}' because value does not "
+"belong to a {}"
+msgstr ""
+"kan het gerelateerde veld '{}' van {} niet bijwerken met waarde '{}' omdat "
+"de waarde niet behoort tot een {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:596
+#, python-brace-format
+msgid ""
+"cannot update {}'s related field '{}' with value '{}' because related model "
+"could not be determined"
+msgstr ""
+"kan het gerelateerde veld '{}' van {} niet bijwerken met waarde '{}' omdat "
+"het gerelateerde model niet kon worden bepaald"
+
+#: cmnsd/views/ajax_utils_meta_field.py:614
+#: cmnsd/views/ajax_utils_meta_field.py:703
+#, python-brace-format
+msgid "unable to update field '{}' on related object '{}'{}"
+msgstr "kan veld '{}' niet bijwerken op gerelateerd object '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:641
+#, python-brace-format
+msgid "removed '{}' '{}' from {} {}"
+msgstr "'{}' '{}' verwijderd uit {} {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:645
+#, python-brace-format
+msgid "unable to remove value of {} to {}{}"
+msgstr "kan waarde van {} niet verwijderen uit {}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:655
+#, python-brace-format
+msgid "added '{}' '{}' to '{}' '{}'"
+msgstr "'{}' '{}' toegevoegd aan '{}' '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:659
+#, python-brace-format
+msgid "unable to add value of {} to {}{}"
+msgstr "kan waarde van {} niet toevoegen aan {}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:721
+#, python-brace-format
+msgid "deleted '{}' '{}'"
+msgstr "'{}' '{}' verwijderd"
+
+#: cmnsd/views/ajax_utils_meta_field.py:726
+#, python-brace-format
+msgid "unable to delete '{}' '{}'{}"
+msgstr "kan '{}' '{}' niet verwijderen{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:739
+#, python-brace-format
+msgid "reassigned '{}' '{}' to '{}' '{}'"
+msgstr "'{}' '{}' opnieuw toegewezen aan '{}' '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:746
+#, python-brace-format
+msgid "unable to reassign '{}' '{}'{}"
+msgstr "kan '{}' '{}' niet opnieuw toewijzen{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:780
+#, python-brace-format
+msgid "Invalid identifier format for related object lookup: {}"
+msgstr "Ongeldig identificatieformaat voor opzoeken van gerelateerd object: {}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:785
+#, python-brace-format
+msgid ""
+"Maximum recursion depth ({}) exceeded resolving related objects for '{}'."
+msgstr ""
+"Maximale recursiviteitsdiepte ({}) overschreden bij oplossen van "
+"gerelateerde objecten voor '{}'."
+
+#: cmnsd/views/ajax_utils_meta_field.py:891
+#, python-brace-format
+msgid ""
+"maximum recursion depth ({}) exceeded while creating related objects for "
+"model '{}'"
+msgstr ""
+"maximale recursiviteitsdiepte ({}) overschreden bij aanmaken van "
+"gerelateerde objecten voor model '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:899
+#, python-brace-format
+msgid ""
+"creation of new related objects is not allowed for foreign key field '{}'"
+msgstr ""
+"het aanmaken van nieuwe gerelateerde objecten is niet toegestaan voor "
+"foreign key-veld '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:905
+#, python-brace-format
+msgid "creation of new related objects is not allowed for related field '{}'"
+msgstr ""
+"het aanmaken van nieuwe gerelateerde objecten is niet toegestaan voor "
+"gerelateerd veld '{}'"
+
+#: cmnsd/views/ajax_utils_meta_field.py:948
+#, python-brace-format
+msgid "created new '{}' '{}'"
+msgstr "nieuw '{}' '{}' aangemaakt"
+
+#: cmnsd/views/ajax_utils_meta_field.py:957
+#, python-brace-format
+msgid "error creating new related object for the given arguments: {}{}"
+msgstr ""
+"fout bij aanmaken van nieuw gerelateerd object voor de opgegeven argumenten: "
+"{}{}"
+
+#: cmnsd/views/ajax_utils_meta_field.py:984
+#, python-brace-format
+msgid "invalid name '{}': no valid parts found"
+msgstr "ongeldige naam '{}': geen geldige onderdelen gevonden"
+
+#: cmnsd/views/ajax_utils_meta_function.py:54
+#, python-brace-format
+msgid "'{}' is not a valid function of model '{}'"
+msgstr "'{}' is geen geldige functie van model '{}'"
+
+#: cmnsd/views/ajax_utils_meta_function.py:59
+#, python-brace-format
+msgid "no function with the name '{}' could be found in object of type '{}'{}"
+msgstr "geen functie met de naam '{}' gevonden in object van type '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_function.py:138
+#, python-brace-format
+msgid "error occurred while calling function '{}'{}"
+msgstr "fout bij aanroepen van functie '{}'{}"
+
+#: cmnsd/views/ajax_utils_meta_model.py:42
+#, python-brace-format
+msgid "access to model '{}' is blocked in application configuration"
+msgstr "toegang tot model '{}' is geblokkeerd in de applicatieconfiguratie"
+
+#: cmnsd/views/ajax_utils_meta_model.py:79
+#, python-brace-format
+msgid "no model with the name '{}' could be found"
+msgstr "geen model met de naam '{}' gevonden"
+
+#: cmnsd/views/ajax_utils_meta_model.py:83
+#, python-brace-format
+msgid ""
+"multiple models with the name '{}' were found. specify 'app_label.modelname' "
+"instead."
+msgstr ""
+"meerdere modellen met de naam '{}' gevonden. Gebruik 'app_label.modelnaam' "
+"in plaats daarvan."
+
+#: cmnsd/views/ajax_utils_meta_object.py:46
+msgid "no valid model supplied in meta_object.__init__"
+msgstr "geen geldig model opgegeven in meta_object.__init__"
+
+#: cmnsd/views/ajax_utils_meta_object.py:63
+#, python-brace-format
+msgid "no valid identifiers supplied for object lookup in model '{}'"
+msgstr ""
+"geen geldige identifiers opgegeven voor opzoeken van object in model '{}'"
+
+#: cmnsd/views/ajax_utils_meta_object.py:74
+#, python-brace-format
+msgid "multiple objects were found for the given arguments: {}"
+msgstr "meerdere objecten gevonden voor de opgegeven argumenten: {}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:77
+#, python-brace-format
+msgid ""
+"you do not have permission to access the requested {} with given arguments {}"
+msgstr ""
+"je hebt geen toegang tot de gevraagde {} met de opgegeven argumenten {}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:78
+#, python-brace-format
+msgid "no object could be found in this queryset for the given arguments: {}"
+msgstr "geen object gevonden in deze queryset voor de opgegeven argumenten: {}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:87
+msgid "no object to commit changes to"
+msgstr "geen object om wijzigingen op te slaan"
+
+#: cmnsd/views/ajax_utils_meta_object.py:92
+#, python-brace-format
+msgid "error committing changes to {} '{}': {}{}"
+msgstr "fout bij opslaan van wijzigingen in {} '{}': {}{}"
+
+#: cmnsd/views/ajax_utils_meta_object.py:106
+#, python-brace-format
+msgid "succesfully updated {} with the following change:"
+msgstr "{} succesvol bijgewerkt met de volgende wijziging:"
+
+#: cmnsd/views/ajax_utils_meta_object.py:108
+#, python-brace-format
+msgid "succesfully updated {} with the following {} changes:"
+msgstr "{} succesvol bijgewerkt met de volgende {} wijzigingen:"
+
+#: cmnsd/views/ajax_utils_meta_object.py:122
+#: cmnsd/views/ajax_utils_meta_object.py:129
+msgid "empty"
+msgstr "leeg"
+
+#: cmnsd/views/ajax_utils_meta_object.py:132
+#, python-brace-format
+msgid "changed field '{}' from {} to {}"
+msgstr "veld '{}' gewijzigd van {} naar {}"
+
+#: cmnsd/views/auth/login.py:11
+msgid "You are already signed in."
+msgstr "Je bent al ingelogd."
+
+#: cmnsd/views/auth/login.py:17
+msgid "You have been signed in."
+msgstr "Je bent ingelogd."
+
+#: cmnsd/views/auth/logout.py:9
+msgid "You have been signed out."
+msgstr "Je bent uitgelogd."
+
+#: cmnsd/views/auth/profile.py:15
+msgid "Profile updated."
+msgstr "Profiel bijgewerkt."
+
+#: locations/admin.py:29
+msgid "System Information"
+msgstr "Systeeminformatie"
+
+#: locations/admin.py:36
+msgid "Recalculate computed fields (run save on selected items)"
+msgstr "Berekende velden herberekenen (sla geselecteerde items opnieuw op)"
+
+#: locations/admin.py:63 locations/admin.py:91 locations/admin.py:106
+#: locations/admin.py:119 locations/admin.py:149
+msgid "Basic Information"
+msgstr "Basisinformatie"
+
+#: locations/admin.py:66
+msgid "Contact Details"
+msgstr "Contactgegevens"
+
+#: locations/admin.py:69
+msgid "Coordinates"
+msgstr "Coördinaten"
+
+#: locations/admin.py:72
+msgid "Classification"
+msgstr "Classificatie"
+
+#: locations/admin.py:75 locations/admin.py:122 locations/admin.py:203
+#: locations/admin.py:219 locations/admin.py:252
+msgid "Visibility"
+msgstr "Zichtbaarheid"
+
+#: locations/admin.py:135
+msgid "Link Information"
+msgstr "Linkinformatie"
+
+#: locations/admin.py:161
+msgid "App Information"
+msgstr "App-informatie"
+
+#: locations/admin.py:173
+msgid "User Preferences"
+msgstr "Gebruikersvoorkeuren"
+
+#: locations/admin.py:185
+msgid "Visit Information"
+msgstr "Bezoekinfo"
+
+#: locations/admin.py:197
+msgid "Comment"
+msgstr "Reactie"
+
+#: locations/admin.py:200
+msgid "Attached to"
+msgstr "Gekoppeld aan"
+
+#: locations/admin.py:216
+msgid "Media"
+msgstr "Media"
+
+#: locations/admin.py:249
+msgid "List"
+msgstr "Lijst"
+
+#: locations/admin.py:267
+msgid "Item"
+msgstr "Item"
+
+#: locations/admin.py:270
+msgid "Accommodation"
+msgstr "Accommodatie"
+
+#: locations/admin.py:273
+msgid "Media & Routing"
+msgstr "Media & Routering"
+
+#: locations/admin.py:286
+msgid "Route"
+msgstr "Route"
+
+#: locations/admin.py:289
+msgid "Cached result"
+msgstr "Gecached resultaat"
+
+#: locations/models/Category.py:14 locations/models/Chain.py:14
+#: locations/models/Region.py:10
+msgid "identifier in URL"
+msgstr "identifier in URL"
+
+#: locations/models/Chain.py:17
+msgid "name of location as it is identified by"
+msgstr "naam van de locatie zoals die herkend wordt"
+
+#: locations/models/List.py:66
+msgid "Itinerary"
+msgstr "Reisroute"
+
+#: locations/models/List.py:67
+msgid "Bucket list"
+msgstr "Bucketlist"
+
+#: locations/models/List.py:68
+msgid "Themed list"
+msgstr "Themalijst"
+
+#: locations/models/List.py:69
+msgid "Logbook"
+msgstr "Logboek"
+
+#: locations/models/List.py:87
+msgid "Archived lists are read-only and hidden from active views."
+msgstr ""
+"Gearchiveerde lijsten zijn alleen-lezen en verborgen in actieve weergaven."
+
+#: locations/models/List.py:133
+msgid "Number of nights"
+msgstr "Aantal nachten"
+
+#: locations/models/Location.py:137
+msgid "Markdown is supported"
+msgstr "Markdown wordt ondersteund"
+
+#: locations/models/Location.py:183
+msgid "distance in km from departure center"
+msgstr "afstand in km vanaf het vertrekpunt"
+
+#: locations/models/Location.py:280
+#: locations/templates/function/location/nearby.html:9
+#: locations/templates/function/location/nearby.html:26
+#: locations/templates/function/location/osm_map.html:24
+#: locations/templates/model/locations/list.html:98
+msgid "activity"
+msgstr "activiteit"
+
+#: locations/models/Location.py:282
+#: locations/templates/function/location/nearby.html:8
+#: locations/templates/function/location/nearby.html:25
+#: locations/templates/function/location/osm_map.html:20
+#: locations/templates/model/locations/list.html:92
+msgid "accommodation"
+msgstr "accommodatie"
+
+#: locations/models/Location.py:284
+msgid "mixed"
+msgstr "gemengd"
+
+#: locations/models/Preferences.py:16
+#, python-brace-format
+msgid "URL template with placeholders, e.g. https://waze.com/ul?ll={lat},{lon}"
+msgstr ""
+"URL-sjabloon met plaatsaanduidingen, bijv. https://waze.com/ul?ll={lat},{lon}"
+
+#: locations/models/Preferences.py:18
+msgid "navigation"
+msgstr "navigatie"
+
+#: locations/models/Preferences.py:40
+msgid "family members"
+msgstr "familieleden"
+
+#: locations/models/Preferences.py:87
+msgid "january"
+msgstr "januari"
+
+#: locations/models/Preferences.py:88
+msgid "february"
+msgstr "februari"
+
+#: locations/models/Preferences.py:89
+msgid "march"
+msgstr "maart"
+
+#: locations/models/Preferences.py:90
+msgid "april"
+msgstr "april"
+
+#: locations/models/Preferences.py:91
+msgid "may"
+msgstr "mei"
+
+#: locations/models/Preferences.py:92
+msgid "june"
+msgstr "juni"
+
+#: locations/models/Preferences.py:93
+msgid "july"
+msgstr "juli"
+
+#: locations/models/Preferences.py:94
+msgid "august"
+msgstr "augustus"
+
+#: locations/models/Preferences.py:95
+msgid "september"
+msgstr "september"
+
+#: locations/models/Preferences.py:96
+msgid "october"
+msgstr "oktober"
+
+#: locations/models/Preferences.py:97
+msgid "november"
+msgstr "november"
+
+#: locations/models/Preferences.py:98
+msgid "december"
+msgstr "december"
+
+#: locations/models/Preferences.py:100
+msgid "year of visit"
+msgstr "jaar van bezoek"
+
+#: locations/models/Preferences.py:102
+msgid "day of visit"
+msgstr "dag van bezoek"
+
+#: locations/models/Region.py:16
+msgid "country"
+msgstr "land"
+
+#: locations/models/Region.py:17
+msgid "region"
+msgstr "regio"
+
+#: locations/models/Region.py:18
+msgid "department"
+msgstr "departement"
+
+#: locations/models/Region.py:19
+msgid "locality"
+msgstr "plaats"
+
+#: locations/models/Region.py:25
+msgid "the level of the region based on its position in the hierarchy"
+msgstr "het niveau van de regio op basis van de positie in de hiërarchie"
+
+#: locations/models/Region.py:25
+msgid "automatically calculated"
+msgstr "automatisch berekend"
+
+#: locations/models/Region.py:31
+msgid "average distance of all locations/subregions in this region"
+msgstr "gemiddelde afstand van alle locaties/subregio's in deze regio"
+
+#: locations/models/Region.py:109
+msgid "a region with this name already exists under the same parent."
+msgstr ""
+"er bestaat al een regio met deze naam onder hetzelfde bovenliggend item."
+
+#: locations/templates/comments/comments_list.html:4
+#: locations/templates/comments/comments_list.html:13
+msgid "Comments"
+msgstr "Reacties"
+
+#: locations/templates/comments/comments_list.html:70
+#, python-format
+msgid ""
+"\n"
+"            Page %(current)s of %(total)s\n"
+"          "
+msgstr ""
+"\n"
+"            Pagina %(current)s van %(total)s\n"
+"          "
+
+#: locations/templates/comments/comments_list.html:83
+msgid "No comments found."
+msgstr "Geen reacties gevonden."
+
+#: locations/templates/element/location/topaction_distance_to_home.html:6
+msgid "distance to your home is"
+msgstr "afstand tot jouw thuis is"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:6
+msgid "hours"
+msgstr "uur"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:8
+msgid "placeholder for calculate distance to home"
+msgstr "afstand tot thuis berekenen"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:12
+msgid "where do you live"
+msgstr "waar woon je"
+
+#: locations/templates/element/location/topaction_distance_to_home.html:12
+msgid "please set your home address in your preferences to see the distance"
+msgstr "stel je thuisadres in via je voorkeuren om de afstand te zien"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+msgid "stop editing location"
+msgstr "stoppen met bewerken van locatie"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+msgid "unsaved changes will be lost"
+msgstr "niet-opgeslagen wijzigingen gaan verloren"
+
+#: locations/templates/element/location/topaction_edit_all.html:15
+#: locations/templates/element/reusable_edit_button.html:3
+#: locations/templates/field/location/categories.html:2
+#: locations/templates/field/location/chain.html:2
+#: locations/templates/field/location/size.html:2
+#: locations/templates/field/location/visibility.html:2
+#: locations/templates/function/location/filtered_descriptions.html:6
+#: locations/templates/object/comment.html:22
+msgid "edit"
+msgstr "bewerken"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:7
+msgid "lists with"
+msgstr "lijsten met"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:10
+#: locations/templates/element/location/topactions_favorite.html:15
+#: locations/templates/field/location/visits.html:10
+msgid "login or register"
+msgstr "inloggen of registreren"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:11
+msgid ""
+"You need an account to store this location in a list. Please login or "
+"register."
+msgstr ""
+"Je hebt een account nodig om deze locatie in een lijst op te slaan. Log in "
+"of registreer je."
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "you have this location in your lists"
+msgstr "je hebt deze locatie in je lijsten"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "this location is in someones lists"
+msgstr "deze locatie staat in iemands lijsten"
+
+#: locations/templates/element/location/topaction_filtered_lists.html:17
+msgid "this location is not in any list"
+msgstr "deze locatie staat in geen enkele lijst"
+
+#: locations/templates/element/location/topaction_manage_media.html:7
+msgid "manage media for"
+msgstr "media beheren voor"
+
+#: locations/templates/element/location/topactions_admin_view.html:1
+msgid "open this object in django&apos;s admin"
+msgstr "dit object openen in Django-beheer"
+
+#: locations/templates/element/location/topactions_favorite.html:16
+#: locations/templates/field/location/visits.html:11
+msgid "You need an account to love this location. Please login or register."
+msgstr ""
+"Je hebt een account nodig om deze locatie te liken. Log in of registreer je."
+
+#: locations/templates/element/reusable_delete_button.html:8
+msgid "are you sure you want to delete this?"
+msgstr "weet je zeker dat je dit wilt verwijderen?"
+
+#: locations/templates/element/reusable_description_form.html:13
+msgid "enter description here"
+msgstr "voer hier een beschrijving in"
+
+#: locations/templates/element/reusable_description_form.html:17
+#: locations/templates/field/location/visibility.html:2
+#: locations/templates/media/manage_media.html:87
+msgid "visibility"
+msgstr "zichtbaarheid"
+
+#: locations/templates/element/reusable_description_form.html:23
+msgid "save"
+msgstr "opslaan"
+
+#: locations/templates/element/reusable_description_form.html:23
+#: locations/templates/function/location/filtered_descriptions.html:4
+msgid "add"
+msgstr "toevoegen"
+
+#: locations/templates/element/reusable_edit_button.html:3
+#: locations/templates/field/userpreferences/all_apps.html:5
+#: locations/templates/field/userpreferences/external_maps_consent.html:32
+#: locations/templates/field/userpreferences/family.html:5
+#: locations/templates/field/userpreferences/home.html:5
+#: locations/templates/object/comment.html:22
+msgid "stop editing"
+msgstr "stoppen met bewerken"
+
+#: locations/templates/element/reusable_form_comment.html:14
+msgid "add a comment"
+msgstr "reactie toevoegen"
+
+#: locations/templates/element/reusable_form_comment.html:16
+msgid "your comment"
+msgstr "jouw reactie"
+
+#: locations/templates/element/reusable_form_comment.html:16
+msgid "markdown is supported"
+msgstr "markdown wordt ondersteund"
+
+#: locations/templates/element/reusable_form_comment.html:20
+#: locations/templates/media/manage_media.html:84
+msgid "optional"
+msgstr "optioneel"
+
+#: locations/templates/element/reusable_form_comment.html:22
+msgid "short subject"
+msgstr "kort onderwerp"
+
+#: locations/templates/element/reusable_form_comment.html:25
+#: locations/templates/function/location/filtered_descriptions.html:20
+#: locations/templates/object/comment.html:15
+msgid "visible to"
+msgstr "zichtbaar voor"
+
+#: locations/templates/element/reusable_form_comment.html:39
+msgid "update"
+msgstr "bijwerken"
+
+#: locations/templates/element/reusable_form_comment.html:39
+msgid "post"
+msgstr "plaatsen"
+
+#: locations/templates/element/reusable_form_with_autosuggest.html:14
+#: locations/templates/field/location/categories.html:22
+#: locations/templates/field/location/chain.html:19
+#: locations/templates/field/location/links.html:24
+#: locations/templates/field/userpreferences/home.html:30
+#: locations/templates/locations/add_location.html:73
+#: templates/navigation.html:68
+msgid "start typing"
+msgstr "begin met typen"
+
+#: locations/templates/field/location/address.html:3
+#: locations/templates/function/location/contact_details.html:3
+#: locations/templates/locations/add_location.html:40
+msgid "address"
+msgstr "adres"
+
+#: locations/templates/field/location/address.html:6
+msgid "address of this"
+msgstr "adres van deze"
+
+#: locations/templates/field/location/categories.html:3
+msgid "category"
+msgstr "categorie"
+
+#: locations/templates/field/location/categories.html:3
+#: locations/templates/locations/add_location.html:68
+msgid "categories"
+msgstr "categorieën"
+
+#: locations/templates/field/location/chain.html:3
+msgid "chain"
+msgstr "keten"
+
+#: locations/templates/field/location/chain.html:36
+msgid "clear value"
+msgstr "waarde wissen"
+
+#: locations/templates/field/location/chain.html:42
+msgid "are you sure you want to remove this value"
+msgstr "weet je zeker dat je deze waarde wilt verwijderen"
+
+#: locations/templates/field/location/description.html:11
+#: locations/templates/function/location/filtered_descriptions.html:9
+msgid "description"
+msgstr "beschrijving"
+
+#: locations/templates/field/location/description.html:12
+msgid "write a longer more detaild description of this"
+msgstr "schrijf een langere, meer gedetailleerde beschrijving hiervan"
+
+#: locations/templates/field/location/description.html:15
+#: locations/templates/field/location/summary.html:14
+msgid "supports markdown formatting"
+msgstr "markdown-opmaak wordt ondersteund"
+
+#: locations/templates/field/location/description.html:16
+msgid "description is visibile to community members"
+msgstr "beschrijving is zichtbaar voor communityleden"
+
+#: locations/templates/field/location/email.html:4
+msgid "email address of this"
+msgstr "e-mailadres van deze"
+
+#: locations/templates/field/location/email.html:7
+msgid "email"
+msgstr "e-mail"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "is your favorite"
+msgstr "is jouw favoriet"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "is someone&apos;s favorite"
+msgstr "is iemands favoriet"
+
+#: locations/templates/field/location/favorited.html:5
+msgid "no one has marked this as favorite yet"
+msgstr "niemand heeft dit nog als favoriet gemarkeerd"
+
+#: locations/templates/field/location/links.html:2
+msgid "edit links"
+msgstr "links bewerken"
+
+#: locations/templates/field/location/links.html:2
+msgid "links"
+msgstr "links"
+
+#: locations/templates/field/location/links.html:9
+msgid "no links available"
+msgstr "geen links beschikbaar"
+
+#: locations/templates/field/location/name.html:13
+msgid "name of"
+msgstr "naam van"
+
+#: locations/templates/field/location/name.html:32
+msgid "added by"
+msgstr "toegevoegd door"
+
+#: locations/templates/field/location/owners_name.html:4
+msgid "owners of this"
+msgstr "eigenaren van deze"
+
+#: locations/templates/field/location/owners_name.html:7
+msgid "owners"
+msgstr "eigenaren"
+
+#: locations/templates/field/location/phone.html:4
+msgid "phone number of this"
+msgstr "telefoonnummer van deze"
+
+#: locations/templates/field/location/phone.html:7
+msgid "phone"
+msgstr "telefoon"
+
+#: locations/templates/field/location/size.html:2
+msgid "size"
+msgstr "grootte"
+
+#: locations/templates/field/location/summary.html:10
+#: locations/templates/locations/add_location.html:55
+msgid "summary"
+msgstr "samenvatting"
+
+#: locations/templates/field/location/summary.html:11
+msgid "write a short descriptive text about this"
+msgstr "schrijf een korte beschrijvende tekst hierover"
+
+#: locations/templates/field/location/summary.html:15
+msgid "summary is visibile to all visitors"
+msgstr "samenvatting is zichtbaar voor alle bezoekers"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "you have visited this place"
+msgstr "je hebt deze plek bezocht"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "someone has visited this place"
+msgstr "iemand heeft deze plek bezocht"
+
+#: locations/templates/field/location/visitors.html:7
+msgid "no one has visited this place yet"
+msgstr "niemand heeft deze plek nog bezocht"
+
+#: locations/templates/field/location/visits.html:7
+msgid "visits to"
+msgstr "bezoeken aan"
+
+#: locations/templates/field/userpreferences/all_apps.html:2
+msgid "links to apps"
+msgstr "links naar apps"
+
+#: locations/templates/field/userpreferences/all_apps.html:15
+msgid ""
+"enable links to third-party apps to open locations in those apps directly "
+"from this site"
+msgstr ""
+"schakel links naar externe apps in om locaties direct vanuit deze site in "
+"die apps te openen"
+
+#: locations/templates/field/userpreferences/all_apps.html:34
+msgid "disable"
+msgstr "uitschakelen"
+
+#: locations/templates/field/userpreferences/all_apps.html:34
+msgid "enable"
+msgstr "inschakelen"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:3
+msgid "external maps"
+msgstr "externe kaarten"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:4
+msgid "allow opening locations in third-party navigation apps"
+msgstr "toestaan dat locaties worden geopend in externe navigatie-apps"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:4
+msgid "loading external maps shares your data with the maps provider"
+msgstr "het laden van externe kaarten deelt je gegevens met de kaartaanbieder"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:24
+msgid "enabled"
+msgstr "ingeschakeld"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:26
+msgid "disabled"
+msgstr "uitgeschakeld"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:45
+msgid "session consent active"
+msgstr "sessietoestemming actief"
+
+#: locations/templates/field/userpreferences/external_maps_consent.html:50
+msgid "revoke"
+msgstr "intrekken"
+
+#: locations/templates/field/userpreferences/family.html:14
+msgid ""
+"Family members can see what you have marked as visible to family. This way "
+"you can share locations, comments, images and lists with your loved ones. "
+"Marking someone as family does not make their content visible to you."
+msgstr ""
+"Familieleden kunnen zien wat je als zichtbaar voor familie hebt gemarkeerd. "
+"Zo kun je locaties, reacties, afbeeldingen en lijsten delen met je "
+"dierbaren. Iemand als familie markeren maakt hun inhoud niet zichtbaar voor "
+"jou."
+
+#: locations/templates/field/userpreferences/family.html:28
+msgid "are you sure you want to remove this family member"
+msgstr "weet je zeker dat je dit familielid wilt verwijderen"
+
+#: locations/templates/field/userpreferences/family.html:30
+msgid "remove family member"
+msgstr "familielid verwijderen"
+
+#: locations/templates/field/userpreferences/family.html:37
+msgid "no family members added"
+msgstr "geen familieleden toegevoegd"
+
+#: locations/templates/field/userpreferences/family.html:45
+msgid "select a family member"
+msgstr "selecteer een familielid"
+
+#: locations/templates/field/userpreferences/family.html:58
+msgid "add family member"
+msgstr "familielid toevoegen"
+
+#: locations/templates/field/userpreferences/home.html:2
+msgid "home"
+msgstr "thuis"
+
+#: locations/templates/field/userpreferences/home.html:53
+msgid "No home location set"
+msgstr "Geen thuislocatie ingesteld"
+
+#: locations/templates/function/location/contact_details.html:3
+#: locations/templates/function/location/contact_details.html:20
+msgid "contact"
+msgstr "contact"
+
+#: locations/templates/function/location/contact_details.html:39
+msgid "save these changes"
+msgstr "deze wijzigingen opslaan"
+
+#: locations/templates/function/location/filtered_comments.html:7
+#: templates/navigation.html:23
+msgid "comments"
+msgstr "reacties"
+
+#: locations/templates/function/location/filtered_comments.html:18
+msgid "no comments yet"
+msgstr "nog geen reacties"
+
+#: locations/templates/function/location/filtered_comments.html:25
+msgid "log in to leave a comment"
+msgstr "log in om een reactie achter te laten"
+
+#: locations/templates/function/location/filtered_descriptions.html:9
+msgid "descriptions"
+msgstr "beschrijvingen"
+
+#: locations/templates/function/location/filtered_descriptions.html:20
+msgid "added on"
+msgstr "toegevoegd op"
+
+#: locations/templates/function/location/filtered_descriptions.html:20
+#: locations/templates/object/comment.html:12
+msgid "by"
+msgstr "door"
+
+#: locations/templates/function/location/filtered_descriptions.html:25
+msgid "no description entered"
+msgstr "geen beschrijving ingevoerd"
+
+#: locations/templates/function/location/filtered_descriptions.html:30
+msgid "add a description to"
+msgstr "beschrijving toevoegen aan"
+
+#: locations/templates/function/location/filtered_tags.html:2
+#: templates/navigation.html:20
+msgid "tags"
+msgstr "tags"
+
+#: locations/templates/function/location/filtered_tags.html:13
+msgid "no tags selected"
+msgstr "geen tags geselecteerd"
+
+#: locations/templates/function/location/filtered_tags.html:59
+msgid "select a tag"
+msgstr "selecteer een tag"
+
+#: locations/templates/function/location/filtered_tags.html:73
+msgid "add tag"
+msgstr "tag toevoegen"
+
+#: locations/templates/function/location/google_maps_script.html:110
+msgid "view details"
+msgstr "details bekijken"
+
+#: locations/templates/function/location/map.html:2
+#: locations/templates/function/location/osm_map.html:5
+msgid "map"
+msgstr "kaart"
+
+#: locations/templates/function/location/map.html:15
+msgid "this map loads content from an external provider"
+msgstr "deze kaart laadt inhoud van een externe aanbieder"
+
+#: locations/templates/function/location/map.html:15
+msgid ""
+"to protect your privacy, you need to give your consent before loading the map"
+msgstr ""
+"ter bescherming van je privacy moet je toestemming geven voordat de kaart "
+"wordt geladen"
+
+#: locations/templates/function/location/map.html:19
+msgid "show maps"
+msgstr "kaarten tonen"
+
+#: locations/templates/function/location/map.html:22
+msgid "once"
+msgstr "eenmalig"
+
+#: locations/templates/function/location/map.html:25
+msgid "for this session"
+msgstr "voor deze sessie"
+
+#: locations/templates/function/location/map.html:29
+msgid "always"
+msgstr "altijd"
+
+#: locations/templates/function/location/navigation_apps.html:7
+msgid "navigate to"
+msgstr "navigeren naar"
+
+#: locations/templates/function/location/navigation_apps.html:7
+msgid "using"
+msgstr "via"
+
+#: locations/templates/function/location/nearby.html:5
+msgid "nearby"
+msgstr "in de buurt"
+
+#: locations/templates/function/location/nearby.html:7
+msgid "all"
+msgstr "alles"
+
+#: locations/templates/function/location/ordered_media.html:11
+msgid "shared by"
+msgstr "gedeeld door"
+
+#: locations/templates/function/location/ordered_media.html:23
+msgid "no image available"
+msgstr "geen afbeelding beschikbaar"
+
+#: locations/templates/function/location/osm_map.html:6
+msgid "nearby locations and activities"
+msgstr "locaties en activiteiten in de buurt"
+
+#: locations/templates/function/location/topactions.html:30
+msgid "refresh automatically detected data of"
+msgstr "automatisch gedetecteerde gegevens vernieuwen van"
+
+#: locations/templates/lists/list_detail.html:12
+#: locations/templates/lists/lists_list.html:4
+#: locations/templates/lists/lists_list.html:11 templates/navigation.html:26
+msgid "lists"
+msgstr "lijsten"
+
+#: locations/templates/lists/list_detail.html:22
+#: locations/templates/locations/add_location.html:11
+msgid "locations"
+msgstr "locaties"
+
+#: locations/templates/lists/list_detail.html:24
+msgid "archived"
+msgstr "gearchiveerd"
+
+#: locations/templates/lists/list_detail.html:49
+msgid "this list has no locations yet"
+msgstr "deze lijst heeft nog geen locaties"
+
+#: locations/templates/lists/lists_list.html:25
+msgid "no lists found"
+msgstr "geen lijsten gevonden"
+
+#: locations/templates/lists/manage_lists.html:5
+msgid "lists containing"
+msgstr "lijsten met"
+
+#: locations/templates/lists/manage_lists.html:18
+msgid "edit your list"
+msgstr "je lijst bewerken"
+
+#: locations/templates/lists/manage_lists.html:22
+msgid "this list is from"
+msgstr "deze lijst is van"
+
+#: locations/templates/lists/manage_lists.html:29
+msgid "this location has not been added to any list"
+msgstr "deze locatie is nog niet aan een lijst toegevoegd"
+
+#: locations/templates/lists/manage_lists.html:37
+msgid "add to list"
+msgstr "aan lijst toevoegen"
+
+#: locations/templates/lists/manage_lists.html:55
+msgid "search or create a list"
+msgstr "zoek of maak een lijst"
+
+#: locations/templates/locations/add_location.html:3
+#: locations/templates/locations/add_location.html:13
+#: locations/templates/locations/add_location.html:17
+#: locations/templates/locations/add_location.html:91
+msgid "add location"
+msgstr "locatie toevoegen"
+
+#: locations/templates/locations/add_location.html:23
+msgid "name"
+msgstr "naam"
+
+#: locations/templates/locations/add_location.html:29
+msgid "e.g. Camping de Bron"
+msgstr "bijv. Camping de Bron"
+
+#: locations/templates/locations/add_location.html:37
+msgid "required"
+msgstr "verplicht"
+
+#: locations/templates/locations/add_location.html:46
+msgid "leave blank to look up automatically"
+msgstr "laat leeg voor automatische opzoeking"
+
+#: locations/templates/locations/add_location.html:52
+msgid "optional — if left blank the address will be searched by name"
+msgstr "optioneel — als je dit leeg laat wordt het adres op naam gezocht"
+
+#: locations/templates/locations/add_location.html:60
+msgid "short description (optional)"
+msgstr "korte beschrijving (optioneel)"
+
+#: locations/templates/locations/add_location.html:87
+msgid "optional — select one or more categories"
+msgstr "optioneel — selecteer een of meer categorieën"
+
+#: locations/templates/locations/add_location.html:94
+msgid "cancel"
+msgstr "annuleren"
+
+#: locations/templates/locations/add_location.html:127
+msgid "remove"
+msgstr "verwijderen"
+
+#: locations/templates/locations/add_location.html:174
+msgid "adding…"
+msgstr "toevoegen…"
+
+#: locations/templates/locations/location_detail.html:54
+#: locations/templates/locations/location_detail.html:120
+msgid "loading nearby accomodations and activities"
+msgstr "nabijgelegen accommodaties en activiteiten laden"
+
+#: locations/templates/locations/location_detail.html:162
+#: locations/templates/locations/location_detail.html:165
+msgid "read more"
+msgstr "lees meer"
+
+#: locations/templates/locations/location_detail.html:165
+msgid "read less"
+msgstr "lees minder"
+
+#: locations/templates/locations/locations_list.html:34
+#: locations/templates/locations/locations_list.html:103
+msgid "Filters"
+msgstr "Filters"
+
+#: locations/templates/locations/locations_list.html:44
+msgid "Active filters:"
+msgstr "Actieve filters:"
+
+#: locations/templates/locations/locations_list.html:58
+msgid "Clear all"
+msgstr "Alles wissen"
+
+#: locations/templates/locations/locations_list.html:79
+msgid "results"
+msgstr "resultaten"
+
+#: locations/templates/locations/locations_list_sidebar.html:13
+msgid "type"
+msgstr "type"
+
+#: locations/templates/locations/locations_list_sidebar.html:17
+msgid "accommodations"
+msgstr "accommodaties"
+
+#: locations/templates/locations/locations_list_sidebar.html:22
+msgid "activities"
+msgstr "activiteiten"
+
+#: locations/templates/locations/locations_list_sidebar.html:29
+msgid "visited"
+msgstr "bezocht"
+
+#: locations/templates/locations/locations_list_sidebar.html:34
+#: locations/templates/preferences/preferences.html:81
+msgid "been there"
+msgstr "er geweest"
+
+#: locations/templates/locations/locations_list_sidebar.html:40
+msgid "not yet"
+msgstr "nog niet"
+
+#: locations/templates/locations/locations_list_sidebar.html:48
+msgid "favorites"
+msgstr "favorieten"
+
+#: locations/templates/locations/locations_list_sidebar.html:53
+#: locations/templates/preferences/preferences.html:84
+msgid "loved"
+msgstr "geliked"
+
+#: locations/templates/locations/locations_list_sidebar.html:59
+msgid "not yet loved"
+msgstr "nog niet geliked"
+
+#: locations/templates/media/manage_media.html:7
+msgid "media for"
+msgstr "media voor"
+
+#: locations/templates/media/manage_media.html:39
+msgid "save visibility"
+msgstr "zichtbaarheid opslaan"
+
+#: locations/templates/media/manage_media.html:48
+msgid "are you sure you want to delete this image"
+msgstr "weet je zeker dat je deze afbeelding wilt verwijderen"
+
+#: locations/templates/media/manage_media.html:66
+msgid "upload image"
+msgstr "afbeelding uploaden"
+
+#: locations/templates/media/manage_media.html:96
+msgid "image"
+msgstr "afbeelding"
+
+#: locations/templates/media/manage_media.html:103
+msgid "upload"
+msgstr "uploaden"
+
+#: locations/templates/model/locations/list.html:79
+msgid "part of chain"
+msgstr "onderdeel van keten"
+
+#: locations/templates/model/locations/list.html:125
+msgid "is your home"
+msgstr "is jouw thuis"
+
+#: locations/templates/model/locations/list.html:129
+msgid "this is a private location"
+msgstr "dit is een privélocatie"
+
+#: locations/templates/model/locations/list.html:133
+msgid "this location has comments"
+msgstr "deze locatie heeft reacties"
+
+#: locations/templates/model/locations/list.html:137
+msgid "this location has images"
+msgstr "deze locatie heeft afbeeldingen"
+
+#: locations/templates/model/locations/list.html:143
+msgid "you have hidden this location"
+msgstr "je hebt deze locatie verborgen"
+
+#: locations/templates/object/comment.html:32
+msgid "delete"
+msgstr "verwijderen"
+
+#: locations/templates/object/comment.html:37
+msgid "are you sure you want to delete this comment?"
+msgstr "weet je zeker dat je deze reactie wilt verwijderen?"
+
+#: locations/templates/object/tag.html:10
+msgid "are you sure you want to remove this tag"
+msgstr "weet je zeker dat je deze tag wilt verwijderen"
+
+#: locations/templates/preferences/preferences.html:4
+#: locations/templates/preferences/preferences.html:13
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: locations/templates/preferences/preferences.html:33
+msgid "Account settings"
+msgstr "Accountinstellingen"
+
+#: locations/templates/preferences/preferences.html:40
+msgid "language"
+msgstr ""
+
+#: locations/templates/preferences/preferences.html:78
+msgid "my links"
+msgstr "mijn links"
+
+#: locations/templates/preferences/preferences.html:87
+msgid "my comments"
+msgstr "mijn reacties"
+
+#: locations/templates/tags/tags_list.html:4
+#: locations/templates/tags/tags_list.html:13
+msgid "Tags"
+msgstr "Tags"
+
+#: locations/templates/tags/tags_list.html:24
+msgid "General"
+msgstr "Algemeen"
+
+#: locations/templates/tags/tags_list.html:49
+msgid "No tags found."
+msgstr "Geen tags gevonden."
+
+#: locations/templates/visits/manage_visits.html:6
+msgid "your visits to"
+msgstr "jouw bezoeken aan"
+
+#: locations/templates/visits/manage_visits.html:26
+msgid "are you sure you want to delete this visit"
+msgstr "weet je zeker dat je dit bezoek wilt verwijderen"
+
+#: locations/views/Translations.py:12
+msgid "Netherlands"
+msgstr "Nederland"
+
+#: locations/views/Translations.py:13
+msgid "Belgium"
+msgstr "België"
+
+#: locations/views/Translations.py:14
+msgid "Germany"
+msgstr "Duitsland"
+
+#: locations/views/Translations.py:15
+msgid "France"
+msgstr "Frankrijk"
+
+#: locations/views/Translations.py:16
+msgid "Spain"
+msgstr "Spanje"
+
+#: locations/views/Translations.py:17
+msgid "Italy"
+msgstr "Italië"
+
+#: locations/views/Translations.py:18
+msgid "United Kingdom"
+msgstr "Verenigd Koninkrijk"
+
+#: locations/views/Translations.py:19
+msgid "United States"
+msgstr "Verenigde Staten"
+
+#: locations/views/Translations.py:20
+msgid "Canada"
+msgstr "Canada"
+
+#: locations/views/Translations.py:21
+msgid "Australia"
+msgstr "Australië"
+
+#: locations/views/Translations.py:22
+msgid "Indonesia"
+msgstr "Indonesië"
+
+#: locations/views/Translations.py:23
+msgid "Portugal"
+msgstr "Portugal"
+
+#: locations/views/Translations.py:24
+msgid "Switzerland"
+msgstr "Zwitserland"
+
+#: locations/views/Translations.py:25
+msgid "Austria"
+msgstr "Oostenrijk"
+
+#: locations/views/Translations.py:26
+msgid "Denmark"
+msgstr "Denemarken"
+
+#: locations/views/Translations.py:27
+msgid "Sweden"
+msgstr "Zweden"
+
+#: locations/views/Translations.py:28
+msgid "Norway"
+msgstr "Noorwegen"
+
+#: locations/views/Translations.py:29
+msgid "Finland"
+msgstr "Finland"
+
+#: locations/views/Translations.py:30
+msgid "Poland"
+msgstr "Polen"
+
+#: locations/views/Translations.py:31
+msgid "Czech Republic"
+msgstr "Tsjechië"
+
+#: locations/views/Translations.py:32
+msgid "Slovakia"
+msgstr "Slowakije"
+
+#: locations/views/Translations.py:33
+msgid "Hungary"
+msgstr "Hongarije"
+
+#: locations/views/Translations.py:34
+msgid "Greece"
+msgstr "Griekenland"
+
+#: locations/views/Translations.py:35
+msgid "Turkey"
+msgstr "Turkije"
+
+#: locations/views/Translations.py:36
+msgid "Croatia"
+msgstr "Kroatië"
+
+#: locations/views/Translations.py:37
+msgid "Slovenia"
+msgstr "Slovenië"
+
+#: locations/views/Translations.py:38
+msgid "Luxembourg"
+msgstr "Luxemburg"
+
+#: locations/views/Translations.py:39
+msgid "Ireland"
+msgstr "Ierland"
+
+#: locations/views/Translations.py:40
+msgid "Russia"
+msgstr "Rusland"
+
+#: locations/views/Translations.py:41
+msgid "Ukraine"
+msgstr "Oekraïne"
+
+#: locations/views/Translations.py:42
+msgid "Romania"
+msgstr "Roemenië"
+
+#: locations/views/Translations.py:43
+msgid "Bulgaria"
+msgstr "Bulgarije"
+
+#: locations/views/Translations.py:44
+msgid "Serbia"
+msgstr "Servië"
+
+#: locations/views/Translations.py:45
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnië en Herzegovina"
+
+#: locations/views/Translations.py:46
+msgid "North Macedonia"
+msgstr "Noord-Macedonië"
+
+#: locations/views/Translations.py:47
+msgid "Albania"
+msgstr "Albanië"
+
+#: locations/views/Translations.py:48
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: locations/views/Translations.py:49
+msgid "Cyprus"
+msgstr "Cyprus"
+
+#: locations/views/Translations.py:50
+msgid "Moldova"
+msgstr "Moldavië"
+
+#: locations/views/Translations.py:51
+msgid "Belarus"
+msgstr "Wit-Rusland"
+
+#: locations/views/Translations.py:52
+msgid "Lithuania"
+msgstr "Litouwen"
+
+#: locations/views/Translations.py:53
+msgid "Latvia"
+msgstr "Letland"
+
+#: locations/views/Translations.py:54
+msgid "Estonia"
+msgstr "Estland"
+
+#: locations/views/Translations.py:55
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: locations/views/Translations.py:56
+msgid "Andorra"
+msgstr "Andorra"
+
+#: locations/views/Translations.py:57
+msgid "Monaco"
+msgstr "Monaco"
+
+#: locations/views/Translations.py:58
+msgid "Vatican City"
+msgstr "Vaticaanstad"
+
+#: locations/views/Translations.py:59
+msgid "San Marino"
+msgstr "San Marino"
+
+#: locations/views/Translations.py:62
+msgid "Vosges"
+msgstr "Vogezen"
+
+#: locations/views/Translations.py:63
+msgid "Ardennes"
+msgstr "Ardennen"
+
+#: locations/views/Translations.py:64
+msgid "Eifel"
+msgstr "Eifel"
+
+#: locations/views/Translations.py:65
+msgid "Pyrenees"
+msgstr "Pyreneeën"
+
+#: locations/views/Translations.py:68
+msgid "Bed & Breakfast"
+msgstr "Bed & Breakfast"
+
+#: locations/views/Translations.py:69
+msgid "Camping"
+msgstr "Camping"
+
+#: locations/views/Translations.py:70
+msgid "Hotel"
+msgstr "Hotel"
+
+#: locations/views/Translations.py:71
+msgid "Chalet"
+msgstr "Chalet"
+
+#: locations/views/Translations.py:72
+msgid "Gite"
+msgstr "Gîte"
+
+#: locations/views/Translations.py:73
+msgid "Glamping (Safaritent)"
+msgstr "Glamping (Safaritent)"
+
+#: locations/views/Translations.py:74
+msgid "Mobile Home"
+msgstr "Stacaravan"
+
+#: locations/views/Translations.py:75 locations/views/Translations.py:77
+msgid "Resort"
+msgstr "Resort"
+
+#: locations/views/Translations.py:76
+msgid "Villa"
+msgstr "Villa"
+
+#: locations/views/Translations.py:80
+msgid "Sight-to-see"
+msgstr "Bezienswaardighed"
+
+#: locations/views/Translations.py:81
+msgid "Transit (one nighter)"
+msgstr "Doorreis (één nacht)"
+
+#: locations/views/Translations.py:82
+msgid "Beach"
+msgstr "Strand"
+
+#: locations/views/Translations.py:83
+msgid "City"
+msgstr "Stad"
+
+#: locations/views/Translations.py:84
+msgid "Museum"
+msgstr "Museum"
+
+#: locations/views/Translations.py:85
+msgid "Park"
+msgstr "Park"
+
+#: locations/views/Translations.py:86
+msgid "Rest-stop"
+msgstr "Rustplaats"
+
+#: locations/views/Translations.py:87
+msgid "Restaurant"
+msgstr "Restaurant"
+
+#: locations/views/Translations.py:88
+msgid "Sauna"
+msgstr "Sauna"
+
+#: locations/views/Translations.py:89
+msgid "Shop"
+msgstr "Winkel"
+
+#: locations/views/Translations.py:90
+msgid "Swimmingpool"
+msgstr "Zwembad"
+
+#: locations/views/Translations.py:91
+msgid "Theatre"
+msgstr "Theater"
+
+#: locations/views/Translations.py:92
+msgid "Theme-park"
+msgstr "Pretpark"
+
+#: locations/views/Translations.py:93
+msgid "Village"
+msgstr "Dorp"
+
+#: locations/views/Translations.py:94
+msgid "Walk"
+msgstr "Wandeling"
+
+#: locations/views/Translations.py:95
+msgid "Winery"
+msgstr "Wijnmakerij"
+
+#: locations/views/Translations.py:96
+msgid "Zoo"
+msgstr "Dierentuin"
+
+#: locations/views/locations/add_location.py:27
+msgid "location added successfully."
+msgstr "locatie succesvol toegevoegd."
+
+#: locations/views/locations/add_location.py:31
+msgid "please correct the errors below."
+msgstr "corrigeer de fouten hieronder."
+
+#: locations/views/locations/location_detail.py:31
+msgid "this page is not available."
+msgstr "deze pagina is niet beschikbaar."
+
+#: locations/views/locations/location_detail.py:31
+msgid "you might need to log in to see this."
+msgstr "je moet mogelijk inloggen om dit te zien."
+
+#: locations/views/locations/reenrich_location.py:24
+msgid "action not allowed."
+msgstr "actie niet toegestaan."
+
+#: templates/footer.html:3
+msgid "Arne Coomans on Github"
+msgstr "Arne Coomans op Github"
+
+#: templates/footer.html:3
+msgid "CMPNG on GitHub"
+msgstr "CMPNG op GitHub"
+
+#: templates/navigation.html:4
+msgid "toggle navigation"
+msgstr "navigatie in-/uitklappen"
+
+#: templates/navigation.html:9
+msgctxt "navigation-slogan"
+msgid "go somewhere"
+msgstr "ga"
+
+#: templates/navigation.html:13
+msgctxt "navigation-slogan"
+msgid "to stay"
+msgstr "slapen"
+
+#: templates/navigation.html:16
+msgctxt "navigation-slogan"
+msgid "to do"
+msgstr "iets doen"
+
+#: templates/navigation.html:36
+msgid "your account"
+msgstr "jouw account"
+
+#: templates/navigation.html:39
+msgid "preferences"
+msgstr "voorkeuren"
+
+#: templates/navigation.html:42
+#, python-format
+msgid "Edit \"%(location)s\" in admin"
+msgstr "Bewerk \"%(location)s\" in beheer"
+
+#: templates/navigation.html:43
+msgid "open django admin"
+msgstr "Django-beheer openen"
+
+#: templates/navigation.html:46
+msgid "edit profile of"
+msgstr "profiel bewerken van"
+
+#: templates/navigation.html:50
+msgid "log out"
+msgstr "uitloggen"
+
+#: templates/navigation.html:57
+msgid "register"
+msgstr "registreren"
+
+#: templates/navigation.html:60
+msgid "login"
+msgstr "inloggen"
+
+#: templates/navigation.html:80
+msgid "search"
+msgstr "zoeken"
