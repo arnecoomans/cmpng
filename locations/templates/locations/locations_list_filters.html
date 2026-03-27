@@ -69,20 +69,61 @@
 
 {% if category_filter_options|length > 0 %}
   <h2 class="">{% translate category_filter_options.label|default:'category'|capfirst %}</h2>
-  <ul>
-    {% for option in category_filter_options.options %}
-      <li>
-        <a href="{{ request.path }}{% update_query_params request add=option.slug to=category_filter_options.key %}">
-          {% translate option.name|capfirst %}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
+  <form method="GET" action="{{ request.path }}">
+    {% for key, values in request.GET.lists %}{% if key != 'categories__slug' %}{% for value in values %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}{% endif %}{% endfor %}
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{% translate 'select a category'|capfirst %}"
+        data-autosuggest
+        data-url="{% url 'cmnsd:dispatch' 'categories' %}{% copy_query_params request prepend='locations__' %}"
+        data-param="{{ search_query_character|default:'q'}}"
+        data-extra-params='{"format":"json"}'
+        data-field-input="name"
+        data-field-hidden="slug"
+        data-field-prefix="categories__"
+        data-container="category"
+        data-allow-create="0"
+        data-min="0"
+      >
+      <button type="submit" class="btn btn-outline-secondary" title="{% translate 'filter'|capfirst %}">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </form>
 {% endif %}
 
 {% if tag_filter_options|length > 0 %}
   <h2 class="">{% translate tag_filter_options.label|default:'tag'|capfirst %}</h2>
-  <ul>
+  <form method="GET" action="{{ request.path }}">
+    {% for key, values in request.GET.lists %}{% if key != 'tags__slug' %}{% for value in values %}
+      <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}{% endif %}{% endfor %}
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{% translate 'select a tag'|capfirst %}"
+        data-autosuggest
+        data-url="{% url 'cmnsd:dispatch' 'tags' %}{% copy_query_params request prepend='locations__' %}"
+        data-param="{{ search_query_character|default:'q'}}"
+        data-extra-params='{"format":"json"}'
+        data-field-input="name"
+        data-field-hidden="slug"
+        data-field-prefix="tags__"
+        data-container="tag"
+        data-allow-create="0"
+        data-min="0"
+      >
+      <button type="submit" class="btn btn-outline-secondary" title="{% translate 'filter'|capfirst %}">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </form>
+  {% comment %} <ul>
     {% for option in tag_filter_options.options %}
       <li>
         <a href="{% update_query_params request add=option.slug to=tag_filter_options.key %}">
@@ -90,5 +131,5 @@
         </a>
       </li>
     {% endfor %}
-  </ul>
+  </ul> {% endcomment %}
 {% endif %}

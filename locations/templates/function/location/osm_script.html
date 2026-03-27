@@ -2,8 +2,8 @@
 <script src="{% static 'js/leaflet/leaflet.js' %}"></script>
 <script>
 (function () {
-  const lat = {{ location.coord_lat|default:'null' }};
-  const lon = {{ location.coord_lon|default:'null' }};
+  {% localize off %}const lat = {{ location.coord_lat|default:'null' }};
+  const lon = {{ location.coord_lon|default:'null' }};{% endlocalize %}
   if (!lat || !lon) return;
 
   const map = L.map('map').setView([lat, lon], {% if location.is_accommodation %}10{% else %}13{% endif %});
