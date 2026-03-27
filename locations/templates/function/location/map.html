@@ -2,12 +2,14 @@
 <section class="card card--map" aria-label="{% translate 'map'|capfirst %}">
   {% has_maps_consent as maps_consent %}
   {% if maps_consent %}
+    {% localize off %}
     <div
       id="map"
       data-lat="{{ location.coord_lat }}"
       data-lon="{{ location.coord_lon }}"
       data-name="{{ location.name|escapejs }}"
     ></div>
+    {% endlocalize %}
   {% else %}
     <div class="card--map__consent">
       <p></p>

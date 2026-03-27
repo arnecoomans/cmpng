@@ -67,8 +67,9 @@ TEMPLATES = [
                 'cmnsd.context_processors.setting_data',
                 'locations.context_processors.setting_data',
             ],
-            'builtins': [ 
+            'builtins': [
                 'django.templatetags.i18n',
+                'django.templatetags.l10n',
                 'django.templatetags.static',
                 'cmnsd.templatetags.markdown',
                 'cmnsd.templatetags.query_filters',

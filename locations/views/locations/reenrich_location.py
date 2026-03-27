@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django.views import View
 
 from locations.models.Location import Location
-from locations.services.location_geocoding import enrich_location
+from locations.services.location_geocoding import enrich_location, _address_is_hint
 
 
 class ReEnrichLocationView(LoginRequiredMixin, View):
@@ -16,6 +16,13 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
 
   Intended use: fix wrong geo data after manually correcting the address.
   Accepts POST only; redirects to the location detail page when done.
+
+  Address handling:
+  - Real address (contains digits, e.g. "49 rue de Cîteaux, 21700 Agencourt"):
+    kept as-is; only geo/place_id are cleared and re-fetched.
+  - Hint address (no digits, e.g. "France" or "Gelderland"):
+    cleared and passed to enrich_location as address_hint so Google
+    can resolve the full formatted address.
   """
 
   def dispatch(self, request, *args, **kwargs):
@@ -27,18 +34,28 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
 
   def post(self, request, slug):
     location = get_object_or_404(Location, slug=slug)
+    address = location.address or None
 
-    # Preserve the address as a search hint, then wipe all auto-populated fields
-    # so the pipeline runs completely from scratch (bypasses Location.save() hooks).
-    address_hint = location.address or None
-    Location.objects.filter(pk=location.pk).update(
-      address=None,
-      google_place_id=None,
-      geo=None,
-    )
-    location.address = None
-    location.google_place_id = None
-    location.geo = None
+    if address and not _address_is_hint(address):
+      # Real address — keep it; only wipe the auto-populated geo fields.
+      Location.objects.filter(pk=location.pk).update(
+        google_place_id=None,
+        geo=None,
+      )
+      location.google_place_id = None
+      location.geo = None
+      enrich_location(location, request=request)
+    else:
+      # Hint address (or no address) — clear it so Google can resolve
+      # the full formatted address from the location name + hint.
+      Location.objects.filter(pk=location.pk).update(
+        address=None,
+        google_place_id=None,
+        geo=None,
+      )
+      location.address = None
+      location.google_place_id = None
+      location.geo = None
+      enrich_location(location, request=request, address_hint=address)
 
-    enrich_location(location, request=request, address_hint=address_hint)
     return redirect(location.get_absolute_url())

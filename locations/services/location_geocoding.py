@@ -28,15 +28,19 @@ def _get_gmaps_client():
   return googlemaps.Client(key=settings.GOOGLE_API_KEY)
 
 
-def _geocode_raw(location, request=None, address_hint=None):
+def _geocode_raw(location, request=None, address_hint=None, use_name=True):
   """
-  Internal helper: geocode 'name, address' and return the raw geopy result.
+  Internal helper: geocode and return the raw geopy result.
   Does NOT call fetch_address — callers are responsible for ensuring an address
   (or address_hint) is available before calling this.
 
   address_hint: optional override used as the geocode address context instead of
                 location.address. Useful when the stored address has been cleared
                 but the caller still wants to provide a search hint.
+  use_name:     when True (default) prepend location.name to the query so Google
+                can disambiguate ambiguous addresses.  Pass False when the address
+                is already precise (street-level) — adding the name can shift the
+                result to a different coordinate.
 
   Returns the geopy Location object, or None on failure.
   """
@@ -46,7 +50,7 @@ def _geocode_raw(location, request=None, address_hint=None):
       messages.warning(request, f"No address available to geocode '{location.name}'")
     return None
 
-  query = f"{location.name}, {addr}"
+  query = f"{location.name}, {addr}" if use_name else addr
   logger.debug("geocode query: %r", query)
   try:
     result = _get_geolocator().geocode(query)
@@ -426,7 +430,13 @@ def enrich_location(location, request=None, address_hint=None):
   if not address_hint and not location.address:
     fetch_address(location, request=request)
 
-  result = _geocode_raw(location, request=request, address_hint=address_hint)
+  # Use the address alone (no name prefix) when it is a precise street-level address.
+  # Adding the name to a precise address can shift Google's result to a different coord.
+  # Keep name+address for hint-based queries so Google can disambiguate.
+  addr_for_check = address_hint if address_hint is not None else location.address
+  use_name = _address_is_hint(addr_for_check)
+
+  result = _geocode_raw(location, request=request, address_hint=address_hint, use_name=use_name)
   if not result:
     return
 
