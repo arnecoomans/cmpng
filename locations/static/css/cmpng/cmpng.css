@@ -19,6 +19,16 @@ body > header {
   font-weight: 800;
   letter-spacing: -0.03em;
 }
+.site-header__watermark {
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 180px;
+  opacity: 0.12;
+  pointer-events: none;
+}
 
 /** Navbar */
 .navbar {

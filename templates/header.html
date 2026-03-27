@@ -1,30 +1,36 @@
 <header class="site-header position-relative">
-    <!-- Content -->
-    <div class="container h-100">
-        <div class="row h-100 align-items-center justify-content-end">
-            <div class="col-auto text-end">
-                <div class="d-flex align-items-center justify-content-end gap-4">
-                  <div>
-                    <h1 class="display-2 fw-bold text-white mb-3">
-                      {% translate project_name|default:"a cmnsd site"|capfirst %}
-                    </h1>
-                    
-                    <p class="lead text-white fs-4 mb-0" style="opacity: 0.95;">
-                      {% translate project_payline|default:"ontdek campings en vakantieverblijven in heel Europa"|capfirst %}
-                    </p>
-                  </div>
-                  
-                  <!-- A-shaped tent icon -->
-                  <div>
-                    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <!-- Outer triangle with curved bottom -->
-                      <path d="M50 10 L10 90 Q50 95 90 90 Z" fill="white"/>
-                      <!-- Inner triangle cutout with curved bottom -->
-                      <path d="M50 35 L35 90 Q50 93 65 90 Z" fill="#059669"/>
-                    </svg>
-                  </div>
-                </div>
-            </div>
+
+  <!-- Watermark tent (mobile only) -->
+  <div class="site-header__watermark d-md-none" aria-hidden="true">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 10 L10 90 Q50 95 90 90 Z" fill="white"/>
+      <path d="M50 35 L35 90 Q50 93 65 90 Z" fill="#059669"/>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-end">
+      <div class="col-auto text-end">
+        <div class="d-flex align-items-center justify-content-end gap-4">
+          <div>
+            <h1 class="display-2 fw-bold text-white mb-3">
+              {% translate project_name|default:"a cmnsd site"|capfirst %}
+            </h1>
+            <p class="lead text-white fs-4 mb-0" style="opacity: 0.95;">
+              {% translate project_payline|default:"ontdek campings en vakantieverblijven in heel Europa"|capfirst %}
+            </p>
+          </div>
+
+          <!-- A-shaped tent icon (desktop only) -->
+          <div class="d-none d-md-block flex-shrink-0">
+            <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 10 L10 90 Q50 95 90 90 Z" fill="white"/>
+              <path d="M50 35 L35 90 Q50 93 65 90 Z" fill="#059669"/>
+            </svg>
+          </div>
         </div>
+      </div>
     </div>
-  </header>
+  </div>
+</header>
