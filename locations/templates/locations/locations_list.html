@@ -103,10 +103,8 @@
     <h2 class="h5 mb-0" id="filtersOffcanvasLabel">{% trans "Filters" %}</h2>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
-  <div class="offcanvas-body">
-
-    <!-- FILTERS -->
-
+  <div class="offcanvas-body cmpng-sidebar">
+    {% include 'locations/locations_list_filters.html' %}
   </div>
 </div>
 </div>
