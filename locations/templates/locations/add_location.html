@@ -23,17 +23,20 @@
         <div class="input-group-text">{% translate 'name'|capfirst %}</div>
         <input
           type="text"
+          id="location-name"
           name="name"
           class="form-control{% if form.name.errors %} is-invalid{% endif %}"
           value="{{ form.name.value|default:'' }}"
           placeholder="{% translate 'e.g. Camping de Bron'|capfirst %}"
           required
           autofocus
+          data-check-duplicate-url="{% url 'locations:check_duplicate' %}"
         >
         {% if form.name.errors %}
           <div class="invalid-feedback">{{ form.name.errors.as_text }}</div>
         {% endif %}
       </div>
+      <div id="duplicate-warning" hidden></div>
       <span class="form-text">{% translate 'required'|capfirst %}.</span>
 
       <div class="input-group mt-2">
@@ -63,6 +66,16 @@
           <div class="invalid-feedback">{{ form.summary.errors.as_text }}</div>
         {% endif %}
       </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text">{% translate 'visibility'|capfirst %}</div>
+        <select name="visibility" class="form-select">
+          {% for value, label in form.visibility.field.choices %}
+            <option value="{{ value }}"{% if form.visibility.value == value %} selected{% endif %}>{% translate label|capfirst %}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <span class="form-text">{% translate 'who can see this location'|capfirst %}.</span>
 
       <div class="input-group mt-2">
         <div class="input-group-text">{% translate 'url'|upper %}</div>
@@ -191,3 +204,82 @@
   </div>
 </main>
 {% endblock %}
+
+{% block scriptfooter %}
+<script type="module">
+import { api } from "{% static 'js/cmnsd/http.js' %}";
+
+(function () {
+  const nameInput    = document.getElementById('location-name');
+  const warningEl    = document.getElementById('duplicate-warning');
+  const checkUrl     = nameInput.dataset.checkDuplicateUrl;
+
+  const msgPublished  = "{% translate 'a location with this name already exists'|capfirst %}.";
+  const msgConcept    = "{% translate 'you have a draft with this name'|capfirst %}.";
+  const msgRevoked    = "{% translate 'you previously revoked a location with this name — do you want to restore it?'|capfirst %}";
+  const msgDeleted    = "{% translate 'a deleted location with this name exists'|capfirst %}.";
+  const msgTooGeneral = "{% translate 'this name is too general — try a more specific name to check for duplicates'|capfirst %}.";
+  const labelView     = "{% translate 'view'|capfirst %}";
+  const labelRestore  = "{% translate 'restore'|capfirst %}";
+  const labelDismiss  = "{% translate 'dismiss'|capfirst %}";
+  const TOO_GENERAL   = 5;
+
+  function statusMessage(match) {
+    if (match.status === 'r') return msgRevoked;
+    if (match.status === 'c') return msgConcept;
+    if (match.status === 'x') return msgDeleted;
+    return msgPublished;
+  }
+
+  function renderWarning(matches) {
+    if (!matches.length) {
+      warningEl.hidden = true;
+      warningEl.innerHTML = '';
+      return;
+    }
+
+    let body;
+    if (matches.length >= TOO_GENERAL) {
+      body = `<span>${msgTooGeneral}</span>`;
+    } else {
+      const items = matches.map(m => {
+        let action = '';
+        if (m.url) {
+          action = ` <a href="${m.url}" target="_blank" class="alert-link">${labelView}</a>`;
+        }
+        if (m.can_unrevoke) {
+          action = ` <a href="${m.url || '#'}" class="alert-link">${labelRestore}</a>`;
+        }
+        const badge = `<span class="cmpng-badge me-1">${m.status_label}</span>`;
+        return `<li>${badge}<strong>${m.name}</strong> — ${statusMessage(m)}${action}</li>`;
+      }).join('');
+      body = `<ul class="mb-0 ps-3">${items}</ul>`;
+    }
+
+    warningEl.innerHTML = `
+      <div class="alert alert-warning d-flex justify-content-between align-items-start mt-1" role="alert">
+        ${body}
+        <button type="button" class="btn-close ms-2" aria-label="${labelDismiss}"></button>
+      </div>`;
+    warningEl.hidden = false;
+
+    warningEl.querySelector('.btn-close').addEventListener('click', () => {
+      warningEl.hidden = true;
+    });
+  }
+
+  nameInput.addEventListener('blur', async function () {
+    const q = nameInput.value.trim();
+    if (q.length < 2) {
+      warningEl.hidden = true;
+      return;
+    }
+    const result = await api.get(checkUrl, { params: { q } });
+    if (result.ok && result.matches) {
+      renderWarning(result.matches);
+    }
+  });
+})();
+</script>
+{% endblock %}
+

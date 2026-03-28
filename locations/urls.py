@@ -15,6 +15,9 @@ urlpatterns = [
   # Add Location View (views/locations/add_location.py)
   path('location/add/', views.AddLocationView.as_view(), name='add_location'),
 
+  # Check Duplicate View (views/locations/check_duplicate.py)
+  path('location/add/check-duplicate/', views.CheckDuplicateView.as_view(), name='check_duplicate'),
+
   # Re-enrich Location View (views/locations/reenrich_location.py) — staff only
   path('location/<slug:slug>/re-enrich/', views.ReEnrichLocationView.as_view(), name='reenrich_location'),
 

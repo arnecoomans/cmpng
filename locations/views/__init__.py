@@ -1,4 +1,4 @@
-from .locations import AllLocationListView, AccommodationListView, ActivityListView, LocationDetailView, AddLocationView, ReEnrichLocationView
+from .locations import AllLocationListView, AccommodationListView, ActivityListView, LocationDetailView, AddLocationView, ReEnrichLocationView, CheckDuplicateView
 from .tags import TagListView
 from .visits import ManageVisitsView
 from .comments import CommentListView
@@ -9,7 +9,7 @@ from .Translations import *
 
 __all__ = [
   'AllLocationListView', 'AccommodationListView', 'ActivityListView',
-  'LocationDetailView', 'AddLocationView', 'ReEnrichLocationView',
+  'LocationDetailView', 'AddLocationView', 'ReEnrichLocationView', 'CheckDuplicateView',
   'TagListView',
   'ManageVisitsView',
   'CommentListView',

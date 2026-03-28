@@ -13,7 +13,7 @@ from locations.services.location_geocoding import enrich_location
 class AddLocationView(LoginRequiredMixin, CreateView):
   model = Location
   template_name = 'locations/add_location.html'
-  fields = ['name', 'address', 'summary']
+  fields = ['name', 'address', 'summary', 'visibility']
 
   def form_valid(self, form):
     from locations.models.Category import Category
