@@ -65,6 +65,18 @@
       </div>
 
       <div class="input-group mt-2">
+        <div class="input-group-text">{% translate 'url'|upper %}</div>
+        <input
+          type="url"
+          name="link_url"
+          class="form-control"
+          value="{{ request.POST.link_url|default:'' }}"
+          placeholder="https://..."
+        >
+      </div>
+      <span class="form-text">{% translate 'optional — website or booking page'|capfirst %}.</span>
+
+      <div class="input-group mt-2">
         <div class="input-group-text">{% translate 'categories'|capfirst %}</div>
         <input
           type="text"
