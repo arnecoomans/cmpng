@@ -17,7 +17,7 @@
     </form>
   {% elif location.description %}
     <div class="field-view location-description" id="description">
-      <div class="description__body">{{ location.description|markdown|safe }}</div>
+      <div class="description__body">{{ location.description|markdown }}</div>
     </div>
   {% endif %}
 {% endif %}

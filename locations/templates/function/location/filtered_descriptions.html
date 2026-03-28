@@ -14,7 +14,7 @@
 
       {% include 'element/reusable_description_form.html' %}
     {% else %}
-      <div class="description__body">{{ description.text|markdown|safe }}</div>
+      <div class="description__body">{{ description.text|markdown }}</div>
     {% endif %}
     <div class="meta">
       <span class="muted">{% translate "added on"|capfirst %} {{ description.date_created|date:"M d, Y" }}{% if user.is_authenticated %} {% translate "by"|capfirst %} {{ description.user.get_full_name|default:description.user.username }}, {% translate "visible to" %} {{ description.get_visibility_display }}{% endif %}.</span>
