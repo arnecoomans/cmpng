@@ -1,0 +1,1 @@
+from .page_detail import PageDetailView

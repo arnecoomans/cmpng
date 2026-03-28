@@ -10,6 +10,7 @@ from PIL import Image
 
 from locations.models import Location, Region, Category, Tag, Link, Chain, List, ListItem, Distance, Media
 from locations.models.Comment import Comment
+from locations.models.Page import Page
 from locations.models.Preferences import UserPreferences
 
 
@@ -169,3 +170,15 @@ class CommentFactory(DjangoModelFactory):
 
     # content_type and object_id must be set explicitly in tests:
     # CommentFactory(content_type=ct, object_id=location.pk)
+
+
+class PageFactory(DjangoModelFactory):
+    class Meta:
+        model = Page
+
+    slug = factory.Sequence(lambda n: f'page-{n}')
+    language = 'en'
+    title = factory.Sequence(lambda n: f'Page {n}')
+    body = 'Page body.'
+    status = 'p'
+    visibility = 'p'

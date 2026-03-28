@@ -103,6 +103,30 @@ class TestCommentListVisibility:
     assert 'Comment A' in titles
     assert 'Comment B' in titles
 
+  def test_comment_on_revoked_location_excluded(self, client):
+    location = LocationFactory(status='r')
+    make_comment(location, title='Revoked Location Comment', status='p', visibility='p')
+    url = reverse('locations:comments')
+    response = client.get(url)
+    titles = [c.title for c in response.context['comments']]
+    assert 'Revoked Location Comment' not in titles
+
+  def test_comment_on_published_location_included(self, client):
+    location = LocationFactory(status='p')
+    make_comment(location, title='Published Location Comment', status='p', visibility='p')
+    url = reverse('locations:comments')
+    response = client.get(url)
+    titles = [c.title for c in response.context['comments']]
+    assert 'Published Location Comment' in titles
+
+  def test_comment_on_deleted_location_excluded(self, client):
+    location = LocationFactory(status='x')
+    make_comment(location, title='Deleted Location Comment', status='p', visibility='p')
+    url = reverse('locations:comments')
+    response = client.get(url)
+    titles = [c.title for c in response.context['comments']]
+    assert 'Deleted Location Comment' not in titles
+
 
 # ------------------------------------------------------------------ #
 #  Search / Filter

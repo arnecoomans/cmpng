@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import Location, Region, Category, Tag, Link, Chain, App, UserPreferences, Visits, Size, List, ListItem, Distance
 from .models.Comment import Comment
 from .models.Media import Media
+from .models.Page import Page
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -290,3 +291,20 @@ class DistanceAdmin(admin.ModelAdmin):
             'fields': ('distance_m', 'duration_s', 'cached_at'),
         }),
     )
+
+
+@admin.register(Page)
+class PageAdmin(BaseModelAdmin):
+  list_display = ('title', 'slug', 'visibility', 'status')
+  list_filter = ('status', 'visibility')
+  search_fields = ('title', 'body')
+  prepopulated_fields = {'slug': ('title',)}
+
+  fieldsets = (
+    (_('Content'), {
+      'fields': ('title', 'slug', 'body'),
+    }),
+    (_('Visibility'), {
+      'fields': ('visibility',),
+    }),
+  )

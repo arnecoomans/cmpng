@@ -52,4 +52,7 @@ urlpatterns = [
   path('preferences/maps-session/revoke/', views.RevokeMapsSessionView.as_view(), name='revoke_maps_session'),
   path('preferences/language/', views.SetLanguageView.as_view(), name='set_language'),
 
+  # Page Views (views/pages/)
+  path('pages/<slug:slug>/', views.PageDetailView.as_view(), name='page_detail'),
+
 ]

@@ -146,3 +146,90 @@ class TestGetNearbyLocations:
     LocationFactory(coord_lat=52.15, coord_lon=5.0)
     result = get_nearby_locations(home, radius_km=50)
     assert len(result) == 3
+
+
+# ------------------------------------------------------------------ #
+#  warn_nearby_duplicates
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestWarnNearbyDuplicates:
+
+  def _make_request(self, user):
+    from django.test import RequestFactory
+    from django.contrib.messages.storage.fallback import FallbackStorage
+    request = RequestFactory().get('/')
+    request.user = user
+    request.session = {}
+    request._messages = FallbackStorage(request)
+    return request
+
+  def _messages(self, request):
+    from django.contrib.messages import get_messages
+    return list(get_messages(request))
+
+  def test_no_warning_when_no_coordinates(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=None, coord_lon=None)
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    assert self._messages(request) == []
+
+  def test_no_warning_when_no_nearby_locations(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    assert self._messages(request) == []
+
+  def test_warning_when_nearby_published_location(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    nearby = LocationFactory(coord_lat=52.001, coord_lon=5.0, status='p')
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    msgs = self._messages(request)
+    assert len(msgs) == 1
+    assert nearby.name in str(msgs[0])
+
+  def test_nearby_published_location_includes_link(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    nearby = LocationFactory(coord_lat=52.001, coord_lon=5.0, status='p')
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    msgs = self._messages(request)
+    assert f'href="{nearby.get_absolute_url()}"' in str(msgs[0])
+
+  def test_nearby_revoked_location_staff_includes_republish_link(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    from django.urls import reverse
+    staff = UserFactory(is_staff=True)
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    revoked = LocationFactory(coord_lat=52.001, coord_lon=5.0, status='r', user=staff)
+    request = self._make_request(staff)
+    warn_nearby_duplicates(location, request)
+    msgs = self._messages(request)
+    revoke_url = reverse('locations:revoke_location', args=[revoked.slug])
+    assert revoke_url in str(msgs[0])
+
+  def test_nearby_revoked_location_non_staff_no_link(self, db):
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    revoked = LocationFactory(coord_lat=52.001, coord_lon=5.0, status='r', user=user)
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    msgs = self._messages(request)
+    assert len(msgs) == 1
+    assert '<a' not in str(msgs[0]) or revoked.name in str(msgs[0])

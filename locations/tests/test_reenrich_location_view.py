@@ -144,3 +144,35 @@ class TestReEnrichLocationViewPost:
 
     _, kwargs = mock_enrich.call_args
     assert kwargs.get('address_hint') is None
+
+
+# ------------------------------------------------------------------ #
+#  warn_nearby_duplicates
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestReEnrichLocationViewNearbyWarning:
+
+  def test_warn_nearby_duplicates_called_after_enrich(self, db):
+    staff = UserFactory()
+    staff.is_staff = True
+    staff.save()
+    location = LocationFactory()
+    request = _post(location.slug, staff)
+
+    with patch('locations.views.locations.reenrich_location.enrich_location'):
+      with patch('locations.views.locations.reenrich_location.warn_nearby_duplicates') as mock_warn:
+        ReEnrichLocationView.as_view()(request, slug=location.slug)
+
+    mock_warn.assert_called_once()
+
+  def test_warn_nearby_duplicates_not_called_for_non_staff(self, db):
+    user = UserFactory()
+    location = LocationFactory()
+    request = _post(location.slug, user)
+
+    with patch('locations.views.locations.reenrich_location.enrich_location'):
+      with patch('locations.views.locations.reenrich_location.warn_nearby_duplicates') as mock_warn:
+        ReEnrichLocationView.as_view()(request, slug=location.slug)
+
+    mock_warn.assert_not_called()

@@ -5,6 +5,7 @@ from .comments import CommentListView
 from .profile import PreferencesView, RevokeMapsSessionView, SetLanguageView
 from .media import ManageMediaView
 from .lists import ManageListsView, ListListView, ListDetailView
+from .pages import PageDetailView
 from .Translations import *
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
   'PreferencesView', 'RevokeMapsSessionView', 'SetLanguageView',
   'ManageMediaView',
   'ManageListsView', 'ListListView', 'ListDetailView',
+  'PageDetailView',
 ]

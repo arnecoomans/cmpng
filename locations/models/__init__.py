@@ -9,3 +9,4 @@ from .Media import Media
 from .Size import Size
 from .Comment import Comment
 from .List import List, ListItem, Distance
+from .Page import Page
