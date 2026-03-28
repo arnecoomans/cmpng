@@ -2,6 +2,17 @@
 
 {% block title %}{% translate 'add location'|capfirst %}{% endblock %}
 
+{% block template_css %}
+<style>
+  .add-location-form { max-width: 600px; }
+  .add-location-form .input-group-text { min-width: 130px; }
+  .add-location-form .field-name input { font-size: 1.25rem; }
+  .add-location-form .field-name .input-group-text { font-size: 1.25rem; font-weight: 600; }
+  .add-location-form .required-mark { color: var(--bs-danger); margin-left: .2em; }
+  .add-location-form .input-group-text.is-optional { color: var(--bs-secondary); }
+</style>
+{% endblock %}
+
 {% block content %}
 <main class="page">
   <div class="container">
@@ -17,10 +28,11 @@
     <h1>{% translate 'add location'|capfirst %}</h1>
 
     <form method="post" class="add-location-form">
+      <p class="form-text mb-2"><span class="required-mark" aria-hidden="true">*</span> {% translate 'required'|capfirst %}</p>
       {% csrf_token %}
 
-      <div class="input-group">
-        <div class="input-group-text">{% translate 'name'|capfirst %}</div>
+      <div class="input-group field-name">
+        <div class="input-group-text">{% translate 'name'|capfirst %}<span class="required-mark" aria-hidden="true">*</span></div>
         <input
           type="text"
           id="location-name"
@@ -37,10 +49,9 @@
         {% endif %}
       </div>
       <div id="duplicate-warning" hidden></div>
-      <span class="form-text">{% translate 'required'|capfirst %}.</span>
 
-      <div class="input-group mt-2">
-        <div class="input-group-text">{% translate 'address'|capfirst %}</div>
+      <div class="input-group mt-3">
+        <div class="input-group-text is-optional">{% translate 'address'|capfirst %}</div>
         <input
           type="text"
           name="address"
@@ -55,7 +66,7 @@
       <span class="form-text">{% translate 'optional — if left blank the address will be searched by name'|capfirst %}.</span>
 
       <div class="input-group mt-2">
-        <div class="input-group-text">{% translate 'summary'|capfirst %}</div>
+        <div class="input-group-text is-optional">{% translate 'summary'|capfirst %}</div>
         <textarea
           name="summary"
           class="form-control{% if form.summary.errors %} is-invalid{% endif %}"
@@ -68,17 +79,7 @@
       </div>
 
       <div class="input-group mt-2">
-        <div class="input-group-text">{% translate 'visibility'|capfirst %}</div>
-        <select name="visibility" class="form-select">
-          {% for value, label in form.visibility.field.choices %}
-            <option value="{{ value }}"{% if form.visibility.value == value %} selected{% endif %}>{% translate label|capfirst %}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <span class="form-text">{% translate 'who can see this location'|capfirst %}.</span>
-
-      <div class="input-group mt-2">
-        <div class="input-group-text">{% translate 'url'|upper %}</div>
+        <div class="input-group-text is-optional">{% translate 'url'|upper %}</div>
         <input
           type="url"
           name="link_url"
@@ -90,7 +91,7 @@
       <span class="form-text">{% translate 'optional — website or booking page'|capfirst %}.</span>
 
       <div class="input-group mt-2">
-        <div class="input-group-text">{% translate 'categories'|capfirst %}</div>
+        <div class="input-group-text">{% translate 'categories'|capfirst %}<span class="required-mark" aria-hidden="true">*</span></div>
         <input
           type="text"
           id="category-autosuggest"
@@ -110,6 +111,16 @@
       </div>
       <div id="category-chips" class="mt-1 d-flex flex-wrap gap-1"></div>
       <span class="form-text">{% translate 'optional — select one or more categories'|capfirst %}.</span>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text is-optional">{% translate 'visibility'|capfirst %}</div>
+        <select name="visibility" class="form-select">
+          {% for value, label in form.visibility.field.choices %}
+            <option value="{{ value }}"{% if form.visibility.value == value %} selected{% endif %}>{% translate label|capfirst %}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <span class="form-text">{% translate 'who can see this location'|capfirst %}.</span>
 
       <div class="mt-3">
         <button type="submit" id="add-location-submit" class="btn btn--primary">
