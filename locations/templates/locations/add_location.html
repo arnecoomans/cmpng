@@ -247,8 +247,8 @@ import { api } from "{% static 'js/cmnsd/http.js' %}";
         if (m.url) {
           action = ` <a href="${m.url}" target="_blank" class="alert-link">${labelView}</a>`;
         }
-        if (m.can_unrevoke) {
-          action = ` <a href="${m.url || '#'}" class="alert-link">${labelRestore}</a>`;
+        if (m.can_unrevoke && m.revoke_url) {
+          action = ` <a href="${m.revoke_url}" class="alert-link" data-action="modal" data-title="${labelRestore}">${labelRestore}</a>`;
         }
         const badge = `<span class="cmpng-badge me-1">${m.status_label}</span>`;
         return `<li>${badge}<strong>${m.name}</strong> — ${statusMessage(m)}${action}</li>`;

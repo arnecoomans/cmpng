@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
+from django.urls import reverse
 from django.views import View
 
 from cmnsd.models.BaseModel import BaseModel
@@ -38,6 +39,7 @@ class CheckDuplicateView(LoginRequiredMixin, View):
         'can_unrevoke': loc.status == 'r' and (
           request.user.is_staff or loc.user_id == request.user.pk
         ),
+        'revoke_url': reverse('locations:revoke_location', args=[loc.slug]) if loc.status == 'r' else None,
       })
 
     return self._json(matches)

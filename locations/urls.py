@@ -21,6 +21,9 @@ urlpatterns = [
   # Re-enrich Location View (views/locations/reenrich_location.py) — staff only
   path('location/<slug:slug>/re-enrich/', views.ReEnrichLocationView.as_view(), name='reenrich_location'),
 
+  # Revoke Location View (views/locations/revoke_location.py) — staff only
+  path('location/<slug:slug>/revoke/', views.RevokeLocationView.as_view(), name='revoke_location'),
+
   # Location Detail Views (views/locations/location_detail.py)
   path('location/<slug:slug>/', views.LocationDetailView.as_view(), name='location_detail'),
   path('accommodation/<slug:slug>/', views.LocationDetailView.as_view(), name='accommodation_detail'),

@@ -1,0 +1,14 @@
+{% if user.is_staff %}
+{% load i18n %}
+<button
+  class="btn btn--ghost"
+  type="button"
+  data-action="modal"
+  data-url="{% url 'locations:revoke_location' location.slug %}"
+  data-title="{% if location.status == 'p' %}{% translate 'revoke location'|capfirst %}{% else %}{% translate 'republish location'|capfirst %}{% endif %}"
+><i class="bi {% if location.status == 'p' %}bi-x-circle{% else %}bi-check-circle text-warning{% endif %}"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    data-bs-title="{% if location.status == 'p' %}{% translate 'revoke location'|capfirst %}{% else %}{% translate 'republish location'|capfirst %}{% endif %}"
+></i></button>
+{% endif %}

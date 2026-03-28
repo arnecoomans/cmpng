@@ -1,7 +1,9 @@
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic import ListView
 from cmnsd.mixins import RequestMixin, FilterMixin
 
 from locations.models import Comment
+from locations.models.Location import Location
 
 
 class CommentListView(RequestMixin, FilterMixin, ListView):
@@ -12,8 +14,13 @@ class CommentListView(RequestMixin, FilterMixin, ListView):
 
   def get_queryset(self):
     if not hasattr(self, '_optimized_queryset'):
+      location_ct = ContentType.objects.get_for_model(Location)
+      published_ids = Location.objects.filter(status='p').values('id')
       queryset = Comment.objects.select_related(
         'user', 'content_type'
+      ).filter(
+        content_type=location_ct,
+        object_id__in=published_ids,
       ).order_by('-date_created')
       self._optimized_queryset = self.filter(queryset, request=self.request)
     return self._optimized_queryset

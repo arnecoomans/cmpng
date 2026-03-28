@@ -1,0 +1,42 @@
+{% load i18n %}
+<div class="modal__body">
+  <form
+    method="post"
+    action="{% url 'locations:revoke_location' location.slug %}"
+  >
+    {% csrf_token %}
+    <div class="modal-section">
+      {% if location.status == 'p' %}
+        <p class="hint">
+          {% translate 'optionally leave a comment to explain why this location is being revoked'|capfirst %}. {% translate 'this helps when reconsidering it later'|capfirst %}.
+        </p>
+        <textarea
+          class="form-control"
+          name="reason"
+          rows="3"
+          placeholder="{% translate 'revoke reason (optional)'|capfirst %}…"
+          autofocus
+        ></textarea>
+      {% else %}
+        <p class="hint">
+          {% translate 'this location is currently revoked. republishing will make it visible again'|capfirst %}.
+        </p>
+      {% endif %}
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-section d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn--secondary" data-close-modal>
+        {% translate 'cancel'|capfirst %}
+      </button>
+      {% if location.status == 'p' %}
+        <button type="submit" class="btn btn--danger">
+          <i class="bi bi-x-circle me-1"></i>{% translate 'revoke location'|capfirst %}
+        </button>
+      {% else %}
+        <button type="submit" class="btn btn--primary">
+          <i class="bi bi-check-circle me-1"></i>{% translate 'republish location'|capfirst %}
+        </button>
+      {% endif %}
+    </div>
+  </form>
+</div>

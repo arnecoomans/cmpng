@@ -2,6 +2,7 @@ import math
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext as _
 
@@ -120,8 +121,13 @@ def warn_nearby_duplicates(location, request):
     return
 
   def _linked(loc):
-    url = loc.get_absolute_url() if loc.status == 'p' else None
-    return f'<a href="{url}">{loc.name}</a>' if url else loc.name
+    if loc.status == 'p':
+      return f'<a href="{loc.get_absolute_url()}">{loc.name}</a>'
+    if loc.status == 'r' and request.user.is_staff:
+      revoke_url = reverse('locations:revoke_location', args=[loc.slug])
+      label = _('republish')
+      return f'{loc.name} (<a href="{revoke_url}" data-action="modal" data-title="{label}">{label}</a>)'
+    return loc.name
 
   parts = [_linked(loc) for loc in nearby[:3]]
   if len(nearby) > 3:

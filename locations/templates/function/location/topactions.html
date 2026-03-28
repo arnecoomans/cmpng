@@ -31,6 +31,8 @@
         onclick="this.disabled=true; this.closest('form').submit()"
       ><i class="bi bi-arrow-clockwise"></i></button>
     </form>
+    <!-- Revoke location -->
+    {% include 'element/location/topaction_revoke.html' %}
     <!-- Admin view -->
     {% include 'element/location/topactions_admin_view.html' %}
   {% endif %}

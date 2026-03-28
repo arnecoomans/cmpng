@@ -3,6 +3,7 @@ from .location_detail import LocationDetailView
 from .add_location import AddLocationView
 from .reenrich_location import ReEnrichLocationView
 from .check_duplicate import CheckDuplicateView
+from .revoke_location import RevokeLocationView
 
 __all__ = [
   'AllLocationListView', 'AccommodationListView', 'ActivityListView',
@@ -10,4 +11,5 @@ __all__ = [
   'AddLocationView',
   'ReEnrichLocationView',
   'CheckDuplicateView',
+  'RevokeLocationView',
 ]

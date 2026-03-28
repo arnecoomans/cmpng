@@ -28,6 +28,20 @@
       </div>
     </div>
 
+    {% if location.status == 'r' %}
+    <div class="alert alert-warning mt-2" role="alert">
+      <i class="bi bi-x-circle me-1"></i>
+      {% translate 'this location is currently revoked and not visible to the public'|capfirst %}.
+      {% if user.is_staff %}
+        <a href="#" class="alert-link ms-1"
+           data-action="modal"
+           data-url="{% url 'locations:revoke_location' location.slug %}"
+           data-title="{% translate 'republish location'|capfirst %}"
+        >{% translate 'republish'|capfirst %}</a>.
+      {% endif %}
+    </div>
+    {% endif %}
+
     <!-- Header with Name -->
     <div id="name">
       {% include 'field/location/name.html' %}
