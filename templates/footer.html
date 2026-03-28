@@ -1,4 +1,5 @@
 <!-- Footer -->
 <footer>
   &copy; {% now 'Y' %} | By <a href="https://github.com/arnecoomans/" target="_blank" title="{% translate "Arne Coomans on Github" %}">Arne Coomans</a> | <a href="https://github.com/arnecoomans/cmpng/" target="_blank" title="{% translate 'CMPNG on GitHub'|capfirst %}"><img src="{% static 'img/bootstrap-icons/github.svg' %}" alt="GitHub"></a> | Powered by <span class="cmnsd"><span class="cmnsd-square"></span> <a href="https://github.com/arnecoomans/cmnsd/" target="_blank">cmnsd</a></span> and <span class="cmnsd js"><span class="cmnsd-square"></span> <a href="https://github.com/arnecoomans/cmnsd/tree/main/static/js/cmnsd" target="_blank">cmnsd.js</a></span>
+  <br><small class="text-muted"><a href="{% url 'locations:page_detail' 'cookie-statement' %}" class="text-muted">{% translate 'cookie statement'|capfirst %}</a></small>
 </footer>
