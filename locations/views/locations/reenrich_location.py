@@ -7,6 +7,7 @@ from django.views import View
 
 from locations.models.Location import Location
 from locations.services.location_geocoding import enrich_location, _address_is_hint
+from locations.services.location_nearby import warn_nearby_duplicates
 
 
 class ReEnrichLocationView(LoginRequiredMixin, View):
@@ -58,4 +59,5 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
       location.geo = None
       enrich_location(location, request=request, address_hint=address)
 
+    warn_nearby_duplicates(location, request)
     return redirect(location.get_absolute_url())

@@ -1,5 +1,11 @@
 import math
 from django.conf import settings
+from django.contrib import messages
+from django.db.models import Q
+from django.utils.text import capfirst
+from django.utils.translation import gettext as _
+
+PROXIMITY_RADIUS_KM = 0.5
 
 
 EARTH_RADIUS_KM = 6371.0
@@ -91,3 +97,37 @@ def get_nearby_locations(location, radius_km=None, queryset=None):
 
   results.sort(key=lambda loc: loc.nearby_distance)
   return results
+
+
+def warn_nearby_duplicates(location, request):
+  """Add a warning message if other locations exist within PROXIMITY_RADIUS_KM.
+
+  Checks all published locations plus the requesting user's own locations
+  across all statuses. Safe to call when coordinates are not yet set —
+  returns silently in that case.
+
+  Args:
+    location: Location instance (must already have coord_lat/coord_lon set).
+    request:  HttpRequest — used for scoping and attaching the message.
+  """
+  if not location.coord_lat or not location.coord_lon:
+    return
+  nearby_qs = location.__class__.objects.filter(
+    Q(status='p') | Q(user=request.user)
+  )
+  nearby = get_nearby_locations(location, radius_km=PROXIMITY_RADIUS_KM, queryset=nearby_qs)
+  if not nearby:
+    return
+
+  def _linked(loc):
+    url = loc.get_absolute_url() if loc.status == 'p' else None
+    return f'<a href="{url}">{loc.name}</a>' if url else loc.name
+
+  parts = [_linked(loc) for loc in nearby[:3]]
+  if len(nearby) > 3:
+    parts.append(_(' and {} more').format(len(nearby) - 3))
+  names = ', '.join(parts)
+  messages.warning(
+    request,
+    capfirst(_('this location is very close to: %(names)s. Is this a duplicate?') % {'names': names}),
+  )
