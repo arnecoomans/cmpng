@@ -1,5 +1,5 @@
 {% with visitors=location.visitors.all %}
-  {% if scope == 'location' or visitors %}
+  {% if not scope or scope not in 'accommodations,activities,all' or visitors %}
     <i
       class="bi bi-person-raised-hand cmpng-icons {% if not visitors %}cmpng-icons-inactive{% elif user in visitors %}cmpng-icons-active{% endif %}"
       data-bs-toggle="tooltip"
