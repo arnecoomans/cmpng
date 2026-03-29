@@ -134,6 +134,11 @@
                       {% include 'field/location/favorited.html' %}
                     {% endif  %}
                   {% endif %}
+                  {% if location.status != 'p' %}
+                    <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate location.get_status_display|capfirst %}">
+                      {{ location.get_status_display|slice:":1" }}
+                    </span>
+                  {% endif %}
                 </div>
 
               </div>
