@@ -1,7 +1,7 @@
 <!-- ADDRESS & CONTACT PANEL -->
 <section class="card card--pad">
   <h2 class="card__title">{% translate "address"|capfirst %} & {% translate "contact"|capfirst %}</h2>
-  {% if ajax.editable %}
+  {% if ajax.editable and perms.locations.change_location %}
     <form
     data-action
     data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'address,owners_name,email,phone' %}"
@@ -15,7 +15,7 @@
   </div>
   
   {% if location.is_accommodation or user.is_authenticated %}
-    {% if ajax.editable or location.owners_name or location.phone or location.email %}
+    {% if ajax.editable and perms.locations.change_location or location.owners_name or location.phone or location.email %}
       <div class="field-view">
         <div class="k">{% translate "contact"|capfirst %}</div>
         {% if location.is_accommodation %}

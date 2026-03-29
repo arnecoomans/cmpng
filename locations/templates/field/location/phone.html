@@ -1,4 +1,4 @@
-{% if ajax.editable %}
+{% if ajax.editable and perms.locations.change_location %}
   <div class="input-group">
     <span class="input-group-text"><i class="bi bi-telephone"></i></span>
     <input type="text" name="phone" class="form-control form-control--ghost" value="{{ location.phone|default:'' }}" placeholder="{% translate 'phone number of this'|capfirst %} {% translate location.type %}">

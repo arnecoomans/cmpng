@@ -1,5 +1,5 @@
 <div class="k">
-  {% if ajax.editable %}{% translate 'edit'|capfirst %} {% endif %}{% translate "size"|capfirst %}
+  {% if ajax.editable and perms.locations.change_location %}{% translate 'edit'|capfirst %} {% endif %}{% translate "size"|capfirst %}
   {% include 'element/reusable_edit_button.html' with field='size' %}
 </div>
 <div class="v">

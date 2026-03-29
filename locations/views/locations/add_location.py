@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -11,7 +11,8 @@ from locations.services.location_geocoding import enrich_location
 from locations.services.location_nearby import warn_nearby_duplicates
 
 
-class AddLocationView(LoginRequiredMixin, CreateView):
+class AddLocationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+  permission_required = 'locations.add_location'
   model = Location
   template_name = 'locations/add_location.html'
   fields = ['name', 'address', 'summary', 'visibility']

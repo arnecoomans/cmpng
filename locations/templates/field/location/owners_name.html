@@ -1,4 +1,4 @@
-{% if ajax.editable %}
+{% if ajax.editable and perms.locations.change_location %}
   <div class="input-group">
     <span class="input-group-text"><i class="bi bi-people"></i></span>
     <input type="text" name="owners_name" class="form-control form-control--ghost" value="{{ location.owners_name|default:'' }}" placeholder="{% translate 'owners of this'|capfirst %} {% translate location.type %}">

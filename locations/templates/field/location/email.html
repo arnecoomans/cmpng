@@ -1,4 +1,4 @@
-{% if ajax.editable %}
+{% if ajax.editable and perms.locations.change_location %}
   <div class="input-group">
     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
     <input type="email" name="email" class="form-control form-control--ghost" value="{{ location.email|default:'' }}" placeholder="{% translate 'email address of this'|capfirst %} {% translate location.type %}">

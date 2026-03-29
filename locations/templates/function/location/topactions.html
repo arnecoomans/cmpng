@@ -19,20 +19,22 @@
 
   <!-- Staff User functions -->
   {% if user.is_staff %}
-    <!-- Re-enrich: refresh all automatically detected geo data -->
-    <form method="post" action="{% url 'locations:reenrich_location' location.slug %}" style="display:inline">
-      {% csrf_token %}
-      <button
-        class="btn btn--ghost"
-        type="submit"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        data-bs-title="{% translate 'refresh automatically detected data of'|capfirst %} {% translate location.type %}"
-        onclick="this.disabled=true; this.closest('form').submit()"
-      ><i class="bi bi-arrow-clockwise"></i></button>
-    </form>
-    <!-- Revoke location -->
-    {% include 'element/location/topaction_revoke.html' %}
+    {% if perms.locations.change_location %}
+      <!-- Re-enrich: refresh all automatically detected geo data -->
+      <form method="post" action="{% url 'locations:reenrich_location' location.slug %}" style="display:inline">
+        {% csrf_token %}
+        <button
+          class="btn btn--ghost"
+          type="submit"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          data-bs-title="{% translate 'refresh automatically detected data of'|capfirst %} {% translate location.type %}"
+          onclick="this.disabled=true; this.closest('form').submit()"
+        ><i class="bi bi-arrow-clockwise"></i></button>
+      </form>
+      <!-- Revoke location -->
+      {% include 'element/location/topaction_revoke.html' %}
+    {% endif %}
     <!-- Admin view -->
     {% include 'element/location/topactions_admin_view.html' %}
   {% endif %}
