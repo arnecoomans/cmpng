@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.core.management.base import BaseCommand
+
+from locations.management.commands.create_groups import create_groups
 
 # Sensitive data (password hashes, emails) lives in a gitignored secrets file.
 # See locations/fixtures/fixture_users.json.example for the expected format.
@@ -21,6 +23,8 @@ class Command(BaseCommand):
 
   def handle(self, *_args, **options):
     reset_passwords = options['reset_passwords']
+
+    create_groups(stdout=self.stdout)
 
     secrets = self._load_secrets()
     if not secrets:
@@ -65,6 +69,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'{status} user: {username} (pk={pk})'))
       else:
         self.stdout.write(f'User already exists: {username} (pk={pk})')
+
+      groups = ['community-member-read', 'community-member']
+      if user_data.get('is_staff'):
+        groups.append('staff')
+      for group_name in groups:
+        user.groups.add(Group.objects.get(name=group_name))
+      self.stdout.write(f'  → assigned to groups: {", ".join(groups)}')
 
   def _load_secrets(self):
     if not SECRETS_FILE.exists():

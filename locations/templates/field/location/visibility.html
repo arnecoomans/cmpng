@@ -3,7 +3,7 @@
   {% include 'element/reusable_edit_button.html' with field='visibility' %}
 </div>
 <div class="v">
-  {% if ajax.editable and perms.locations.change_location and user.is_staff %}
+  {% if ajax.editable and perms.locations.change_location %}
     <form
       data-action
       data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'visibility' %}"

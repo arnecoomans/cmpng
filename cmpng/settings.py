@@ -160,6 +160,7 @@ SEARCH_MIN_LENGTH = 2
 SEARCH_QUERY_CHARACTER = 'q'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@localhost')
+REGISTRATION_NOTIFY_EMAIL = env('REGISTRATION_NOTIFY_EMAIL', default=None)
 
 # Logging
 _log_handlers = {
