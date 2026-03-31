@@ -1,7 +1,7 @@
 from geopy import distance
 from django.contrib import messages
 from locations.utils.get_departure_coordinates import get_departure_coordinates
-
+from django.utils.text import capfirst
 
 def calculate_distance_to_departure_center(location, request=None):
   """
@@ -29,7 +29,7 @@ def calculate_distance_to_departure_center(location, request=None):
     departure_coords = get_departure_coordinates()
     if not departure_coords:
       if request:
-        messages.error(request, "Could not determine departure center coordinates")
+        messages.error(request, capfirst("could not determine departure center coordinates"))
       return None
     
     calculated_distance = distance.distance(
@@ -42,16 +42,19 @@ def calculate_distance_to_departure_center(location, request=None):
     
     if old_distance != location.distance_to_departure_center:
       location.save(update_fields=['distance_to_departure_center'])
-      
+
+      if request:
+        messages.success(request, capfirst(f"distance to departure center set to {location.distance_to_departure_center} km."))
+
       # Trigger region recalculation
       if location.region:
         location.region.calculate_average_distance_to_center()
-    
+
     return location.distance_to_departure_center
     
   except Exception as e:
     if request:
-      messages.error(request, f"Error calculating distance for {location.name}: {e}")
+      messages.error(request, capfirst(f"error calculating distance for {location.name}: {e}"))
     return None
 
 

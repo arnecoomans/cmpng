@@ -68,7 +68,7 @@ class LocationAdmin(BaseModelAdmin):
             'fields': ('address', 'email', 'phone', 'owners_name')
         }),
         (_('Coordinates'), {
-            'fields': ('coord_lat', 'coord_lon', 'google_place_id'),
+            'fields': ('coord_lat', 'coord_lon', 'google_place_id', 'distance_to_departure_center'),
         }),
         (_('Classification'), {
             'fields': ('categories', 'tags', 'is_accommodation', 'is_activity'),

@@ -42,9 +42,11 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
       Location.objects.filter(pk=location.pk).update(
         google_place_id=None,
         geo=None,
+        distance_to_departure_center=None,
       )
       location.google_place_id = None
       location.geo = None
+      location.distance_to_departure_center = None
       enrich_location(location, request=request)
     else:
       # Hint address (or no address) — clear it so Google can resolve
@@ -53,11 +55,14 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
         address=None,
         google_place_id=None,
         geo=None,
+        distance_to_departure_center=None,
       )
       location.address = None
       location.google_place_id = None
       location.geo = None
+      location.distance_to_departure_center = None
       enrich_location(location, request=request, address_hint=address)
 
+    location.calculate_distance_to_departure_center(request=request)
     warn_nearby_duplicates(location, request)
     return redirect(location.get_absolute_url())
