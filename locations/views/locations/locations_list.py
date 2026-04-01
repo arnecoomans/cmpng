@@ -33,7 +33,9 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     # Default, show only published locations, but allow filtering for unpublished if user is authenticated and has permission
     request_status = self.request.GET.get('all_status', False)
     if not request_status:
-      return queryset.filter(status='p')
+      # Model manager filters visibility based on staff status and user permissions
+      # Add filter to show retracted or draft locations after explicitly requesting all status
+      queryset = queryset.filter(status='p')
     
     return queryset
   
