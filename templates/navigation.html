@@ -37,9 +37,13 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'locations:preferences' %}">{% translate 'preferences'|capfirst %}</a></li>
-              {% if user.is_staff and location %}
+              {% if user.is_staff %}
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/admin/locations/location/{{ location.id }}/change/" target="_blank">{% blocktranslate %}Edit "{{ location }}" in admin{% endblocktranslate %}</a></li>
+                <li><a class="dropdown-item" href="{% url 'locations:manage_tag_visibility' %}">{% translate 'manage tag visibility'|capfirst %}</a></li>
+                {% if location %}
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/admin/locations/location/{{ location.id }}/change/" target="_blank">{% blocktranslate %}Edit "{{ location }}" in admin{% endblocktranslate %}</a></li>
+                {% endif %}
                 <li><a class="dropdown-item" href="/admin/" target="_blank">{% translate "open django admin"|capfirst %}</a></li>
               {% endif %}
               <li><hr class="dropdown-divider"></li>

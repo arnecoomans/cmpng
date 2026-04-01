@@ -1,0 +1,133 @@
+{% extends 'index.html' %}
+{% load i18n text_filters %}
+
+{% block title %}{% translate 'manage tag visibility'|capfirst %}{% endblock %}
+
+{% block template_css %}
+<style>
+  .visibility-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .visibility-col { background: var(--bs-light); border-radius: .5rem; padding: .75rem; min-height: 200px; }
+  .visibility-col h6 { font-weight: 600; margin-bottom: .5rem; }
+  .visibility-col[data-visibility="p"] h6 { color: var(--bs-success); }
+  .visibility-col[data-visibility="c"] h6 { color: var(--bs-primary); }
+  .visibility-col[data-visibility="f"] h6 { color: var(--bs-warning); }
+  .visibility-col[data-visibility="q"] h6 { color: var(--bs-secondary); }
+  .tag-chip {
+    display: inline-flex; align-items: center; gap: .35rem;
+    background: white; border: 1px solid var(--bs-border-color);
+    border-radius: 2rem; padding: .2rem .6rem; margin: .2rem;
+    font-size: .85rem; cursor: grab; user-select: none;
+  }
+  .tag-chip.dragging { opacity: .4; }
+  .visibility-col.drag-over { outline: 2px dashed var(--bs-primary); }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{% url 'locations:tags' %}">{% translate 'tags'|capfirst %}</a>
+        <span class="sep">›</span>
+        <span aria-current="page">{% translate 'manage visibility'|capfirst %}</span>
+      </nav>
+    </div>
+
+    <h1>{% translate 'manage tag visibility'|capfirst %}</h1>
+    <p class="text-muted mb-3">{% translate 'drag tags between columns to change their visibility'|capfirst %}.</p>
+
+    <div class="visibility-board" id="visibility-board">
+      {% for vis_key, label in visibility_labels.items %}
+        <div class="visibility-col" data-visibility="{{ vis_key }}">
+          <h6>{% translate label|capfirst %}</h6>
+          {% for tag in columns|get_item:vis_key %}
+            <div
+              class="tag-chip"
+              draggable="true"
+              data-tag-id="{{ tag.pk }}"
+              data-tag-name="{{ tag.name }}"
+            >
+              {% if tag.parent %}<span class="text-muted">{{ tag.parent.name }} › </span>{% endif %}
+              {{ tag.name }}
+            </div>
+          {% empty %}
+            <p class="text-muted small fst-italic">{% translate 'no tags'|capfirst %}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+
+  </div>
+</main>
+{% endblock %}
+
+{% block scriptfooter %}
+<script type="module">
+import { api } from "{% static 'js/cmnsd/http.js' %}";
+
+(function () {
+  const board     = document.getElementById('visibility-board');
+  const messages  = document.getElementById('messages');
+  const updateUrl = '{% url "locations:manage_tag_visibility" %}';
+
+  let dragged = null;
+
+  board.addEventListener('dragstart', e => {
+    const chip = e.target.closest('.tag-chip');
+    if (!chip) return;
+    dragged = chip;
+    chip.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', chip.dataset.tagId);
+  });
+
+  board.addEventListener('dragend', e => {
+    if (dragged) dragged.classList.remove('dragging');
+    document.querySelectorAll('.visibility-col').forEach(c => c.classList.remove('drag-over'));
+    dragged = null;
+  });
+
+  board.addEventListener('dragover', e => {
+    const col = e.target.closest('.visibility-col');
+    if (!col) return;
+    e.preventDefault();
+    document.querySelectorAll('.visibility-col').forEach(c => c.classList.remove('drag-over'));
+    col.classList.add('drag-over');
+  });
+
+  board.addEventListener('drop', async e => {
+    const col = e.target.closest('.visibility-col');
+    if (!col || !dragged) return;
+    e.preventDefault();
+
+    const newVisibility = col.dataset.visibility;
+    const tagId         = dragged.dataset.tagId;
+
+    // Move chip in DOM
+    dragged.parentElement.removeChild(dragged);
+    col.appendChild(dragged);
+
+    // Clear empty state if present
+    const empty = col.querySelector('.fst-italic');
+    if (empty) empty.remove();
+
+    // POST update
+    const result = await api.post(updateUrl, { data: { tag_id: tagId, visibility: newVisibility } });
+    if (!result.ok) {
+      showFeedback('{% translate "could not update tag" %}', 'danger');
+    }
+  });
+
+  function showFeedback(msg, type = 'success') {
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type} alert-dismissible fade show`;
+    alert.role = 'alert';
+    alert.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+    messages.appendChild(alert);
+  }
+})();
+</script>
+{% endblock %}

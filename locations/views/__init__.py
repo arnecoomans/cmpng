@@ -1,5 +1,5 @@
 from .locations import AllLocationListView, AccommodationListView, ActivityListView, LocationDetailView, AddLocationView, ReEnrichLocationView, CheckDuplicateView, RevokeLocationView
-from .tags import TagListView
+from .tags import TagListView, ManageTagVisibilityView
 from .visits import ManageVisitsView
 from .comments import CommentListView
 from .profile import PreferencesView, RevokeMapsSessionView, SetLanguageView
@@ -11,7 +11,7 @@ from .Translations import *
 __all__ = [
   'AllLocationListView', 'AccommodationListView', 'ActivityListView',
   'LocationDetailView', 'AddLocationView', 'ReEnrichLocationView', 'CheckDuplicateView', 'RevokeLocationView',
-  'TagListView',
+  'TagListView', 'ManageTagVisibilityView',
   'ManageVisitsView',
   'CommentListView',
   'PreferencesView', 'RevokeMapsSessionView', 'SetLanguageView',
