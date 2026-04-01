@@ -3,6 +3,25 @@
 
 {% block title %}{% trans "Tags" %}{% endblock %}
 
+{% block template_css %}
+{% if perms.locations.change_tag %}
+<style>
+  .tag-edit-group { display: inline-flex; align-items: center; }
+  .tag-edit-group .tag-edit-btn {
+    display: none;
+    padding: .1rem .25rem;
+    color: var(--bs-secondary);
+    font-size: .7rem;
+    line-height: 1;
+    border: none;
+    background: none;
+    text-decoration: none;
+  }
+  .tag-edit-group:hover .tag-edit-btn { display: inline-flex; }
+</style>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="cmpng-page">
 
@@ -24,9 +43,14 @@
           <div class="cmpng-section cmpng-section--country">{% trans "General" %}</div>
           <div class="p-3 d-flex flex-wrap gap-2">
             {% for tag in group.list %}
-              <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">
-                {{ tag.name }}
-              </a>
+              {% if perms.locations.change_tag %}
+                <span class="tag-edit-group">
+                  <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">{{ tag.name }}</a>
+                  <a href="{% url 'locations:edit_tag' tag.slug %}" class="tag-edit-btn" title="{% translate 'edit'|capfirst %}"><i class="bi bi-pencil"></i></a>
+                </span>
+              {% else %}
+                <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">{{ tag.name }}</a>
+              {% endif %}
             {% endfor %}
           </div>
         {% endif %}
@@ -37,9 +61,14 @@
           <div class="cmpng-section cmpng-section--region">{{ group.grouper.name }}</div>
           <div class="p-3 d-flex flex-wrap gap-2">
             {% for tag in group.list %}
-              <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">
-                {{ tag.name }}
-              </a>
+              {% if perms.locations.change_tag %}
+                <span class="tag-edit-group">
+                  <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">{{ tag.name }}</a>
+                  <a href="{% url 'locations:edit_tag' tag.slug %}" class="tag-edit-btn" title="{% translate 'edit'|capfirst %}"><i class="bi bi-pencil"></i></a>
+                </span>
+              {% else %}
+                <a href="{{ tag.get_absolute_url }}" class="cmpng-badge cmpng-badge--tag">{{ tag.name }}</a>
+              {% endif %}
             {% endfor %}
           </div>
         {% endif %}

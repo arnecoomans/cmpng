@@ -32,6 +32,7 @@ urlpatterns = [
   # Tag Views (views/tags/)
   path('tags/', views.TagListView.as_view(), name='tags'),
   path('tags/manage-visibility/', views.ManageTagVisibilityView.as_view(), name='manage_tag_visibility'),
+  path('tag/<slug:slug>/edit/', views.EditTagView.as_view(), name='edit_tag'),
 
   # Manage Visits View (views/visits/manage_visits.py)
   path('visits/manage/', views.ManageVisitsView.as_view(), name='manage_visits'),

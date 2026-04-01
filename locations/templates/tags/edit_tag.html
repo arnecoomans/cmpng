@@ -1,0 +1,75 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'edit tag'|capfirst %}: {{ object.name }}{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{% url 'locations:tags' %}">{% translate 'tags'|capfirst %}</a>
+        <span class="sep">›</span>
+        <span aria-current="page">{% translate 'edit'|capfirst %}: {{ object.name }}</span>
+      </nav>
+    </div>
+
+    <h1>{% translate 'edit tag'|capfirst %}: {{ object.name }}</h1>
+
+    <form method="post" style="max-width:500px">
+      {% csrf_token %}
+
+      <div class="input-group mt-3">
+        <div class="input-group-text" style="min-width:120px">{% translate 'name'|capfirst %}</div>
+        <input
+          type="text"
+          name="name"
+          class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+          value="{{ form.name.value|default:'' }}"
+          required
+          autofocus
+        >
+        {% if form.name.errors %}<div class="invalid-feedback">{{ form.name.errors.as_text }}</div>{% endif %}
+      </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text" style="min-width:120px">{% translate 'slug'|capfirst %}</div>
+        <input
+          type="text"
+          name="slug"
+          class="form-control{% if form.slug.errors %} is-invalid{% endif %}"
+          value="{{ form.slug.value|default:'' }}"
+          required
+        >
+        {% if form.slug.errors %}<div class="invalid-feedback">{{ form.slug.errors.as_text }}</div>{% endif %}
+      </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text" style="min-width:120px">{% translate 'description'|capfirst %}</div>
+        <textarea
+          name="description"
+          class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+          data-autoresize
+        >{{ form.description.value|default:'' }}</textarea>
+        {% if form.description.errors %}<div class="invalid-feedback">{{ form.description.errors.as_text }}</div>{% endif %}
+      </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-text" style="min-width:120px">{% translate 'status'|capfirst %}</div>
+        <select name="status" class="form-select">
+          {% for value, label in form.status.field.choices %}
+            <option value="{{ value }}"{% if form.status.value == value %} selected{% endif %}>{% translate label|capfirst %}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn--primary">{% translate 'save'|capfirst %}</button>
+        <a href="{% url 'locations:tags' %}" class="btn btn--secondary">{% translate 'cancel'|capfirst %}</a>
+      </div>
+    </form>
+
+  </div>
+</main>
+{% endblock %}
