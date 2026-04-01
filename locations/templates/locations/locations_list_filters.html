@@ -123,13 +123,16 @@
       </button>
     </div>
   </form>
-  {% comment %} <ul>
-    {% for option in tag_filter_options.options %}
-      <li>
-        <a href="{% update_query_params request add=option.slug to=tag_filter_options.key %}">
-          {% translate option.name|capfirst %}
-        </a>
-      </li>
-    {% endfor %}
-  </ul> {% endcomment %}
+{% endif %}
+
+{% if user.is_staff %}
+  <h2 class="">{% translate 'all statuses'|capfirst %}</h2>
+  <ul>
+    <li>
+      <a href="{{ request.path }}{% update_query_params request replace='true' to='all_status' %}"
+         {% if request.GET.all_status == 'true' %}class="active"{% endif %}>
+        {% translate 'show all statuses'|capfirst %}
+      </a>
+    </li>
+  </ul>
 {% endif %}
