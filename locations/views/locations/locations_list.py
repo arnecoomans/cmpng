@@ -30,6 +30,11 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
       mapping=mapping,
       request=self.request,
       )
+    # Default, show only published locations, but allow filtering for unpublished if user is authenticated and has permission
+    request_status = self.request.GET.get('all_status', False)
+    if not request_status:
+      return queryset.filter(status='p')
+    
     return queryset
   
   def get_context_data(self, **kwargs):
