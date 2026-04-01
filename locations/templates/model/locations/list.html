@@ -135,6 +135,7 @@
                     {% endif  %}
                   {% endif %}
                   {% if location.status != 'p' %}
+                    <!-- Status Badge for locations that are not published -->
                     <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate location.get_status_display|capfirst %}">
                       {{ location.get_status_display|slice:":1" }}
                     </span>
