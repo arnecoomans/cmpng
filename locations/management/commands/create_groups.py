@@ -29,11 +29,12 @@ GROUP_DEFINITIONS = {
                      'change_userpreferences',
   ],
   'staff': [
-    'add_category',  'change_category',
-    'add_page',      'change_page',
-    'add_size',      'change_size',
-    'add_tag',       'change_tag',
-    'add_region',    'change_region',
+    'add_category',    'change_category',
+    'add_page',        'change_page',
+    'add_size',        'change_size',
+    'add_tag',         'change_tag',
+    'add_region',      'change_region',
+    'delete_location',                   # re-enrich and revoke actions
   ],
 }
 

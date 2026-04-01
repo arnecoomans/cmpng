@@ -2,9 +2,17 @@ import pytest
 from django.test import RequestFactory
 from django.contrib.messages.storage.fallback import FallbackStorage
 
+from django.contrib.auth.models import Permission
+
 from locations.models import Visits
 from locations.tests.factories import LocationFactory, UserFactory
 from locations.views.visits.manage_visits import ManageVisitsView
+
+
+def _make_member_user():
+  user = UserFactory()
+  user.user_permissions.add(Permission.objects.get(codename='add_visits'))
+  return user
 
 
 def _get(url='/', user=None, ajax=False, **kwargs):
@@ -67,7 +75,7 @@ class TestManageVisitsViewQueryset:
 class TestManageVisitsViewContext:
 
   def test_context_scope_is_visits(self, db):
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user)
 
     response = ManageVisitsView.as_view()(request)
@@ -75,7 +83,7 @@ class TestManageVisitsViewContext:
     assert response.context_data['scope'] == 'visits'
 
   def test_context_location_is_none_without_slug(self, db):
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user)
 
     response = ManageVisitsView.as_view()(request)
@@ -83,7 +91,7 @@ class TestManageVisitsViewContext:
     assert response.context_data['location'] is None
 
   def test_context_location_set_when_slug_provided(self, db):
-    user = UserFactory()
+    user = _make_member_user()
     location = LocationFactory()
     request = _get(user=user)
 
@@ -92,7 +100,7 @@ class TestManageVisitsViewContext:
     assert response.context_data['location'] == location
 
   def test_context_months_present(self, db):
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user)
 
     response = ManageVisitsView.as_view()(request)
@@ -108,7 +116,7 @@ class TestManageVisitsViewContext:
 class TestManageVisitsViewGet:
 
   def test_normal_request_returns_200(self, db):
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user)
 
     response = ManageVisitsView.as_view()(request)
@@ -117,7 +125,7 @@ class TestManageVisitsViewGet:
 
   def test_ajax_request_returns_json(self, db):
     from unittest.mock import patch
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user, ajax=True)
 
     with patch('locations.views.visits.manage_visits.render_to_string', return_value='<html>'):
@@ -129,7 +137,7 @@ class TestManageVisitsViewGet:
   def test_ajax_response_contains_payload(self, db):
     import json
     from unittest.mock import patch
-    user = UserFactory()
+    user = _make_member_user()
     request = _get(user=user, ajax=True)
 
     with patch('locations.views.visits.manage_visits.render_to_string', return_value='<html>'):

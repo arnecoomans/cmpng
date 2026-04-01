@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -10,22 +10,16 @@ from django.views import View
 from locations.models.Location import Location
 
 
-class RevokeLocationView(LoginRequiredMixin, View):
+class RevokeLocationView(LoginRequiredMixin, PermissionRequiredMixin, View):
   """Staff-only view for toggling a location between published and revoked.
 
   GET  — returns the revoke/republish form as HTML (for cmnsd modal).
   POST — toggles status: published → revoked, or revoked → published.
          When revoking, optionally saves the reason as a private comment.
   """
+  permission_required = 'locations.delete_location'
 
   template_name = 'locations/revoke_location_form.html'
-
-  def dispatch(self, request, *args, **kwargs):
-    if not request.user.is_staff:
-      location = get_object_or_404(Location, slug=kwargs.get('slug'))
-      messages.warning(request, capfirst(_('action not allowed.')))
-      return redirect(location.get_absolute_url())
-    return super().dispatch(request, *args, **kwargs)
 
   def get(self, request, slug):
     location = get_object_or_404(Location, slug=slug)

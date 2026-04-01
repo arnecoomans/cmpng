@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth.models import Permission
 from django.urls import reverse
 
 from locations.tests.factories import (
@@ -13,6 +14,12 @@ def force_login(client, user):
   first syncs the in-memory hash to the DB."""
   user.save()
   client.force_login(user)
+
+
+def make_member_user():
+  user = UserFactory()
+  user.user_permissions.add(Permission.objects.get(codename='add_list'))
+  return user
 
 
 # ------------------------------------------------------------------ #
@@ -141,28 +148,28 @@ class TestManageListsView:
     assert '/accounts/' in response['Location']
 
   def test_accessible_to_authenticated(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     response = client.get(self._url(location))
     assert response.status_code == 200
 
   def test_uses_correct_template(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     response = client.get(self._url(location))
     assert 'lists/manage_lists.html' in [t.name for t in response.templates]
 
   def test_context_contains_location(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     response = client.get(self._url(location))
     assert response.context['location'] == location
 
   def test_context_contains_location_lists(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     lst = ListFactory(status='p', visibility='p')
@@ -171,7 +178,7 @@ class TestManageListsView:
     assert lst in response.context['location_lists']
 
   def test_context_contains_user_lists(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     lst = ListFactory(status='p', visibility='p', user=user)
@@ -180,13 +187,13 @@ class TestManageListsView:
     assert lst in response.context['user_lists']
 
   def test_404_for_unknown_location(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     response = client.get(reverse('locations:manage_lists', kwargs={'slug': 'no-such-place'}))
     assert response.status_code == 404
 
   def test_ajax_returns_json(self, client):
-    user = UserFactory()
+    user = make_member_user()
     force_login(client, user)
     location = LocationFactory()
     response = client.get(

@@ -1,10 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.views.generic import ListView
 from cmnsd.mixins import RequestMixin, FilterMixin
 from locations.models import Visits, Location
 
-class ManageVisitsView(RequestMixin, FilterMixin, ListView):
+class ManageVisitsView(LoginRequiredMixin, PermissionRequiredMixin, RequestMixin, FilterMixin, ListView):
+  permission_required = 'locations.add_visits'
   model = Visits
   template_name = 'visits/manage_visits.html'
   context_object_name = 'visits'

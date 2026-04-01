@@ -2,11 +2,20 @@ import pytest
 from unittest.mock import patch
 from django.contrib.messages import get_messages
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.exceptions import PermissionDenied
 from django.test import RequestFactory
+
+from django.contrib.auth.models import Permission
 
 from locations.models.Location import Location
 from locations.tests.factories import LocationFactory, RegionFactory, UserFactory
 from locations.views.locations.reenrich_location import ReEnrichLocationView
+
+
+def _make_staff_user():
+  user = UserFactory(is_staff=True)
+  user.user_permissions.add(Permission.objects.get(codename='delete_location'))
+  return user
 
 
 def _post(slug, user):
@@ -24,26 +33,13 @@ def _post(slug, user):
 @pytest.mark.django_db
 class TestReEnrichLocationViewPermissions:
 
-  def test_non_staff_gets_warning_message(self, db):
+  def test_non_staff_is_denied(self, db):
     user = UserFactory()
     location = LocationFactory()
     request = _post(location.slug, user)
 
-    ReEnrichLocationView.as_view()(request, slug=location.slug)
-
-    msgs = list(get_messages(request))
-    assert len(msgs) == 1
-    assert 'not allowed' in str(msgs[0]).lower()
-
-  def test_non_staff_is_redirected_to_location(self, db):
-    user = UserFactory()
-    location = LocationFactory()
-    request = _post(location.slug, user)
-
-    response = ReEnrichLocationView.as_view()(request, slug=location.slug)
-
-    assert response.status_code == 302
-    assert location.slug in response['Location']
+    with pytest.raises(PermissionDenied):
+      ReEnrichLocationView.as_view()(request, slug=location.slug)
 
   def test_non_staff_does_not_call_enrich(self, db):
     user = UserFactory()
@@ -51,7 +47,8 @@ class TestReEnrichLocationViewPermissions:
     request = _post(location.slug, user)
 
     with patch('locations.views.locations.reenrich_location.enrich_location') as mock_enrich:
-      ReEnrichLocationView.as_view()(request, slug=location.slug)
+      with pytest.raises(PermissionDenied):
+        ReEnrichLocationView.as_view()(request, slug=location.slug)
 
     mock_enrich.assert_not_called()
 
@@ -64,7 +61,7 @@ class TestReEnrichLocationViewPermissions:
 class TestReEnrichLocationViewPost:
 
   def test_clears_address_before_enrich(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory(address='france')
@@ -77,7 +74,7 @@ class TestReEnrichLocationViewPost:
     assert location.address is None
 
   def test_passes_address_hint_to_enrich(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory(address='france')
@@ -90,7 +87,7 @@ class TestReEnrichLocationViewPost:
     assert kwargs.get('address_hint') == 'france'
 
   def test_clears_google_place_id(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory()
@@ -104,7 +101,7 @@ class TestReEnrichLocationViewPost:
     assert location.google_place_id is None
 
   def test_clears_geo(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     country = RegionFactory(parent=None)
@@ -120,7 +117,7 @@ class TestReEnrichLocationViewPost:
     assert location.geo is None
 
   def test_redirects_to_location_after_enrich(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory()
@@ -133,7 +130,7 @@ class TestReEnrichLocationViewPost:
     assert location.slug in response['Location']
 
   def test_address_hint_is_none_when_no_address(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory(address=None)
@@ -154,7 +151,7 @@ class TestReEnrichLocationViewPost:
 class TestReEnrichLocationViewNearbyWarning:
 
   def test_warn_nearby_duplicates_called_after_enrich(self, db):
-    staff = UserFactory()
+    staff = _make_staff_user()
     staff.is_staff = True
     staff.save()
     location = LocationFactory()
@@ -173,6 +170,7 @@ class TestReEnrichLocationViewNearbyWarning:
 
     with patch('locations.views.locations.reenrich_location.enrich_location'):
       with patch('locations.views.locations.reenrich_location.warn_nearby_duplicates') as mock_warn:
-        ReEnrichLocationView.as_view()(request, slug=location.slug)
+        with pytest.raises(PermissionDenied):
+          ReEnrichLocationView.as_view()(request, slug=location.slug)
 
     mock_warn.assert_not_called()

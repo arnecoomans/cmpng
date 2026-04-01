@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.text import capfirst
 from django.utils.translation import gettext as _
@@ -10,7 +10,7 @@ from locations.services.location_geocoding import enrich_location, _address_is_h
 from locations.services.location_nearby import warn_nearby_duplicates
 
 
-class ReEnrichLocationView(LoginRequiredMixin, View):
+class ReEnrichLocationView(LoginRequiredMixin, PermissionRequiredMixin, View):
   """
   Staff-only action view that clears cached geo data and re-runs the full
   enrichment pipeline (address → coordinates → regions → place_id → phone).
@@ -25,13 +25,7 @@ class ReEnrichLocationView(LoginRequiredMixin, View):
     cleared and passed to enrich_location as address_hint so Google
     can resolve the full formatted address.
   """
-
-  def dispatch(self, request, *args, **kwargs):
-    if not request.user.is_staff:
-      location = get_object_or_404(Location, slug=kwargs.get('slug'))
-      messages.warning(request, capfirst(_('action not allowed.')))
-      return redirect(location.get_absolute_url())
-    return super().dispatch(request, *args, **kwargs)
+  permission_required = 'locations.delete_location'
 
   def post(self, request, slug):
     location = get_object_or_404(Location, slug=slug)
