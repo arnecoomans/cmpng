@@ -1,5 +1,6 @@
 # CMPNG
 
+[![Tests](https://github.com/arnecoomans/cmpng/actions/workflows/test.yml/badge.svg)](https://github.com/arnecoomans/cmpng/actions/workflows/test.yml)
 [![codecov](https://codecov.io/github/arnecoomans/cmpng/graph/badge.svg?token=R7AA982PE5)](https://codecov.io/github/arnecoomans/cmpng)
 
 Personal vacation planning app for managing camping locations and hotel stays across Europe. Browse locations by region, category, tag, and distance from home. Built with Django, self-hosted via Docker.
