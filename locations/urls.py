@@ -31,23 +31,21 @@ urlpatterns = [
 
   # Tag Views (views/tags/)
   path('tags/', views.TagListView.as_view(), name='tags'),
-  path('tags/manage-visibility/', views.ManageTagVisibilityView.as_view(), name='manage_tag_visibility'),
   path('tag/<slug:slug>/edit/', views.EditTagView.as_view(), name='edit_tag'),
 
-  # Manage Visits View (views/visits/manage_visits.py)
-  path('visits/manage/', views.ManageVisitsView.as_view(), name='manage_visits'),
-  path('visits/manage/<slug:slug>/', views.ManageVisitsView.as_view(), name='manage_visits_location'),
+  # Manage Views (views/*/manage_*.py)
+  path('manage/tags/', views.ManageTagVisibilityView.as_view(), name='manage_tag_visibility'),
+  path('manage/visits/', views.ManageVisitsView.as_view(), name='manage_visits'),
+  path('manage/visits/<slug:slug>/', views.ManageVisitsView.as_view(), name='manage_visits_location'),
+  path('manage/media/<slug:slug>/', views.ManageMediaView.as_view(), name='manage_media'),
+  path('manage/lists/<slug:slug>/', views.ManageListsView.as_view(), name='manage_lists'),
 
   # Comment Views (views/comments/)
   path('comments/', views.CommentListView.as_view(), name='comments'),
 
-  # Media View (views/media/)
-  path('media/manage/<slug:slug>/', views.ManageMediaView.as_view(), name='manage_media'),
-
   # Lists Views (views/lists/)
   path('lists/', views.ListListView.as_view(), name='lists'),
   path('lists/<slug:slug>/', views.ListDetailView.as_view(), name='list_detail'),
-  path('lists/manage/<slug:slug>/', views.ManageListsView.as_view(), name='manage_lists'),
 
   # Preferences View (views/profile/)
   path('preferences/', views.PreferencesView.as_view(), name='preferences'),
