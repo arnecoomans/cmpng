@@ -137,7 +137,7 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
   description = models.TextField(blank=True, default='', help_text=_('Markdown is supported'))
   address = models.CharField(max_length=255, blank=True, null=True)
   email = models.EmailField(blank=True, null=True)
-  phone = models.CharField(max_length=20, blank=True, null=True)
+  phone = models.CharField(max_length=50, blank=True, null=True)
   owners_name = models.CharField(max_length=255, blank=True, null=True)
   coord_lat = models.FloatField(blank=True, null=True)
   coord_lon = models.FloatField(blank=True, null=True)
