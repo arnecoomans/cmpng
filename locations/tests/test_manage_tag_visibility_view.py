@@ -88,6 +88,24 @@ class TestManageTagVisibilityGet:
     response = client.get(reverse('locations:manage_tag_visibility'))
     assert 'visibility_labels' in response.context
 
+  def test_parent_tags_excluded_from_list(self, client):
+    user = _make_staff_user()
+    client.force_login(user)
+    parent = TagFactory(visibility='p')
+    child = TagFactory(visibility='p', parent=parent)
+    response = client.get(reverse('locations:manage_tag_visibility'))
+    all_tags = [t for col in response.context['columns'].values() for t in col]
+    assert parent not in all_tags
+    assert child in all_tags
+
+  def test_leaf_tags_included_in_list(self, client):
+    user = _make_staff_user()
+    client.force_login(user)
+    leaf = TagFactory(visibility='c')
+    response = client.get(reverse('locations:manage_tag_visibility'))
+    all_tags = [t for col in response.context['columns'].values() for t in col]
+    assert leaf in all_tags
+
 
 # ------------------------------------------------------------------ #
 #  POST — update visibility

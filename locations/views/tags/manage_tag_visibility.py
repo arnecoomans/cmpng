@@ -13,7 +13,7 @@ class ManageTagVisibilityView(LoginRequiredMixin, PermissionRequiredMixin, View)
   template_name = 'tags/manage_tag_visibility.html'
 
   def get(self, request):
-    tags = Tag.objects.select_related('parent').order_by('parent__name', 'name')
+    tags = Tag.objects.filter(children__isnull=True).select_related('parent').order_by('parent__name', 'name')
     columns = {key: [] for key, _ in Tag.visibility_choices}
     for tag in tags:
       columns[tag.visibility].append(tag)
