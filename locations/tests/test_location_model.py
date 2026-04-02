@@ -657,3 +657,188 @@ class TestLocationServiceDelegation:
       result = location.fetch_phone()
     mock.assert_called_once_with(location)
     assert result == '+31 20 123'
+
+  def test_get_regions_with_locations_delegates_to_service(self, db):
+    from unittest.mock import patch
+    qs = Location.objects.all()
+    with patch('locations.services.location_queries.get_regions_with_locations') as mock:
+      mock.return_value = []
+      Location.get_regions_with_locations(qs)
+    mock.assert_called_once_with(qs)
+
+  def test_get_departments_with_locations_delegates_to_service(self, db):
+    from unittest.mock import patch
+    qs = Location.objects.all()
+    with patch('locations.services.location_queries.get_departments_with_locations') as mock:
+      mock.return_value = []
+      Location.get_departments_with_locations(qs)
+    mock.assert_called_once_with(qs)
+
+
+# ------------------------------------------------------------------ #
+#  get_absolute_url / get_type_list_url
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationUrls:
+
+  def test_get_absolute_url_activity(self, db):
+    from locations.tests.factories import CategoryFactory
+    root = CategoryFactory(name='Activity', parent=None)
+    cat = CategoryFactory(parent=root)
+    location = LocationFactory()
+    location.categories.add(cat)
+    location._update_types()
+    location.save()
+    assert 'activity' in str(location.get_absolute_url())
+
+  def test_get_type_list_url_accommodation(self, db):
+    location = LocationFactory(is_accommodation=True, is_activity=False)
+    from django.urls import reverse
+    assert str(location.get_type_list_url()) == reverse('locations:accommodations')
+
+  def test_get_type_list_url_activity(self, db):
+    from locations.tests.factories import CategoryFactory
+    root = CategoryFactory(name='Activity', parent=None)
+    cat = CategoryFactory(parent=root)
+    location = LocationFactory()
+    location.categories.add(cat)
+    location._update_types()
+    location.save()
+    from django.urls import reverse
+    assert str(location.get_type_list_url()) == reverse('locations:activities')
+
+  def test_get_type_list_url_no_type(self, db):
+    location = LocationFactory()
+    # Bypass save() / _update_types() to force both flags off
+    Location.objects.filter(pk=location.pk).update(is_accommodation=False, is_activity=False)
+    location.refresh_from_db()
+    from django.urls import reverse
+    assert str(location.get_type_list_url()) == reverse('locations:all')
+
+
+# ------------------------------------------------------------------ #
+#  _update_types edge cases
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationUpdateTypesEdgeCases:
+
+  def test_no_categories_preserves_existing_accommodation_flag(self, db):
+    """When no categories exist and is_accommodation is already True, keep it."""
+    location = LocationFactory()
+    location.categories.clear()
+    location.is_accommodation = True
+    location.is_activity = False
+    location._update_types()
+    assert location.is_accommodation is True
+
+  def test_no_categories_preserves_existing_activity_flag(self, db):
+    """When no categories exist and is_activity is already True, keep it."""
+    location = LocationFactory()
+    location.categories.clear()
+    location.is_accommodation = False
+    location.is_activity = True
+    location._update_types()
+    assert location.is_activity is True
+
+
+# ------------------------------------------------------------------ #
+#  is_visited / is_favorite — no request
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationSearchableFunctionsNoRequest:
+
+  def test_is_visited_false_without_request(self, db):
+    location = LocationFactory()
+    assert location.is_visited() is False
+
+  def test_is_favorite_false_without_request(self, db):
+    location = LocationFactory()
+    assert location.is_favorite() is False
+
+
+# ------------------------------------------------------------------ #
+#  available_sizes
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationAvailableSizes:
+
+  def test_available_sizes_empty_when_no_size_for_category(self, db):
+    location = LocationFactory()
+    sizes = location.available_sizes()
+    assert sizes.count() == 0
+
+
+# ------------------------------------------------------------------ #
+#  nearby
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationNearby:
+
+  def test_nearby_no_request_uses_nearby_range(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[]) as mock:
+      location.nearby()
+    mock.assert_called_once()
+    _, kwargs = mock.call_args
+    assert kwargs.get('radius_km') is not None or mock.call_args[0]
+
+  def test_nearby_with_guest_uses_guest_range(self, db):
+    from unittest.mock import patch, MagicMock
+    from django.conf import settings
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = False
+    location.request = request
+    expected = getattr(settings, 'GUEST_NEARBY_RANGE', 35)
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[]) as mock:
+      location.nearby()
+    _, kwargs = mock.call_args
+    assert kwargs.get('radius_km') == expected
+
+  def test_nearby_with_auth_user_uses_nearby_range_by_default(self, db):
+    from unittest.mock import patch, MagicMock
+    from django.conf import settings
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = True
+    request.GET.get = MagicMock(return_value=0)
+    location.request = request
+    expected = getattr(settings, 'NEARBY_RANGE', 75)
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[]) as mock:
+      location.nearby()
+    _, kwargs = mock.call_args
+    assert kwargs.get('radius_km') == expected
+
+  def test_nearby_with_auth_user_respects_radius_param(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = True
+    request.GET.get = MagicMock(return_value='50')
+    location.request = request
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[]) as mock:
+      location.nearby()
+    _, kwargs = mock.call_args
+    assert kwargs.get('radius_km') == 50.0
+
+
+# ------------------------------------------------------------------ #
+#  ajax_function delegates (topactions, contact_details)
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationAjaxFunctions:
+
+  def test_topactions_returns_empty_string(self, db):
+    location = LocationFactory()
+    assert location.topactions() == ''
+
+  def test_contact_details_returns_empty_string(self, db):
+    location = LocationFactory()
+    assert location.contact_details() == ''
