@@ -1,20 +1,16 @@
 import json
 
 import pytest
-from django.contrib.auth.models import Permission
-from django.core.exceptions import PermissionDenied
-from django.test import RequestFactory
 from django.urls import reverse
 
 from locations.models import Tag
 from locations.tests.factories import TagFactory, UserFactory
-from locations.views.tags.manage_tag_visibility import ManageTagVisibilityView
 
 
 def _make_staff_user():
   user = UserFactory()
+  user.is_staff = True
   user.save()
-  user.user_permissions.add(Permission.objects.get(codename='change_tag'))
   return user
 
 
@@ -30,14 +26,12 @@ class TestManageTagVisibilityPermissions:
     assert response.status_code == 302
     assert '/accounts/' in response['Location']
 
-  def test_user_without_permission_denied(self, db):
+  def test_non_staff_user_forbidden(self, client):
     user = UserFactory()
     user.save()
-    rf = RequestFactory()
-    request = rf.get('/tags/manage-visibility/')
-    request.user = user
-    with pytest.raises(PermissionDenied):
-      ManageTagVisibilityView.as_view()(request)
+    client.force_login(user)
+    response = client.get(reverse('locations:manage_tag_visibility'))
+    assert response.status_code == 403
 
   def test_staff_user_can_access(self, client):
     user = _make_staff_user()
@@ -101,10 +95,20 @@ class TestManageTagVisibilityGet:
   def test_leaf_tags_included_in_list(self, client):
     user = _make_staff_user()
     client.force_login(user)
-    leaf = TagFactory(visibility='c')
+    leaf = TagFactory(visibility='c', status='p')
     response = client.get(reverse('locations:manage_tag_visibility'))
     all_tags = [t for col in response.context['columns'].values() for t in col]
     assert leaf in all_tags
+
+  def test_unpublished_tags_excluded_from_list(self, client):
+    user = _make_staff_user()
+    client.force_login(user)
+    draft_tag = TagFactory(status='c')
+    revoked_tag = TagFactory(status='r')
+    response = client.get(reverse('locations:manage_tag_visibility'))
+    all_tags = [t for col in response.context['columns'].values() for t in col]
+    assert draft_tag not in all_tags
+    assert revoked_tag not in all_tags
 
 
 # ------------------------------------------------------------------ #
@@ -161,15 +165,9 @@ class TestManageTagVisibilityPost:
     )
     assert response.status_code == 400
 
-  def test_post_without_permission_denied(self, db):
+  def test_non_staff_post_forbidden(self, client):
     user = UserFactory()
     user.save()
-    rf = RequestFactory()
-    request = rf.post(
-      '/tags/manage-visibility/',
-      data=json.dumps({'tag_id': 1, 'visibility': 'p'}),
-      content_type='application/json',
-    )
-    request.user = user
-    with pytest.raises(PermissionDenied):
-      ManageTagVisibilityView.as_view()(request)
+    client.force_login(user)
+    response = self._post_json(client, {'tag_id': 1, 'visibility': 'p'})
+    assert response.status_code == 403

@@ -1,19 +1,23 @@
 import json
 
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
+from cmnsd.mixins import RequestMixin
 from locations.models import Tag
 
 
-class ManageTagVisibilityView(LoginRequiredMixin, PermissionRequiredMixin, View):
-  permission_required = 'locations.change_tag'
+class ManageTagVisibilityView(LoginRequiredMixin, UserPassesTestMixin, RequestMixin, View):
+
+  def test_func(self):
+    return self.request.user.is_staff
   template_name = 'tags/manage_tag_visibility.html'
 
   def get(self, request):
-    tags = Tag.objects.filter(children__isnull=True).select_related('parent').order_by('parent__name', 'name')
+    tags = Tag.objects.filter(children__isnull=True, status='p').select_related('parent').order_by('parent__name', 'name')
+    
     columns = {key: [] for key, _ in Tag.visibility_choices}
     for tag in tags:
       columns[tag.visibility].append(tag)
