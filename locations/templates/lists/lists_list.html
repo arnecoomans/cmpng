@@ -14,10 +14,15 @@
     {% if lists %}
       <ul class="list-list">
         {% for lst in lists %}
-          <li class="list-item" style="grid-template-columns: 1fr auto auto;">
+          <li class="list-item">
             <a class="list-item__name" href="{% url 'locations:list_detail' lst.slug %}">{{ lst.name }}</a>
-            <span class="list-item__template badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">{{ lst.get_template_display }}</span>
-            <span class="badge badge--muted">{{ lst.items.count }}</span>
+            {% if lst.user != request.user %}
+              <span class="badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">{{ lst.user.get_full_name|default:lst.user.username }}</span>
+            {% endif %}
+            {% if lst.get_template_display %}
+              <span class="list-item__template badge badge--muted" style="font-size: 0.7em; white-space: nowrap;">{{ lst.get_template_display }}</span>
+            {% endif %}
+            <span class="badge badge--muted">{{ lst.items.all|length }}</span>
           </li>
         {% endfor %}
       </ul>

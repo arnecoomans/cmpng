@@ -326,9 +326,29 @@ a.internal:focus {
 }
 .section-link:hover { text-decoration: underline }
 
+.hint { font-size: 13px; color: var(--gray-500) }
+
 /* ---------- List items ---------- */
 
 .list { display: grid; gap: 12px }
+
+/* Lists-of-lists page */
+.list-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
+.list-list .list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.list-item__name {
+  color: var(--gray-900);
+  text-decoration: none;
+  font-weight: var(--fw-semibold);
+  flex: 1;
+}
+.list-item__name:hover { text-decoration: underline }
+
+/* Location list items */
 .list-item {
   display: grid;
   grid-template-columns: 120px 1fr auto;
@@ -439,6 +459,19 @@ a.internal:focus {
   text-decoration-color: rgba(6, 95, 70, 0.35);
   text-underline-offset: 3px;
 }
+
+/* ---------- Badge ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  border: 1px solid var(--gray-200);
+}
+.badge--muted { background: var(--gray-100); color: var(--gray-700) }
 
 /* ---------- Inline badges (names + tags in a list row) ---------- */
 

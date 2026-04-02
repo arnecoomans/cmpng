@@ -292,18 +292,7 @@
   letter-spacing: .06em;
   text-transform: uppercase;
 }
-.hint { font-size: 13px; color: var(--gray-500) }
 .modal-divider { height: 1px; background: var(--gray-200); margin: 14px 0 }
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: var(--fw-semibold);
-  border: 1px solid var(--gray-200);
-}
-.badge--muted { background: var(--gray-100); color: var(--gray-700) }
 
 /* ---------- Visit list ---------- */
 
