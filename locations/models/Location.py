@@ -178,10 +178,12 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
   # ================================================================
   # Distance caching
   distance_to_departure_center = models.IntegerField(
-    null=True, 
+    null=True,
     blank=True,
     help_text=capfirst(_('distance in km from departure center'))
   )
+  # Completeness score (0-100), recalculated via signals
+  completeness = models.IntegerField(default=0, editable=False)
 
   # Use custom manager
   objects = LocationManager()
@@ -315,6 +317,76 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     """Return True if any Size exists for any of this location's categories."""
     from locations.models.Size import Size
     return Size.objects.filter(categories__in=self.categories.all()).exists()
+
+  def calculate_completeness(self):
+    """Compute and store the completeness score (0–100).
+
+    Points are normalised against the applicable maximum so conditional
+    criteria (e.g. size) do not penalise locations that can never earn them.
+    Bonus points for visits and list appearances are added after normalisation,
+    capped at 100.
+    """
+    SCORES = {
+      'address':     20,
+      'coords':      15,
+      'summary':     15,
+      'categories':  15,
+      'links':       15,
+      'size':        15,  # conditional on can_have_size()
+      'description': 10,
+    }
+    BONUSES = {'visited': 10, 'on_list': 10}
+
+    size_applicable = self.can_have_size()
+    applicable_max = sum(
+      v for k, v in SCORES.items() if k != 'size' or size_applicable
+    )
+
+    earned = 0
+    if self.address:
+      earned += SCORES['address']
+    if self.coord_lat and self.coord_lon:
+      earned += SCORES['coords']
+    if self.summary:
+      earned += SCORES['summary']
+    if self.categories.exists():
+      earned += SCORES['categories']
+    if self.links.exists():
+      earned += SCORES['links']
+    if size_applicable and self.size:
+      earned += SCORES['size']
+    if self.description:
+      earned += SCORES['description']
+
+    score = round((earned / applicable_max) * 100) if applicable_max else 0
+
+    if self.visitors.exists():
+      score = min(100, score + BONUSES['visited'])
+    if self.list_items.exists():
+      score = min(100, score + BONUSES['on_list'])
+
+    Location.objects.filter(pk=self.pk).update(completeness=score)
+    self.completeness = score
+
+  def completeness_hints(self):
+    """Return criteria and deductions as (label, status) tuples.
+
+    Status is one of: 'done', 'missing', 'deduction'.
+    """
+    size_applicable = self.can_have_size()
+    hints = [
+      (_('address'),     'done' if self.address else 'missing'),
+      (_('coordinates'), 'done' if self.coord_lat and self.coord_lon else 'missing'),
+      (_('summary'),     'done' if self.summary else 'missing'),
+      (_('category'),    'done' if self.categories.exists() else 'missing'),
+      (_('link'),        'done' if self.links.exists() else 'missing'),
+      (_('description'), 'done' if self.description else 'missing'),
+    ]
+    if size_applicable:
+      hints.append((_('size'), 'done' if self.size else 'missing'))
+    hints.append((_('visited (+10%)'), 'bonus' if self.visitors.exists() else 'missing'))
+    hints.append((_('on a list (+10%)'), 'bonus' if self.list_items.exists() else 'missing'))
+    return hints
 
   def available_sizes(self):
     """Return all unique sizes available for this location's categories."""

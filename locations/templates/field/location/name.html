@@ -17,18 +17,29 @@
   {% else %}
     <h1 class="title">{% if location.is_accommodation %}<i class="bi bi-house-door"></i>{% elif location.is_activity %}<i class="bi bi-compass"></i>{% endif %} {{ location.name|title }}</h1>
   {% endif %}
-  {% comment %} <div class="meta">
-    <span>Camping</span>
-    <span class="meta__dot">•</span>
-    <span>Indre</span>
-    <span class="meta__dot">•</span>
-    <span>Centre-Val de Loire</span>
-    <span class="meta__dot">•</span>
-    <span>Private</span>
-  </div> {% endcomment %}
   {% if user.is_authenticated %}
     <div class="byline">
       {% translate 'added by'|capfirst%} {{ location.user.get_full_name|default:location.user.username }}.
     </div>
+  {% endif %}
+  {% if user.is_authenticated %}
+    <details class="completeness-details">
+      <summary class="badge completeness-badge
+        {% if location.completeness >= 80 %}completeness-badge--good
+        {% elif location.completeness >= 50 %}completeness-badge--mid
+        {% else %}completeness-badge--low{% endif %}">
+        {% translate 'completeness'|capfirst %}: {{ location.completeness }}%
+      </summary>
+      <ul class="completeness-hints">
+        {% for label, status in location.completeness_hints %}
+          <li class="completeness-hint completeness-hint--{{ status }}">
+            {% if status == 'done' %}<i class="bi bi-check-circle-fill"></i>
+            {% elif status == 'bonus' %}<i class="bi bi-plus-circle-fill"></i>
+            {% else %}<i class="bi bi-exclamation-circle"></i>{% endif %}
+            {{ label|capfirst }}
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
   {% endif %}
 </header>

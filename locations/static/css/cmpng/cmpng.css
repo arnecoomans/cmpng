@@ -180,6 +180,28 @@ a.internal:focus {
   font-size: 13px;
 }
 .byline a { color: var(--gray-700) }
+.completeness-details { display: inline-block; margin-top: 8px }
+.completeness-details[open] .completeness-badge { border-radius: 999px 999px 0 0 }
+.completeness-badge { cursor: pointer; list-style: none }
+.completeness-badge--good { background: #d1fae5; color: #065f46; border-color: #6ee7b7 }
+.completeness-badge--mid  { background: #fef3c7; color: #92400e; border-color: #fcd34d }
+.completeness-badge--low  { background: #fee2e2; color: #991b1b; border-color: #fca5a5 }
+.completeness-hints {
+  list-style: none;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 8px 8px 8px;
+  background: #fff;
+  font-size: 12px;
+  display: grid;
+  gap: 4px;
+}
+.completeness-hint { display: flex; align-items: center; gap: 6px }
+.completeness-hint--done    { color: #065f46 }
+.completeness-hint--bonus   { color: #1d4ed8 }
+.completeness-hint--missing { color: #991b1b; font-weight: var(--fw-semibold) }
 
 /* ---------- Pills ---------- */
 

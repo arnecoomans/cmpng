@@ -55,7 +55,7 @@ def recalculate_distances(modeladmin, request, queryset):
     
 @admin.register(Location)
 class LocationAdmin(BaseModelAdmin):
-    list_display = ('name', 'geo', 'chain', 'is_accommodation', 'is_activity', 'status', 'distance_to_departure_center')
+    list_display = ('name', 'geo', 'chain', 'completeness', 'distance_to_departure_center')
     list_filter = ('is_accommodation', 'is_activity', 'status', 'visibility', 'geo')
     search_fields = ('name', 'summary', 'address', 'email')
     filter_horizontal = ('categories', 'tags')
