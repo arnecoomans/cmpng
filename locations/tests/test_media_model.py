@@ -163,6 +163,43 @@ class TestMediaLocationRelation:
 
 
 # ------------------------------------------------------------------ #
+#  File hash
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestMediaFileHash:
+
+    def test_file_hash_populated_on_save(self, settings, tmp_path):
+        settings.MEDIA_ROOT = str(tmp_path)
+        media = Media(
+            source=make_image_file('photo.jpg'),
+            title='Test',
+            location=LocationFactory(),
+            visibility='p',
+            status='p',
+            user=UserFactory(),
+        )
+        media.save()
+        assert len(media.file_hash) == 64  # SHA-256 hex digest
+
+    def test_file_hash_not_overwritten_on_resave(self, settings, tmp_path):
+        settings.MEDIA_ROOT = str(tmp_path)
+        media = Media(
+            source=make_image_file('photo.jpg'),
+            title='Test',
+            location=LocationFactory(),
+            visibility='p',
+            status='p',
+            user=UserFactory(),
+        )
+        media.save()
+        original_hash = media.file_hash
+        media.title = 'Updated'
+        media.save()
+        assert media.file_hash == original_hash
+
+
+# ------------------------------------------------------------------ #
 #  BaseModel / VisibilityModel integration
 # ------------------------------------------------------------------ #
 

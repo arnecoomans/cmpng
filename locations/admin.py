@@ -219,6 +219,7 @@ class MediaAdmin(BaseModelAdmin):
     list_display = ('__str__', 'location', 'visibility', 'status', 'date_created')
     list_filter = ('status', 'visibility')
     search_fields = ('title', 'location__name')
+    readonly_fields = BaseModelAdmin.readonly_fields + ('file_hash',)
 
     fieldsets = (
         (_('Media'), {
@@ -226,6 +227,10 @@ class MediaAdmin(BaseModelAdmin):
         }),
         (_('Visibility'), {
             'fields': ('visibility',),
+        }),
+        (_('System Information'), {
+            'classes': ('collapse',),
+            'fields': ('token', 'status', 'user', 'date_created', 'date_modified', 'file_hash'),
         }),
     )
 

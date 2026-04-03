@@ -143,3 +143,32 @@ class TestManageMediaPost:
     location = LocationFactory()
     response = client.post(_url(location), {'source': make_image_file(), 'visibility': 'p'})
     assert response.status_code == 200
+
+  def test_duplicate_upload_not_created(self, client, settings, tmp_path):
+    settings.MEDIA_ROOT = str(tmp_path)
+    user = _user_with_permission()
+    force_login(client, user)
+    location = LocationFactory()
+    img = make_image_file()
+    client.post(_url(location), {'source': img, 'visibility': 'p'})
+    img.seek(0)
+    client.post(_url(location), {'source': img, 'visibility': 'p'})
+    from locations.models.Media import Media
+    assert Media.objects.filter(location=location).count() == 1
+
+  def test_duplicate_upload_returns_warning_message(self, client, settings, tmp_path):
+    settings.MEDIA_ROOT = str(tmp_path)
+    user = _user_with_permission()
+    force_login(client, user)
+    location = LocationFactory()
+    img = make_image_file()
+    client.post(_url(location), {'source': img, 'visibility': 'p'})
+    img.seek(0)
+    response = client.post(
+      _url(location),
+      {'source': img, 'visibility': 'p'},
+      HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+    )
+    data = response.json()
+    assert 'messages' in data
+    assert any(m['level'] == 'warning' for m in data['messages'])

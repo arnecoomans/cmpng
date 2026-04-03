@@ -1,3 +1,4 @@
+import hashlib
 import os
 from datetime import date
 from io import BytesIO
@@ -15,6 +16,7 @@ def media_upload_path(instance, filename):
 class Media(VisibilityModel, BaseModel):
   source = models.ImageField(upload_to=media_upload_path)
   title = models.CharField(max_length=255, blank=True)
+  file_hash = models.CharField(max_length=64, blank=True, db_index=True)
   location = models.ForeignKey(
     'locations.Location',
     on_delete=models.CASCADE,
@@ -35,6 +37,10 @@ class Media(VisibilityModel, BaseModel):
     if not self.title:
       self.title = self.source.name.replace('_', ' ')
     self._convert_heic_to_jpg()
+    if self.source and not self.file_hash:
+      self.source.seek(0)
+      self.file_hash = hashlib.sha256(self.source.read()).hexdigest()
+      self.source.seek(0)
     super().save(*args, **kwargs)
 
   def _convert_heic_to_jpg(self):
