@@ -10,6 +10,7 @@ from locations.models.Link import Link
 from locations.services.location_geocoding import enrich_location
 from locations.services.location_nearby import warn_nearby_duplicates
 
+from urllib.parse import urlencode
 
 class AddLocationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
   permission_required = 'locations.add_location'
@@ -27,8 +28,10 @@ class AddLocationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
       cats = Category.objects.filter(slug__in=category_slugs, status='p')
       location.categories.set(cats)
     link_url = self.request.POST.get('link_url', '').strip()
-    if link_url:
-      Link.objects.get_or_create(url=link_url, defaults={'location': location, 'user': self.request.user})
+    if not link_url:
+      link_url = 'https://google.com/search?q=' + urlencode(location.name)
+    Link.objects.get_or_create(url=link_url, defaults={'location': location, 'user': self.request.user})
+    
     enrich_location(location, request=self.request)
     warn_nearby_duplicates(location, self.request)
     messages.success(self.request, capfirst(_('location added successfully.')))
