@@ -6,6 +6,7 @@
 
 ### Added
 - Completeness score (0–100) on `Location` — normalised against applicable criteria with bonuses for visited (+10%) and listed (+10%), capped at 100. Shown as a colour-coded badge with click-to-expand hints on the location detail page for authenticated users. Recalculated automatically via signals on save. Staff dashboard integration pending. ([#15](https://github.com/arnecoomans/cmpng/issues/15))
+- Uploaded media filenames are now prefixed with the upload date (`yyyy-mm-dd-filename.jpg`) to prevent overwrites and aid media management ([#26](https://github.com/arnecoomans/cmpng/issues/26))
 - Optional end date (`end_year`, `end_month`, `end_day`) on `Visits` — shown as a date range in the visit list with night count. Add-visit form has a collapsible end date section, hidden by default. ([#7](https://github.com/arnecoomans/cmpng/issues/7))
 
 ### Changed

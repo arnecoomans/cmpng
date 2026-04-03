@@ -1,4 +1,5 @@
 import os
+from datetime import date
 from io import BytesIO
 
 from django.core.files.base import ContentFile
@@ -7,8 +8,12 @@ from django.db import models
 from cmnsd.models import BaseModel, VisibilityModel
 
 
+def media_upload_path(instance, filename):
+  return f"images/locations/{date.today().strftime('%Y-%m-%d')}-{filename}"
+
+
 class Media(VisibilityModel, BaseModel):
-  source = models.ImageField(upload_to='images/locations/')
+  source = models.ImageField(upload_to=media_upload_path)
   title = models.CharField(max_length=255, blank=True)
   location = models.ForeignKey(
     'locations.Location',
