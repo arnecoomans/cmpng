@@ -178,7 +178,7 @@ class TestAddLocationViewLinkUrl:
     location = Location.objects.get(name='Camping Test')
     assert Link.objects.filter(url='https://example.com', location=location).exists()
 
-  def test_no_link_when_url_not_provided(self, db):
+  def test_google_fallback_link_when_url_not_provided(self, db):
     user = _make_user()
     request = _post({'name': 'Camping Test', 'visibility': 'p'}, user)
 
@@ -187,7 +187,7 @@ class TestAddLocationViewLinkUrl:
         AddLocationView.as_view()(request)
 
     location = Location.objects.get(name='Camping Test')
-    assert Link.objects.filter(location=location).count() == 0
+    assert Link.objects.filter(location=location, url__icontains='google.com').exists()
 
   def test_does_not_duplicate_existing_link(self, db):
     user = _make_user()
