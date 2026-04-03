@@ -27,11 +27,17 @@ def location_saved(sender, instance, raw, **kwargs):
 # ------------------------------------------------------------------ #
 
 @receiver(m2m_changed, sender='locations.Location_categories')
-def location_categories_changed(sender, instance, **kwargs):
-  if kwargs['action'] in ('post_add', 'post_remove', 'post_clear'):
+def location_categories_changed(sender, instance, action, pk_set, **kwargs):
+  if action in ('post_add', 'post_remove', 'post_clear'):
     from locations.models import Location
     if isinstance(instance, Location):
       _recalculate(instance)
+  if action == 'post_add' and pk_set:
+    from locations.models import Location, Category
+    if isinstance(instance, Location):
+      if Category.objects.filter(pk__in=pk_set, slug='home').exists():
+        Location.objects.filter(pk=instance.pk).update(visibility='f')
+        instance.visibility = 'f'
 
 
 # ------------------------------------------------------------------ #

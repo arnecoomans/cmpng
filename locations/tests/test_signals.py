@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from locations.signals import listitem_saved, location_saved, visit_saved
-from locations.tests.factories import LocationFactory, UserFactory
+from locations.tests.factories import CategoryFactory, LocationFactory, UserFactory
 
 
 @pytest.mark.django_db
@@ -67,3 +67,22 @@ class TestSignalsRawSkip:
     with patch('locations.signals._recalculate') as mock:
       listitem_saved(sender=None, instance=item, raw=False)
     mock.assert_called_once_with(item.location)
+
+
+@pytest.mark.django_db
+class TestHomeCategorySignal:
+  """Adding the 'home' category forces location visibility to 'family'."""
+
+  def test_home_category_sets_visibility_family(self):
+    location = LocationFactory(visibility='p')
+    home = CategoryFactory(slug='home', status='p')
+    location.categories.add(home)
+    location.refresh_from_db()
+    assert location.visibility == 'f'
+
+  def test_non_home_category_does_not_change_visibility(self):
+    location = LocationFactory(visibility='p')
+    other = CategoryFactory(slug='camping', status='p')
+    location.categories.add(other)
+    location.refresh_from_db()
+    assert location.visibility == 'p'

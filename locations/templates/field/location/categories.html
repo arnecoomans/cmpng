@@ -9,10 +9,10 @@
 {% if ajax.editable and perms.locations.change_location %}
   <form
     data-action
-    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'categories' %}"
+    data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'categories,visibility' %}"
     data-body="form"
     data-method="POST"
-    data-map='{"categories":"#categories"}'
+    data-map='{"categories":"#categories", "visibility":"#visibility"}'
   >
     <div class="input-group">
       <span class="input-group-text"><i class="bi bi-plus"></i></span>

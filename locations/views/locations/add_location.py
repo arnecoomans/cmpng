@@ -27,6 +27,8 @@ class AddLocationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     if category_slugs:
       cats = Category.objects.filter(slug__in=category_slugs, status='p')
       location.categories.set(cats)
+      if 'home' in category_slugs and location.visibility != 'f':
+        messages.info(self.request, capfirst(_('visibility set to family because this location is marked as home.')))
     link_url = self.request.POST.get('link_url', '').strip()
     if not link_url:
       link_url = 'https://google.com/search?q=' + parse.quote_plus(location.name)
