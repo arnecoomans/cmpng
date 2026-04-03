@@ -107,6 +107,14 @@ class TestLinkDisplayName:
         # Don't save, just test the method
         assert link.display_name() == 'invalid'
 
+    def test_display_name_google_search_decodes_query(self, db):
+        link = LinkFactory(url='https://google.com/search?q=Camping+Test', label='')
+        assert link.display_name() == 'Camping Test on Google'
+
+    def test_display_name_google_search_decodes_percent_encoding(self, db):
+        link = LinkFactory(url='https://google.com/search?q=Camping%20de%20Bron', label='')
+        assert link.display_name() == 'Camping de Bron on Google'
+
 
 # ------------------------------------------------------------------ #
 #  Location relationship
