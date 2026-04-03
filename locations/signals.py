@@ -63,7 +63,10 @@ def media_saved(sender, instance, raw, **kwargs):
 
 @receiver(post_delete, sender='locations.Media')
 def media_deleted(sender, instance, **kwargs):
-  _recalculate(instance.location)
+  try:
+    _recalculate(instance.location)
+  except Exception:
+    pass  # location may have been deleted (CASCADE)
 
 
 # ------------------------------------------------------------------ #
