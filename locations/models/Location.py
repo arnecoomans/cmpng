@@ -326,37 +326,53 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     Bonus points for visits and list appearances are added after normalisation,
     capped at 100.
     """
+    # Scoring weights — applicable_max is the sum of all weights below
+    # (categories and tags are tiered; max values used for applicable_max)
     SCORES = {
-      'address':     20,
-      'coords':      15,
-      'summary':     15,
-      'categories':  15,
-      'links':       15,
-      'size':        15,  # conditional on can_have_size()
-      'description': 10,
+      'address':      10,  # auto-filled, lower credit
+      'summary':      20,  # primary text — most important
+      'link':         20,  # important external reference
+      'category_1':  10,  # at least one category
+      'category_2':   5,  # two or more (slightly better)
+      'description':  10,  # longer-form, edit-only
+      'media':        10,  # public/community photo
+      'tag_1':         5,  # at least one tag
+      'tag_2':         5,  # two or more tags
     }
-    BONUSES = {'visited': 10, 'on_list': 10}
+    # Bonuses applied after normalisation, capped at 100.
+    # These reward active use and conditional enrichment without affecting the base max.
+    BONUSES = {
+      'visited':  10,  # location has been visited — signals real-world value
+      'on_list':  10,  # location appears on a trip list — signals planning value
+      'comments':  5,  # has community comments — signals engagement
+      'size':      5,  # size set when applicable — conditional enrichment
+    }
 
-    size_applicable = self.can_have_size()
-    applicable_max = sum(
-      v for k, v in SCORES.items() if k != 'size' or size_applicable
-    )
+    applicable_max = sum(SCORES.values())  # 95
+
+    category_count = self.categories.count()
+    tag_count = self.tags.count()
+    has_media = self.media.filter(visibility__in=('p', 'c'), status='p').exists()
 
     earned = 0
     if self.address:
       earned += SCORES['address']
-    if self.coord_lat and self.coord_lon:
-      earned += SCORES['coords']
     if self.summary:
       earned += SCORES['summary']
-    if self.categories.exists():
-      earned += SCORES['categories']
     if self.links.exists():
-      earned += SCORES['links']
-    if size_applicable and self.size:
-      earned += SCORES['size']
+      earned += SCORES['link']
+    if category_count >= 1:
+      earned += SCORES['category_1']
+    if category_count >= 2:
+      earned += SCORES['category_2']
     if self.description:
       earned += SCORES['description']
+    if has_media:
+      earned += SCORES['media']
+    if tag_count >= 1:
+      earned += SCORES['tag_1']
+    if tag_count >= 2:
+      earned += SCORES['tag_2']
 
     score = round((earned / applicable_max) * 100) if applicable_max else 0
 
@@ -364,6 +380,10 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       score = min(100, score + BONUSES['visited'])
     if self.list_items.exists():
       score = min(100, score + BONUSES['on_list'])
+    if self.comments.filter(status='p').exists():
+      score = min(100, score + BONUSES['comments'])
+    if self.can_have_size() and self.size:
+      score = min(100, score + BONUSES['size'])
 
     Location.objects.filter(pk=self.pk).update(completeness=score)
     self.completeness = score
@@ -373,19 +393,25 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
 
     Status is one of: 'done', 'missing', 'deduction'.
     """
-    size_applicable = self.can_have_size()
+    category_count = self.categories.count()
+    tag_count = self.tags.count()
+    has_media = self.media.filter(visibility__in=('p', 'c'), status='p').exists()
     hints = [
-      (_('address'),     'done' if self.address else 'missing'),
-      (_('coordinates'), 'done' if self.coord_lat and self.coord_lon else 'missing'),
-      (_('summary'),     'done' if self.summary else 'missing'),
-      (_('category'),    'done' if self.categories.exists() else 'missing'),
-      (_('link'),        'done' if self.links.exists() else 'missing'),
-      (_('description'), 'done' if self.description else 'missing'),
+      (_('address'),              'done' if self.address else 'missing'),
+      (_('summary'),              'done' if self.summary else 'missing'),
+      (_('link'),                 'done' if self.links.exists() else 'missing'),
+      (_('category'),             'done' if category_count >= 1 else 'missing'),
+      (_('multiple categories'),  'done' if category_count >= 2 else 'missing'),
+      (_('description'),          'done' if self.description else 'missing'),
+      (_('media'),                'done' if has_media else 'missing'),
+      (_('tag'),                  'done' if tag_count >= 1 else 'missing'),
+      (_('multiple tags'),        'done' if tag_count >= 2 else 'missing'),
     ]
-    if size_applicable:
-      hints.append((_('size'), 'done' if self.size else 'missing'))
-    hints.append((_('visited (+10%)'), 'bonus' if self.visitors.exists() else 'missing'))
-    hints.append((_('on a list (+10%)'), 'bonus' if self.list_items.exists() else 'missing'))
+    hints.append((_('visited (+10%)'),    'bonus' if self.visitors.exists() else 'missing'))
+    hints.append((_('on a list (+10%)'),  'bonus' if self.list_items.exists() else 'missing'))
+    hints.append((_('comments (+5%)'),    'bonus' if self.comments.filter(status='p').exists() else 'missing'))
+    if self.can_have_size():
+      hints.append((_('size (+5%)'), 'bonus' if self.size else 'missing'))
     return hints
 
   def available_sizes(self):

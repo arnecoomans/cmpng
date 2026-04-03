@@ -51,6 +51,42 @@ def visit_deleted(sender, instance, **kwargs):
 
 
 # ------------------------------------------------------------------ #
+#  Media
+# ------------------------------------------------------------------ #
+
+@receiver(post_save, sender='locations.Media')
+def media_saved(sender, instance, raw, **kwargs):
+  if raw:
+    return
+  _recalculate(instance.location)
+
+
+@receiver(post_delete, sender='locations.Media')
+def media_deleted(sender, instance, **kwargs):
+  _recalculate(instance.location)
+
+
+# ------------------------------------------------------------------ #
+#  Comments (GenericRelation — resolve location via content_object)
+# ------------------------------------------------------------------ #
+
+@receiver(post_save, sender='locations.Comment')
+def comment_saved(sender, instance, raw, **kwargs):
+  if raw:
+    return
+  from locations.models import Location
+  if isinstance(instance.content_object, Location):
+    _recalculate(instance.content_object)
+
+
+@receiver(post_delete, sender='locations.Comment')
+def comment_deleted(sender, instance, **kwargs):
+  from locations.models import Location
+  if isinstance(instance.content_object, Location):
+    _recalculate(instance.content_object)
+
+
+# ------------------------------------------------------------------ #
 #  Through model: ListItem (Location.list_items)
 # ------------------------------------------------------------------ #
 
