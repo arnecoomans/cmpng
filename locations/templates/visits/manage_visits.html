@@ -12,9 +12,17 @@
           <li class="visit-item">
             <span class="visit-item__dot"></span>
             <span class="visit-item__label">
-              {% if visit.day%}{{ visit.day }} {% endif %} 
-              {% if visit.month%}{% translate visit.get_month_display %} {% endif %}
-              {{ visit.year }}</span>
+              {% if visit.day %}{{ visit.day }} {% endif %}
+              {% if visit.month %}{% translate visit.get_month_display %} {% endif %}
+              {{ visit.year }}
+              {% if visit.end_year %}
+                –
+                {% if visit.end_day %}{{ visit.end_day }} {% endif %}
+                {% if visit.end_month %}{% translate visit.get_end_month_display %} {% endif %}
+                {{ visit.end_year }}
+                {% if visit.nights %}<span class="text-muted">({{ visit.nights }} {% translate 'nights' %})</span>{% endif %}
+              {% endif %}
+            </span>
               {% if user == visit.user %}
                 <span class="visit-item__actions">
                   <a href="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'visits' visit.id visit.token%}" class="btn btn--small btn--danger" 
@@ -63,25 +71,46 @@
       <input type="hidden" name="visited_by__location__slug" value="{{ location.slug }}">
       <div class="segmented">
         <label class="segmented__cell">
-          <span class="segmented__label">Day</span>
+          <span class="segmented__label">{% translate 'day'|capfirst %}</span>
           <input class="segmented__input" name="visited_by__day" type="number" min="1" max="31" placeholder="—">
         </label>
-
         <label class="segmented__cell">
-          <span class="segmented__label">Month</span>
+          <span class="segmented__label">{% translate 'month'|capfirst %}</span>
           <select class="segmented__input" name="visited_by__month">
-            <option value="">Select month</option>
+            <option value="">—</option>
             {% for month_num, month_name in months %}
               <option value="{{ month_num }}">{% translate month_name %}</option>
             {% endfor %}
           </select>
         </label>
-
         <label class="segmented__cell">
-          <span class="segmented__label">Year</span>
-          <input class="segmented__input" name="visited_by__year" type="number" min="1900" max="2100" value="2026" required>
+          <span class="segmented__label">{% translate 'year'|capfirst %}</span>
+          <input class="segmented__input" name="visited_by__year" type="number" min="1900" max="2100" value="{% now 'Y' %}" required>
         </label>
       </div>
+
+      <details class="visit-enddate">
+        <summary class="hint visit-enddate__toggle">{% translate 'add end date'|capfirst %}</summary>
+        <div class="segmented" style="margin-top: 6px;">
+          <label class="segmented__cell">
+            <span class="segmented__label">{% translate 'day'|capfirst %}</span>
+            <input class="segmented__input" name="visited_by__end_day" type="number" min="1" max="31" placeholder="—">
+          </label>
+          <label class="segmented__cell">
+            <span class="segmented__label">{% translate 'month'|capfirst %}</span>
+            <select class="segmented__input" name="visited_by__end_month">
+              <option value="">—</option>
+              {% for month_num, month_name in months %}
+                <option value="{{ month_num }}">{% translate month_name %}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label class="segmented__cell">
+            <span class="segmented__label">{% translate 'year'|capfirst %}</span>
+            <input class="segmented__input" name="visited_by__end_year" type="number" min="1900" max="2100" placeholder="{% now 'Y' %}">
+          </label>
+        </div>
+      </details>
 
       <div class="modal__footer">
         <button class="btn btn--primary" type="submit">

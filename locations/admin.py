@@ -178,13 +178,20 @@ class UserPreferencesAdmin(admin.ModelAdmin):
 
 @admin.register(Visits)
 class VisitsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'location', 'year', 'month', 'day')
+    list_display = ('user', 'location', 'year', 'month', 'day', 'end_year', 'end_month', 'end_day')
     search_fields = ('user__username', 'location__name')
     list_filter = ('year', 'month')
-    
+
     fieldsets = (
         (_('Visit Information'), {
-            'fields': ('user', 'location', 'year', 'month', 'day')
+            'fields': ('user', 'location')
+        }),
+        (_('Start date'), {
+            'fields': ('year', 'month', 'day')
+        }),
+        (_('End date'), {
+            'fields': ('end_year', 'end_month', 'end_day'),
+            'description': _('Optional — leave blank for single-day or unknown duration visits.'),
         }),
     )
 @admin.register(Comment)

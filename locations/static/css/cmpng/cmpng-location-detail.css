@@ -316,6 +316,8 @@
 .visit-item__actions { margin-left: auto; display: flex; align-items: center; gap: 8px }
 .visit-item__actions i { color: var(--gray-200); cursor: pointer }
 .visit-item:hover .visit-item__actions i { color: var(--gray-600) }
+.visit-enddate { margin-top: 8px }
+.visit-enddate__toggle { cursor: pointer; display: inline; }
 
 /* ---------- Segmented inputs ---------- */
 
