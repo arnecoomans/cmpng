@@ -13,7 +13,9 @@ def _recalculate(location):
 # ------------------------------------------------------------------ #
 
 @receiver(post_save, sender='locations.Location')
-def location_saved(sender, instance, **kwargs):
+def location_saved(sender, instance, raw, **kwargs):
+  if raw:
+    return
   # Avoid recursion — calculate_completeness uses update_fields internally
   if kwargs.get('update_fields') and 'completeness' in (kwargs['update_fields'] or []):
     return
@@ -37,7 +39,9 @@ def location_categories_changed(sender, instance, **kwargs):
 # ------------------------------------------------------------------ #
 
 @receiver(post_save, sender='locations.Visits')
-def visit_saved(sender, instance, **kwargs):
+def visit_saved(sender, instance, raw, **kwargs):
+  if raw:
+    return
   _recalculate(instance.location)
 
 
@@ -51,7 +55,9 @@ def visit_deleted(sender, instance, **kwargs):
 # ------------------------------------------------------------------ #
 
 @receiver(post_save, sender='locations.ListItem')
-def listitem_saved(sender, instance, **kwargs):
+def listitem_saved(sender, instance, raw, **kwargs):
+  if raw:
+    return
   _recalculate(instance.location)
 
 
