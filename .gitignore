@@ -15,6 +15,7 @@ db.sqlite3
 # media/
 mediafiles/
 staticfiles/
+/fixtures/*.json
 */fixtures/*.json
 # Seed/reference data is safe to commit (taxonomy, not personal data)
 !*/fixtures/regions.json
