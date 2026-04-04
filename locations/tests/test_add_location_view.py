@@ -228,3 +228,23 @@ class TestAddLocationViewNearbyWarning:
         AddLocationView.as_view()(request)
 
     mock_warn.assert_not_called()
+
+
+# ------------------------------------------------------------------ #
+#  Home category visibility message
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestAddLocationViewHomeCategoryMessage:
+
+  def test_home_category_with_non_family_visibility_adds_info_message(self, db):
+    user = _make_user()
+    home = CategoryFactory(slug='home', status='p')
+    request = _post({'name': 'My Home', 'visibility': 'p', 'categories': [home.slug]}, user)
+
+    with patch('locations.views.locations.add_location.enrich_location'):
+      with patch('locations.views.locations.add_location.warn_nearby_duplicates'):
+        AddLocationView.as_view()(request)
+
+    msgs = [str(m) for m in get_messages(request)]
+    assert any('family' in m for m in msgs)

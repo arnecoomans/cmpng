@@ -2,7 +2,7 @@ import pytest
 from django.db.models import Count
 
 from locations.models import Location, Tag, Category, Region
-from locations.tests.factories import LocationFactory, TagFactory, CategoryFactory, RegionFactory
+from locations.tests.factories import LocationFactory, TagFactory, CategoryFactory, RegionFactory, SizeFactory
 from locations.services.location_queries import (
     get_tags_from_queryset,
     get_categories_from_queryset,
@@ -441,3 +441,31 @@ class TestGetDepartmentsWithLocations:
 
         assert departments[0]['geo__name'] == 'Arnhem'
         assert departments[1]['geo__name'] == 'Zeeland'
+
+# ------------------------------------------------------------------ #
+#  get_sizes_for_categories
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestGetSizesForCategories:
+
+  def test_returns_sizes_for_matching_categories(self):
+    from locations.services.location_queries import get_sizes_for_categories
+    cat = CategoryFactory()
+    size = SizeFactory(status='p')
+    size.categories.add(cat)
+    result = list(get_sizes_for_categories([cat.pk]))
+    assert size in result
+
+  def test_excludes_non_published_sizes(self):
+    from locations.services.location_queries import get_sizes_for_categories
+    cat = CategoryFactory()
+    size = SizeFactory(status='c')
+    size.categories.add(cat)
+    result = list(get_sizes_for_categories([cat.pk]))
+    assert size not in result
+
+  def test_returns_empty_for_no_matching_categories(self):
+    from locations.services.location_queries import get_sizes_for_categories
+    result = list(get_sizes_for_categories([9999]))
+    assert result == []

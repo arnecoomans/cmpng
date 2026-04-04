@@ -197,3 +197,26 @@ class TestRecalculateAllDistances:
     stats = recalculate_all_distances(queryset=qs)
 
     assert stats['calculated'] == 1
+
+  @patch('locations.services.location_distance.get_departure_coordinates')
+  def test_exception_with_request_adds_error_message(self, mock_coords, db):
+    from django.contrib.messages.storage.fallback import FallbackStorage
+    from django.test import RequestFactory
+    mock_coords.side_effect = Exception('boom')
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    request = RequestFactory().get('/')
+    request.session = {}
+    request._messages = FallbackStorage(request)
+    result = calculate_distance_to_departure_center(location, request=request)
+    assert result is None
+    msgs = list(request._messages)
+    assert any('error' in str(m.tags) for m in msgs)
+
+  @patch('locations.services.location_distance.calculate_distance_to_departure_center')
+  def test_skipped_counted_when_no_coords_and_result_none(self, mock_calc, db):
+    """skipped branch: location in custom queryset has no coords and distance returns None."""
+    from locations.models import Location
+    mock_calc.return_value = None
+    loc = LocationFactory(coord_lat=None, coord_lon=None)
+    stats = recalculate_all_distances(queryset=Location.objects.filter(pk=loc.pk))
+    assert stats['skipped'] == 1

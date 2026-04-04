@@ -233,3 +233,17 @@ class TestWarnNearbyDuplicates:
     msgs = self._messages(request)
     assert len(msgs) == 1
     assert '<a' not in str(msgs[0]) or revoked.name in str(msgs[0])
+
+  def test_more_than_three_nearby_shows_and_more(self, db):
+    """Line 134 — 'and N more' appended when more than 3 duplicates."""
+    from locations.services.location_nearby import warn_nearby_duplicates
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    location = LocationFactory(coord_lat=52.0, coord_lon=5.0)
+    for _ in range(4):
+      LocationFactory(coord_lat=52.001, coord_lon=5.0)
+    request = self._make_request(user)
+    warn_nearby_duplicates(location, request)
+    msgs = self._messages(request)
+    assert len(msgs) == 1
+    assert 'more' in str(msgs[0])

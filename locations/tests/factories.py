@@ -9,6 +9,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image
 
 from locations.models import Location, Region, Category, Tag, Link, Chain, List, ListItem, Distance, Media
+from locations.models.Size import Size
 from locations.models.Comment import Comment
 from locations.models.Page import Page
 from locations.models.Preferences import UserPreferences
@@ -89,6 +90,16 @@ class LinkFactory(DjangoModelFactory):
     location = factory.SubFactory(LocationFactory)
     status = 'p'
     user = factory.SubFactory(UserFactory)
+
+class SizeFactory(DjangoModelFactory):
+    class Meta:
+        model = Size
+
+    name = factory.Sequence(lambda n: f'Size {n}')
+    code = factory.Sequence(lambda n: f'S{n}')
+    status = 'p'
+    order = factory.Sequence(lambda n: n)
+
 
 class ChainFactory(DjangoModelFactory):
     class Meta:

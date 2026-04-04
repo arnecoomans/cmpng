@@ -1,3 +1,5 @@
+import hashlib
+
 from django.core.cache import cache
 from django.conf import settings
 from geopy.geocoders import GoogleV3
@@ -9,7 +11,8 @@ def get_departure_coordinates():
     Get departure center coordinates with caching.
     Returns (latitude, longitude) tuple or None.
     """
-    cache_key = f'departure_coords_{settings.DEPARTURE_CENTER}'
+    key_hash = hashlib.md5(settings.DEPARTURE_CENTER.encode()).hexdigest()
+    cache_key = f'departure_coords_{key_hash}'
     coords = cache.get(cache_key)
     
     if coords:

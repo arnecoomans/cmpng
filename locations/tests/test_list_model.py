@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch, PropertyMock
 from django.db import IntegrityError
 from django.test import RequestFactory
 
@@ -341,3 +342,33 @@ class TestLocationOwnedLists:
         lst = ListFactory(status='p', visibility='p')
         ListItemFactory(list=lst, location=location)
         assert location.owned_lists().count() == 0
+
+
+# ------------------------------------------------------------------ #
+#  Distance.__str__
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestDistanceStr:
+
+    def test_str_shows_distance_and_duration(self):
+        d = DistanceFactory(distance_m=55000.0, duration_s=3600.0)
+        s = str(d)
+        assert '55.00 km' in s
+        assert '60.00 min' in s
+
+
+# ------------------------------------------------------------------ #
+#  ListItem.__str__ fallback
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestListItemStrFallback:
+
+    def test_str_fallback_when_location_missing(self):
+        from unittest.mock import PropertyMock
+        item = ListItemFactory()
+        # Simulate broken FK by making .location raise
+        with patch.object(type(item), 'location', new_callable=PropertyMock, side_effect=Exception):
+            s = str(item)
+        assert 'LOCATION' in s

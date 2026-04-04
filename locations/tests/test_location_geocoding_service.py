@@ -910,3 +910,94 @@ class TestEnrichLocation:
     enrich_location(location, request=request)
 
     assert len(list(get_messages(request))) >= 1
+
+
+# ------------------------------------------------------------------ #
+#  Coverage gaps
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestGeocodingCoverageGaps:
+
+  def test_get_gmaps_client_returns_client(self):
+    """Line 28 — _get_gmaps_client() returns a googlemaps Client."""
+    from locations.services.location_geocoding import _get_gmaps_client
+    with patch('locations.services.location_geocoding.googlemaps') as mock_gm:
+      mock_gm.Client.return_value = 'client'
+      result = _get_gmaps_client()
+    assert result == 'client'
+
+  @patch('locations.services.location_geocoding._get_geolocator')
+  def test_geocode_raw_unexpected_exception_with_request_adds_message(self, mock_geo):
+    """Line 66 — unexpected exception path in _geocode_raw with request."""
+    mock_geo.return_value.geocode.side_effect = RuntimeError('unexpected')
+    location = LocationFactory()
+    request = _make_request()
+    result = _geocode_raw(location, request=request)
+    assert result is None
+    from django.contrib.messages import get_messages
+    assert len(list(get_messages(request))) >= 1
+
+  @patch('locations.services.location_geocoding._get_geolocator')
+  def test_fetch_address_unexpected_exception_with_request_adds_message(self, mock_geo):
+    """Lines 110, 112 — unexpected exception in fetch_address with request."""
+    mock_geo.return_value.geocode.side_effect = RuntimeError('oops')
+    location = LocationFactory(address=None)
+    request = _make_request()
+    result = fetch_address(location, request=request)
+    assert result is None
+    from django.contrib.messages import get_messages
+    assert len(list(get_messages(request))) >= 1
+
+  def test_extract_address_parts_debug_prints_missing_fields(self, capsys):
+    """Lines 209-211 — DEBUG=True branch logs missing address fields."""
+    from unittest.mock import MagicMock
+    from locations.services.location_geocoding import _extract_address_parts
+    geocode_result = MagicMock()
+    geocode_result.raw = {'address_components': []}  # empty → all fields missing
+    with patch('locations.services.location_geocoding.settings') as mock_settings:
+      mock_settings.DEBUG = True
+      try:
+        _extract_address_parts(geocode_result)
+      except ValueError:
+        pass  # expected — no address_components raises ValueError
+    captured = capsys.readouterr()
+    # Empty components raises before the debug print — use a component with no mapping
+    # to reach the debug print. Pass a component that fills nothing useful.
+    geocode_result.raw = {'address_components': [
+      {'types': ['premise'], 'long_name': 'A', 'short_name': 'A'}
+    ]}
+    with patch('locations.services.location_geocoding.settings') as mock_settings:
+      mock_settings.DEBUG = True
+      try:
+        _extract_address_parts(geocode_result)
+      except ValueError:
+        pass
+    captured = capsys.readouterr()
+    assert 'Missing address fields' in captured.out
+
+  @patch('locations.services.location_geocoding._get_geolocator')
+  def test_geocode_raw_unexpected_exception_debug_appends_detail(self, mock_geo):
+    """Line 66 — DEBUG=True appends exception detail to message."""
+    from django.test import override_settings
+    mock_geo.return_value.geocode.side_effect = RuntimeError('boom detail')
+    location = LocationFactory(address='Amsterdam, Netherlands')
+    request = _make_request()
+    with override_settings(DEBUG=True):
+      _geocode_raw(location, request=request)
+    from django.contrib.messages import get_messages
+    msgs = [str(m) for m in get_messages(request)]
+    assert any('boom detail' in m for m in msgs)
+
+  @patch('locations.services.location_geocoding._get_geolocator')
+  def test_fetch_address_unexpected_exception_debug_appends_detail(self, mock_geo):
+    """Line 110 — DEBUG=True appends exception detail to message."""
+    from django.test import override_settings
+    mock_geo.return_value.geocode.side_effect = RuntimeError('addr detail')
+    location = LocationFactory(address=None)
+    request = _make_request()
+    with override_settings(DEBUG=True):
+      fetch_address(location, request=request)
+    from django.contrib.messages import get_messages
+    msgs = [str(m) for m in get_messages(request)]
+    assert any('addr detail' in m for m in msgs)
