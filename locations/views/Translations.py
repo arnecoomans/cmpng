@@ -83,6 +83,7 @@ class Translations:
     _('City'),
     _('Museum'),
     _('Park'),
+    _('Playground'),
     _('Rest-stop'),
     _('Restaurant'),
     _('Sauna'),
