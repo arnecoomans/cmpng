@@ -80,6 +80,8 @@ class Translations:
     _('Sight-to-see'),
     _('Transit (one nighter)'),
     _('Beach'),
+    _('Bar or Pub'),
+    _('Cafe'),
     _('City'),
     _('Museum'),
     _('Park'),
