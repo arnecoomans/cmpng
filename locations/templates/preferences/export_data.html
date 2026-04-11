@@ -1,0 +1,45 @@
+{% extends 'locations/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Download my data" %}{% endblock %}
+
+{% block content %}
+<div class="cmpng-page">
+
+  <div class="mb-3">
+    <div class="cmpng-header-bar p-3">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-download fs-4"></i>
+        <h1 class="h3 mb-0">{% trans "Download my data" %}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack">
+
+    <div class="card card--pad">
+      <p class="cmpng-muted mb-3">
+        {% blocktrans %}Select which data to include. You will receive a ZIP file containing one CSV per category.{% endblocktrans %}
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-flex flex-column gap-2 mb-4">
+          {% for key, label in sections %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="{{ key }}" id="export_{{ key }}" checked>
+              <label class="form-check-label" for="export_{{ key }}">{{ label }}</label>
+            </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-download me-1"></i>{% trans "Download" %}
+        </button>
+        <a href="{% url 'locations:preferences' %}" class="btn btn-link text-muted ms-2">{% trans "Cancel" %}</a>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

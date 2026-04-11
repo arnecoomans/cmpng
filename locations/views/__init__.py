@@ -2,7 +2,7 @@ from .locations import AllLocationListView, AccommodationListView, ActivityListV
 from .tags import TagListView, ManageTagVisibilityView, EditTagView
 from .visits import ManageVisitsView
 from .comments import CommentListView
-from .profile import PreferencesView, RevokeMapsSessionView, SetLanguageView
+from .profile import PreferencesView, RevokeMapsSessionView, SetLanguageView, ExportDataView
 from .media import ManageMediaView
 from .lists import ManageListsView, ListListView, ListDetailView
 from .pages import PageDetailView
@@ -14,7 +14,7 @@ __all__ = [
   'TagListView', 'ManageTagVisibilityView', 'EditTagView',
   'ManageVisitsView',
   'CommentListView',
-  'PreferencesView', 'RevokeMapsSessionView', 'SetLanguageView',
+  'PreferencesView', 'RevokeMapsSessionView', 'SetLanguageView', 'ExportDataView',
   'ManageMediaView',
   'ManageListsView', 'ListListView', 'ListDetailView',
   'PageDetailView',

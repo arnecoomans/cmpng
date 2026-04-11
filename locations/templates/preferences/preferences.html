@@ -73,6 +73,15 @@
       {% include 'field/userpreferences/family.html' with family=preferences.family %}
     </div>
 
+    <!-- Data export -->
+    <div class="card card--pad">
+      <div class="card__title">{% translate "my data"|capfirst %}</div>
+      <p class="cmpng-muted small mb-2">{% blocktrans %}Download a copy of all data stored under your account.{% endblocktrans %}</p>
+      <a href="{% url 'locations:export_data' %}" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-download me-1"></i>{% trans "Download my data" %}
+      </a>
+    </div>
+
     <!-- Quick links -->
     <div class="card card--pad">
       <div class="card__title">{% translate "my links"|capfirst %}</div>
