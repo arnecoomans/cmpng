@@ -7,6 +7,7 @@ from .models.Comment import Comment
 from .models.Media import Media
 from .models.Page import Page
 from cmnsd.admin import BaseModelAdmin, VisibilityModelAdmin, TranslationAliasAdminMixin
+from locations.services.visits_recommendation import get_recommendation_summary
 
 
 @admin.action(description='Recalculate distances')
@@ -18,7 +19,7 @@ def recalculate_distances(modeladmin, request, queryset):
 
 @admin.register(Location)
 class LocationAdmin(VisibilityModelAdmin, BaseModelAdmin):
-    list_display = ('name', 'geo', 'chain', 'completeness', 'distance_to_departure_center')
+    list_display = ('name', 'geo', 'chain', 'completeness', 'distance_to_departure_center', 'recommendation_score')
     list_filter = ('is_accommodation', 'is_activity', 'status', 'visibility', 'geo')
     search_fields = ('name', 'summary', 'address', 'email')
     filter_horizontal = ('categories', 'tags')
@@ -40,6 +41,13 @@ class LocationAdmin(VisibilityModelAdmin, BaseModelAdmin):
 
     readonly_fields = BaseModelAdmin.readonly_fields + ('is_accommodation', 'is_activity', 'distance_to_departure_center', 'google_place_id')
     actions = BaseModelAdmin.actions + [recalculate_distances]
+
+    @admin.display(description=_('Score'))
+    def recommendation_score(self, obj):
+        summary = get_recommendation_summary(obj)
+        if summary['score'] is None:
+            return '–'
+        return summary['score']
 
 
 @admin.register(Region)
@@ -136,7 +144,7 @@ class UserPreferencesAdmin(admin.ModelAdmin):
 
 @admin.register(Visits)
 class VisitsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'location', 'year', 'month', 'day', 'end_year', 'end_month', 'end_day', 'recommendation')
+    list_display = ('user', 'location', 'year', 'month', 'day', 'end_year', 'end_month', 'end_day', 'recommendation_label')
     search_fields = ('user__username', 'location__name')
     list_filter = ('year', 'month', 'recommendation')
 
@@ -155,6 +163,18 @@ class VisitsAdmin(admin.ModelAdmin):
             'fields': ('recommendation',),
         }),
     )
+
+    _RECOMMENDATION_LABELS = {
+        Visits.RECOMMENDATION_RECOMMEND: _('Recommended'),
+        Visits.RECOMMENDATION_NEUTRAL: _('Neutral'),
+        Visits.RECOMMENDATION_DO_NOT_RECOMMEND: _('Not recommended'),
+    }
+
+    @admin.display(description=_('Recommendation'))
+    def recommendation_label(self, obj):
+        if obj.recommendation is None:
+            return '–'
+        return self._RECOMMENDATION_LABELS.get(obj.recommendation, obj.recommendation)
 
 
 @admin.register(Comment)

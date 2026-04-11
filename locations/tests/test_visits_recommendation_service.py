@@ -161,9 +161,10 @@ class TestGetVisitState:
     location = LocationFactory()
     user = UserFactory()
     other = UserFactory()
+    third = UserFactory()
     VisitsFactory(location=location, user=user, recommendation=Visits.RECOMMENDATION_RECOMMEND)
     VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
-    VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
+    VisitsFactory(location=location, user=third, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
     assert get_visit_state(location, user) == 'you-neg'
 
   def test_conflict_you_neg_but_community_pos(self):
@@ -171,9 +172,10 @@ class TestGetVisitState:
     location = LocationFactory()
     user = UserFactory()
     other = UserFactory()
+    third = UserFactory()
     VisitsFactory(location=location, user=user, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
     VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_RECOMMEND)
-    VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_RECOMMEND)
+    VisitsFactory(location=location, user=third, recommendation=Visits.RECOMMENDATION_RECOMMEND)
     assert get_visit_state(location, user) == 'you-pos'
 
   def test_unauthenticated_user_returns_none_when_nobody_visited(self):
@@ -278,9 +280,10 @@ class TestVisitStateFromAnnotation:
     location = LocationFactory()
     user = UserFactory()
     other = UserFactory()
+    third = UserFactory()
     VisitsFactory(location=location, user=user, recommendation=Visits.RECOMMENDATION_RECOMMEND)
     VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
-    VisitsFactory(location=location, user=other, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
+    VisitsFactory(location=location, user=third, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
     loc = self._annotated(location, user)
     assert visit_state_from_annotation(loc) == 'you-neg'
 

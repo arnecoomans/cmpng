@@ -119,15 +119,21 @@ class LocationQuerySet(models.QuerySet):
     convert these to a state string.
     """
     from django.db.models import Subquery, OuterRef, Exists, IntegerField, FloatField, Value, Avg
+    from django.db.models.expressions import RawSQL
     from locations.models.Visits import Visits
 
     anyone_visited = Visits.objects.filter(location=OuterRef('pk'))
 
-    community_score = Subquery(
-      Visits.objects.filter(
-        location=OuterRef('pk'),
-        recommendation__isnull=False,
-      ).values('location').annotate(avg=Avg('recommendation')).values('avg'),
+    # Two-level avg: per-user first, then community — gives each user one vote
+    community_score = RawSQL(
+      '(SELECT AVG(u_avg) FROM ('
+      '  SELECT AVG(recommendation) AS u_avg'
+      '  FROM locations_visits'
+      '  WHERE location_id = "locations_location"."id"'
+      '    AND recommendation IS NOT NULL'
+      '  GROUP BY user_id'
+      ') t)',
+      [],
       output_field=FloatField(),
     )
 

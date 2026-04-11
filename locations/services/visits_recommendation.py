@@ -49,13 +49,15 @@ def get_visit_context(location, user):
       'visit_community_score': None,
     }
 
-  community_score = Visits.objects.filter(
-    location=location,
-    recommendation__isnull=False,
-  ).aggregate(avg=Avg('recommendation'))['avg']
-
-  if community_score is not None:
-    community_score = round(community_score, 2)
+  # Two-level average: each user gets one vote regardless of visit count
+  user_avgs_qs = (
+    Visits.objects
+    .filter(location=location, recommendation__isnull=False)
+    .values('user')
+    .annotate(user_avg=Avg('recommendation'))
+  )
+  community_score_raw = user_avgs_qs.aggregate(avg=Avg('user_avg'))['avg']
+  community_score = round(community_score_raw, 2) if community_score_raw is not None else None
 
   bucket = _score_to_bucket(community_score)
 
@@ -141,22 +143,25 @@ def get_recommendation_summary(location):
       do_not_recommend (int): visits with recommendation=-1
       score (float|None): average of rated visits (-1.0 to 1.0), or None if no rated visits
   """
-  rated = Visits.objects.filter(location=location, recommendation__isnull=False)
+  # Per-user averages: each user gets one vote regardless of visit count
+  user_avgs = list(
+    Visits.objects
+    .filter(location=location, recommendation__isnull=False)
+    .values('user')
+    .annotate(u=Avg('recommendation'))
+    .values_list('u', flat=True)
+  )
 
-  counts = {v: 0 for v in (
-    Visits.RECOMMENDATION_RECOMMEND,
-    Visits.RECOMMENDATION_NEUTRAL,
-    Visits.RECOMMENDATION_DO_NOT_RECOMMEND,
-  )}
-  for value in rated.values_list('recommendation', flat=True):
-    counts[value] += 1
+  counts = {1: 0, 0: 0, -1: 0}
+  for avg in user_avgs:
+    counts[1 if avg > 0 else (-1 if avg < 0 else 0)] += 1
 
-  total_rated = sum(counts.values())
-  score = rated.aggregate(avg=Avg('recommendation'))['avg'] if total_rated else None
+  total = len(user_avgs)
+  score = round(sum(user_avgs) / total, 2) if total else None
 
   return {
     'recommend': counts[Visits.RECOMMENDATION_RECOMMEND],
     'neutral': counts[Visits.RECOMMENDATION_NEUTRAL],
     'do_not_recommend': counts[Visits.RECOMMENDATION_DO_NOT_RECOMMEND],
-    'score': round(score, 2) if score is not None else None,
+    'score': score,
   }
