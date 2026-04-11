@@ -6,6 +6,7 @@ from .models.Visits import Visits
 from .models.Comment import Comment
 from .models.Media import Media
 from .models.Page import Page
+from cmnsd.models import TranslationAliasAdminMixin
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -99,7 +100,7 @@ class RegionAdmin(BaseModelAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(BaseModelAdmin):
+class CategoryAdmin(TranslationAliasAdminMixin, BaseModelAdmin):
     list_display = ('name', 'parent', 'status')
     list_filter = ('status',)
     search_fields = ('name',)
@@ -112,7 +113,7 @@ class CategoryAdmin(BaseModelAdmin):
 
 
 @admin.register(Tag)
-class TagAdmin(BaseModelAdmin):
+class TagAdmin(TranslationAliasAdminMixin, BaseModelAdmin):
     list_display = ('name', 'parent', 'status', 'visibility')
     list_filter = ('status', 'visibility')
     search_fields = ('name', 'description')

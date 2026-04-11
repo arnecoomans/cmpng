@@ -297,3 +297,69 @@ class TestTagDescription:
         desc = 'This tag indicates pet-friendly locations'
         tag = TagFactory(description=desc)
         assert tag.description == desc
+
+
+# ------------------------------------------------------------------ #
+#  Translation aliases
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestTagAliases:
+
+    def test_aliases_field_defaults_to_empty(self, db):
+        tag = TagFactory()
+        assert tag.aliases == ''
+
+    def test_update_aliases_stores_translations_that_differ_from_name(self, db):
+        from unittest.mock import patch
+        from django.test import override_settings
+        tag = TagFactory(name='Swimming pool')
+
+        def fake_gettext(s):
+            from django.utils.translation import get_language
+            return 'Zwembad' if get_language() == 'nl' else s
+
+        with override_settings(LANGUAGES=[('en', 'English'), ('nl', 'Nederlands')]):
+            with patch('django.utils.translation.gettext', side_effect=fake_gettext):
+                tag._update_aliases()
+
+        assert 'Zwembad' in tag.aliases
+
+    def test_update_aliases_skips_identical_translations(self, db):
+        from unittest.mock import patch
+        from django.test import override_settings
+        tag = TagFactory(name='Camping')
+
+        with override_settings(LANGUAGES=[('en', 'English'), ('nl', 'Nederlands')]):
+            with patch('django.utils.translation.gettext', return_value='Camping'):
+                tag._update_aliases()
+
+        assert tag.aliases == ''
+
+    def test_save_calls_update_aliases(self, db):
+        from unittest.mock import patch
+        tag = TagFactory()
+        with patch.object(tag.__class__, '_update_aliases') as mock_update:
+            tag.name = 'Updated name'
+            tag.save()
+        mock_update.assert_called_once()
+
+    def test_search_finds_tag_by_alias(self, db):
+        from cmnsd.mixins import FilterMixin
+        from unittest.mock import MagicMock
+
+        tag = TagFactory(name='Swimming pool')
+        Tag.objects.filter(pk=tag.pk).update(aliases='Zwembad, Zwemmen')
+        tag.refresh_from_db()
+
+        request = MagicMock()
+        request.GET = {'q': 'zwem'}
+        request.POST = {}
+        request.user = MagicMock(is_authenticated=False)
+
+        mixin = FilterMixin()
+        mixin.request = request
+        qs = Tag.objects.filter(pk=tag.pk)
+        result = mixin.filter(qs, request=request)
+
+        assert tag in result

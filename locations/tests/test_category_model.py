@@ -149,3 +149,87 @@ class TestCategoryBaseModel:
     def test_get_absolute_url_contains_slug(self, db):
         cat = CategoryFactory(slug='glamping')
         assert 'glamping' in cat.get_absolute_url()
+
+
+# ------------------------------------------------------------------ #
+#  Translation aliases
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestCategoryAliases:
+
+    def test_aliases_field_defaults_to_empty(self, db):
+        cat = CategoryFactory()
+        assert cat.aliases == ''
+
+    def test_update_aliases_stores_translations_that_differ_from_name(self, db):
+        from unittest.mock import patch
+        from django.test import override_settings
+        cat = CategoryFactory(name='Swimming pool')
+
+        def fake_gettext(s):
+            from django.utils.translation import get_language
+            return 'Zwembad' if get_language() == 'nl' else s
+
+        with override_settings(LANGUAGES=[('en', 'English'), ('nl', 'Nederlands')]):
+            with patch('django.utils.translation.gettext', side_effect=fake_gettext):
+                cat._update_aliases()
+
+        assert 'Zwembad' in cat.aliases
+
+    def test_update_aliases_skips_identical_translations(self, db):
+        from unittest.mock import patch
+        from django.test import override_settings
+        cat = CategoryFactory(name='Camping')
+
+        with override_settings(LANGUAGES=[('en', 'English'), ('nl', 'Nederlands')]):
+            with patch('django.utils.translation.gettext', return_value='Camping'):
+                cat._update_aliases()
+
+        assert cat.aliases == ''
+
+    def test_update_aliases_stores_multiple_languages(self, db):
+        from unittest.mock import patch
+        from django.test import override_settings
+        cat = CategoryFactory(name='Hotel')
+
+        translations = {'nl': 'Hotel NL', 'fr': 'Hôtel FR'}
+
+        def fake_gettext(s):
+            from django.utils.translation import get_language
+            return translations.get(get_language(), s)
+
+        with override_settings(LANGUAGES=[('en', 'English'), ('nl', 'Nederlands'), ('fr', 'Français')]):
+            with patch('django.utils.translation.gettext', side_effect=fake_gettext):
+                cat._update_aliases()
+
+        assert 'Hotel NL' in cat.aliases
+        assert 'Hôtel FR' in cat.aliases
+
+    def test_save_calls_update_aliases(self, db):
+        from unittest.mock import patch
+        cat = CategoryFactory()
+        with patch.object(cat.__class__, '_update_aliases') as mock_update:
+            cat.name = 'Updated name'
+            cat.save()
+        mock_update.assert_called_once()
+
+    def test_search_finds_category_by_alias(self, db):
+        from cmnsd.mixins import FilterMixin
+        from unittest.mock import MagicMock
+
+        cat = CategoryFactory(name='Swimming pool')
+        Category.objects.filter(pk=cat.pk).update(aliases='Zwembad, Zwemmen')
+        cat.refresh_from_db()
+
+        request = MagicMock()
+        request.GET = {'q': 'zwem'}
+        request.POST = {}
+        request.user = MagicMock(is_authenticated=False)
+
+        mixin = FilterMixin()
+        mixin.request = request
+        qs = Category.objects.filter(pk=cat.pk)
+        result = mixin.filter(qs, request=request)
+
+        assert cat in result

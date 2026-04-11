@@ -6,13 +6,14 @@ from django.conf import settings
 from django.utils.text import slugify, capfirst
 from django.utils.translation import gettext_lazy as _
 
-from cmnsd.models import BaseModel, VisibilityModel
+from cmnsd.models import BaseModel, VisibilityModel, TranslationAliasMixin
 
 ''' Category model
 '''
-class Category(BaseModel):
+class Category(TranslationAliasMixin, BaseModel):
   slug                = models.CharField(max_length=255, unique=True, help_text=f"{ capfirst(_('identifier in URL')) } ({ _('automatically generated') })")
   name                = models.CharField(max_length=255, unique=True, help_text= capfirst(_('Name of category')))
+  aliases             = models.TextField(blank=True, default='', help_text=capfirst(_('comma-separated translations, auto-populated on save')))
   parent              = models.ForeignKey("self", on_delete=models.CASCADE, related_name='children', null=True, blank=True)
 
   class Meta:
@@ -25,9 +26,10 @@ class Category(BaseModel):
     return self.name
   
   def save(self, *args, **kwargs):
-    # Auto-generate slug from name if not provided
     if not self.slug:
       self.slug = slugify(self.name)
+    if 'update_fields' not in kwargs or 'aliases' in (kwargs.get('update_fields') or []):
+      self._update_aliases()
     super().save(*args, **kwargs)
 
   def get_absolute_url(self):

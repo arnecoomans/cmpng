@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 
 from django.urls import reverse_lazy
 
-from cmnsd.models import VisibilityModel
+from cmnsd.models import VisibilityModel, TranslationAliasMixin
 from cmnsd.models.TagModel import TagModel
 
-class Tag(VisibilityModel, TagModel):
+class Tag(TranslationAliasMixin, VisibilityModel, TagModel):
   class Meta:
     ordering = ['parent__name', 'name']
 
@@ -23,6 +23,11 @@ class Tag(VisibilityModel, TagModel):
     return {
       'parent': 'parent__slug',
     }
+
+  def save(self, *args, **kwargs):
+    if 'update_fields' not in kwargs or 'aliases' in (kwargs.get('update_fields') or []):
+      self._update_aliases()
+    super().save(*args, **kwargs)
 
   def get_absolute_url(self):
     return reverse_lazy('locations:all') + f'?tag={self.slug}'
