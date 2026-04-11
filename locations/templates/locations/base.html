@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block announcement %}
+  {% if not user.is_authenticated %}
+    <div class="container pt-3">
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>{% translate 'Get more out of your trips.' %}</strong>
+        {% blocktranslate %}With a free account you see more accommodations and activities, mark visits, save favourites, build lists and more.{% endblocktranslate %}
+        <a href="{% url 'register' %}" class="alert-link">{% translate 'Create an account' %}</a>
+        {% translate 'or' %}
+        <a href="{% url 'login' %}" class="alert-link">{% translate 'log in' %}</a>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% translate 'Close' %}"></button>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
