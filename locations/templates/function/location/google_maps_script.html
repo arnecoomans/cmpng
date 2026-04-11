@@ -53,10 +53,10 @@
       infoWindow.open({ anchor: marker, map });
     });
 
-    // Nearby markers
-    const nearbyBaseUrl = '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "nearby" %}?format=json';
+    // Viewport markers — reload on every pan/zoom via bbox params
+    const bboxBaseUrl = '{% url "cmnsd:dispatch" "locations" %}?format=json';
     const sharedInfoWindow = new google.maps.InfoWindow();
-    let nearbyMarkers = [];
+    let viewportMarkers = [];
 
     function makeDotElement(fill, outline) {
       const el = document.createElement('div');
@@ -76,81 +76,65 @@
       act_visited: 'rgba(225, 190, 18, 0.8)',
     };
 
-    function clearNearbyMarkers() {
-      nearbyMarkers.forEach(m => { m.map = null; });
-      nearbyMarkers = [];
+    function clearViewportMarkers() {
+      viewportMarkers.forEach(m => { m.map = null; });
+      viewportMarkers = [];
     }
 
-    function loadNearbyMarkers(radiusKm) {
-      const url = nearbyBaseUrl + (radiusKm ? `&radius_km=${Math.round(radiusKm)}` : '');
+    function loadViewportMarkers() {
+      const bounds = map.getBounds();
+      if (!bounds) return;
+
+      const sw = bounds.getSouthWest();
+      const ne = bounds.getNorthEast();
+
+      const url = bboxBaseUrl
+        + `&coord_lat__gte=${sw.lat()}`
+        + `&coord_lat__lte=${ne.lat()}`
+        + `&coord_lon__gte=${sw.lng()}`
+        + `&coord_lon__lte=${ne.lng()}`;
+
       fetch(url)
         .then(r => r.json())
         .then(data => {
-          clearNearbyMarkers();
-          Object.values(data.payload.nearby).forEach(loc => {
+          clearViewportMarkers();
+          Object.values(data.payload?.location || {}).forEach(loc => {
             if (!loc.coord_lat || !loc.coord_lon) return;
+            // Skip the main location — already has its own pin
+            if (loc.url === '{{ location.get_absolute_url|escapejs }}') return;
 
-            const fillKey = loc.is_accommodation
-              ? (loc.visited ? 'acc_visited' : 'acc')
-              : (loc.visited ? 'act_visited' : 'act');
+            const fillKey = loc.is_accommodation ? 'acc' : 'act';
 
-            const nearbyMarker = new AdvancedMarkerElement({
+            const vm = new AdvancedMarkerElement({
               position: { lat: loc.coord_lat, lng: loc.coord_lon },
               map,
               title: loc.name,
-              content: makeDotElement(FILLS[fillKey], loc.loved),
+              content: makeDotElement(FILLS[fillKey], false),
             });
 
-            nearbyMarker.addListener('click', () => {
+            vm.addListener('click', () => {
               sharedInfoWindow.setContent(`
                 <div style="max-width:220px;font-family:inherit">
                   <strong style="font-size:14px">${loc.name}</strong>
                   ${loc.summary ? `<p style="margin:6px 0 0;font-size:12px;color:#555">${loc.summary}</p>` : ''}
-                  <p style="margin:6px 0 0;font-size:12px;color:#777">${loc.nearby_distance} km</p>
                   <p style="margin:8px 0 0"><a href="${loc.url}" style="font-size:12px">{% translate "view details"|capfirst %}</a></p>
                 </div>
               `);
-              sharedInfoWindow.open({ anchor: nearbyMarker, map });
+              sharedInfoWindow.open({ anchor: vm, map });
             });
 
-            nearbyMarkers.push(nearbyMarker);
+            viewportMarkers.push(vm);
           });
         })
-        .catch(err => console.warn('Nearby markers unavailable:', err));
+        .catch(err => console.warn('Viewport markers unavailable:', err));
     }
 
-    // Initial load with default range
-    let loadedRadiusKm = null;
-
-    function loadNearbyMarkersTracked(radiusKm) {
-      loadedRadiusKm = radiusKm;
-      loadNearbyMarkers(radiusKm);
-    }
-
-    loadNearbyMarkersTracked(null);
-
-    {% if user.is_authenticated %}
-    // Reload markers only when zooming out beyond the already-loaded radius
-    let zoomDebounce;
-    map.addListener('zoom_changed', () => {
-      clearTimeout(zoomDebounce);
-      zoomDebounce = setTimeout(() => {
-        const bounds = map.getBounds();
-        if (!bounds) return;
-        const ne = bounds.getNorthEast();
-        const center = map.getCenter();
-        const R = 6371;
-        const dLat = (ne.lat() - center.lat()) * Math.PI / 180;
-        const dLon = (ne.lng() - center.lng()) * Math.PI / 180;
-        const a = Math.sin(dLat / 2) ** 2
-          + Math.cos(center.lat() * Math.PI / 180) * Math.cos(ne.lat() * Math.PI / 180)
-          * Math.sin(dLon / 2) ** 2;
-        const radiusKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        if (loadedRadiusKm !== null && radiusKm <= loadedRadiusKm) return; // zoom in — skip
-        loadNearbyMarkersTracked(radiusKm);
-      }, 600);
+    // Debounced idle listener — fires after pan and zoom settle
+    let idleDebounce;
+    map.addListener('idle', () => {
+      clearTimeout(idleDebounce);
+      idleDebounce = setTimeout(loadViewportMarkers, 400);
     });
-    {% endif %}
   }
 })();
 </script>

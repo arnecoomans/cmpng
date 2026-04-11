@@ -1,5 +1,10 @@
 "{{ location.slug }}": {
   "id": "{{ location.id }}",
   "name": "{{ location.name|highlight:query|safe }}",
-  "url": "{{ location.get_absolute_url }}"
+  "url": "{{ location.get_absolute_url }}",
+  {% localize off %}"coord_lat": {{ location.coord_lat|default:"null" }},
+  "coord_lon": {{ location.coord_lon|default:"null" }},{% endlocalize %}
+  "is_accommodation": {{ location.is_accommodation|lower }},
+  "is_activity": {{ location.is_activity|lower }},
+  "summary": "{{ location.summary|default:''|escapejs }}"
 }
