@@ -1,5 +1,5 @@
 <span class="chip">
-  {% translate tag.name %}
+  <a href="{{ tag.get_absolute_url }}" class="internal tag">{% translate tag.name %}</a>
   {% if ajax.editable %}
     <a href="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'tags' %}"
       data-action

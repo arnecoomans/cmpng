@@ -108,7 +108,9 @@ a.internal:focus {
   color: var(--primary-dark);
   text-decoration-color: rgba(6, 95, 70, 0.65);
 }
-
+a.internal.tag {
+  text-decoration: none;
+}
 
 /* ====================================================================
    Generic layout & components (shared across all page types)
