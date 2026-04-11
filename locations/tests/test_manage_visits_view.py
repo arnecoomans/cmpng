@@ -134,9 +134,10 @@ class TestManageVisitsViewContext:
 
   def test_context_recommendation_summary_counts_correctly(self, db):
     user = _make_member_user()
+    other = UserFactory()
     location = LocationFactory()
     VisitsFactory(user=user, location=location, recommendation=Visits.RECOMMENDATION_RECOMMEND)
-    VisitsFactory(user=user, location=location, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
+    VisitsFactory(user=other, location=location, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
     request = _get(user=user)
 
     response = ManageVisitsView.as_view()(request, slug=location.slug)

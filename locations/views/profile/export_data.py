@@ -5,6 +5,7 @@ from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
@@ -16,11 +17,11 @@ from locations.models.Media import Media
 
 
 EXPORT_SECTIONS = [
-  ('visits',    _('Visits')),
-  ('comments',  _('Comments')),
-  ('locations', _('Locations added')),
-  ('media',     _('Media added')),
-  ('lists',     _('Lists')),
+  ('visits',    capfirst(_('visits'))),
+  ('comments',  capfirst(_('comments'))),
+  ('locations', capfirst(_('locations added'))),
+  ('media',     capfirst(_('media added'))),
+  ('lists',     capfirst(_('lists'))),
 ]
 
 _RECOMMENDATION_LABELS = {

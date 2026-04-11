@@ -272,7 +272,7 @@ class TestTagVisibility:
 
     def test_default_visibility_is_community(self):
         field = Tag._meta.get_field('visibility')
-        assert field.default == 'p'
+        assert field.default == 'c'
 
     def test_visibility_can_be_set_to_public(self, db):
         tag = TagFactory(visibility='p')
