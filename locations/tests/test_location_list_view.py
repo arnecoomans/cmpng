@@ -1,11 +1,12 @@
 import pytest
 from django.urls import reverse
 from locations.tests.factories import (
-    LocationFactory, 
-    RegionFactory, 
+    LocationFactory,
+    RegionFactory,
     CategoryFactory,
     TagFactory,
     ChainFactory,
+    UserFactory,
 )
 
 
@@ -380,3 +381,24 @@ class TestLocationListOrdering:
         
         names = [loc.name for loc in response.context['locations']]
         assert names[0] == 'New Hotel'
+
+
+# ------------------------------------------------------------------ #
+#  Authentication banner
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestAuthBanner:
+
+  def test_banner_shown_to_anonymous_user(self, client):
+    url = reverse('locations:home')
+    response = client.get(url)
+    assert b'Create an account' in response.content
+
+  def test_banner_not_shown_to_authenticated_user(self, client):
+    user = UserFactory()
+    user.save()
+    client.force_login(user)
+    url = reverse('locations:home')
+    response = client.get(url)
+    assert b'Create an account' not in response.content
