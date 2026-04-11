@@ -7,12 +7,11 @@ from cmnsd.models import VisibilityModel, TranslationAliasMixin
 from cmnsd.models.TagModel import TagModel
 
 class Tag(TranslationAliasMixin, VisibilityModel, TagModel):
-  class Tag(TranslationAliasMixin, VisibilityModel, TagModel):
-    visibility = models.CharField(
-        max_length=1,
-        choices=VisibilityModel.visibility_choices,
-        default='c',
-    )
+  visibility = models.CharField(
+      max_length=1,
+      choices=VisibilityModel.visibility_choices,
+      default='c',
+  )
 
   class Meta:
     ordering = ['parent__name', 'name']
