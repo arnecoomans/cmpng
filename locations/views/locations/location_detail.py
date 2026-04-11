@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 
 from locations.models.Location import Location
+from locations.services.visits_recommendation import get_visit_context
 from django.utils.translation import gettext as _
 from django.utils.text import capfirst
 # from django.urls import reverse_lazy, reverse
@@ -57,4 +58,5 @@ class LocationDetailView(RequestMixin, FilterMixin, DetailView):
     self.object.request = self.request  # needed for visibility-filtered methods (filtered_tags, ordered_media, etc.)
     context['filtered_media'] = self.object.ordered_media()
     context['scope'] = 'location'
+    context.update(get_visit_context(self.object, self.request.user))
     return context

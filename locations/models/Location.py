@@ -106,6 +106,49 @@ class LocationQuerySet(models.QuerySet):
       ),
     )
 
+  def with_visit_state(self, user):
+    """Annotate each location with visit state data for the given user.
+
+    Adds four annotations:
+      visit_anyone_visited (bool): True if any user has visited this location.
+      visit_user_visited (bool): True if the given user has visited.
+      visit_user_recommendation (int|None): user's most recent recommendation value.
+      visit_community_score (float|None): average recommendation across all rated visits.
+
+    Use visit_state_from_annotation() from visits_recommendation service to
+    convert these to a state string.
+    """
+    from django.db.models import Subquery, OuterRef, Exists, IntegerField, FloatField, Value, Avg
+    from locations.models.Visits import Visits
+
+    anyone_visited = Visits.objects.filter(location=OuterRef('pk'))
+
+    community_score = Subquery(
+      Visits.objects.filter(
+        location=OuterRef('pk'),
+        recommendation__isnull=False,
+      ).values('location').annotate(avg=Avg('recommendation')).values('avg'),
+      output_field=FloatField(),
+    )
+
+    if getattr(user, 'is_authenticated', False):
+      user_visits = Visits.objects.filter(location=OuterRef('pk'), user=user)
+      user_recommendation = Subquery(
+        user_visits.order_by('-year', '-month', '-day').values('recommendation')[:1],
+        output_field=IntegerField(),
+      )
+      user_visited = Exists(user_visits)
+    else:
+      user_recommendation = Value(None, output_field=IntegerField())
+      user_visited = Value(False)
+
+    return self.annotate(
+      visit_anyone_visited=Exists(anyone_visited),
+      visit_user_visited=user_visited,
+      visit_user_recommendation=user_recommendation,
+      visit_community_score=community_score,
+    )
+
   def optimized(self):
     """Full optimization - everything in one call."""
     return self.with_relations().with_distances().with_default_ordering().with_comments()
@@ -124,6 +167,9 @@ class LocationManager(models.Manager):
   def with_distances(self):
     return self.get_queryset().with_distances()
   
+  def with_visit_state(self, user):
+    return self.get_queryset().with_visit_state(user)
+
   def optimized(self):
     return self.get_queryset().optimized()
     

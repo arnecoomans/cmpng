@@ -13,6 +13,7 @@ from locations.models.Size import Size
 from locations.models.Comment import Comment
 from locations.models.Page import Page
 from locations.models.Preferences import UserPreferences
+from locations.models.Visits import Visits
 
 
 User = get_user_model()
@@ -181,6 +182,16 @@ class CommentFactory(DjangoModelFactory):
 
     # content_type and object_id must be set explicitly in tests:
     # CommentFactory(content_type=ct, object_id=location.pk)
+
+
+class VisitsFactory(DjangoModelFactory):
+  class Meta:
+    model = Visits
+
+  user = factory.SubFactory(UserFactory)
+  location = factory.SubFactory(LocationFactory)
+  year = 2024
+  recommendation = None
 
 
 class PageFactory(DjangoModelFactory):

@@ -5,7 +5,7 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.auth.models import Permission
 
 from locations.models import Visits
-from locations.tests.factories import LocationFactory, UserFactory
+from locations.tests.factories import LocationFactory, UserFactory, VisitsFactory
 from locations.views.visits.manage_visits import ManageVisitsView
 
 
@@ -106,6 +106,44 @@ class TestManageVisitsViewContext:
     response = ManageVisitsView.as_view()(request)
 
     assert 'months' in response.context_data
+
+  def test_context_recommendation_choices_present(self, db):
+    user = _make_member_user()
+    request = _get(user=user)
+
+    response = ManageVisitsView.as_view()(request)
+
+    assert 'recommendation_choices' in response.context_data
+
+  def test_context_recommendation_summary_absent_without_slug(self, db):
+    user = _make_member_user()
+    request = _get(user=user)
+
+    response = ManageVisitsView.as_view()(request)
+
+    assert 'recommendation_summary' not in response.context_data
+
+  def test_context_recommendation_summary_present_with_slug(self, db):
+    user = _make_member_user()
+    location = LocationFactory()
+    request = _get(user=user)
+
+    response = ManageVisitsView.as_view()(request, slug=location.slug)
+
+    assert 'recommendation_summary' in response.context_data
+
+  def test_context_recommendation_summary_counts_correctly(self, db):
+    user = _make_member_user()
+    location = LocationFactory()
+    VisitsFactory(user=user, location=location, recommendation=Visits.RECOMMENDATION_RECOMMEND)
+    VisitsFactory(user=user, location=location, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND)
+    request = _get(user=user)
+
+    response = ManageVisitsView.as_view()(request, slug=location.slug)
+
+    summary = response.context_data['recommendation_summary']
+    assert summary['recommend'] == 1
+    assert summary['do_not_recommend'] == 1
 
 
 # ------------------------------------------------------------------ #

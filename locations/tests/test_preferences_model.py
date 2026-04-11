@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from locations.models.Preferences import App, UserPreferences, Visits
+from locations.models.Preferences import App, UserPreferences
 from locations.tests.factories import UserFactory, LocationFactory, UserPreferencesFactory
 
 
@@ -119,21 +119,3 @@ class TestUserPreferencesModel:
     assert other.pk in ids
 
 
-# ------------------------------------------------------------------ #
-#  Visits model
-# ------------------------------------------------------------------ #
-
-@pytest.mark.django_db
-class TestVisitsModel:
-
-  def test_get_months_returns_all_12(self, db):
-    months = Visits.get_months()
-    assert len(months) == 12
-
-  def test_get_months_first_is_january(self, db):
-    months = Visits.get_months()
-    assert months[0][0] == 1
-
-  def test_get_months_last_is_december(self, db):
-    months = Visits.get_months()
-    assert months[-1][0] == 12

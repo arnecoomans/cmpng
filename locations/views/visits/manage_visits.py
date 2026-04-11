@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView
 from cmnsd.mixins import RequestMixin, FilterMixin
 from locations.models import Visits, Location
+from locations.services.visits_recommendation import get_recommendation_summary
 
 class ManageVisitsView(LoginRequiredMixin, PermissionRequiredMixin, RequestMixin, FilterMixin, ListView):
   permission_required = 'locations.add_visits'
@@ -15,7 +16,11 @@ class ManageVisitsView(LoginRequiredMixin, PermissionRequiredMixin, RequestMixin
     context = super().get_context_data(**kwargs)
     context['scope'] = 'visits'
     context['months'] = self.model.get_months()
-    context['location'] = Location.objects.filter(slug=self.kwargs.get('slug')).first() if 'slug' in self.kwargs else None
+    context['recommendation_choices'] = self.model.RECOMMENDATION_CHOICES
+    location = Location.objects.filter(slug=self.kwargs.get('slug')).first() if 'slug' in self.kwargs else None
+    context['location'] = location
+    if location:
+      context['recommendation_summary'] = get_recommendation_summary(location)
     return context
 
   def get_queryset(self):

@@ -20,3 +20,39 @@ i.cmpng-favorite {
 i.cmpng-favorite-active {
   color: rgba(220, 38, 38, 0.85);
 }
+
+/* Visited icon — state-based coloring
+   State encodes two dimensions:
+     who:       none | others-* (outline) | you-* (fill)
+     community: *-pos (green) | *-neu (gray) | *-neg (red)
+*/
+
+/* Nobody visited */
+i.cmpng-visited--none {
+  color: var(--gray-300);
+}
+
+/* Others visited (you haven't) — outline effect via reduced opacity */
+i.cmpng-visited--others-pos {
+  color: var(--primary);
+  opacity: 0.4;
+}
+i.cmpng-visited--others-neu {
+  color: var(--gray-400);
+  opacity: 0.6;
+}
+i.cmpng-visited--others-neg {
+  color: rgba(220, 38, 38, 0.85);
+  opacity: 0.4;
+}
+
+/* You visited — filled, full opacity */
+i.cmpng-visited--you-pos {
+  color: var(--primary);
+}
+i.cmpng-visited--you-neu {
+  color: var(--gray-600);
+}
+i.cmpng-visited--you-neg {
+  color: rgba(220, 38, 38, 0.85);
+}

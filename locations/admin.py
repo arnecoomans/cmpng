@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from .models import Location, Region, Category, Tag, Link, Chain, App, UserPreferences, Visits, Size, List, ListItem, Distance
+from .models import Location, Region, Category, Tag, Link, Chain, App, UserPreferences, Size, List, ListItem, Distance
+from .models.Visits import Visits
 from .models.Comment import Comment
 from .models.Media import Media
 from .models.Page import Page
@@ -178,9 +179,9 @@ class UserPreferencesAdmin(admin.ModelAdmin):
 
 @admin.register(Visits)
 class VisitsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'location', 'year', 'month', 'day', 'end_year', 'end_month', 'end_day')
+    list_display = ('user', 'location', 'year', 'month', 'day', 'end_year', 'end_month', 'end_day', 'recommendation')
     search_fields = ('user__username', 'location__name')
-    list_filter = ('year', 'month')
+    list_filter = ('year', 'month', 'recommendation')
 
     fieldsets = (
         (_('Visit Information'), {
@@ -192,6 +193,9 @@ class VisitsAdmin(admin.ModelAdmin):
         (_('End date'), {
             'fields': ('end_year', 'end_month', 'end_day'),
             'description': _('Optional — leave blank for single-day or unknown duration visits.'),
+        }),
+        (_('Recommendation'), {
+            'fields': ('recommendation',),
         }),
     )
 @admin.register(Comment)

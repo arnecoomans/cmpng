@@ -5,6 +5,17 @@
       <div class="modal-section__head">
         <h3 class="modal-section__title" id="yourVisitsTitle">{% translate 'your visits to'|capfirst %} {{ visits.first.location.name }}</h3>
         <span class="badge badge--muted">{{ visits|length }}</span>
+        {% if recommendation_summary %}
+          {% if recommendation_summary.recommend %}
+            <span class="badge badge--success" title="{% translate 'recommend' %}">+{{ recommendation_summary.recommend }}</span>
+          {% endif %}
+          {% if recommendation_summary.neutral %}
+            <span class="badge badge--muted" title="{% translate 'neutral' %}">{{ recommendation_summary.neutral }}</span>
+          {% endif %}
+          {% if recommendation_summary.do_not_recommend %}
+            <span class="badge badge--danger" title="{% translate 'do not recommend' %}">-{{ recommendation_summary.do_not_recommend }}</span>
+          {% endif %}
+        {% endif %}
       </div>
 
       <ul class="visit-list">
@@ -23,22 +34,39 @@
                 {% if visit.nights %}<span class="text-muted">({{ visit.nights }} {% translate 'nights' %})</span>{% endif %}
               {% endif %}
             </span>
-              {% if user == visit.user %}
-                <span class="visit-item__actions">
-                  <a href="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'visits' visit.id visit.token%}" class="btn btn--small btn--danger" 
+            {% if user == visit.user %}
+              <span class="visit-item__recommendation">
+                {% for value, label in recommendation_choices %}
+                  <button type="button"
+                    class="btn btn--xsmall {% if visit.recommendation == value %}btn--active{% else %}btn--outline{% endif %}"
                     data-action
-                    data-method="DELETE"
-                    data-body='{"visits__id": "{{ visit.id }}"}'
-                    data-action 
-                    data-method="DELETE" 
-                    data-confirm="{% translate 'are you sure you want to delete this visit'|capfirst %}?"
-                    data-refresh-url="{% url 'locations:manage_visits_location' location.slug %}" 
-                    data-refresh-mode="update" 
-                    data-refresh-map='{"content": "#cmnsd-modal-body"}'>
-                    <i class="bi bi-trash"></i>
-                  </a>
-                </span>
-              {% endif %}
+                    data-method="PATCH"
+                    data-url="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'visits' visit.id visit.token %}"
+                    data-body='{"recommendation": "{{ value }}"}'
+                    data-refresh-url="{% url 'locations:manage_visits_location' location.slug %}"
+                    data-refresh-mode="update"
+                    data-refresh-map='{"content": "#cmnsd-modal-body"}'
+                    title="{{ label }}"
+                  >
+                    {% if value == 1 %}+{% elif value == -1 %}-{% else %}~{% endif %}
+                  </button>
+                {% endfor %}
+              </span>
+              <span class="visit-item__actions">
+                <a href="{% url 'cmnsd:dispatch_object_by_id_and_slug' 'visits' visit.id visit.token%}" class="btn btn--small btn--danger"
+                  data-action
+                  data-method="DELETE"
+                  data-body='{"visits__id": "{{ visit.id }}"}'
+                  data-action
+                  data-method="DELETE"
+                  data-confirm="{% translate 'are you sure you want to delete this visit'|capfirst %}?"
+                  data-refresh-url="{% url 'locations:manage_visits_location' location.slug %}"
+                  data-refresh-mode="update"
+                  data-refresh-map='{"content": "#cmnsd-modal-body"}'>
+                  <i class="bi bi-trash"></i>
+                </a>
+              </span>
+            {% endif %}
           </li>
         {% endfor %}
       </ul>
@@ -111,6 +139,15 @@
           </label>
         </div>
       </details>
+
+      <label class="segmented__cell" style="margin-top: 8px;">
+        <span class="segmented__label">{% translate 'recommendation'|capfirst %}</span>
+        <select class="segmented__input" name="visited_by__recommendation">
+          {% for value, label in recommendation_choices %}
+            <option value="{{ value }}" {% if value == 0 %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
 
       <div class="modal__footer">
         <button class="btn btn--primary" type="submit">

@@ -36,7 +36,9 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
       # Model manager filters visibility based on staff status and user permissions
       # Add filter to show retracted or draft locations after explicitly requesting all status
       queryset = queryset.filter(status='p')
-    
+
+    queryset = queryset.with_visit_state(self.request.user)
+
     return queryset
   
   def get_context_data(self, **kwargs):

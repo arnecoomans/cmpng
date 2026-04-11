@@ -1,9 +1,77 @@
 {% with visitors=location.visitors.all %}
-  {% if not scope or scope not in 'accommodations,activities,all' or visitors %}
-    <i
-      class="bi bi-person-raised-hand cmpng-icons {% if not visitors %}cmpng-icons-inactive{% elif user in visitors %}cmpng-icons-active{% endif %}"
-      data-bs-toggle="tooltip"
-      data-bs-placement="top"
-      data-bs-title="{% if user in visitors %}{% translate 'you have visited this place'|capfirst %}{% elif visitors %}{% translate 'someone has visited this place'|capfirst %}{% else %}{% translate 'no one has visited this place yet'|capfirst %}{% endif %}"></i>
+  {% if not scope or scope not in 'accommodations,activities,all' or visitors or location.visit_anyone_visited or visit_state == 'none' %}
+
+    {% comment %}
+      Determine the state and tooltip to display.
+
+      State encodes two dimensions:
+        - who visited:      'none' | 'others-*' | 'you-*'
+        - community color:  '-pos' | '-neu' | '-neg'
+
+      Tooltip shows community sentiment + your personal recommendation conflict.
+
+      Three rendering paths:
+        1. visit_state context var  — detail view (get_visit_context sets visit_state,
+                                      visit_user_recommendation, visit_community_score)
+        2. visit_* annotations      — list view (with_visit_state queryset annotation)
+        3. Legacy fallback          — no annotation, no context var
+    {% endcomment %}
+
+    {% if visit_state %}
+      {% with state=visit_state urec=visit_user_recommendation %}
+        <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          data-bs-title="{% if state == 'none' %}{% translate 'no one has visited this place yet' %}{% elif state == 'others-pos' %}{% translate 'recommended by visitors' %}{% elif state == 'others-neu' %}{% translate 'visited — no clear recommendation yet' %}{% elif state == 'others-neg' %}{% translate 'visitors do not recommend this place' %}{% elif state == 'you-pos' %}{% if urec == 1 %}{% translate 'you recommend this place' %}{% elif urec == -1 %}{% translate "you visited but don't recommend — community disagrees" %}{% else %}{% translate 'you visited — community recommends this place' %}{% endif %}{% elif state == 'you-neu' %}{% if urec == 1 %}{% translate 'you recommend this place — community is neutral' %}{% elif urec == -1 %}{% translate "you don't recommend this place — community is neutral" %}{% else %}{% translate 'you visited this place' %}{% endif %}{% elif state == 'you-neg' %}{% if urec == -1 %}{% translate "you visited and don't recommend this place" %}{% elif urec == 1 %}{% translate 'you recommend this place — community disagrees' %}{% else %}{% translate 'you visited — community does not recommend this place' %}{% endif %}{% endif %}"></i>
+      {% endwith %}
+
+    {% elif location.visit_anyone_visited is not None %}
+      {% comment %} Annotation path (list view) {% endcomment %}
+      {% with urec=location.visit_user_recommendation cscore=location.visit_community_score %}
+        {% if not location.visit_anyone_visited %}
+          {% with state='none' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% translate 'no one has visited this place yet' %}"></i>
+          {% endwith %}
+        {% elif not location.visit_user_visited %}
+          {% if cscore > 0 %}{% with state='others-pos' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% translate 'recommended by visitors' %}"></i>
+          {% endwith %}{% elif cscore < 0 %}{% with state='others-neg' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% translate 'visitors do not recommend this place' %}"></i>
+          {% endwith %}{% else %}{% with state='others-neu' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% translate 'visited — no clear recommendation yet' %}"></i>
+          {% endwith %}{% endif %}
+        {% else %}
+          {% if cscore > 0 %}{% with state='you-pos' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% if urec == 1 %}{% translate 'you recommend this place' %}{% elif urec == -1 %}{% translate "you visited but don't recommend — community disagrees" %}{% else %}{% translate 'you visited — community recommends this place' %}{% endif %}"></i>
+          {% endwith %}{% elif cscore < 0 %}{% with state='you-neg' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% if urec == -1 %}{% translate "you visited and don't recommend this place" %}{% elif urec == 1 %}{% translate 'you recommend this place — community disagrees' %}{% else %}{% translate 'you visited — community does not recommend this place' %}{% endif %}"></i>
+          {% endwith %}{% else %}{% with state='you-neu' %}
+            <i class="bi bi-person-raised-hand cmpng-icons cmpng-visited--{{ state }}"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-title="{% if urec == 1 %}{% translate 'you recommend this place — community is neutral' %}{% elif urec == -1 %}{% translate "you don't recommend this place — community is neutral" %}{% else %}{% translate 'you visited this place' %}{% endif %}"></i>
+          {% endwith %}{% endif %}
+        {% endif %}
+      {% endwith %}
+
+    {% else %}
+      {# legacy fallback — no annotation, no context var #}
+      <i class="bi bi-person-raised-hand cmpng-icons {% if not visitors %}cmpng-icons-inactive{% elif user in visitors %}cmpng-icons-active{% endif %}"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-title="{% if user in visitors %}{% translate 'you have visited this place'|capfirst %}{% elif visitors %}{% translate 'someone has visited this place'|capfirst %}{% else %}{% translate 'no one has visited this place yet'|capfirst %}{% endif %}"></i>
+    {% endif %}
+
   {% endif %}
 {% endwith %}
