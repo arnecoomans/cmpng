@@ -2,7 +2,7 @@ import pytest
 from django.utils.text import slugify
 
 from locations.models import Location
-from locations.tests.factories import LocationFactory, UserFactory, RegionFactory, CategoryFactory
+from locations.tests.factories import LocationFactory, UserFactory, RegionFactory, CategoryFactory, SizeFactory
 
 
 # ------------------------------------------------------------------ #
@@ -742,6 +742,16 @@ class TestLocationUpdateTypesEdgeCases:
     location._update_types()
     assert location.is_activity is True
 
+  def test_no_categories_both_flags_false_defaults_to_accommodation(self, db):
+    """When no categories and both flags are False, default to is_accommodation=True."""
+    location = LocationFactory()
+    location.categories.clear()
+    location.is_accommodation = False
+    location.is_activity = False
+    location._update_types()
+    assert location.is_accommodation is True
+    assert location.is_activity is False
+
 
 # ------------------------------------------------------------------ #
 #  is_visited / is_favorite — no request
@@ -770,6 +780,62 @@ class TestLocationAvailableSizes:
     location = LocationFactory()
     sizes = location.available_sizes()
     assert sizes.count() == 0
+
+
+# ------------------------------------------------------------------ #
+#  completeness — size bonus
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationCompletenessSize:
+
+  def _location_with_size(self):
+    """Return a location with a Size linked to its category and set on the location."""
+    category = CategoryFactory()
+    size = SizeFactory()
+    size.categories.add(category)
+    location = LocationFactory()
+    location.categories.add(category)
+    location.size = size
+    location.save()
+    return location
+
+  def test_size_bonus_included_in_completeness_when_size_set(self, db):
+    location = self._location_with_size()
+    location.size = None
+    location.save()
+    location.calculate_completeness()
+    score_without_size = location.completeness
+
+    location2 = self._location_with_size()
+    location2.calculate_completeness()
+    score_with_size = location2.completeness
+
+    assert score_with_size > score_without_size
+
+  def test_completeness_hints_includes_size_hint_when_applicable(self, db):
+    location = self._location_with_size()
+    labels = [label for label, _ in location.completeness_hints()]
+    from django.utils.translation import gettext as _
+    assert any('size' in str(label).lower() for label in labels)
+
+  def test_completeness_hints_size_bonus_when_size_set(self, db):
+    location = self._location_with_size()
+    hints = dict(location.completeness_hints())
+    from django.utils.translation import gettext as _
+    size_hint = next((v for k, v in hints.items() if 'size' in str(k).lower()), None)
+    assert size_hint == 'bonus'
+
+  def test_completeness_hints_size_missing_when_size_not_set(self, db):
+    category = CategoryFactory()
+    size = SizeFactory()
+    size.categories.add(category)
+    location = LocationFactory()
+    location.categories.add(category)
+    # size applicable but not set
+    hints = dict(location.completeness_hints())
+    size_hint = next((v for k, v in hints.items() if 'size' in str(k).lower()), None)
+    assert size_hint == 'missing'
 
 
 # ------------------------------------------------------------------ #

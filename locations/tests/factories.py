@@ -50,6 +50,14 @@ class LocationFactory(DjangoModelFactory):
     
     # Note: categories M2M is handled in tests via location.categories.add()
 
+class SizeFactory(DjangoModelFactory):
+    class Meta:
+        model = Size
+
+    code = factory.Sequence(lambda n: f'S{n}')
+    name = factory.Sequence(lambda n: f'Size {n}')
+    order = 0
+
 class RegionFactory(DjangoModelFactory):
     class Meta:
         model = Region
