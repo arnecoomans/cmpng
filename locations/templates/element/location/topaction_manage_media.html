@@ -1,10 +1,11 @@
 {% if user.is_authenticated and perms.locations.change_media %}
-  <button 
-    class="btn btn--ghost" 
+  <button
+    class="btn btn--ghost"
     type="button"
     data-action="modal"
     data-url="{% url 'locations:manage_media' location.slug %}"
     data-title="{% translate 'manage media for'|capfirst %} {{ location.name }}"
-  
+    data-on-close-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'ordered_media' %}"
+    data-on-close-map='{"ordered_media": "#ordered_media"}'
     ><i class="bi bi-images"></i></button>
 {% endif %}
