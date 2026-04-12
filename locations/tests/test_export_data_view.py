@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
 from locations.models.Visits import Visits
+from locations.models.Preferences import UserPreferences
 from locations.tests.factories import (
   UserFactory,
   LocationFactory,
@@ -73,12 +74,12 @@ class TestExportDataGet:
     response = client.get(reverse('locations:export_data'))
     assert 'sections' in response.context
 
-  def test_all_five_sections_present(self, client):
+  def test_all_six_sections_present(self, client):
     user = UserFactory()
     force_login(client, user)
     response = client.get(reverse('locations:export_data'))
     keys = [key for key, _ in response.context['sections']]
-    assert set(keys) == {'visits', 'comments', 'locations', 'media', 'lists'}
+    assert set(keys) == {'profile', 'visits', 'comments', 'locations', 'media', 'lists'}
 
 
 # ------------------------------------------------------------------ #
@@ -118,14 +119,14 @@ class TestExportDataZipResponse:
 @pytest.mark.django_db
 class TestExportDataSectionSelection:
 
-  def test_all_sections_selected_produces_all_five_csvs(self, client):
+  def test_all_sections_selected_produces_all_six_csvs(self, client):
     user = UserFactory()
     force_login(client, user)
     response = client.post(reverse('locations:export_data'), {
-      'visits': 'on', 'comments': 'on', 'locations': 'on', 'media': 'on', 'lists': 'on',
+      'profile': 'on', 'visits': 'on', 'comments': 'on', 'locations': 'on', 'media': 'on', 'lists': 'on',
     })
     assert set(_zip_filenames(response)) == {
-      'visits.csv', 'comments.csv', 'locations.csv', 'media.csv', 'lists.csv',
+      'profile.csv', 'visits.csv', 'comments.csv', 'locations.csv', 'media.csv', 'lists.csv',
     }
 
   def test_single_section_produces_one_csv(self, client):
@@ -139,7 +140,7 @@ class TestExportDataSectionSelection:
     force_login(client, user)
     response = client.post(reverse('locations:export_data'), {})
     assert set(_zip_filenames(response)) == {
-      'visits.csv', 'comments.csv', 'locations.csv', 'media.csv', 'lists.csv',
+      'profile.csv', 'visits.csv', 'comments.csv', 'locations.csv', 'media.csv', 'lists.csv',
     }
 
 
@@ -267,6 +268,75 @@ class TestExportDataEmptyData:
     user = UserFactory()
     force_login(client, user)
     response = client.post(reverse('locations:export_data'), {
-      'visits': 'on', 'comments': 'on', 'locations': 'on', 'media': 'on', 'lists': 'on',
+      'profile': 'on', 'visits': 'on', 'comments': 'on', 'locations': 'on', 'media': 'on', 'lists': 'on',
     })
     assert zipfile.is_zipfile(io.BytesIO(response.content))
+
+
+# ------------------------------------------------------------------ #
+#  POST — profile CSV
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestExportDataProfileCsv:
+
+  def test_profile_csv_contains_correct_columns(self, client):
+    user = UserFactory()
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert rows[0] == ['name', 'username', 'email', 'language', 'home', 'family', 'favorites']
+
+  def test_profile_csv_contains_username(self, client):
+    user = UserFactory()
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert rows[1][1] == user.username
+
+  def test_profile_csv_contains_email(self, client):
+    user = UserFactory()
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert rows[1][2] == user.email
+
+  def test_profile_csv_contains_home_location_name(self, client):
+    user = UserFactory()
+    home = LocationFactory(name='Home Base')
+    prefs, _ = UserPreferences.objects.get_or_create(user=user)
+    prefs.home = home
+    prefs.save()
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert rows[1][4] == 'Home Base'
+
+  def test_profile_csv_contains_favorites(self, client):
+    user = UserFactory()
+    fav = LocationFactory(name='Favourite Spot')
+    prefs, _ = UserPreferences.objects.get_or_create(user=user)
+    prefs.favorites.add(fav)
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert 'Favourite Spot' in rows[1][6]
+
+  def test_profile_csv_contains_family_usernames(self, client):
+    user = UserFactory()
+    family_member = UserFactory()
+    prefs, _ = UserPreferences.objects.get_or_create(user=user)
+    prefs.family.add(family_member)
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert family_member.username in rows[1][5]
+
+  def test_profile_csv_works_without_preferences(self, client):
+    user = UserFactory()
+    # No UserPreferences created
+    force_login(client, user)
+    response = client.post(reverse('locations:export_data'), {'profile': 'on'})
+    rows = _read_csv(response, 'profile.csv')
+    assert len(rows) == 2  # header + one row
+    assert rows[1][1] == user.username

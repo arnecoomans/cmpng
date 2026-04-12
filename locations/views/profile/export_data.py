@@ -14,9 +14,11 @@ from locations.models import Location, List, ListItem
 from locations.models.Visits import Visits
 from locations.models.Comment import Comment
 from locations.models.Media import Media
+from locations.models.Preferences import UserPreferences
 
 
 EXPORT_SECTIONS = [
+  ('profile',   capfirst(_('profile & preferences'))),
   ('visits',    capfirst(_('visits'))),
   ('comments',  capfirst(_('comments'))),
   ('locations', capfirst(_('locations added'))),
@@ -43,6 +45,22 @@ def _csv_bytes(headers, rows):
 def _build_zip(user, sections):
   buf = io.BytesIO()
   with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as zf:
+
+    if 'profile' in sections:
+      prefs = UserPreferences.objects.filter(user=user).select_related('home').prefetch_related('family', 'favorites').first()
+      rows = [[
+        user.get_full_name(),
+        user.username,
+        user.email,
+        prefs.language if prefs else '',
+        prefs.home.name if prefs and prefs.home else '',
+        ', '.join(u.username for u in prefs.family.all()) if prefs else '',
+        ', '.join(loc.name for loc in prefs.favorites.all()) if prefs else '',
+      ]]
+      zf.writestr('profile.csv', _csv_bytes(
+        ['name', 'username', 'email', 'language', 'home', 'family', 'favorites'],
+        rows,
+      ))
 
     if 'visits' in sections:
       rows = [
