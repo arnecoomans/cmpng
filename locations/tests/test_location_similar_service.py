@@ -174,6 +174,17 @@ class TestSimilarLocationsBasic:
     results = get_similar_locations(ref, min_overlap=0.0)
     assert cand in results
 
+  def test_base_score_is_weight_fraction(self):
+    # ref has one tag with default weight 100; cand shares it → base = 100/100 = 1.0
+    tag = TagFactory(similarity_weight=100)
+    ref = self._loc()
+    ref.tags.add(tag)
+    cand = self._loc()
+    cand.tags.add(tag)
+    results = get_similar_locations(ref, min_overlap=0.0)
+    match = next(r for r in results if r.pk == cand.pk)
+    assert match.similarity == 1.0
+
 
 @pytest.mark.django_db
 class TestSimilarLocationsBonuses:
@@ -281,6 +292,76 @@ class TestSimilarLocationsBonuses:
     results = get_similar_locations(ref, min_overlap=0.0)
     match = next(r for r in results if r.pk == cand.pk)
     assert match.similarity == 1.0
+
+
+@pytest.mark.django_db
+class TestSimilarLocationsWeighting:
+  def setup_method(self):
+    _, _, self.dept = make_region_hierarchy()
+
+  def _loc(self, **kwargs):
+    return LocationFactory(geo=self.dept, **kwargs)
+
+  def test_higher_weight_tag_increases_base_score(self):
+    # ref has one tag with weight 200; cand shares it → base = 200/200 = 1.0
+    # same fraction, but now add a second ref tag with weight 100 not shared
+    # ref total = 300; shared = 200 → base = 0.67
+    heavy = TagFactory(similarity_weight=200)
+    light = TagFactory(similarity_weight=100)
+    ref = self._loc()
+    ref.tags.add(heavy, light)
+    cand = self._loc()
+    cand.tags.add(heavy)  # only shares the heavy tag
+    results = get_similar_locations(ref, min_overlap=0.0)
+    match = next(r for r in results if r.pk == cand.pk)
+    assert match.similarity == round(200 / 300, 2)
+
+  def test_low_weight_tag_contributes_less_to_score(self):
+    # ref has two tags: heavy (200) and light (50); total = 250
+    # cand_a shares only light → base = 50/250 = 0.20
+    # cand_b shares only heavy → base = 200/250 = 0.80
+    heavy = TagFactory(similarity_weight=200)
+    light = TagFactory(similarity_weight=50)
+    ref = self._loc()
+    ref.tags.add(heavy, light)
+    cand_a = self._loc()
+    cand_a.tags.add(light)
+    cand_b = self._loc()
+    cand_b.tags.add(heavy)
+    results = get_similar_locations(ref, min_overlap=0.0)
+    score_a = next(r for r in results if r.pk == cand_a.pk).similarity
+    score_b = next(r for r in results if r.pk == cand_b.pk).similarity
+    assert score_b > score_a
+    assert score_a == round(50 / 250, 2)
+    assert score_b == round(200 / 250, 2)
+
+  def test_high_weight_tag_can_push_below_threshold_candidate_above_it(self):
+    # ref has one tag with weight 150; candidate shares it → base = 1.0 regardless
+    # but with two ref tags (150+100=250), sharing only heavy (150) gives base=0.6
+    # with min_overlap=0.5, it passes; sharing only light (100) gives 0.4, fails
+    heavy = TagFactory(similarity_weight=150)
+    light = TagFactory(similarity_weight=100)
+    ref = self._loc()
+    ref.tags.add(heavy, light)
+    passes = self._loc()
+    passes.tags.add(heavy)
+    fails = self._loc()
+    fails.tags.add(light)
+    results = get_similar_locations(ref, min_overlap=0.5)
+    pks = [r.pk for r in results]
+    assert passes.pk in pks
+    assert fails.pk not in pks
+
+  def test_zero_weight_tag_does_not_contribute(self):
+    zero = TagFactory(similarity_weight=0)
+    normal = TagFactory(similarity_weight=100)
+    ref = self._loc()
+    ref.tags.add(zero, normal)
+    # cand shares only the zero-weight tag → base = 0/100 = 0.0
+    cand = self._loc()
+    cand.tags.add(zero)
+    results = get_similar_locations(ref, min_overlap=0.01)
+    assert cand.pk not in [r.pk for r in results]
 
 
 @pytest.mark.django_db

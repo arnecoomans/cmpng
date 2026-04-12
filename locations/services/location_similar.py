@@ -42,7 +42,8 @@ def get_similar_locations(location, min_overlap=None, max_results=None, queryset
 
   The composite similarity score is:
 
-    base           = (|tags ∩ ref_tags| + |cats ∩ ref_cats|) / (|ref_tags| + |ref_cats|)
+    base           = Σ weight(shared tags) + Σ weight(shared cats) / Σ weight(all ref tags+cats)
+                     tag weights come from Tag.similarity_weight (default 100); categories use 100
     chain          = +0.20 (same chain), +0.05 (both chained, different chain)
     size           = +0.10 (same size),  +0.05 (adjacent size)
     recommendation = +0.10 (positive community score), +0 (unrated or negative)
@@ -78,9 +79,10 @@ def get_similar_locations(location, min_overlap=None, max_results=None, queryset
     getattr(settings, 'SIMILAR_MAX_RESULTS', 10)
   )
 
-  ref_tags = frozenset(location.tags.values_list('pk', flat=True))
-  ref_cats = frozenset(location.categories.values_list('pk', flat=True))
-  total = len(ref_tags) + len(ref_cats)
+  # Build weighted maps: {pk: weight}. Categories have uniform weight 100.
+  ref_tag_weights = dict(location.tags.values_list('pk', 'similarity_weight'))
+  ref_cat_weights = {pk: 100 for pk in location.categories.values_list('pk', flat=True)}
+  total = sum(ref_tag_weights.values()) + sum(ref_cat_weights.values())
 
   if total == 0:
     return []
@@ -105,10 +107,13 @@ def get_similar_locations(location, min_overlap=None, max_results=None, queryset
 
   results = []
   for candidate in candidates:
-    cand_tags = frozenset(t.pk for t in candidate.tags.all())
-    cand_cats = frozenset(c.pk for c in candidate.categories.all())
-    shared = len(cand_tags & ref_tags) + len(cand_cats & ref_cats)
-    base = shared / total
+    cand_tag_pks = frozenset(t.pk for t in candidate.tags.all())
+    cand_cat_pks = frozenset(c.pk for c in candidate.categories.all())
+    shared_weight = (
+      sum(w for pk, w in ref_tag_weights.items() if pk in cand_tag_pks) +
+      sum(ref_cat_weights[pk] for pk in ref_cat_weights if pk in cand_cat_pks)
+    )
+    base = shared_weight / total
 
     rec_bonus = _RECOMMENDATION_BONUS if (getattr(candidate, 'visit_community_score', None) or 0) > 0 else 0.0
     fav_bonus = _FAVORITE_BONUS if candidate.favorited.all() else 0.0

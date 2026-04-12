@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from django.urls import reverse_lazy
@@ -11,6 +12,10 @@ class Tag(TranslationAliasMixin, VisibilityModel, TagModel):
       max_length=1,
       choices=VisibilityModel.visibility_choices,
       default='c',
+  )
+  similarity_weight = models.PositiveSmallIntegerField(
+      default=100,
+      help_text=capfirst(_('relative weight used in similarity scoring; increase for tags that strongly define a location (default: 100)')),
   )
 
   class Meta:

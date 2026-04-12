@@ -9,5 +9,5 @@ class EditTagView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
   model = Tag
   permission_required = 'locations.change_tag'
   template_name = 'tags/edit_tag.html'
-  fields = ['name', 'slug', 'description', 'status']
+  fields = ['name', 'slug', 'description', 'status', 'similarity_weight']
   success_url = reverse_lazy('locations:tags')

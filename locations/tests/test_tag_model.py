@@ -284,6 +284,30 @@ class TestTagVisibility:
 
 
 # ------------------------------------------------------------------ #
+#  Similarity weight
+# ------------------------------------------------------------------ #
+
+class TestTagSimilarityWeight:
+
+    def test_default_similarity_weight_is_100(self, db):
+        tag = TagFactory()
+        assert tag.similarity_weight == 100
+
+    def test_similarity_weight_can_be_set(self, db):
+        tag = TagFactory(similarity_weight=150)
+        assert tag.similarity_weight == 150
+
+    def test_similarity_weight_persists(self, db):
+        tag = TagFactory(similarity_weight=130)
+        tag.refresh_from_db()
+        assert tag.similarity_weight == 130
+
+    def test_similarity_weight_zero_allowed(self, db):
+        tag = TagFactory(similarity_weight=0)
+        assert tag.similarity_weight == 0
+
+
+# ------------------------------------------------------------------ #
 #  Description field
 # ------------------------------------------------------------------ #
 

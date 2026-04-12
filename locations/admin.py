@@ -80,13 +80,16 @@ class CategoryAdmin(TranslationAliasAdminMixin, BaseModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(TranslationAliasAdminMixin, VisibilityModelAdmin, BaseModelAdmin):
-    list_display = ('name', 'parent', 'status', 'visibility')
+    list_display = ('name', 'parent', 'status', 'visibility', 'similarity_weight')
     list_filter = ('status', 'visibility')
     search_fields = ('name', 'description')
 
     fieldsets = (
         (_('Basic Information'), {
             'fields': ('name', 'slug', 'parent', 'description')
+        }),
+        (_('Similarity'), {
+            'fields': ('similarity_weight',),
         }),
     )
 
