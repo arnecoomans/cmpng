@@ -599,15 +599,31 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
   def similar(self, queryset=None):
     """Return globally recommended locations with sufficient tag/category overlap.
 
+    Authenticated users receive up to SIMILAR_MAX_RESULTS results.
+    Anonymous users are capped at 5; a sixth result (if present) is replaced
+    by a sentinel dict {'more': True} so the template can render a login nudge.
+
     Delegates to get_similar_locations(). Each result has a .similarity
     attribute (float 0–1). Visibility filtering is applied when a request
     is available (e.g. via cmnsd AJAX dispatch).
     """
     from locations.services.location_similar import get_similar_locations
-    similar_locations = get_similar_locations(self, queryset=queryset)
+
+    is_authenticated = getattr(getattr(self, 'request', None), 'user', None)
+    is_authenticated = getattr(is_authenticated, 'is_authenticated', False)
+
+    ANON_LIMIT = 5
+    fetch_limit = None if is_authenticated else ANON_LIMIT + 1
+
+    similar_locations = get_similar_locations(self, queryset=queryset, max_results=fetch_limit)
+
     if hasattr(self, 'request'):
       user = self.request.user
       similar_locations = [loc for loc in similar_locations if loc.is_visible_to(user)]
+
+    if not is_authenticated and len(similar_locations) > ANON_LIMIT:
+      return similar_locations[:ANON_LIMIT] + [{'more': True}]
+
     return similar_locations
 
   # ================================================================

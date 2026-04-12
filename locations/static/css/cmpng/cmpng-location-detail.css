@@ -408,6 +408,21 @@
 
 /* ---------- Responsive (detail-specific) ---------- */
 
+/* ---------- Similar — login nudge ---------- */
+
+.similar-more {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
+  background: #fff;
+  align-items: center;
+  color: var(--gray-600);
+  font-size: 14px;
+}
+
 /* ---------- Section accordions (nearby / similar) ---------- */
 
 .accordion--section { border: none }

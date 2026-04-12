@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 12:55+0000\n"
+"POT-Creation-Date: 2026-04-12 13:30+0000\n"
 "PO-Revision-Date: 2026-03-26 00:00+0100\n"
 "Last-Translator: Arne Coomans\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -279,7 +279,7 @@ msgstr "familie"
 
 #: cmnsd/models/VisibilityModel.py:10
 #: locations/templates/function/location/nearby.html:27
-#: locations/templates/function/location/similar.html:22
+#: locations/templates/function/location/similar.html:34
 msgid "private"
 msgstr "privé"
 
@@ -353,14 +353,6 @@ msgstr "Open '%(linkname)s' in een nieuw venster"
 msgid "home"
 msgstr "thuis"
 
-msgctxt "category"
-msgid "Home"
-msgstr "Thuis"
-
-msgctxt "category"
-msgid "Mobile Home"
-msgstr "Stacaravan"
-
 #: cmnsd/templates/pages/page_detail.html:21
 msgid "this page is not published and not visible to the public"
 msgstr "deze pagina is niet gepubliceerd en niet zichtbaar voor het publiek"
@@ -404,8 +396,9 @@ msgstr "wachtwoord opnieuw ingesteld"
 
 #: cmnsd/templates/registration/password_reset_complete.html:32
 msgid "your password has been set. You can now sign in with your new password."
-msgstr "je wachtwoord is ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord."
-"je wachtwoord is ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord."
+msgstr ""
+"je wachtwoord is ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord.je "
+"wachtwoord is ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord."
 
 #: cmnsd/templates/registration/password_reset_confirm.html:4
 #: cmnsd/templates/registration/password_reset_confirm.html:42
@@ -1108,8 +1101,10 @@ msgstr "Logboek"
 
 #: locations/models/List.py:87
 msgid "Archived lists are read-only and hidden from active views."
-msgstr "Gearchiveerde lijsten zijn alleen-lezen en verborgen in actieve weergaven."
-"Gearchiveerde lijsten zijn alleen-lezen en verborgen in actieve weergaven."
+msgstr ""
+"Gearchiveerde lijsten zijn alleen-lezen en verborgen in actieve "
+"weergaven.Gearchiveerde lijsten zijn alleen-lezen en verborgen in actieve "
+"weergaven."
 
 #: locations/models/List.py:133
 msgid "Number of nights"
@@ -1126,7 +1121,7 @@ msgstr "afstand in km vanaf het vertrekpunt"
 #: locations/models/Location.py:335
 #: locations/templates/function/location/nearby.html:9
 #: locations/templates/function/location/nearby.html:26
-#: locations/templates/function/location/similar.html:21
+#: locations/templates/function/location/similar.html:33
 #: locations/templates/model/locations/list.html:98
 msgid "activity"
 msgstr "activiteit"
@@ -1134,7 +1129,7 @@ msgstr "activiteit"
 #: locations/models/Location.py:337
 #: locations/templates/function/location/nearby.html:8
 #: locations/templates/function/location/nearby.html:25
-#: locations/templates/function/location/similar.html:20
+#: locations/templates/function/location/similar.html:32
 #: locations/templates/model/locations/list.html:92
 msgid "accommodation"
 msgstr "accommodatie"
@@ -1219,8 +1214,9 @@ msgstr "grootte (+5%)"
 #: locations/models/Preferences.py:14
 #, python-brace-format
 msgid "URL template with placeholders, e.g. https://waze.com/ul?ll={lat},{lon}"
-msgstr "URL-sjabloon met variabelen, bijv. https://waze.com/ul?ll={lat},{lon}"
-"URL-sjabloon met plaatshouders, bijv. https://waze.com/ul?ll={lat},{lon}"
+msgstr ""
+"URL-sjabloon met variabelen, bijv. https://waze.com/ul?ll={lat},{lon}URL-"
+"sjabloon met plaatshouders, bijv. https://waze.com/ul?ll={lat},{lon}"
 
 #: locations/models/Preferences.py:16
 msgid "navigation"
@@ -1507,9 +1503,10 @@ msgstr "dit object openen in Django-beheer"
 
 #: locations/templates/element/location/topactions_favorite.html:16
 msgid "You need an account to love this location. Please login or register."
-msgstr "Je hebt een account nodig om deze locatie te bewaren. Log in of registreer."
-"Je hebt een account nodig om deze locatie als favoriet te markeren. Log in "
-"of registreer."
+msgstr ""
+"Je hebt een account nodig om deze locatie te bewaren. Log in of "
+"registreer.Je hebt een account nodig om deze locatie als favoriet te "
+"markeren. Log in of registreer."
 
 #: locations/templates/element/reusable_description_form.html:13
 msgid "enter description here"
@@ -1773,9 +1770,10 @@ msgstr "bezoeken aan"
 #, fuzzy
 #| msgid "You need an account to love this location. Please login or register."
 msgid "You need an account to visit this location. Please login or register."
-msgstr "Je hebt een account nodig om deze locatie te bezoeken. Log in of registreer."
-"Je hebt een account nodig om deze locatie als favoriet te markeren. Log in "
-"of registreer."
+msgstr ""
+"Je hebt een account nodig om deze locatie te bezoeken. Log in of "
+"registreer.Je hebt een account nodig om deze locatie als favoriet te "
+"markeren. Log in of registreer."
 
 #: locations/templates/field/userpreferences/all_apps.html:2
 msgid "links to apps"
@@ -1988,6 +1986,22 @@ msgstr "geen afbeelding beschikbaar"
 msgid "similar locations you might enjoy"
 msgstr "vergelijkbare locaties die je misschien leuk vindt"
 
+#: locations/templates/function/location/similar.html:13
+msgid "logged in users see more"
+msgstr "ingelogde gebruikers zien meer"
+
+#: locations/templates/function/location/similar.html:15
+#: templates/navigation.html:61
+msgid "register"
+msgstr "registreren"
+
+#: locations/templates/function/location/similar.html:16
+#: locations/templates/locations/base.html:12
+#, fuzzy
+#| msgid "log out"
+msgid "log in"
+msgstr "uitloggen"
+
 #: locations/templates/function/location/topactions.html:31
 msgid "refresh automatically detected data of"
 msgstr "automatisch gedetecteerde gegevens vernieuwen van"
@@ -2110,8 +2124,9 @@ msgstr "toevoegen…"
 #, fuzzy
 #| msgid "a region with this name already exists under the same parent."
 msgid "a location with this name already exists"
-msgstr "er bestaat al een locatie met deze naam"
-"er bestaat al een regio met deze naam onder hetzelfde bovenliggend item."
+msgstr ""
+"er bestaat al een locatie met deze naamer bestaat al een regio met deze naam "
+"onder hetzelfde bovenliggend item."
 
 #: locations/templates/locations/add_location.html:230
 #, fuzzy
@@ -2165,20 +2180,15 @@ msgstr "account aanmaken"
 msgid "or"
 msgstr "of"
 
-#: locations/templates/locations/base.html:12
-#, fuzzy
-#| msgid "log out"
-msgid "log in"
-msgstr "uitloggen"
-
 #: locations/templates/locations/base.html:13
 msgid "Close"
 msgstr "Sluiten"
 
 #: locations/templates/locations/location_detail.html:34
 msgid "this location is currently revoked and not visible to the public"
-msgstr "deze locatie is momenteel ingetrokken en niet zichtbaar voor het publiek"
-"deze locatie is momenteel ingetrokken en niet zichtbaar voor het publiek"
+msgstr ""
+"deze locatie is momenteel ingetrokken en niet zichtbaar voor het publiekdeze "
+"locatie is momenteel ingetrokken en niet zichtbaar voor het publiek"
 
 #: locations/templates/locations/location_detail.html:68
 msgid "loading nearby accomodations and activities"
@@ -2397,7 +2407,8 @@ msgstr "mijn gegevens"
 
 #: locations/templates/preferences/preferences.html:79
 msgid "Download a copy of all data stored under your account."
-msgstr "Download een kopie van alle gegevens die onder jouw account zijn opgeslagen."
+msgstr ""
+"Download een kopie van alle gegevens die onder jouw account zijn opgeslagen."
 
 #: locations/templates/preferences/preferences.html:87
 msgid "my links"
@@ -2822,7 +2833,9 @@ msgstr "Dierentuin"
 
 #: locations/views/locations/add_location.py:32
 msgid "visibility set to family because this location is marked as home."
-msgstr "zichtbaarheid ingesteld op familie omdat deze locatie als thuis is gemarkeerd."
+msgstr ""
+"zichtbaarheid ingesteld op familie omdat deze locatie als thuis is "
+"gemarkeerd."
 
 #: locations/views/locations/add_location.py:40
 msgid "location added successfully."
@@ -2942,10 +2955,6 @@ msgstr "profiel bewerken van"
 msgid "log out"
 msgstr "uitloggen"
 
-#: templates/navigation.html:61
-msgid "register"
-msgstr "registreren"
-
 #: templates/navigation.html:64
 msgid "login"
 msgstr "inloggen"
@@ -2953,6 +2962,22 @@ msgstr "inloggen"
 #: templates/navigation.html:84
 msgid "search"
 msgstr "zoeken"
+
+#, python-format
+#~ msgid ""
+#~ "Register or <a href=\"%(login_url)s\">log in</a> to see more similar "
+#~ "locations."
+#~ msgstr ""
+#~ "Registreer of <a href=\"%(login_url)s\">log in</a> om meer vergelijkbare "
+#~ "locaties te zien."
+
+#~ msgctxt "category"
+#~ msgid "Home"
+#~ msgstr "Thuis"
+
+#~ msgctxt "category"
+#~ msgid "Mobile Home"
+#~ msgstr "Stacaravan"
 
 #~ msgid "Visibility"
 #~ msgstr "Zichtbaarheid"
