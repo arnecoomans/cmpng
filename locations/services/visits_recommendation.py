@@ -40,7 +40,7 @@ def get_visit_context(location, user):
       visit_user_recommendation (int|None): user's own recommendation value, or None.
       visit_community_score (float|None): average rated score, or None if unrated.
   """
-  anyone_visited = Visits.objects.filter(location=location).exists()
+  anyone_visited = Visits.objects.filter(location=location, status='p').exists()
 
   if not anyone_visited:
     return {
@@ -52,7 +52,7 @@ def get_visit_context(location, user):
   # Two-level average: each user gets one vote regardless of visit count
   user_avgs_qs = (
     Visits.objects
-    .filter(location=location, recommendation__isnull=False)
+    .filter(location=location, recommendation__isnull=False, status='p')
     .values('user')
     .annotate(user_avg=Avg('recommendation'))
   )
@@ -70,7 +70,7 @@ def get_visit_context(location, user):
 
   user_visit = (
     Visits.objects
-    .filter(location=location, user=user)
+    .filter(location=location, user=user, status='p')
     .order_by('-year', '-month', '-day')
     .first()
   )
@@ -146,7 +146,7 @@ def get_recommendation_summary(location):
   # Per-user averages: each user gets one vote regardless of visit count
   user_avgs = list(
     Visits.objects
-    .filter(location=location, recommendation__isnull=False)
+    .filter(location=location, recommendation__isnull=False, status='p')
     .values('user')
     .annotate(u=Avg('recommendation'))
     .values_list('u', flat=True)

@@ -122,7 +122,7 @@ class LocationQuerySet(models.QuerySet):
     from django.db.models.expressions import RawSQL
     from locations.models.Visits import Visits
 
-    anyone_visited = Visits.objects.filter(location=OuterRef('pk'))
+    anyone_visited = Visits.objects.filter(location=OuterRef('pk'), status='p')
 
     # Two-level avg: per-user first, then community — gives each user one vote
     community_score = RawSQL(
@@ -131,6 +131,7 @@ class LocationQuerySet(models.QuerySet):
       '  FROM locations_visits'
       '  WHERE location_id = "locations_location"."id"'
       '    AND recommendation IS NOT NULL'
+      '    AND status = \'p\''
       '  GROUP BY user_id'
       ') t)',
       [],
@@ -138,7 +139,7 @@ class LocationQuerySet(models.QuerySet):
     )
 
     if getattr(user, 'is_authenticated', False):
-      user_visits = Visits.objects.filter(location=OuterRef('pk'), user=user)
+      user_visits = Visits.objects.filter(location=OuterRef('pk'), user=user, status='p')
       user_recommendation = Subquery(
         user_visits.order_by('-year', '-month', '-day').values('recommendation')[:1],
         output_field=IntegerField(),
