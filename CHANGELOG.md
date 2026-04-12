@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+- Two-level community recommendation scoring: each user's visits are averaged first, then those per-user averages are averaged — prevents repeat visitors from dominating the score. Applied to `get_visit_context()`, `get_recommendation_summary()`, and the `with_visit_state()` queryset annotation ([#34](https://github.com/arnecoomans/cmpng/issues/34))
+- Recommendation score column added to `LocationAdmin` list display, showing the two-level community average per location
+- Human-readable recommendation label added to `VisitsAdmin` list display (Recommended / Neutral / Not recommended)
+- GDPR data export: authenticated users can download a ZIP archive of CSVs covering visits, comments, locations added, media added, lists, and profile & preferences. Available via the preferences page. ([#33](https://github.com/arnecoomans/cmpng/issues/33))
+- Map viewport filtering on the location detail page — nearby markers load dynamically from the JSON endpoint as the user pans or zooms; uses the Maps `idle` event so markers update only after the viewport settles ([#4](https://github.com/arnecoomans/cmpng/issues/4))
+- Post-close page refresh for modals — `data-on-close-url` and `data-on-close-map` attributes on any modal trigger cause the specified page sections to be re-fetched and updated when the modal closes, without a full page reload ([#25](https://github.com/arnecoomans/cmpng/issues/25))
+
+### Fixed
+- `Tag` default visibility is now hardcoded to `'c'` (community) regardless of the `DEFAULT_MODEL_VISIBILITY` setting ([#30](https://github.com/arnecoomans/cmpng/issues/30))
+- [Bugfix] Visits with `status != 'p'` (revoked or deleted) were incorrectly included in visit indicators, recommendation scores, and community averages; all visit queries now filter on `status='p'` ([#38](https://github.com/arnecoomans/cmpng/issues/38))
+
 ## [26.04.1] - 2026-04-04
 
 > ⚠️ **Migration required:** run `python manage.py migrate`, `python manage.py update_completeness` to backfill completeness scores, and `python manage.py backfill_media_hashes` to backfill file hashes for existing media.

@@ -595,6 +595,21 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       nearby_locations = [loc for loc in nearby_locations if loc.is_visible_to(user)]
     return nearby_locations
 
+  @ajax_function
+  def similar(self, queryset=None):
+    """Return globally recommended locations with sufficient tag/category overlap.
+
+    Delegates to get_similar_locations(). Each result has a .similarity
+    attribute (float 0–1). Visibility filtering is applied when a request
+    is available (e.g. via cmnsd AJAX dispatch).
+    """
+    from locations.services.location_similar import get_similar_locations
+    similar_locations = get_similar_locations(self, queryset=queryset)
+    if hasattr(self, 'request'):
+      user = self.request.user
+      similar_locations = [loc for loc in similar_locations if loc.is_visible_to(user)]
+    return similar_locations
+
   # ================================================================
   # Access helper for internal fields
   # ================================================================

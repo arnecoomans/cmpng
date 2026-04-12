@@ -1,0 +1,17 @@
+{
+  {% for location in location.similar %}
+    "{{ location.slug }}": {
+      "id": "{{ location.id }}",
+      "name": "{{ location.name }}",
+      "summary": "{{ location.summary|default:'' }}",
+      "url": "{{ location.get_absolute_url }}",
+      {% localize off %}"coord_lat": {{ location.coord_lat|default:'0' }},
+      "coord_lon": {{ location.coord_lon|default:'0' }},
+      "similarity": {{ location.similarity|default:'0' }},{% endlocalize %}
+      "is_accommodation": {{ location.is_accommodation|lower }},
+      "is_activity": {{ location.is_activity|lower }},
+      "visited": {% if user in location.visitors.all %}true{% else %}false{% endif %},
+      "loved": {% if user.preferences in location.favorited.all %}true{% else %}false{% endif %}
+    }{% if not forloop.last %},{% endif %}
+  {% endfor %}
+}

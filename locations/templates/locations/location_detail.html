@@ -128,15 +128,53 @@
     <div id="comments">
       {% include 'function/location/filtered_comments.html' %}
     </div>
-      <div id="nearby">
-        {% if lazy_load_nearby %}
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">{% translate 'loading nearby accomodations and activities'|capfirst %}...</span>
+
+      <!-- NEARBY ACCORDION -->
+      <div class="accordion accordion--section" id="nearby-accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#nearby-collapse"
+              data-lazy-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'nearby' %}?format=html"
+              data-lazy-map='{"nearby": "#nearby-body"}'
+            >{% translate "nearby"|capfirst %}</button>
+          </h2>
+          <div id="nearby-collapse" class="accordion-collapse collapse">
+            <div class="accordion-body" id="nearby-body">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">{% translate 'loading'|capfirst %}…</span>
+              </div>
+            </div>
           </div>
-        {% else %}
-          {% include 'function/location/nearby.html' %}
-        {% endif %}
+        </div>
       </div>
+
+      <!-- SIMILAR ACCORDION -->
+      <div class="accordion accordion--section" id="similar-accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#similar-collapse"
+              data-lazy-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'similar' %}?format=html"
+              data-lazy-map='{"similar": "#similar-body"}'
+            >{% translate "similar locations you might enjoy"|capfirst %}</button>
+          </h2>
+          <div id="similar-collapse" class="accordion-collapse collapse">
+            <div class="accordion-body" id="similar-body">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">{% translate 'loading'|capfirst %}…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </div>
@@ -157,14 +195,16 @@
       }
     });
   {% endif %}
-  {% if lazy_load_nearby %}
-    cmnsd.loadContent({
-      url: '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "location" location.id location.slug "nearby" %}?format=html',
-      map: {
-        nearby: '#nearby',
-      }
-    });
-  {% endif %}
+
+  // Lazy-load accordion sections on first open
+  document.addEventListener('show.bs.collapse', (e) => {
+    const btn = document.querySelector(`[data-bs-target="#${e.target.id}"]`);
+    if (!btn || btn.dataset.loaded || !btn.dataset.lazyUrl) return;
+    btn.dataset.loaded = '1';
+    let map;
+    try { map = JSON.parse(btn.dataset.lazyMap); } catch (_) { return; }
+    cmnsd.loadContent({ url: btn.dataset.lazyUrl, map });
+  });
 
   // Description read-more toggle — deferred so CSS clamp is applied before measuring
   requestAnimationFrame(() => {
@@ -181,12 +221,12 @@
     });
   });
 
-  // Nearby filters — delegated so they work on both server-rendered and lazy-loaded content
+  // Type filters — delegated, works for both nearby and similar sections
   document.addEventListener('click', (e) => {
-    const btn = e.target.closest('#section-nearby [data-filter]');
+    const btn = e.target.closest('[data-filter]');
     if (!btn) return;
-    const section = btn.closest('#section-nearby');
-    const list = section && section.querySelector('#nearby-list');
+    const section = btn.closest('section');
+    const list = section && section.querySelector('.list');
     if (!list) return;
 
     section.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('btn--active'));

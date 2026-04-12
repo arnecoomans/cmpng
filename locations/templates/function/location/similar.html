@@ -1,0 +1,30 @@
+<!-- SIMILAR LOCATIONS -->
+{% if location.similar %}
+  <section id="section-similar">
+    <div class="section-head">
+      <h2 class="section-title">{% translate "similar locations you might enjoy"|capfirst %}: <span class="text-muted">({{ location.similar|length }})</span></h2>
+    </div>
+    <div class="list" id="similar-list">
+      {% for loc in location.similar %}
+        <article class="list-item" data-type="{% if loc.is_accommodation %}accommodation {% endif %}{% if loc.is_activity %}activity{% endif %}">
+          {% if loc.ordered_media.all.count > 0 %}
+            <img class="thumb" src="/media/{{ loc.ordered_media.first.source }}" alt="{{ loc.ordered_media.first.title|default:loc.name }}">
+          {% else %}
+            <div class="thumb thumb--empty"></div>
+          {% endif %}
+          <div>
+            <h3 class="li-title"><a href="{{ loc.get_absolute_url }}">{{ loc.name }}</a></h3>
+            {% if loc.summary %}<div class="text-muted small">{{ loc.summary|truncatewords:24 }}</div>{% endif %}
+            <div class="li-tags">
+              <span class="chip chip--similarity">{% widthratio loc.similarity 1 100 %}%</span>
+              {% if loc.is_accommodation %}<span class="chip chip--accommodation">{% translate "accommodation"|capfirst %}</span>{% endif %}
+              {% if loc.is_activity %}<span class="chip chip--activity">{% translate "activity"|capfirst %}</span>{% endif %}
+              {% if loc.is_private %}<span class="chip chip--private"><i class="bi bi-incognito" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate "private"|capfirst %} {% translate loc.type %}"></i></span>{% endif %}
+              {% if loc.is_visited %}<span class="chip chip--visited">{% include 'field/location/visitors.html' with location=loc %}</span>{% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
