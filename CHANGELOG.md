@@ -3,6 +3,8 @@
 ## [Unreleased]
 
 ### Added
+- Similar locations — `Location.similar()` method and `get_similar_locations()` service surface globally similar locations using a composite score: tag/category overlap (base), same chain (+0.20), any chain (+0.05), same size (+0.10), adjacent size (+0.05), positive community recommendation (+0.10), any favourite (+0.05). Restricted to the same country by default (`SIMILAR_SAME_COUNTRY = True`). Exposed via cmnsd API as `similar.json` / `similar.html`. Displayed on the location detail page as a lazy-loaded Bootstrap accordion. ([#9](https://github.com/arnecoomans/cmpng/issues/9))
+- Nearby and similar sections on the location detail page are now lazy-loaded Bootstrap accordions — both closed by default, content fetched on first open via `show.bs.collapse` event ([#9](https://github.com/arnecoomans/cmpng/issues/9))
 - Two-level community recommendation scoring: each user's visits are averaged first, then those per-user averages are averaged — prevents repeat visitors from dominating the score. Applied to `get_visit_context()`, `get_recommendation_summary()`, and the `with_visit_state()` queryset annotation ([#34](https://github.com/arnecoomans/cmpng/issues/34))
 - Recommendation score column added to `LocationAdmin` list display, showing the two-level community average per location
 - Human-readable recommendation label added to `VisitsAdmin` list display (Recommended / Neutral / Not recommended)

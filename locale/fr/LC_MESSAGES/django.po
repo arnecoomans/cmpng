@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 20:12+0000\n"
+"POT-Creation-Date: 2026-04-12 12:55+0000\n"
 "PO-Revision-Date: 2026-03-26 00:00+0000\n"
 "Last-Translator: Arne Coomans\n"
 "Language-Team: French <fr@li.org>\n"
@@ -16,6 +16,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: cmnsd/admin.py:40
+#, fuzzy
+#| msgid "System Information"
+msgid "system information"
+msgstr "Informations système"
+
+#: cmnsd/admin.py:47
+msgid "Recalculate computed fields (run save on selected items)"
+msgstr ""
+"Recalculer les champs calculés (exécuter la sauvegarde sur les éléments "
+"sélectionnés)"
+
+#: cmnsd/admin.py:76
+#: locations/templates/element/reusable_description_form.html:17
+#: locations/templates/field/location/visibility.html:2
+#: locations/templates/locations/add_location.html:117
+#: locations/templates/media/manage_media.html:88
+msgid "visibility"
+msgstr "visibilité"
+
+#: cmnsd/admin.py:104
+#, fuzzy
+#| msgid "this location has images"
+msgid "translation aliases"
+msgstr "ce lieu a des images"
+
+#: cmnsd/admin.py:108
+msgid ""
+"auto-populated from .po translations on save. run update_translation_aliases "
+"after compilemessages."
+msgstr ""
 
 #: cmnsd/forms/profile.py:7
 msgid "Email address"
@@ -45,17 +77,18 @@ msgstr "nom de famille"
 msgid "You must be logged in to view these items"
 msgstr "Tu dois être connecté pour voir ces éléments"
 
-#: cmnsd/mixins/FilterMixin.py:143
+#: cmnsd/mixins/FilterMixin.py:140
 #, python-brace-format
 msgid "Field '{}' is not allowed for searching due to security reasons."
-msgstr "Le champ '{}' n'est pas autorisé à la recherche pour des raisons de sécurité."
+msgstr ""
+"Le champ '{}' n'est pas autorisé à la recherche pour des raisons de sécurité."
 
-#: cmnsd/mixins/FilterMixin.py:176 cmnsd/mixins/FilterMixin.py:456
+#: cmnsd/mixins/FilterMixin.py:173 cmnsd/mixins/FilterMixin.py:453
 #, python-brace-format
 msgid "An error occurred while searching{}"
 msgstr "Une erreur s'est produite lors de la recherche{}"
 
-#: cmnsd/mixins/FilterMixin.py:530
+#: cmnsd/mixins/FilterMixin.py:526
 #, python-brace-format
 msgid "An error occurred while filtering{}"
 msgstr "Une erreur s'est produite lors du filtrage{}"
@@ -122,7 +155,8 @@ msgstr "le champ '{}' est introuvable dans {} '{}'"
 #: cmnsd/mixins/ResponseMixin.py:195 cmnsd/mixins/ResponseMixin.py:197
 #, python-brace-format
 msgid "unexpected error retrieving field '{}' from {} '{}': {}"
-msgstr "Erreur inattendue lors de la récupération du champ '{}' de {} '{}' : {}"
+msgstr ""
+"Erreur inattendue lors de la récupération du champ '{}' de {} '{}' : {}"
 
 #: cmnsd/mixins/ResponseMixin.py:324
 msgid "Message template not found when rendering message"
@@ -150,12 +184,12 @@ msgstr "révoquer"
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:8
 #: cmnsd/models/TagModel.py:11
 msgid "Identifier in URL"
 msgstr "Identifiant dans l'URL"
 
-#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:11
+#: cmnsd/models/Category.py:15 cmnsd/models/Tag.py:8
 #: cmnsd/models/TagModel.py:11 locations/models/Category.py:14
 #: locations/models/Chain.py:14 locations/models/Region.py:10
 msgid "automatically generated"
@@ -175,7 +209,7 @@ msgstr "markdown supporté"
 
 #: cmnsd/models/Comment.py:59
 #: locations/templates/element/reusable_form_comment.html:20
-#: locations/templates/media/manage_media.html:83
+#: locations/templates/media/manage_media.html:84
 msgid "title"
 msgstr "titre"
 
@@ -214,17 +248,21 @@ msgstr "Langue dans laquelle cette page est rédigée"
 msgid "Markdown supported"
 msgstr "markdown supporté"
 
-#: cmnsd/models/Tag.py:12 cmnsd/models/TagModel.py:12
+#: cmnsd/models/Tag.py:9 cmnsd/models/TagModel.py:12
 msgid "Name of tag"
 msgstr "Nom du tag"
 
-#: cmnsd/models/Tag.py:14 cmnsd/models/TagModel.py:14
+#: cmnsd/models/Tag.py:11 cmnsd/models/TagModel.py:14
 msgid "description of this tag, why it is relevant"
 msgstr "description de ce tag, pourquoi il est pertinent"
 
 #: cmnsd/models/TagModel.py:50
 msgid "A tag with this name already exists under the same parent."
 msgstr "Un tag avec ce nom existe déjà sous le même parent."
+
+#: cmnsd/models/TranslationAliasMixin.py:27 locations/models/Category.py:16
+msgid "comma-separated translations, auto-populated on save"
+msgstr ""
 
 #: cmnsd/models/VisibilityModel.py:7
 msgid "public"
@@ -241,6 +279,7 @@ msgstr "famille"
 
 #: cmnsd/models/VisibilityModel.py:10
 #: locations/templates/function/location/nearby.html:27
+#: locations/templates/function/location/similar.html:22
 msgid "private"
 msgstr "privé"
 
@@ -357,7 +396,9 @@ msgstr "réinitialisation du mot de passe terminée"
 
 #: cmnsd/templates/registration/password_reset_complete.html:32
 msgid "your password has been set. You can now sign in with your new password."
-msgstr "votre mot de passe a été défini. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+msgstr ""
+"votre mot de passe a été défini. Vous pouvez maintenant vous connecter avec "
+"votre nouveau mot de passe."
 
 #: cmnsd/templates/registration/password_reset_confirm.html:4
 #: cmnsd/templates/registration/password_reset_confirm.html:42
@@ -374,7 +415,9 @@ msgstr "définir le nouveau mot de passe"
 
 #: cmnsd/templates/registration/password_reset_confirm.html:66
 msgid "this reset link is invalid or has expired. Please request a new one."
-msgstr "ce lien de réinitialisation est invalide ou a expiré. Veuillez en demander un nouveau."
+msgstr ""
+"ce lien de réinitialisation est invalide ou a expiré. Veuillez en demander "
+"un nouveau."
 
 #: cmnsd/templates/registration/password_reset_confirm.html:69
 msgid "request new link"
@@ -406,7 +449,9 @@ msgstr "réinitialiser le mot de passe"
 
 #: cmnsd/templates/registration/password_reset_form.html:41
 msgid "enter your email address and we'll send you a reset link"
-msgstr "saisissez votre adresse e-mail et nous vous enverrons un lien de réinitialisation"
+msgstr ""
+"saisissez votre adresse e-mail et nous vous enverrons un lien de "
+"réinitialisation"
 
 #: cmnsd/templates/registration/password_reset_form.html:50
 msgid "send reset link"
@@ -551,7 +596,9 @@ msgstr "échec de la suppression de l'objet"
 #: cmnsd/views/ajax__crud_update.py:40
 #, python-brace-format
 msgid "an unexpected error occured when updating fields of {}{}"
-msgstr "une erreur inattendue s'est produite lors de la mise à jour des champs de {}{}"
+msgstr ""
+"une erreur inattendue s'est produite lors de la mise à jour des champs de {}"
+"{}"
 
 #: cmnsd/views/ajax__crud_update.py:76
 #, python-brace-format
@@ -575,7 +622,8 @@ msgstr "aucun {} avec l'id '{}' trouvé"
 
 #: cmnsd/views/ajax__crud_update.py:110
 msgid "'content_token' or 'content_id' is required when 'content_for' is set"
-msgstr "'content_token' ou 'content_id' est requis lorsque 'content_for' est défini"
+msgstr ""
+"'content_token' ou 'content_id' est requis lorsque 'content_for' est défini"
 
 #: cmnsd/views/ajax__crud_update.py:177
 #, python-brace-format
@@ -795,7 +843,9 @@ msgstr ""
 #: cmnsd/views/ajax_utils_meta_field.py:905
 #, python-brace-format
 msgid "creation of new related objects is not allowed for related field '{}'"
-msgstr "la création de nouveaux objets liés n'est pas autorisée pour le champ lié '{}'"
+msgstr ""
+"la création de nouveaux objets liés n'est pas autorisée pour le champ lié "
+"'{}'"
 
 #: cmnsd/views/ajax_utils_meta_field.py:948
 #, python-brace-format
@@ -805,7 +855,9 @@ msgstr "nouveau '{}' '{}' créé"
 #: cmnsd/views/ajax_utils_meta_field.py:957
 #, python-brace-format
 msgid "error creating new related object for the given arguments: {}{}"
-msgstr "erreur lors de la création d'un nouvel objet lié pour les arguments donnés : {}{}"
+msgstr ""
+"erreur lors de la création d'un nouvel objet lié pour les arguments donnés : "
+"{}{}"
 
 #: cmnsd/views/ajax_utils_meta_field.py:984
 #, python-brace-format
@@ -831,7 +883,8 @@ msgstr "erreur lors de l'appel de la fonction '{}'{}"
 #: cmnsd/views/ajax_utils_meta_model.py:42
 #, python-brace-format
 msgid "access to model '{}' is blocked in application configuration"
-msgstr "l'accès au modèle '{}' est bloqué dans la configuration de l'application"
+msgstr ""
+"l'accès au modèle '{}' est bloqué dans la configuration de l'application"
 
 #: cmnsd/views/ajax_utils_meta_model.py:79
 #, python-brace-format
@@ -854,7 +907,8 @@ msgstr "aucun modèle valide fourni dans meta_object.__init__"
 #: cmnsd/views/ajax_utils_meta_object.py:63
 #, python-brace-format
 msgid "no valid identifiers supplied for object lookup in model '{}'"
-msgstr "aucun identifiant valide fourni pour la recherche d'objet dans le modèle '{}'"
+msgstr ""
+"aucun identifiant valide fourni pour la recherche d'objet dans le modèle '{}'"
 
 #: cmnsd/views/ajax_utils_meta_object.py:74
 #, python-brace-format
@@ -872,7 +926,9 @@ msgstr ""
 #: cmnsd/views/ajax_utils_meta_object.py:78
 #, python-brace-format
 msgid "no object could be found in this queryset for the given arguments: {}"
-msgstr "aucun objet n'a pu être trouvé dans ce queryset pour les arguments donnés : {}"
+msgstr ""
+"aucun objet n'a pu être trouvé dans ce queryset pour les arguments donnés : "
+"{}"
 
 #: cmnsd/views/ajax_utils_meta_object.py:87
 msgid "no object to commit changes to"
@@ -919,89 +975,116 @@ msgstr "Tu as été déconnecté."
 msgid "Profile updated."
 msgstr "Profil mis à jour."
 
-#: locations/admin.py:30
-msgid "System Information"
-msgstr "Informations système"
-
-#: locations/admin.py:37
-msgid "Recalculate computed fields (run save on selected items)"
-msgstr "Recalculer les champs calculés (exécuter la sauvegarde sur les éléments sélectionnés)"
-
-#: locations/admin.py:64 locations/admin.py:92 locations/admin.py:107
-#: locations/admin.py:120 locations/admin.py:150
+#: locations/admin.py:28 locations/admin.py:60 locations/admin.py:75
+#: locations/admin.py:88 locations/admin.py:114
 msgid "Basic Information"
 msgstr "Informations de base"
 
-#: locations/admin.py:67
+#: locations/admin.py:31
 msgid "Contact Details"
 msgstr "Coordonnées"
 
-#: locations/admin.py:70
+#: locations/admin.py:34
 msgid "Coordinates"
 msgstr "Coordonnées GPS"
 
-#: locations/admin.py:73
+#: locations/admin.py:37
 msgid "Classification"
 msgstr "Classification"
 
-#: locations/admin.py:76 locations/admin.py:123 locations/admin.py:204
-#: locations/admin.py:220 locations/admin.py:253 locations/admin.py:307
-msgid "Visibility"
-msgstr "Visibilité"
+#: locations/admin.py:45
+msgid "Score"
+msgstr ""
 
-#: locations/admin.py:136
+#: locations/admin.py:101
 msgid "Link Information"
 msgstr "Informations sur les liens"
 
-#: locations/admin.py:162
+#: locations/admin.py:127
 msgid "App Information"
 msgstr "Informations de l'application"
 
-#: locations/admin.py:174
+#: locations/admin.py:139
 msgid "User Preferences"
 msgstr "Préférences utilisateur"
 
-#: locations/admin.py:186
+#: locations/admin.py:152
 msgid "Visit Information"
 msgstr "Informations de visite"
 
-#: locations/admin.py:198
+#: locations/admin.py:155
+msgid "Start date"
+msgstr ""
+
+#: locations/admin.py:158
+msgid "End date"
+msgstr ""
+
+#: locations/admin.py:160
+msgid "Optional — leave blank for single-day or unknown duration visits."
+msgstr ""
+
+#: locations/admin.py:162 locations/admin.py:173
+#, fuzzy
+#| msgid "Accommodation"
+msgid "Recommendation"
+msgstr "Hébergement"
+
+#: locations/admin.py:168
+#, fuzzy
+#| msgid "comments"
+msgid "Recommended"
+msgstr "commentaires"
+
+#: locations/admin.py:169
+#, fuzzy
+#| msgid "Australia"
+msgid "Neutral"
+msgstr "Australie"
+
+#: locations/admin.py:170
+#, fuzzy
+#| msgid "No comments found."
+msgid "Not recommended"
+msgstr "Aucun commentaire trouvé."
+
+#: locations/admin.py:188
 msgid "Comment"
 msgstr "Commentaire"
 
-#: locations/admin.py:201
+#: locations/admin.py:191
 msgid "Attached to"
 msgstr "Attaché à"
 
-#: locations/admin.py:217
+#: locations/admin.py:205
 msgid "Media"
 msgstr "Médias"
 
-#: locations/admin.py:250
+#: locations/admin.py:235
 msgid "List"
 msgstr "Liste"
 
-#: locations/admin.py:268
+#: locations/admin.py:250
 msgid "Item"
 msgstr "Élément"
 
-#: locations/admin.py:271
+#: locations/admin.py:253
 msgid "Accommodation"
 msgstr "Hébergement"
 
-#: locations/admin.py:274
+#: locations/admin.py:256
 msgid "Media & Routing"
 msgstr "Médias & Itinéraire"
 
-#: locations/admin.py:287
+#: locations/admin.py:269
 msgid "Route"
 msgstr "Itinéraire"
 
-#: locations/admin.py:290
+#: locations/admin.py:272
 msgid "Cached result"
 msgstr "Résultat en cache"
 
-#: locations/admin.py:304
+#: locations/admin.py:286
 msgid "Content"
 msgstr "Contenu"
 
@@ -1032,108 +1115,127 @@ msgstr "Carnet de voyage"
 
 #: locations/models/List.py:87
 msgid "Archived lists are read-only and hidden from active views."
-msgstr "Les listes archivées sont en lecture seule et masquées dans les vues actives."
+msgstr ""
+"Les listes archivées sont en lecture seule et masquées dans les vues actives."
 
 #: locations/models/List.py:133
 msgid "Number of nights"
 msgstr "Nombre de nuits"
 
-#: locations/models/Location.py:137
+#: locations/models/Location.py:190
 msgid "Markdown is supported"
 msgstr "Le Markdown est supporté"
 
-#: locations/models/Location.py:183
+#: locations/models/Location.py:236
 msgid "distance in km from departure center"
 msgstr "distance en km depuis le point de départ"
 
-#: locations/models/Location.py:280
+#: locations/models/Location.py:335
 #: locations/templates/function/location/nearby.html:9
 #: locations/templates/function/location/nearby.html:26
-#: locations/templates/function/location/osm_map.html:24
+#: locations/templates/function/location/similar.html:21
 #: locations/templates/model/locations/list.html:98
 msgid "activity"
 msgstr "activité"
 
-#: locations/models/Location.py:282
+#: locations/models/Location.py:337
 #: locations/templates/function/location/nearby.html:8
 #: locations/templates/function/location/nearby.html:25
-#: locations/templates/function/location/osm_map.html:20
+#: locations/templates/function/location/similar.html:20
 #: locations/templates/model/locations/list.html:92
 msgid "accommodation"
 msgstr "hébergement"
 
-#: locations/models/Location.py:284
+#: locations/models/Location.py:339
 msgid "mixed"
 msgstr "mixte"
 
-#: locations/models/Preferences.py:16
+#: locations/models/Location.py:453
+#: locations/templates/field/location/address.html:3
+#: locations/templates/function/location/contact_details.html:3
+#: locations/templates/locations/add_location.html:54
+msgid "address"
+msgstr "adresse"
+
+#: locations/models/Location.py:454
+#: locations/templates/field/location/summary.html:10
+#: locations/templates/locations/add_location.html:69
+msgid "summary"
+msgstr "résumé"
+
+#: locations/models/Location.py:455
+#, fuzzy
+#| msgid "links"
+msgid "link"
+msgstr "liens"
+
+#: locations/models/Location.py:456
+#: locations/templates/field/location/categories.html:3
+msgid "category"
+msgstr "catégorie"
+
+#: locations/models/Location.py:457
+#, fuzzy
+#| msgid "categories"
+msgid "multiple categories"
+msgstr "catégories"
+
+#: locations/models/Location.py:458
+#: locations/templates/field/location/description.html:11
+#: locations/templates/function/location/filtered_descriptions.html:9
+#: locations/templates/tags/edit_tag.html:49
+msgid "description"
+msgstr "description"
+
+#: locations/models/Location.py:459
+#, fuzzy
+#| msgid "Media"
+msgid "media"
+msgstr "Médias"
+
+#: locations/models/Location.py:460
+#, fuzzy
+#| msgid "tags"
+msgid "tag"
+msgstr "tags"
+
+#: locations/models/Location.py:461
+msgid "multiple tags"
+msgstr ""
+
+#: locations/models/Location.py:463
+#, fuzzy
+#| msgid "visited"
+msgid "visited (+10%)"
+msgstr "visité"
+
+#: locations/models/Location.py:464
+msgid "on a list (+10%)"
+msgstr ""
+
+#: locations/models/Location.py:465
+#, fuzzy
+#| msgid "comments"
+msgid "comments (+5%)"
+msgstr "commentaires"
+
+#: locations/models/Location.py:467
+msgid "size (+5%)"
+msgstr ""
+
+#: locations/models/Preferences.py:14
 #, python-brace-format
 msgid "URL template with placeholders, e.g. https://waze.com/ul?ll={lat},{lon}"
-msgstr "Modèle d'URL avec espaces réservés, ex. https://waze.com/ul?ll={lat},{lon}"
+msgstr ""
+"Modèle d'URL avec espaces réservés, ex. https://waze.com/ul?ll={lat},{lon}"
 
-#: locations/models/Preferences.py:18
+#: locations/models/Preferences.py:16
 msgid "navigation"
 msgstr "navigation"
 
-#: locations/models/Preferences.py:40
+#: locations/models/Preferences.py:38
 msgid "family members"
 msgstr "membres de la famille"
-
-#: locations/models/Preferences.py:87
-msgid "january"
-msgstr "janvier"
-
-#: locations/models/Preferences.py:88
-msgid "february"
-msgstr "février"
-
-#: locations/models/Preferences.py:89
-msgid "march"
-msgstr "mars"
-
-#: locations/models/Preferences.py:90
-msgid "april"
-msgstr "avril"
-
-#: locations/models/Preferences.py:91
-msgid "may"
-msgstr "mai"
-
-#: locations/models/Preferences.py:92
-msgid "june"
-msgstr "juin"
-
-#: locations/models/Preferences.py:93
-msgid "july"
-msgstr "juillet"
-
-#: locations/models/Preferences.py:94
-msgid "august"
-msgstr "août"
-
-#: locations/models/Preferences.py:95
-msgid "september"
-msgstr "septembre"
-
-#: locations/models/Preferences.py:96
-msgid "october"
-msgstr "octobre"
-
-#: locations/models/Preferences.py:97
-msgid "november"
-msgstr "novembre"
-
-#: locations/models/Preferences.py:98
-msgid "december"
-msgstr "décembre"
-
-#: locations/models/Preferences.py:100
-msgid "year of visit"
-msgstr "année de visite"
-
-#: locations/models/Preferences.py:102
-msgid "day of visit"
-msgstr "jour de visite"
 
 #: locations/models/Region.py:16
 msgid "country"
@@ -1166,6 +1268,114 @@ msgstr "distance moyenne de tous les lieux/sous-régions dans cette région"
 #: locations/models/Region.py:109
 msgid "a region with this name already exists under the same parent."
 msgstr "une région avec ce nom existe déjà sous le même parent."
+
+#: locations/models/Visits.py:23
+#: locations/templates/visits/manage_visits.html:10
+#, fuzzy
+#| msgid "comments"
+msgid "recommend"
+msgstr "commentaires"
+
+#: locations/models/Visits.py:24
+#: locations/templates/visits/manage_visits.html:13
+#, fuzzy
+#| msgid "Australia"
+msgid "neutral"
+msgstr "Australie"
+
+#: locations/models/Visits.py:25
+#: locations/templates/visits/manage_visits.html:16
+#, fuzzy
+#| msgid "add a comment"
+msgid "do not recommend"
+msgstr "ajouter un commentaire"
+
+#: locations/models/Visits.py:31
+#: locations/templates/visits/manage_visits.html:144
+#, fuzzy
+#| msgid "Accommodation"
+msgid "recommendation"
+msgstr "Hébergement"
+
+#: locations/models/Visits.py:35
+msgid "january"
+msgstr "janvier"
+
+#: locations/models/Visits.py:36
+msgid "february"
+msgstr "février"
+
+#: locations/models/Visits.py:37
+msgid "march"
+msgstr "mars"
+
+#: locations/models/Visits.py:38
+msgid "april"
+msgstr "avril"
+
+#: locations/models/Visits.py:39
+msgid "may"
+msgstr "mai"
+
+#: locations/models/Visits.py:40
+msgid "june"
+msgstr "juin"
+
+#: locations/models/Visits.py:41
+msgid "july"
+msgstr "juillet"
+
+#: locations/models/Visits.py:42
+msgid "august"
+msgstr "août"
+
+#: locations/models/Visits.py:43
+msgid "september"
+msgstr "septembre"
+
+#: locations/models/Visits.py:44
+msgid "october"
+msgstr "octobre"
+
+#: locations/models/Visits.py:45
+msgid "november"
+msgstr "novembre"
+
+#: locations/models/Visits.py:46
+msgid "december"
+msgstr "décembre"
+
+#: locations/models/Visits.py:48
+msgid "year of visit"
+msgstr "année de visite"
+
+#: locations/models/Visits.py:52
+msgid "day of visit"
+msgstr "jour de visite"
+
+#: locations/models/Visits.py:56
+#, fuzzy
+#| msgid "year of visit"
+msgid "year of last day of visit"
+msgstr "année de visite"
+
+#: locations/models/Visits.py:60
+#, fuzzy
+#| msgid "day of visit"
+msgid "day of last day of visit"
+msgstr "jour de visite"
+
+#: locations/models/Visits.py:77
+msgid "End year cannot be before start year."
+msgstr ""
+
+#: locations/models/Visits.py:83
+msgid "End month cannot be before start month in the same year."
+msgstr ""
+
+#: locations/models/Visits.py:90
+msgid "End day cannot be before start day in the same month."
+msgstr ""
 
 #: locations/services/location_nearby.py:128
 #: locations/templates/locations/location_detail.html:40
@@ -1223,7 +1433,9 @@ msgstr "où habites-tu"
 
 #: locations/templates/element/location/topaction_distance_to_home.html:12
 msgid "please set your home address in your preferences to see the distance"
-msgstr "veuillez définir votre adresse personnelle dans vos préférences pour voir la distance"
+msgstr ""
+"veuillez définir votre adresse personnelle dans vos préférences pour voir la "
+"distance"
 
 #: locations/templates/element/location/topaction_edit_all.html:15
 msgid "stop editing location"
@@ -1241,6 +1453,9 @@ msgstr "les modifications non sauvegardées seront perdues"
 #: locations/templates/field/location/visibility.html:2
 #: locations/templates/function/location/filtered_descriptions.html:6
 #: locations/templates/object/comment.html:22
+#: locations/templates/tags/edit_tag.html:14
+#: locations/templates/tags/tags_list.html:49
+#: locations/templates/tags/tags_list.html:67
 msgid "edit"
 msgstr "modifier"
 
@@ -1250,7 +1465,7 @@ msgstr "listes avec"
 
 #: locations/templates/element/location/topaction_filtered_lists.html:10
 #: locations/templates/element/location/topactions_favorite.html:15
-#: locations/templates/field/location/visits.html:10
+#: locations/templates/field/location/visits.html:12
 msgid "login or register"
 msgstr "se connecter ou s'inscrire"
 
@@ -1300,26 +1515,17 @@ msgid "open this object in django&apos;s admin"
 msgstr "ouvrir cet objet dans l'admin Django"
 
 #: locations/templates/element/location/topactions_favorite.html:16
-#: locations/templates/field/location/visits.html:11
 msgid "You need an account to love this location. Please login or register."
-msgstr "Vous avez besoin d'un compte pour aimer cet emplacement. Veuillez vous connecter ou vous inscrire."
-
-#: locations/templates/element/reusable_delete_button.html:8
-msgid "are you sure you want to delete this?"
-msgstr "es-tu sûr de vouloir supprimer ceci ?"
+msgstr ""
+"Vous avez besoin d'un compte pour aimer cet emplacement. Veuillez vous "
+"connecter ou vous inscrire."
 
 #: locations/templates/element/reusable_description_form.html:13
 msgid "enter description here"
 msgstr "saisir une description ici"
 
-#: locations/templates/element/reusable_description_form.html:17
-#: locations/templates/field/location/visibility.html:2
-#: locations/templates/locations/add_location.html:71
-#: locations/templates/media/manage_media.html:87
-msgid "visibility"
-msgstr "visibilité"
-
 #: locations/templates/element/reusable_description_form.html:23
+#: locations/templates/tags/edit_tag.html:68
 msgid "save"
 msgstr "enregistrer"
 
@@ -1350,7 +1556,7 @@ msgid "markdown is supported"
 msgstr "le markdown est supporté"
 
 #: locations/templates/element/reusable_form_comment.html:20
-#: locations/templates/media/manage_media.html:84
+#: locations/templates/media/manage_media.html:85
 msgid "optional"
 msgstr "optionnel"
 
@@ -1377,27 +1583,17 @@ msgstr "publier"
 #: locations/templates/field/location/chain.html:19
 #: locations/templates/field/location/links.html:24
 #: locations/templates/field/userpreferences/home.html:30
-#: locations/templates/locations/add_location.html:98
-#: templates/navigation.html:68
+#: locations/templates/locations/add_location.html:99
+#: templates/navigation.html:72
 msgid "start typing"
 msgstr "commence à taper"
-
-#: locations/templates/field/location/address.html:3
-#: locations/templates/function/location/contact_details.html:3
-#: locations/templates/locations/add_location.html:43
-msgid "address"
-msgstr "adresse"
 
 #: locations/templates/field/location/address.html:6
 msgid "address of this"
 msgstr "adresse de ce lieu"
 
 #: locations/templates/field/location/categories.html:3
-msgid "category"
-msgstr "catégorie"
-
-#: locations/templates/field/location/categories.html:3
-#: locations/templates/locations/add_location.html:93
+#: locations/templates/locations/add_location.html:94
 msgid "categories"
 msgstr "catégories"
 
@@ -1412,11 +1608,6 @@ msgstr "effacer la valeur"
 #: locations/templates/field/location/chain.html:42
 msgid "are you sure you want to remove this value"
 msgstr "es-tu sûr de vouloir supprimer cette valeur"
-
-#: locations/templates/field/location/description.html:11
-#: locations/templates/function/location/filtered_descriptions.html:9
-msgid "description"
-msgstr "description"
 
 #: locations/templates/field/location/description.html:12
 msgid "write a longer more detaild description of this"
@@ -1467,9 +1658,13 @@ msgstr "aucun lien disponible"
 msgid "name of"
 msgstr "nom de"
 
-#: locations/templates/field/location/name.html:32
+#: locations/templates/field/location/name.html:22
 msgid "added by"
 msgstr "ajouté par"
+
+#: locations/templates/field/location/name.html:31
+msgid "completeness"
+msgstr ""
 
 #: locations/templates/field/location/owners_name.html:4
 msgid "owners of this"
@@ -1491,11 +1686,6 @@ msgstr "téléphone"
 msgid "size"
 msgstr "taille"
 
-#: locations/templates/field/location/summary.html:10
-#: locations/templates/locations/add_location.html:58
-msgid "summary"
-msgstr "résumé"
-
 #: locations/templates/field/location/summary.html:11
 msgid "write a short descriptive text about this"
 msgstr "rédige un court texte descriptif sur ce lieu"
@@ -1504,21 +1694,97 @@ msgstr "rédige un court texte descriptif sur ce lieu"
 msgid "summary is visibile to all visitors"
 msgstr "le résumé est visible par tous les visiteurs"
 
-#: locations/templates/field/location/visitors.html:7
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:37
+#: locations/templates/field/location/visitors.html:75
+msgid "no one has visited this place yet"
+msgstr "personne n'a encore visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:43
+msgid "recommended by visitors"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:51
+msgid "visited — no clear recommendation yet"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:47
+msgid "visitors do not recommend this place"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:57
+#, fuzzy
+#| msgid "you have visited this place"
+msgid "you recommend this place"
+msgstr "tu as visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:57
+msgid "you visited but don't recommend — community disagrees"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:57
+msgid "you visited — community recommends this place"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:65
+msgid "you recommend this place — community is neutral"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:65
+msgid "you don't recommend this place — community is neutral"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:65
+#, fuzzy
+#| msgid "you have visited this place"
+msgid "you visited this place"
+msgstr "tu as visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:61
+#, fuzzy
+#| msgid "you have visited this place"
+msgid "you visited and don't recommend this place"
+msgstr "tu as visité cet endroit"
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:61
+msgid "you recommend this place — community disagrees"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:26
+#: locations/templates/field/location/visitors.html:61
+msgid "you visited — community does not recommend this place"
+msgstr ""
+
+#: locations/templates/field/location/visitors.html:75
 msgid "you have visited this place"
 msgstr "tu as visité cet endroit"
 
-#: locations/templates/field/location/visitors.html:7
+#: locations/templates/field/location/visitors.html:75
 msgid "someone has visited this place"
 msgstr "quelqu'un a visité cet endroit"
-
-#: locations/templates/field/location/visitors.html:7
-msgid "no one has visited this place yet"
-msgstr "personne n'a encore visité cet endroit"
 
 #: locations/templates/field/location/visits.html:7
 msgid "visits to"
 msgstr "visites à"
+
+#: locations/templates/field/location/visits.html:13
+#, fuzzy
+#| msgid "You need an account to love this location. Please login or register."
+msgid "You need an account to visit this location. Please login or register."
+msgstr ""
+"Vous avez besoin d'un compte pour aimer cet emplacement. Veuillez vous "
+"connecter ou vous inscrire."
 
 #: locations/templates/field/userpreferences/all_apps.html:2
 msgid "links to apps"
@@ -1550,7 +1816,9 @@ msgstr "autoriser l'ouverture des lieux dans des apps de navigation tierces"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:4
 msgid "loading external maps shares your data with the maps provider"
-msgstr "le chargement de cartes externes partage vos données avec le fournisseur de cartes"
+msgstr ""
+"le chargement de cartes externes partage vos données avec le fournisseur de "
+"cartes"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:24
 msgid "enabled"
@@ -1613,7 +1881,7 @@ msgid "save these changes"
 msgstr "enregistrer ces modifications"
 
 #: locations/templates/function/location/filtered_comments.html:7
-#: templates/navigation.html:23
+#: locations/views/profile/export_data.py:23 templates/navigation.html:23
 msgid "comments"
 msgstr "commentaires"
 
@@ -1647,6 +1915,8 @@ msgid "add a description to"
 msgstr "ajouter une description à"
 
 #: locations/templates/function/location/filtered_tags.html:2
+#: locations/templates/tags/edit_tag.html:12
+#: locations/templates/tags/manage_tag_visibility.html:32
 #: templates/navigation.html:20
 msgid "tags"
 msgstr "tags"
@@ -1664,12 +1934,11 @@ msgstr "sélectionner un tag"
 msgid "add tag"
 msgstr "ajouter un tag"
 
-#: locations/templates/function/location/google_maps_script.html:110
+#: locations/templates/function/location/google_maps_script.html:120
 msgid "view details"
 msgstr "voir les détails"
 
 #: locations/templates/function/location/map.html:2
-#: locations/templates/function/location/osm_map.html:5
 msgid "map"
 msgstr "carte"
 
@@ -1709,6 +1978,7 @@ msgid "using"
 msgstr "avec"
 
 #: locations/templates/function/location/nearby.html:5
+#: locations/templates/locations/location_detail.html:143
 msgid "nearby"
 msgstr "à proximité"
 
@@ -1724,22 +1994,24 @@ msgstr "partagé par"
 msgid "no image available"
 msgstr "aucune image disponible"
 
-#: locations/templates/function/location/osm_map.html:6
-msgid "nearby locations and activities"
-msgstr "lieux et activités à proximité"
+#: locations/templates/function/location/similar.html:5
+#: locations/templates/locations/location_detail.html:166
+msgid "similar locations you might enjoy"
+msgstr ""
 
-#: locations/templates/function/location/topactions.html:30
+#: locations/templates/function/location/topactions.html:31
 msgid "refresh automatically detected data of"
 msgstr "actualiser les données détectées automatiquement de"
 
 #: locations/templates/lists/list_detail.html:12
 #: locations/templates/lists/lists_list.html:4
-#: locations/templates/lists/lists_list.html:11 templates/navigation.html:26
+#: locations/templates/lists/lists_list.html:11
+#: locations/views/profile/export_data.py:26 templates/navigation.html:26
 msgid "lists"
 msgstr "listes"
 
 #: locations/templates/lists/list_detail.html:22
-#: locations/templates/locations/add_location.html:11
+#: locations/templates/locations/add_location.html:22
 msgid "locations"
 msgstr "lieux"
 
@@ -1751,7 +2023,7 @@ msgstr "archivé"
 msgid "this list has no locations yet"
 msgstr "cette liste ne contient encore aucun lieu"
 
-#: locations/templates/lists/lists_list.html:25
+#: locations/templates/lists/lists_list.html:30
 msgid "no lists found"
 msgstr "aucune liste trouvée"
 
@@ -1780,122 +2052,160 @@ msgid "search or create a list"
 msgstr "rechercher ou créer une liste"
 
 #: locations/templates/locations/add_location.html:3
-#: locations/templates/locations/add_location.html:13
-#: locations/templates/locations/add_location.html:17
-#: locations/templates/locations/add_location.html:116
+#: locations/templates/locations/add_location.html:24
+#: locations/templates/locations/add_location.html:28
+#: locations/templates/locations/add_location.html:128
 msgid "add location"
 msgstr "ajouter un lieu"
 
-#: locations/templates/locations/add_location.html:23
-msgid "name"
-msgstr "nom"
-
-#: locations/templates/locations/add_location.html:30
-msgid "e.g. Camping de Bron"
-msgstr "ex. Camping de Bron"
-
-#: locations/templates/locations/add_location.html:40
+#: locations/templates/locations/add_location.html:31
 msgid "required"
 msgstr "obligatoire"
 
-#: locations/templates/locations/add_location.html:49
+#: locations/templates/locations/add_location.html:35
+#: locations/templates/tags/edit_tag.html:24
+msgid "name"
+msgstr "nom"
+
+#: locations/templates/locations/add_location.html:42
+msgid "e.g. Camping de Bron"
+msgstr "ex. Camping de Bron"
+
+#: locations/templates/locations/add_location.html:60
 msgid "leave blank to look up automatically"
 msgstr "laisser vide pour remplir automatiquement"
 
-#: locations/templates/locations/add_location.html:55
+#: locations/templates/locations/add_location.html:66
 msgid "optional — if left blank the address will be searched by name"
 msgstr "optionnel — si vide, l'adresse sera recherchée par le nom"
 
-#: locations/templates/locations/add_location.html:63
+#: locations/templates/locations/add_location.html:74
 msgid "short description (optional)"
 msgstr "description courte (optionnel)"
 
-#: locations/templates/locations/add_location.html:78
-#, fuzzy
-#| msgid "you have hidden this location"
-msgid "who can see this location"
-msgstr "tu as masqué ce lieu"
-
-#: locations/templates/locations/add_location.html:81
+#: locations/templates/locations/add_location.html:82
 msgid "url"
 msgstr "url"
 
-#: locations/templates/locations/add_location.html:90
+#: locations/templates/locations/add_location.html:91
 #, fuzzy
 #| msgid "optional — select one or more categories"
 msgid "optional — website or booking page"
 msgstr "optionnel — sélectionne une ou plusieurs catégories"
 
-#: locations/templates/locations/add_location.html:112
+#: locations/templates/locations/add_location.html:114
 msgid "optional — select one or more categories"
 msgstr "optionnel — sélectionne une ou plusieurs catégories"
 
-#: locations/templates/locations/add_location.html:119
+#: locations/templates/locations/add_location.html:124
+#, fuzzy
+#| msgid "you have hidden this location"
+msgid "who can see this location"
+msgstr "tu as masqué ce lieu"
+
+#: locations/templates/locations/add_location.html:131
 #: locations/templates/locations/revoke_location_form.html:29
+#: locations/templates/tags/edit_tag.html:69
 msgid "cancel"
 msgstr "annuler"
 
-#: locations/templates/locations/add_location.html:152
+#: locations/templates/locations/add_location.html:164
 msgid "remove"
 msgstr "retirer"
 
-#: locations/templates/locations/add_location.html:199
+#: locations/templates/locations/add_location.html:211
 msgid "adding…"
 msgstr "ajout en cours…"
 
-#: locations/templates/locations/add_location.html:217
+#: locations/templates/locations/add_location.html:229
 #, fuzzy
 #| msgid "a region with this name already exists under the same parent."
 msgid "a location with this name already exists"
 msgstr "une région avec ce nom existe déjà sous le même parent."
 
-#: locations/templates/locations/add_location.html:218
+#: locations/templates/locations/add_location.html:230
 #, fuzzy
 #| msgid "you have visited this place"
 msgid "you have a draft with this name"
 msgstr "tu as visité cet endroit"
 
-#: locations/templates/locations/add_location.html:219
+#: locations/templates/locations/add_location.html:231
 msgid ""
 "you previously revoked a location with this name — do you want to restore it?"
 msgstr ""
 
-#: locations/templates/locations/add_location.html:220
+#: locations/templates/locations/add_location.html:232
 msgid "a deleted location with this name exists"
 msgstr "un emplacement supprimé avec ce nom existe"
 
-#: locations/templates/locations/add_location.html:221
+#: locations/templates/locations/add_location.html:233
 msgid ""
 "this name is too general — try a more specific name to check for duplicates"
 msgstr ""
 
-#: locations/templates/locations/add_location.html:222
+#: locations/templates/locations/add_location.html:234
 msgid "view"
 msgstr "voir"
 
-#: locations/templates/locations/add_location.html:223
+#: locations/templates/locations/add_location.html:235
 msgid "restore"
 msgstr "restaurer"
 
-#: locations/templates/locations/add_location.html:224
+#: locations/templates/locations/add_location.html:236
 msgid "dismiss"
 msgstr "ignorer"
+
+#: locations/templates/locations/base.html:8
+msgid "Get more out of your trips."
+msgstr ""
+
+#: locations/templates/locations/base.html:9
+msgid ""
+"With a free account you see more accommodations and activities, mark visits, "
+"save favourites, build lists and more."
+msgstr ""
+
+#: locations/templates/locations/base.html:10
+#, fuzzy
+#| msgid "create account"
+msgid "Create an account"
+msgstr "créer un compte"
+
+#: locations/templates/locations/base.html:11
+msgid "or"
+msgstr ""
+
+#: locations/templates/locations/base.html:12
+#, fuzzy
+#| msgid "log out"
+msgid "log in"
+msgstr "se déconnecter"
+
+#: locations/templates/locations/base.html:13
+msgid "Close"
+msgstr ""
 
 #: locations/templates/locations/location_detail.html:34
 msgid "this location is currently revoked and not visible to the public"
 msgstr "cet emplacement est actuellement révoqué et non visible par le public"
 
 #: locations/templates/locations/location_detail.html:68
-#: locations/templates/locations/location_detail.html:134
 msgid "loading nearby accomodations and activities"
 msgstr "chargement des hébergements et activités à proximité"
 
-#: locations/templates/locations/location_detail.html:176
-#: locations/templates/locations/location_detail.html:179
+#: locations/templates/locations/location_detail.html:148
+#: locations/templates/locations/location_detail.html:171
+#, fuzzy
+#| msgid "upload image"
+msgid "loading"
+msgstr "téléverser une image"
+
+#: locations/templates/locations/location_detail.html:216
+#: locations/templates/locations/location_detail.html:219
 msgid "read more"
 msgstr "lire la suite"
 
-#: locations/templates/locations/location_detail.html:179
+#: locations/templates/locations/location_detail.html:219
 msgid "read less"
 msgstr "lire moins"
 
@@ -1933,7 +2243,7 @@ msgid "visited"
 msgstr "visité"
 
 #: locations/templates/locations/locations_list_filters.html:25
-#: locations/templates/preferences/preferences.html:81
+#: locations/templates/preferences/preferences.html:90
 msgid "been there"
 msgstr "déjà visité"
 
@@ -1946,7 +2256,7 @@ msgid "favorites"
 msgstr "favoris"
 
 #: locations/templates/locations/locations_list_filters.html:44
-#: locations/templates/preferences/preferences.html:84
+#: locations/templates/preferences/preferences.html:93
 msgid "loved"
 msgstr "adoré"
 
@@ -1966,6 +2276,14 @@ msgstr "sélectionner un tag"
 #| msgid "Filters"
 msgid "filter"
 msgstr "Filtres"
+
+#: locations/templates/locations/locations_list_filters.html:129
+msgid "all statuses"
+msgstr ""
+
+#: locations/templates/locations/locations_list_filters.html:134
+msgid "show all statuses"
+msgstr ""
 
 #: locations/templates/locations/revoke_location_form.html:11
 msgid ""
@@ -2003,11 +2321,11 @@ msgstr "es-tu sûr de vouloir supprimer cette image"
 msgid "upload image"
 msgstr "téléverser une image"
 
-#: locations/templates/media/manage_media.html:96
+#: locations/templates/media/manage_media.html:97
 msgid "image"
 msgstr "image"
 
-#: locations/templates/media/manage_media.html:103
+#: locations/templates/media/manage_media.html:104
 msgid "upload"
 msgstr "téléverser"
 
@@ -2047,6 +2365,28 @@ msgstr "es-tu sûr de vouloir supprimer ce commentaire ?"
 msgid "are you sure you want to remove this tag"
 msgstr "es-tu sûr de vouloir retirer ce tag"
 
+#: locations/templates/preferences/export_data.html:4
+#: locations/templates/preferences/export_data.html:13
+#: locations/templates/preferences/preferences.html:81
+msgid "Download my data"
+msgstr ""
+
+#: locations/templates/preferences/export_data.html:22
+msgid ""
+"Select which data to include. You will receive a ZIP file containing one CSV "
+"per category."
+msgstr ""
+
+#: locations/templates/preferences/export_data.html:36
+msgid "Download"
+msgstr ""
+
+#: locations/templates/preferences/export_data.html:38
+#, fuzzy
+#| msgid "cancel"
+msgid "Cancel"
+msgstr "annuler"
+
 #: locations/templates/preferences/preferences.html:4
 #: locations/templates/preferences/preferences.html:13
 msgid "Preferences"
@@ -2061,23 +2401,74 @@ msgid "language"
 msgstr "langue"
 
 #: locations/templates/preferences/preferences.html:78
+msgid "my data"
+msgstr ""
+
+#: locations/templates/preferences/preferences.html:79
+msgid "Download a copy of all data stored under your account."
+msgstr ""
+
+#: locations/templates/preferences/preferences.html:87
 msgid "my links"
 msgstr "mes liens"
 
-#: locations/templates/preferences/preferences.html:87
+#: locations/templates/preferences/preferences.html:96
 msgid "my comments"
 msgstr "mes commentaires"
 
+#: locations/templates/tags/edit_tag.html:4
+#: locations/templates/tags/edit_tag.html:18
+#, fuzzy
+#| msgid "edit"
+msgid "edit tag"
+msgstr "modifier"
+
+#: locations/templates/tags/edit_tag.html:37
+msgid "slug"
+msgstr ""
+
+#: locations/templates/tags/edit_tag.html:59
+msgid "status"
+msgstr ""
+
+#: locations/templates/tags/manage_tag_visibility.html:4
+#: locations/templates/tags/manage_tag_visibility.html:38
+#: templates/navigation.html:42
+#, fuzzy
+#| msgid "save visibility"
+msgid "manage tag visibility"
+msgstr "enregistrer la visibilité"
+
+#: locations/templates/tags/manage_tag_visibility.html:34
+#, fuzzy
+#| msgid "save visibility"
+msgid "manage visibility"
+msgstr "enregistrer la visibilité"
+
+#: locations/templates/tags/manage_tag_visibility.html:39
+msgid "drag tags between columns to change their visibility"
+msgstr ""
+
+#: locations/templates/tags/manage_tag_visibility.html:56
+#, fuzzy
+#| msgid "tags"
+msgid "no tags"
+msgstr "tags"
+
+#: locations/templates/tags/manage_tag_visibility.html:120
+msgid "could not update tag"
+msgstr ""
+
 #: locations/templates/tags/tags_list.html:4
-#: locations/templates/tags/tags_list.html:13
+#: locations/templates/tags/tags_list.html:32
 msgid "Tags"
 msgstr "Tags"
 
-#: locations/templates/tags/tags_list.html:24
+#: locations/templates/tags/tags_list.html:43
 msgid "General"
 msgstr "Général"
 
-#: locations/templates/tags/tags_list.html:49
+#: locations/templates/tags/tags_list.html:78
 msgid "No tags found."
 msgstr "Aucun tag trouvé."
 
@@ -2085,9 +2476,34 @@ msgstr "Aucun tag trouvé."
 msgid "your visits to"
 msgstr "tes visites à"
 
-#: locations/templates/visits/manage_visits.html:26
+#: locations/templates/visits/manage_visits.html:34
+msgid "nights"
+msgstr ""
+
+#: locations/templates/visits/manage_visits.html:62
 msgid "are you sure you want to delete this visit"
 msgstr "es-tu sûr de vouloir supprimer cette visite"
+
+#: locations/templates/visits/manage_visits.html:102
+#: locations/templates/visits/manage_visits.html:124
+#, fuzzy
+#| msgid "may"
+msgid "day"
+msgstr "mai"
+
+#: locations/templates/visits/manage_visits.html:106
+#: locations/templates/visits/manage_visits.html:128
+msgid "month"
+msgstr ""
+
+#: locations/templates/visits/manage_visits.html:115
+#: locations/templates/visits/manage_visits.html:137
+msgid "year"
+msgstr ""
+
+#: locations/templates/visits/manage_visits.html:121
+msgid "add end date"
+msgstr ""
 
 #: locations/views/Translations.py:12
 msgid "Netherlands"
@@ -2346,99 +2762,138 @@ msgid "Beach"
 msgstr "Plage"
 
 #: locations/views/Translations.py:83
+msgid "Bar or Pub"
+msgstr ""
+
+#: locations/views/Translations.py:84
+msgid "Cafe"
+msgstr ""
+
+#: locations/views/Translations.py:85
 msgid "City"
 msgstr "Ville"
 
-#: locations/views/Translations.py:84
+#: locations/views/Translations.py:86
 msgid "Museum"
 msgstr "Musée"
 
-#: locations/views/Translations.py:85
+#: locations/views/Translations.py:87
 msgid "Park"
 msgstr "Parc"
 
-#: locations/views/Translations.py:86
+#: locations/views/Translations.py:88
+msgid "Playground"
+msgstr ""
+
+#: locations/views/Translations.py:89
 msgid "Rest-stop"
 msgstr "Aire de repos"
 
-#: locations/views/Translations.py:87
+#: locations/views/Translations.py:90
 msgid "Restaurant"
 msgstr "Restaurant"
 
-#: locations/views/Translations.py:88
+#: locations/views/Translations.py:91
 msgid "Sauna"
 msgstr "Sauna"
 
-#: locations/views/Translations.py:89
+#: locations/views/Translations.py:92
 msgid "Shop"
 msgstr "Boutique"
 
-#: locations/views/Translations.py:90
+#: locations/views/Translations.py:93
 msgid "Swimmingpool"
 msgstr "Piscine"
 
-#: locations/views/Translations.py:91
+#: locations/views/Translations.py:94
 msgid "Theatre"
 msgstr "Théâtre"
 
-#: locations/views/Translations.py:92
+#: locations/views/Translations.py:95
 msgid "Theme-park"
 msgstr "Parc d'attractions"
 
-#: locations/views/Translations.py:93
+#: locations/views/Translations.py:96
 msgid "Village"
 msgstr "Village"
 
-#: locations/views/Translations.py:94
+#: locations/views/Translations.py:97
 msgid "Walk"
 msgstr "Randonnée"
 
-#: locations/views/Translations.py:95
+#: locations/views/Translations.py:98
 msgid "Winery"
 msgstr "Domaine viticole"
 
-#: locations/views/Translations.py:96
+#: locations/views/Translations.py:99
 msgid "Zoo"
 msgstr "Zoo"
 
-#: locations/views/locations/add_location.py:33
+#: locations/views/locations/add_location.py:32
+msgid "visibility set to family because this location is marked as home."
+msgstr ""
+
+#: locations/views/locations/add_location.py:40
 msgid "location added successfully."
 msgstr "lieu ajouté avec succès."
 
-#: locations/views/locations/add_location.py:37
+#: locations/views/locations/add_location.py:44
 msgid "please correct the errors below."
 msgstr "corrige les erreurs ci-dessous."
 
-#: locations/views/locations/location_detail.py:31
+#: locations/views/locations/location_detail.py:32
 msgid "this page is not available."
 msgstr "cette page n'est pas disponible."
 
-#: locations/views/locations/location_detail.py:31
+#: locations/views/locations/location_detail.py:32
 msgid "you might need to log in to see this."
 msgstr "tu dois peut-être te connecter pour voir ceci."
 
-#: locations/views/locations/reenrich_location.py:32
-#: locations/views/locations/revoke_location.py:26
-msgid "action not allowed."
-msgstr "action non autorisée."
-
-#: locations/views/locations/revoke_location.py:57
+#: locations/views/locations/revoke_location.py:51
 #, fuzzy
 #| msgid "revoke"
 msgid "revoke reason"
 msgstr "révoquer"
 
-#: locations/views/locations/revoke_location.py:65
+#: locations/views/locations/revoke_location.py:59
 #, fuzzy
 #| msgid "locations"
 msgid "location revoked."
 msgstr "lieux"
 
-#: locations/views/locations/revoke_location.py:70
+#: locations/views/locations/revoke_location.py:64
 #, fuzzy
 #| msgid "locations"
 msgid "location republished."
 msgstr "lieux"
+
+#: locations/views/media/manage_media.py:54
+msgid "This image has already been uploaded for this location."
+msgstr ""
+
+#: locations/views/profile/export_data.py:21
+#, fuzzy
+#| msgid "preferences"
+msgid "profile & preferences"
+msgstr "préférences"
+
+#: locations/views/profile/export_data.py:22
+#, fuzzy
+#| msgid "visits to"
+msgid "visits"
+msgstr "visites à"
+
+#: locations/views/profile/export_data.py:24
+#, fuzzy
+#| msgid "locations"
+msgid "locations added"
+msgstr "lieux"
+
+#: locations/views/profile/export_data.py:25
+#, fuzzy
+#| msgid "media for"
+msgid "media added"
+msgstr "médias pour"
 
 #: templates/footer.html:3
 msgid "Arne Coomans on Github"
@@ -2485,34 +2940,46 @@ msgstr "ton compte"
 msgid "preferences"
 msgstr "préférences"
 
-#: templates/navigation.html:42
+#: templates/navigation.html:45
 #, python-format
 msgid "Edit \"%(location)s\" in admin"
 msgstr "Modifier \"%(location)s\" dans l'admin"
 
-#: templates/navigation.html:43
+#: templates/navigation.html:47
 msgid "open django admin"
 msgstr "ouvrir l'admin Django"
 
-#: templates/navigation.html:46
+#: templates/navigation.html:50
 msgid "edit profile of"
 msgstr "modifier le profil de"
 
-#: templates/navigation.html:50
+#: templates/navigation.html:54
 msgid "log out"
 msgstr "se déconnecter"
 
-#: templates/navigation.html:57
+#: templates/navigation.html:61
 msgid "register"
 msgstr "s'inscrire"
 
-#: templates/navigation.html:60
+#: templates/navigation.html:64
 msgid "login"
 msgstr "connexion"
 
-#: templates/navigation.html:80
+#: templates/navigation.html:84
 msgid "search"
 msgstr "rechercher"
+
+#~ msgid "Visibility"
+#~ msgstr "Visibilité"
+
+#~ msgid "are you sure you want to delete this?"
+#~ msgstr "es-tu sûr de vouloir supprimer ceci ?"
+
+#~ msgid "nearby locations and activities"
+#~ msgstr "lieux et activités à proximité"
+
+#~ msgid "action not allowed."
+#~ msgstr "action non autorisée."
 
 #~ msgid "Révoqué"
 #~ msgstr "Révoqué"
