@@ -177,6 +177,13 @@ if not DEBUG:
     'backupCount': 5,
     'formatter': 'simple',
   }
+  _log_handlers['auth_file'] = {
+    'class': 'logging.handlers.RotatingFileHandler',
+    'filename': '/var/log/cmpng/auth.log',
+    'maxBytes': 10 * 1024 * 1024,  # 10 MB
+    'backupCount': 5,
+    'formatter': 'simple',
+  }
 
 LOGGING = {
   'version': 1,
@@ -191,6 +198,11 @@ LOGGING = {
   'loggers': {
     'locations': {
       'handlers': ['console'] if DEBUG else ['geocoding_file'],
+      'level': 'DEBUG' if DEBUG else 'INFO',
+      'propagate': False,
+    },
+    'cmnsd.views.auth': {
+      'handlers': ['console'] if DEBUG else ['auth_file'],
       'level': 'DEBUG' if DEBUG else 'INFO',
       'propagate': False,
     },
