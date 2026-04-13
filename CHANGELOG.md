@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added
+- `Tag.similarity_weight` field (default 100) — tags that strongly define a location's character (e.g. *domaine*, *Nederlandse eigenaren*) can be given a higher weight to increase their contribution to the similarity score. Editable in Django admin and the tag edit form. ([#39](https://github.com/arnecoomans/cmpng/issues/39))
+
+### Changed
+- Similar locations: negative community recommendation score now deducts −0.10 from the composite score (mirrors the +0.10 bonus for positive scores) ([#39](https://github.com/arnecoomans/cmpng/issues/39))
+- Similar locations: locations the authenticated user has personally marked as "not recommended" are never shown in their similar list, regardless of community score or attribute overlap ([#39](https://github.com/arnecoomans/cmpng/issues/39))
+
 ## [26.04.2] - 2026-04-12
 
 ### Added

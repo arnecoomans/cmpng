@@ -9,7 +9,8 @@ _CHAIN_SAME_BONUS    = 0.20  # exact same chain (e.g. all Huttopias)
 _CHAIN_ANY_BONUS     = 0.05  # both belong to a chain, regardless of which
 _SIZE_SAME_BONUS     = 0.10  # identical size classification
 _SIZE_ADJACENT_BONUS = 0.05  # one step apart in size order
-_RECOMMENDATION_BONUS = 0.10 # positive community recommendation score
+_RECOMMENDATION_BONUS  = 0.10  # positive community recommendation score
+_RECOMMENDATION_PENALTY = 0.10  # negative community recommendation score
 _FAVORITE_BONUS       = 0.05 # at least one user has favorited this location
 
 
@@ -46,7 +47,7 @@ def get_similar_locations(location, min_overlap=None, max_results=None, queryset
                      tag weights come from Tag.similarity_weight (default 100); categories use 100
     chain          = +0.20 (same chain), +0.05 (both chained, different chain)
     size           = +0.10 (same size),  +0.05 (adjacent size)
-    recommendation = +0.10 (positive community score), +0 (unrated or negative)
+    recommendation = +0.10 (positive community score), 0 (unrated), -0.10 (negative community score)
     favorite       = +0.05 (at least one user has favorited this location)
     score          = base + chain + size + recommendation + favorite
 
@@ -115,7 +116,13 @@ def get_similar_locations(location, min_overlap=None, max_results=None, queryset
     )
     base = shared_weight / total
 
-    rec_bonus = _RECOMMENDATION_BONUS if (getattr(candidate, 'visit_community_score', None) or 0) > 0 else 0.0
+    community_score = getattr(candidate, 'visit_community_score', None) or 0
+    if community_score > 0:
+      rec_bonus = _RECOMMENDATION_BONUS
+    elif community_score < 0:
+      rec_bonus = -_RECOMMENDATION_PENALTY
+    else:
+      rec_bonus = 0.0
     fav_bonus = _FAVORITE_BONUS if candidate.favorited.all() else 0.0
 
     score = (

@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import MagicMock
 from locations.models import Location
 from locations.services.location_similar import (
   get_similar_locations,
@@ -273,6 +274,42 @@ class TestSimilarLocationsBonuses:
     match = next(r for r in results if r.pk == cand.pk)
     assert match.similarity == 1.0
 
+  def test_recommendation_penalty_applied_when_community_score_negative(self):
+    from locations.services.location_similar import _RECOMMENDATION_PENALTY
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    VisitsFactory(location=cand, recommendation=-1, status='p')
+    from django.contrib.auth.models import AnonymousUser
+    qs = (
+      Location.objects.filter(status='p')
+      .with_visit_state(AnonymousUser())
+      .select_related('chain', 'size')
+      .prefetch_related('tags', 'categories', 'favorited')
+    )
+    results = get_similar_locations(ref, min_overlap=0.0, queryset=qs)
+    match = next(r for r in results if r.pk == cand.pk)
+    assert match.similarity == round(1.0 - _RECOMMENDATION_PENALTY, 2)
+
+  def test_negative_community_score_can_push_below_threshold(self):
+    from locations.services.location_similar import _RECOMMENDATION_PENALTY
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    VisitsFactory(location=cand, recommendation=-1, status='p')
+    from django.contrib.auth.models import AnonymousUser
+    qs = (
+      Location.objects.filter(status='p')
+      .with_visit_state(AnonymousUser())
+      .select_related('chain', 'size')
+      .prefetch_related('tags', 'categories', 'favorited')
+    )
+    # threshold just above penalised score
+    results = get_similar_locations(ref, min_overlap=round(1.0 - _RECOMMENDATION_PENALTY + 0.01, 2), queryset=qs)
+    assert cand.pk not in [r.pk for r in results]
+
   def test_favorite_bonus_applied_when_favorited(self):
     ref = self._loc()
     ref.categories.add(self.cat)
@@ -362,6 +399,90 @@ class TestSimilarLocationsWeighting:
     cand.tags.add(zero)
     results = get_similar_locations(ref, min_overlap=0.01)
     assert cand.pk not in [r.pk for r in results]
+
+
+@pytest.mark.django_db
+class TestSimilarLocationsPersonalFilter:
+  """Tests for the personal 'not recommended' exclusion in Location.similar()."""
+
+  def setup_method(self):
+    _, _, self.dept = make_region_hierarchy()
+    self.cat = CategoryFactory()
+
+  def _loc(self, **kwargs):
+    return LocationFactory(geo=self.dept, **kwargs)
+
+  def _request(self, user):
+    req = MagicMock()
+    req.user = user
+    req.GET = {}
+    return req
+
+  def test_location_user_not_recommended_is_excluded(self):
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    VisitsFactory(user=user, location=cand, recommendation=-1, status='p')
+
+    ref.request = self._request(user)
+    results = ref.similar()
+    assert cand.pk not in [r.pk for r in results if isinstance(r, Location)]
+
+  def test_location_user_not_visited_is_included(self):
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    # user has no visit to cand
+
+    ref.request = self._request(user)
+    results = ref.similar()
+    assert cand.pk in [r.pk for r in results if isinstance(r, Location)]
+
+  def test_location_user_recommended_is_included(self):
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    VisitsFactory(user=user, location=cand, recommendation=1, status='p')
+
+    ref.request = self._request(user)
+    results = ref.similar()
+    assert cand.pk in [r.pk for r in results if isinstance(r, Location)]
+
+  def test_other_users_not_recommended_does_not_exclude(self):
+    from locations.tests.factories import UserFactory
+    user = UserFactory()
+    other = UserFactory()
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    # other user doesn't recommend it, but our user hasn't visited
+    VisitsFactory(user=other, location=cand, recommendation=-1, status='p')
+
+    ref.request = self._request(user)
+    results = ref.similar()
+    assert cand.pk in [r.pk for r in results if isinstance(r, Location)]
+
+  def test_anonymous_user_sees_not_recommended_locations(self):
+    """Anonymous users have no personal visits — exclusion does not apply."""
+    ref = self._loc()
+    ref.categories.add(self.cat)
+    cand = self._loc()
+    cand.categories.add(self.cat)
+    VisitsFactory(location=cand, recommendation=-1, status='p')
+
+    # no request attached — service default queryset, no personal filter
+    results = get_similar_locations(ref, min_overlap=0.0)
+    assert cand.pk in [r.pk for r in results]
 
 
 @pytest.mark.django_db

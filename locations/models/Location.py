@@ -618,8 +618,16 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     similar_locations = get_similar_locations(self, queryset=queryset, max_results=fetch_limit)
 
     if hasattr(self, 'request'):
+      from locations.models.Visits import Visits
       user = self.request.user
       similar_locations = [loc for loc in similar_locations if loc.is_visible_to(user)]
+      if getattr(user, 'is_authenticated', False):
+        not_recommended = set(
+          Visits.objects
+          .filter(user=user, recommendation=Visits.RECOMMENDATION_DO_NOT_RECOMMEND, status='p')
+          .values_list('location_id', flat=True)
+        )
+        similar_locations = [loc for loc in similar_locations if loc.pk not in not_recommended]
 
     if not is_authenticated and len(similar_locations) > ANON_LIMIT:
       return similar_locations[:ANON_LIMIT] + [{'more': True}]
