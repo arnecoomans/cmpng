@@ -14,6 +14,8 @@ class TagListView(RequestMixin, FilterMixin, ListView):
       queryset = Tag.get_optimized_queryset()
       mapping = Tag.get_filter_mapping()
       self._optimized_queryset = self.filter(queryset, mapping=mapping, request=self.request)
+      if not self.request.user.is_staff:
+        self._optimized_queryset = self._optimized_queryset.filter(children__isnull=True).distinct()
     return self._optimized_queryset
 
   def get_context_data(self, **kwargs):
