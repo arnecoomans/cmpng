@@ -6,6 +6,7 @@ from .profile import PreferencesView, RevokeMapsSessionView, SetLanguageView, Ex
 from .media import ManageMediaView
 from .lists import ManageListsView, ListListView, ListDetailView
 from .pages import PageDetailView
+from .staff import StaffDashboardView
 from .Translations import *
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
   'ManageMediaView',
   'ManageListsView', 'ListListView', 'ListDetailView',
   'PageDetailView',
+  'StaffDashboardView',
 ]

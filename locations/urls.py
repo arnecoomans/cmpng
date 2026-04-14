@@ -56,4 +56,7 @@ urlpatterns = [
   # Page Views (views/pages/)
   path('pages/<slug:slug>/', views.PageDetailView.as_view(), name='page_detail'),
 
+  # Staff Views (views/staff/)
+  path('staff/dashboard/', views.StaffDashboardView.as_view(), name='staff_dashboard'),
+
 ]

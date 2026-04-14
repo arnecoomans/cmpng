@@ -1,0 +1,303 @@
+{% extends 'locations/base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'staff dashboard'|capfirst %}{% endblock %}
+
+{% block template_css %}
+<style>
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .dashboard-card {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .dashboard-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+  }
+  .dashboard-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-height: 80px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .dashboard-card__list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    font-size: .875rem;
+    padding: .2rem 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .dashboard-card__list li:last-child { border-bottom: none }
+  .dashboard-card__list a { color: inherit; text-decoration: none }
+  .dashboard-card__list a:hover { text-decoration: underline }
+  .dashboard-card__badge {
+    font-size: .75rem;
+    font-weight: 600;
+    background: var(--gray-100);
+    border-radius: 999px;
+    padding: .1rem .5rem;
+    white-space: nowrap;
+  }
+
+  .dashboard-card__empty {
+    font-size: .875rem;
+    color: var(--gray-400);
+    font-style: italic;
+  }
+  .dashboard-card__reason {
+    font-size: .75rem;
+    color: var(--gray-400);
+    font-style: italic;
+    text-align: right;
+    flex-shrink: 0;
+    max-width: 55%;
+  }
+  .score--high  { background: #d1fae5; color: #065f46 }
+  .score--mid   { background: #fef3c7; color: #92400e }
+  .score--low   { background: #fee2e2; color: #991b1b }
+  .dashboard-card__more {
+    font-size: .75rem;
+    color: var(--gray-400);
+    font-style: italic;
+    padding-top: .25rem;
+  }
+  .dashboard-card--action {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100px;
+  }
+  .dashboard-card--action a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .dashboard-card--action a:hover .card__title { text-decoration: underline }
+  @media (max-width: 767.98px) {
+    .dashboard-grid { grid-template-columns: 1fr }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page">
+  <div class="container">
+
+    <div class="toprow">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <span aria-current="page">{% translate 'staff dashboard'|capfirst %}</span>
+      </nav>
+    </div>
+
+    <h1 class="header">{% translate 'staff dashboard'|capfirst %}</h1>
+
+    <div class="dashboard-grid">
+
+      {# ── Lowest completeness ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'lowest completeness'|capfirst %}</p>
+        </div>
+        {% if lowest_completeness %}
+          <ul class="dashboard-card__list">
+            {% for location in lowest_completeness %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                <span class="dashboard-card__badge {% if location.completeness >= 80 %}score--high{% elif location.completeness >= 50 %}score--mid{% else %}score--low{% endif %}">
+                  {{ location.completeness }}%
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if lowest_completeness|length >= max_results %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no locations found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Missing summary ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'missing or short summary'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ missing_summary_count }}</span>
+        </div>
+        {% if missing_summary %}
+          <ul class="dashboard-card__list">
+            {% for location in missing_summary %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                <span class="dashboard-card__reason">
+                  {% if location.geo.parent.parent %}{% translate location.geo.parent.parent.name %}{% endif %}
+                  {% with cats=location.categories.all %}
+                    {% if cats %}· {% for cat in cats %}{% translate cat.name %}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}
+                  {% endwith %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if missing_summary_count > missing_summary|length %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'all locations have a summary'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Fewest tags ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'fewest tags'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ fewest_tags|length }} &le; {{ fewest_tags_boundary }} {{ fewest_tags_boundary|pluralize:"tag,tags" }}</span>
+        </div>
+        {% if fewest_tags %}
+          <ul class="dashboard-card__list">
+            {% for location in fewest_tags %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                <span class="dashboard-card__badge">{{ location.tag_count }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no locations found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Missing description ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'missing description'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ missing_description_count }}</span>
+        </div>
+        {% if missing_description %}
+          <ul class="dashboard-card__list">
+            {% for location in missing_description %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if missing_description_count > missing_description|length %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'all locations have a description'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Fewest categories ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'fewest categories'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ fewest_categories|length }} &le; {{ fewest_categories_boundary }} {{ fewest_categories_boundary|pluralize:"category,categories" }}</span>
+        </div>
+        {% if fewest_categories %}
+          <ul class="dashboard-card__list">
+            {% for location in fewest_categories %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                <span class="dashboard-card__badge">{{ location.cat_count }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no locations found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Recently commented ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'recently commented'|capfirst %}</p>
+        </div>
+        {% if recently_commented %}
+          <ul class="dashboard-card__list">
+            {% for location in recently_commented %}
+              {% with comment=location.recent_comments_list|first %}
+              <li class="flex-column align-items-start">
+                <div class="d-flex justify-content-between w-100">
+                  <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                  <span class="dashboard-card__badge">{{ location.latest_comment_date|date:"d M" }}</span>
+                </div>
+                {% if comment %}
+                  <span class="dashboard-card__reason">{{ comment.text|truncatewords:10 }}</span>
+                {% endif %}
+              </li>
+              {% endwith %}
+            {% endfor %}
+          </ul>
+          {% if recently_commented|length >= max_results %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no recent comments'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Recently added ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'recently added'|capfirst %}</p>
+        </div>
+        {% if recently_added %}
+          <ul class="dashboard-card__list">
+            {% for location in recently_added %}
+              <li>
+                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                <span class="dashboard-card__reason">{% if location.user %}{{ location.user.username }}{% endif %} · {{ location.date_created|date:"d M" }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if recently_added|length >= max_results %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no locations found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Revoked ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'revoked locations'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ revoked_count }}</span>
+        </div>
+        {% if revoked %}
+          <ul class="dashboard-card__list">
+            {% for location in revoked %}
+              <li class="flex-column align-items-start">
+                <div class="d-flex justify-content-between w-100">
+                  <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+                  <span class="dashboard-card__badge">{{ location.date_modified|date:"d M" }}</span>
+                </div>
+                {% with reason=location.revoke_comments|first %}
+                  {% if reason %}
+                    <span class="dashboard-card__reason">{{ reason.text|truncatewords:12 }}</span>
+                  {% endif %}
+                {% endwith %}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if revoked_count > revoked|length %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no revoked locations'|capfirst %}</p>
+        {% endif %}
+      </div>
+
+      {# ── Tag management (link card) ── #}
+      <div class="card card--pad dashboard-card dashboard-card--action">
+        <a href="{% url 'locations:manage_tag_visibility' %}">
+          <p class="card__title">{% translate 'tag management'|capfirst %}</p>
+          <p class="text-muted small mb-0">{% translate 'manage tag descriptions and visibility'|capfirst %}</p>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
