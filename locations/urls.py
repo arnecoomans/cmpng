@@ -34,7 +34,6 @@ urlpatterns = [
   path('tag/<slug:slug>/edit/', views.EditTagView.as_view(), name='edit_tag'),
 
   # Manage Views (views/*/manage_*.py)
-  path('manage/tags/', views.ManageTagVisibilityView.as_view(), name='manage_tag_visibility'),
   path('manage/visits/', views.ManageVisitsView.as_view(), name='manage_visits'),
   path('manage/visits/<slug:slug>/', views.ManageVisitsView.as_view(), name='manage_visits_location'),
   path('manage/media/<slug:slug>/', views.ManageMediaView.as_view(), name='manage_media'),
@@ -57,6 +56,8 @@ urlpatterns = [
   path('pages/<slug:slug>/', views.PageDetailView.as_view(), name='page_detail'),
 
   # Staff Views (views/staff/)
+  # Manage Tag Visibility Views (views/*/manage_*.py)
+  path('staff/tags/', views.ManageTagVisibilityView.as_view(), name='manage_tag_visibility'),
   path('staff/dashboard/', views.StaffDashboardView.as_view(), name='staff_dashboard'),
 
 ]

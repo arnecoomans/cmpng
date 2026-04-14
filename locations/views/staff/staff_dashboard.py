@@ -23,7 +23,7 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     context = super().get_context_data(**kwargs)
     context['max_results'] = self.max_results
 
-    published = Location.objects.filter(status='p').select_related('geo')
+    published = Location.objects.filter(status='p').exclude(categories__slug='home').select_related('geo')
 
     context['lowest_completeness'] = (
       published
@@ -74,7 +74,7 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
       .values('date_created')[:1]
     )
     context['recently_commented'] = (
-      Location.objects.filter(status='p')
+      Location.objects.filter(status='p').exclude(categories__slug='home')
       .annotate(latest_comment_date=Subquery(latest_comment_date))
       .filter(latest_comment_date__isnull=False)
       .prefetch_related(

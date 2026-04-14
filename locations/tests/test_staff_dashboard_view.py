@@ -3,7 +3,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
 from locations.models.Location import Location
+from locations.models import Category
 from locations.tests.factories import (
+  CategoryFactory,
   CommentFactory,
   LocationFactory,
   UserFactory,
@@ -324,3 +326,92 @@ class TestStaffDashboardRecentlyAdded:
     response = _get(client)
     pks = [l.pk for l in response.context['recently_added']]
     assert revoked.pk not in pks
+
+
+# ------------------------------------------------------------------ #
+#  Home category exclusion
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardHomeCategoryExclusion:
+
+  def _home_category(self):
+    return Category.objects.get_or_create(slug='home', defaults={'name': 'Home', 'status': 'p'})[0]
+
+  def _home_location(self):
+    loc = LocationFactory()
+    loc.categories.add(self._home_category())
+    return loc
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+
+  def test_home_location_excluded_from_lowest_completeness(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['lowest_completeness']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_missing_summary(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['missing_summary']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_missing_summary_count(self, client):
+    LocationFactory(summary=None)  # non-home, should be counted
+    home_loc = self._home_location()
+    home_loc.summary = None
+    home_loc.save()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['missing_summary']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_missing_description(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['missing_description']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_fewest_tags(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['fewest_tags']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_fewest_categories(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['fewest_categories']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_recently_commented(self, client):
+    home_loc = self._home_location()
+    ct = ContentType.objects.get_for_model(home_loc)
+    CommentFactory(content_type=ct, object_id=home_loc.pk)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['recently_commented']]
+    assert home_loc.pk not in pks
+
+  def test_home_location_excluded_from_recently_added(self, client):
+    home_loc = self._home_location()
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['recently_added']]
+    assert home_loc.pk not in pks
+
+  def test_revoked_home_location_still_in_revoked_list(self, client):
+    home_loc = LocationFactory(status='r')
+    home_loc.categories.add(self._home_category())
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['revoked']]
+    assert home_loc.pk in pks
