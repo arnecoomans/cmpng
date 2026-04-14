@@ -122,7 +122,18 @@ class TestTagListSearch:
 @pytest.mark.django_db
 class TestTagListGrouping:
 
-  def test_root_tags_and_child_tags_both_present(self, client):
+  def test_non_staff_sees_only_leaf_tags(self, client):
+    parent = TagFactory(name='Outdoor')
+    TagFactory(name='Hiking', parent=parent)
+    url = reverse('locations:tags')
+    response = client.get(url)
+    names = [t.name for t in response.context['tags']]
+    assert 'Hiking' in names
+    assert 'Outdoor' not in names
+
+  def test_staff_sees_both_parent_and_child_tags(self, client, django_user_model):
+    user = django_user_model.objects.create_user(username='staff', password='pass', is_staff=True)
+    client.force_login(user)
     parent = TagFactory(name='Outdoor')
     TagFactory(name='Hiking', parent=parent)
     url = reverse('locations:tags')
