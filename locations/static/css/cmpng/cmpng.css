@@ -156,7 +156,8 @@ a.internal.tag {
 .crumbs a { color: var(--gray-600); text-decoration: none }
 .crumbs a:hover { text-decoration: underline }
 .sep { opacity: .7 }
-.topactions { display: flex; gap: 10px }
+.topactions { display: flex; flex-wrap: wrap; gap: 10px }
+.topactions__break { display: none }
 
 /* ---------- Page header ---------- */
 
@@ -561,6 +562,7 @@ a.internal.tag {
     justify-content: flex-end;
   }
   .crumb-name { display: none }
+  .topactions__break { flex-basis: 100%; height: 0 }
 }
 @media (max-width: 620px) {
   .list-item { grid-template-columns: 1fr; align-items: start }

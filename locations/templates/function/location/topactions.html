@@ -19,6 +19,7 @@
 
   <!-- Staff User functions -->
   {% if user.is_staff %}
+  <span class="topactions__break"></span>
     {% if perms.locations.change_location %}
       <!-- Re-enrich: refresh all automatically detected geo data -->
       <form method="post" action="{% url 'locations:reenrich_location' location.slug %}" style="display:inline">
