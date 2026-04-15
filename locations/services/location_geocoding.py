@@ -195,15 +195,15 @@ def _extract_address_parts(geocode_result):
   }
 
   filled = set()
-  for component in components:
-    types      = component.get('types', [])
-    long_name  = component.get('long_name', '')
-    short_name = component.get('short_name', '')
-    for google_type, target_name, target_slug in MAPPING:
-      if google_type in types and target_name not in filled:
-        result[target_name] = long_name
-        result[target_slug] = short_name
+  for google_type, target_name, target_slug in MAPPING:
+    if target_name in filled:
+      continue
+    for component in components:
+      if google_type in component.get('types', []):
+        result[target_name] = component.get('long_name', '')
+        result[target_slug] = component.get('short_name', '')
         filled.add(target_name)
+        break
 
   if getattr(settings, 'DEBUG', False):
     missing = [k for k, v in result.items() if v.startswith('(')]
