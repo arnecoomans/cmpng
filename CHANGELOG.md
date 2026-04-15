@@ -13,6 +13,7 @@
 
 ### Fixed
 - Topactions bar no longer overflows on mobile — buttons wrap with `flex-wrap`, staff-only actions (re-enrich, revoke, admin view) break to a second row on small screens ([#40](https://github.com/arnecoomans/cmpng/issues/40))
+- Nearby and similar thumbnails now respect media visibility — `request` is propagated onto each returned location object so `ordered_media` applies the correct visibility filter; previously all media including private and family photos were exposed ([#42](https://github.com/arnecoomans/cmpng/issues/42))
 
 ## [26.04.2] - 2026-04-12
 

@@ -593,6 +593,8 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     if hasattr(self, 'request'):
       user = self.request.user
       nearby_locations = [loc for loc in nearby_locations if loc.is_visible_to(user)]
+      for loc in nearby_locations:
+        loc.request = self.request
     return nearby_locations
 
   @ajax_function
@@ -628,6 +630,10 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
           .values_list('location_id', flat=True)
         )
         similar_locations = [loc for loc in similar_locations if loc.pk not in not_recommended]
+      for loc in similar_locations:
+        if isinstance(loc, dict):
+          continue
+        loc.request = self.request
 
     if not is_authenticated and len(similar_locations) > ANON_LIMIT:
       return similar_locations[:ANON_LIMIT] + [{'more': True}]
