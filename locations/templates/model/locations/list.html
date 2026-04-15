@@ -112,9 +112,11 @@
                   {% if user.preferences in location.home_of.all %}<!-- Home Icon-->
                     <i class="bi bi-house-fill cmpng-icons" title="{% translate 'is your home'|capfirst %}"></i>
                   {% else %}
-                    <!-- Highlight private locations -->
-                    {% if location.visibility == 'q' %}
-                      <i class="bi bi-incognito cmpng-icons" title="{% translate 'this is a private location'|capfirst %}"></i>
+                    <!-- Show Location Visibility for Private, Family and Community -->
+                    {% if location.visibility != 'p' %}
+                      <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'visible to'|capfirst %} {{ location.get_visibility_display|capfirst }}">
+                        {{ location.get_visibility_display|slice:":1" }}
+                      </span>
                     {% endif %}
                     <!-- Comments -->
                     {% if location.prefetched_comments %}
