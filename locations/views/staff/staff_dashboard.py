@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Count, OuterRef, Prefetch, Q, Subquery
+from django.db.models import Count, Exists, OuterRef, Prefetch, Q, Subquery
 from django.db.models.functions import Length
 from django.views.generic import TemplateView
 
@@ -94,8 +94,15 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     )
     revoked_qs = Location.objects.filter(status='r')
     context['revoked_count'] = revoked_qs.count()
+    has_revoke_comment = Comment.objects.filter(
+      content_type=location_ct,
+      object_id=OuterRef('pk'),
+      status='p',
+      title__icontains='revok',
+    )
     context['revoked'] = (
       revoked_qs
+      .annotate(has_revoke_reason=Exists(has_revoke_comment))
       .select_related('geo')
       .prefetch_related(
         Prefetch(
@@ -104,7 +111,7 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
           to_attr='revoke_comments',
         )
       )
-      .order_by('-date_modified')[:self.max_results]
+      .order_by('has_revoke_reason', '-date_modified')
     )
 
     return context
