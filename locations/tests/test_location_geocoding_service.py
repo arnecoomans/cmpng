@@ -443,6 +443,23 @@ class TestExtractAddressParts:
 
     assert parts['department'] == 'Paris'
 
+  def test_admin_level_2_beats_locality_for_department(self):
+    """When both administrative_area_level_2 and locality are present,
+    MAPPING priority must win — admin_level_2 should be used as department,
+    not the locality (regression test for French addresses like Mama Café / Lot)."""
+    result = MagicMock()
+    result.raw = {'address_components': [
+      {'types': ['country'],                     'long_name': 'France',    'short_name': 'FR'},
+      {'types': ['administrative_area_level_1'], 'long_name': 'Occitanie', 'short_name': 'OCC'},
+      {'types': ['locality'],                    'long_name': 'Saint-Céré','short_name': 'Saint-Céré'},
+      {'types': ['administrative_area_level_2'], 'long_name': 'Lot',       'short_name': 'Lot'},
+    ]}
+
+    parts = _extract_address_parts(result)
+
+    assert parts['department'] == 'Lot'
+    assert parts['region'] == 'Occitanie'
+
   def test_sublocality_overrides_admin_level1_for_region(self):
     result = MagicMock()
     result.raw = {'address_components': [
