@@ -69,6 +69,7 @@ class TestStaffDashboardContext:
   def test_context_contains_all_expected_keys(self, client):
     response = self._response(client)
     expected = [
+      'problems', 'problems_count',
       'lowest_completeness',
       'missing_summary', 'missing_summary_count',
       'missing_description', 'missing_description_count',
@@ -415,3 +416,76 @@ class TestStaffDashboardHomeCategoryExclusion:
     response = _get(client)
     pks = [l.pk for l in response.context['revoked']]
     assert home_loc.pk in pks
+
+
+# ------------------------------------------------------------------ #
+#  Problems card
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardProblems:
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+
+  def test_location_without_address_appears(self, client):
+    loc = LocationFactory(address=None, geo=None)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk in pks
+
+  def test_location_with_empty_address_appears(self, client):
+    loc = LocationFactory(address='', geo=None)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk in pks
+
+  def test_location_without_region_appears(self, client):
+    loc = LocationFactory(address='Some Street 1', geo=None)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk in pks
+
+  def test_location_with_both_missing_appears_once(self, client):
+    loc = LocationFactory(address=None, geo=None)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert pks.count(loc.pk) == 1
+
+  def test_location_with_address_and_region_not_in_problems(self, client):
+    from locations.tests.factories import RegionFactory
+    country = RegionFactory(level='country', parent=None)
+    region  = RegionFactory(level='region', parent=country)
+    dept    = RegionFactory(level='department', parent=region)
+    loc = LocationFactory(address='Main Street 1', geo=dept)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk not in pks
+
+  def test_problems_count_reflects_total(self, client):
+    LocationFactory.create_batch(3, address=None, geo=None)
+    self._staff(client)
+    response = _get(client)
+    assert response.context['problems_count'] >= 3
+
+  def test_revoked_location_not_in_problems(self, client):
+    loc = LocationFactory(status='r', address=None, geo=None)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk not in pks
+
+  def test_home_location_not_in_problems(self, client):
+    home_cat = Category.objects.get_or_create(slug='home', defaults={'name': 'Home', 'status': 'p'})[0]
+    loc = LocationFactory(address=None, geo=None)
+    loc.categories.add(home_cat)
+    self._staff(client)
+    response = _get(client)
+    pks = [l.pk for l in response.context['problems']]
+    assert loc.pk not in pks

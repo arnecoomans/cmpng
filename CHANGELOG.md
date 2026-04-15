@@ -3,11 +3,16 @@
 ## [Unreleased]
 
 ### Added
+- Staff dashboard at `/staff/dashboard/` — surfaces locations needing attention across eight cards: problems (missing address or region), lowest completeness score, missing/short summary, missing description, fewest tags, fewest categories, recently commented, recently added, and revoked locations. The problems card is full-width and only renders when issues exist. Locations with the "home" category are excluded from all cards except revoked. Revoked locations are sorted by missing reason first, then by date. Linked from the staff section of the navigation dropdown. ([#2](https://github.com/arnecoomans/cmpng/issues/2), [#15](https://github.com/arnecoomans/cmpng/issues/15))
 - `Tag.similarity_weight` field (default 100) — tags that strongly define a location's character (e.g. *domaine*, *Nederlandse eigenaren*) can be given a higher weight to increase their contribution to the similarity score. Editable in Django admin and the tag edit form. ([#39](https://github.com/arnecoomans/cmpng/issues/39))
 
 ### Changed
+- Manage tag visibility moved from `/manage/tags/` to `/staff/tags/` to consolidate staff-only URLs under the `/staff/` prefix
 - Similar locations: negative community recommendation score now deducts −0.10 from the composite score (mirrors the +0.10 bonus for positive scores) ([#39](https://github.com/arnecoomans/cmpng/issues/39))
 - Similar locations: locations the authenticated user has personally marked as "not recommended" are never shown in their similar list, regardless of community score or attribute overlap ([#39](https://github.com/arnecoomans/cmpng/issues/39))
+
+### Fixed
+- Topactions bar no longer overflows on mobile — buttons wrap with `flex-wrap`, staff-only actions (re-enrich, revoke, admin view) break to a second row on small screens ([#40](https://github.com/arnecoomans/cmpng/issues/40))
 
 ## [26.04.2] - 2026-04-12
 

@@ -106,6 +106,29 @@
 
     <div class="dashboard-grid">
 
+      {# ── Problems ── #}
+      {% if problems %}
+      <div class="card card--pad dashboard-card" style="grid-column: 1 / -1; border-color: #fca5a5;">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0" style="color: #991b1b;">{% translate 'problems'|capfirst %}</p>
+          <span class="dashboard-card__badge score--low">{{ problems_count }}</span>
+        </div>
+        <ul class="dashboard-card__list">
+          {% for location in problems %}
+            <li>
+              <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
+              <span class="dashboard-card__reason">
+                {% if not location.address %}{% translate 'no address' %}{% endif %}
+                {% if not location.address and not location.geo %} · {% endif %}
+                {% if not location.geo %}{% translate 'no region' %}{% endif %}
+              </span>
+            </li>
+          {% endfor %}
+        </ul>
+        {% if problems_count > problems|length %}<p class="dashboard-card__more">{% translate '… and more' %}</p>{% endif %}
+      </div>
+      {% endif %}
+
       {# ── Lowest completeness ── #}
       <div class="card card--pad dashboard-card">
         <div class="dashboard-card__header">

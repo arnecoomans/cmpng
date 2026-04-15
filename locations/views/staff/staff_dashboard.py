@@ -25,6 +25,10 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     published = Location.objects.filter(status='p').exclude(categories__slug='home').select_related('geo')
 
+    problems_qs = published.filter(Q(address__isnull=True) | Q(address='') | Q(geo__isnull=True))
+    context['problems_count'] = problems_qs.count()
+    context['problems'] = problems_qs.order_by('name')[:self.max_results]
+
     context['lowest_completeness'] = (
       published
       .select_related('geo__parent__parent')
