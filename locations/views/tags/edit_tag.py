@@ -12,7 +12,7 @@ class EditTagView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
   fields = ['name', 'slug', 'description', 'parent', 'status', 'similarity_weight']
   success_url = reverse_lazy('locations:tags')
 
-def get_form(self, form_class=None):
+  def get_form(self, form_class=None):
     form = super().get_form(form_class)
     form.fields['parent'].required = False
     if self.request.method == 'POST':
