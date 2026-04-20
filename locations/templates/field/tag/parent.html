@@ -1,9 +1,10 @@
 <div class="input-group mt-2">
   <div class="input-group-text" style="min-width:120px">{% translate 'parent'|capfirst %}</div>
   <input type="text"
-    class="form-control{% if form.slug.errors %} is-invalid{% endif %}"
+    class="form-control{% if form.parent.errors %} is-invalid{% endif %}"
     placeholder="{% translate 'start typing'|capfirst %}..."
-    {% if object.parent %}value="{{ object.parent.name }}"{% endif %}          data-autosuggest
+    {% if object.parent %}value="{{ object.parent.name }}"{% endif %}
+    data-autosuggest
     data-url="{% url 'cmnsd:dispatch' 'tags' %}"
     data-param="{{ search_query_character|default:'q'}}"
     data-extra-params='{"format":"json", "parent__isnull": "true", "exclude" :"id:{{ object.id }}"}'
