@@ -1,0 +1,30 @@
+<div class="input-group mt-2">
+  <div class="input-group-text" style="min-width:120px">{% translate 'parent'|capfirst %}</div>
+  <input type="text"
+    class="form-control{% if form.slug.errors %} is-invalid{% endif %}"
+    placeholder="{% translate 'start typing'|capfirst %}..."
+    {% if object.parent %}value="{{ object.parent.name }}"{% endif %}          data-autosuggest
+    data-url="{% url 'cmnsd:dispatch' 'tags' %}"
+    data-param="{{ search_query_character|default:'q'}}"
+    data-extra-params='{"format":"json", "parent__isnull": "true", "exclude" :"id:{{ object.id }}"}'
+    data-field-input="name"
+    data-field-hidden="id"
+    data-field-prefix="parent__"
+    data-container="tag"
+    data-allow-create="0"
+    data-autosuggest-allow-empty="1"
+    data-min="0"
+  >
+  {% if object.parent %}
+    <button type="button" class="btn btn--icon"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'tag' object.id object.slug 'parent' %}"
+      data-method="POST"
+      data-body='{"parent__id": "{{ object.parent.id }}" }'
+      data-map='{"parent": "#parent"}'
+      
+    >
+      <i class="bi bi-x"></i>
+    </button>
+  {% endif %}
+</div>

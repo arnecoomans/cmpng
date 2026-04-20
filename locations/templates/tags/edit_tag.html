@@ -44,6 +44,9 @@
         >
         {% if form.slug.errors %}<div class="invalid-feedback">{{ form.slug.errors.as_text }}</div>{% endif %}
       </div>
+      <div id="parent">
+        {% include 'field/tag/parent.html' %}
+      </div>
 
       <div class="input-group mt-2">
         <div class="input-group-text" style="min-width:120px">{% translate 'description'|capfirst %}</div>

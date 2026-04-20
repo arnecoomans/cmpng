@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Tag parent field on the tag edit form — autosuggest filtered to top-level tags only (`parent__isnull=true`); includes a × button to clear the parent via cmnsd.api without leaving the page. ([#43](https://github.com/arnecoomans/cmpng/issues/43))
 - Staff dashboard at `/staff/dashboard/` — surfaces locations needing attention across eight cards: problems (missing address or region), lowest completeness score, missing/short summary, missing description, fewest tags, fewest categories, recently commented, recently added, and revoked locations. The problems card is full-width and only renders when issues exist. Locations with the "home" category are excluded from all cards except revoked. Revoked locations are sorted by missing reason first, then by date. Linked from the staff section of the navigation dropdown. ([#2](https://github.com/arnecoomans/cmpng/issues/2), [#15](https://github.com/arnecoomans/cmpng/issues/15))
 - `Tag.similarity_weight` field (default 100) — tags that strongly define a location's character (e.g. *domaine*, *Nederlandse eigenaren*) can be given a higher weight to increase their contribution to the similarity score. Editable in Django admin and the tag edit form. ([#39](https://github.com/arnecoomans/cmpng/issues/39))
 
