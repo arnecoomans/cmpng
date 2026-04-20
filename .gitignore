@@ -34,6 +34,7 @@ settings_local.py
 .vscode/
 .idea/
 *.swp
+.claude
 
 # Documentation sessions (optional - these can be personal/exploratory)
 documentation/claude-session-*.md
