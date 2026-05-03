@@ -152,7 +152,7 @@
   </nav>
   {% endif %}
 
-  {% if available_filters.visibility.options %}
+  {% if available_filters.visibility.options and user.is_authenticated %}
   <p class="mb-0 small">
     {% for option in available_filters.visibility.options %}
       {% if not forloop.first %}&middot;{% endif %}

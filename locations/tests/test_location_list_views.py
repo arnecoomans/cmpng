@@ -219,34 +219,46 @@ class TestVisibilityFilterOptions:
     view.object_list = Location.objects.none()
     return view
 
-  def test_sole_visibility_returns_sole_name(self, db):
-    LocationFactory(visibility='p')
+  def test_anon_user_returns_empty_dict(self, db):
     LocationFactory(visibility='p')
     qs = Location.objects.filter(status='p')
 
     result = self._view(_get()).get_visibility_filter_options(qs)
+
+    assert result == {}
+
+  def test_sole_visibility_returns_sole_name(self, db):
+    user = UserFactory()
+    user.save()
+    LocationFactory(visibility='p')
+    LocationFactory(visibility='p')
+    qs = Location.objects.filter(status='p')
+
+    result = self._view(_get(user)).get_visibility_filter_options(qs)
 
     assert result['sole_name'] is not None
     assert result['options'] == []
 
   def test_multiple_visibilities_returns_options(self, db):
+    user = UserFactory()
+    user.save()
     LocationFactory(visibility='p')
     LocationFactory(visibility='c')
     qs = Location.objects.filter(status='p')
 
-    result = self._view(_get()).get_visibility_filter_options(qs)
+    result = self._view(_get(user)).get_visibility_filter_options(qs)
 
     assert 'sole_name' not in result
     assert len(result['options']) == 2
 
   def test_active_visibility_excluded_from_options(self, db):
+    user = UserFactory()
+    user.save()
     LocationFactory(visibility='p')
     LocationFactory(visibility='c')
     qs = Location.objects.filter(status='p')
     request = RequestFactory().get('/', {'visibility': 'p'})
-    from django.contrib.auth.models import AnonymousUser
-    from django.contrib.messages.storage.fallback import FallbackStorage
-    request.user = AnonymousUser()
+    request.user = user
     request.session = {}
     request._messages = FallbackStorage(request)
 
@@ -257,12 +269,13 @@ class TestVisibilityFilterOptions:
     assert 'c' in keys
 
   def test_active_name_set_when_visibility_filtered(self, db):
+    user = UserFactory()
+    user.save()
     LocationFactory(visibility='p')
     LocationFactory(visibility='c')
     qs = Location.objects.filter(status='p')
     request = RequestFactory().get('/', {'visibility': 'p'})
-    from django.contrib.auth.models import AnonymousUser
-    request.user = AnonymousUser()
+    request.user = user
     request.session = {}
     request._messages = FallbackStorage(request)
 
@@ -271,9 +284,11 @@ class TestVisibilityFilterOptions:
     assert 'active_name' in result
 
   def test_empty_queryset_returns_empty_dict(self, db):
+    user = UserFactory()
+    user.save()
     qs = Location.objects.none()
 
-    result = self._view(_get()).get_visibility_filter_options(qs)
+    result = self._view(_get(user)).get_visibility_filter_options(qs)
 
     assert result == {}
 

@@ -109,6 +109,8 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     return {}
 
   def get_visibility_filter_options(self, qs):
+    if not self.request.user.is_authenticated:
+      return {}
     from cmnsd.models import VisibilityModel
     display_names = dict(VisibilityModel.visibility_choices)
     active_code = self.request.GET.get('visibility', '')
