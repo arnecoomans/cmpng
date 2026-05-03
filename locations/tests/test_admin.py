@@ -6,6 +6,7 @@ from django.test import RequestFactory
 
 from locations.admin import BaseModelAdmin, LocationAdmin, recalculate_distances
 from locations.models import Location
+from locations.models.Visits import Visits
 from locations.tests.factories import LocationFactory, UserFactory
 
 
@@ -160,3 +161,58 @@ class TestRecalculateDistancesAction:
     messages = list(request._messages)
     assert len(messages) == 1
     assert '1' in str(messages[0])
+
+
+# ------------------------------------------------------------------ #
+#  LocationAdmin.recommendation_score display method
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationAdminRecommendationScore:
+
+  def setup_method(self):
+    self.site = AdminSite()
+    self.admin = LocationAdmin(Location, self.site)
+
+  def test_returns_dash_when_score_is_none(self, db):
+    location = LocationFactory()
+    with patch('locations.admin.get_recommendation_summary', return_value={'score': None}):
+      result = self.admin.recommendation_score(location)
+    assert result == '–'
+
+  def test_returns_score_when_present(self, db):
+    location = LocationFactory()
+    with patch('locations.admin.get_recommendation_summary', return_value={'score': 42}):
+      result = self.admin.recommendation_score(location)
+    assert result == 42
+
+
+# ------------------------------------------------------------------ #
+#  VisitsAdmin.recommendation_label display method
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestVisitsAdminRecommendationLabel:
+
+  def setup_method(self):
+    from locations.admin import VisitsAdmin
+    self.site = AdminSite()
+    self.admin = VisitsAdmin(Visits, self.site)
+
+  def test_returns_dash_when_recommendation_is_none(self, db):
+    visit = MagicMock(spec=Visits)
+    visit.recommendation = None
+    assert self.admin.recommendation_label(visit) == '–'
+
+  def test_returns_label_for_known_recommendation(self, db):
+    visit = MagicMock(spec=Visits)
+    visit.recommendation = Visits.RECOMMENDATION_RECOMMEND
+    result = self.admin.recommendation_label(visit)
+    assert result is not None
+    assert result != '–'
+
+  def test_returns_raw_value_for_unknown_recommendation(self, db):
+    visit = MagicMock(spec=Visits)
+    visit.recommendation = 'unknown_code'
+    result = self.admin.recommendation_label(visit)
+    assert result == 'unknown_code'

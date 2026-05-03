@@ -708,6 +708,15 @@ class TestLocationUrls:
     from django.urls import reverse
     assert str(location.get_type_list_url()) == reverse('locations:activities')
 
+  def test_get_absolute_url_no_type(self, db):
+    location = LocationFactory()
+    Location.objects.filter(pk=location.pk).update(is_accommodation=False, is_activity=False)
+    location.refresh_from_db()
+    url = str(location.get_absolute_url())
+    assert location.slug in url
+    assert 'accommodation' not in url
+    assert 'activity' not in url
+
   def test_get_type_list_url_no_type(self, db):
     location = LocationFactory()
     # Bypass save() / _update_types() to force both flags off

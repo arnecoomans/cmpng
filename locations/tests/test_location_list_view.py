@@ -339,7 +339,10 @@ class TestLocationListContext:
         url = reverse('locations:home')
         response = client.get(url)
 
-        assert 'region_filter_options' in response.context
+        assert 'available_filters' in response.context
+        assert 'geo' in response.context['available_filters']
+        assert 'category' in response.context['available_filters']
+        assert 'tag' in response.context['available_filters']
     
     def test_context_includes_active_filters(self, client):
         """Context shows which filters are currently active."""

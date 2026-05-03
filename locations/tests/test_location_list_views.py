@@ -344,6 +344,28 @@ class TestStatusFilterOptions:
 
     assert view.get_status_filter_options() == []
 
+  def test_status_filter_options_without_check_returns_empty(self, db):
+    view = self._view(_get())
+    # _check_extra_statuses never called — hasattr guard fires (line 82)
+    assert view.get_status_filter_options() == []
+
+  def test_status_url_param_filters_queryset(self, db):
+    user = UserFactory()
+    user.save()
+    concept = LocationFactory(status='c', user=user)
+    published = LocationFactory(status='p')
+    request = RequestFactory().get('/', {'status': 'c'})
+    request.user = user
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    response = AllLocationListView.as_view()(request)
+    qs = response.context_data['locations']
+
+    pks = list(qs.values_list('pk', flat=True))
+    assert concept.pk in pks
+    assert published.pk not in pks
+
 
 # ------------------------------------------------------------------ #
 #  get_category_filter_options / get_tag_filter_options

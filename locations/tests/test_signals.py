@@ -123,8 +123,17 @@ class TestSignalsMiscCoverage:
       media_saved(sender=None, instance=media, raw=True)
     mock.assert_not_called()
 
+  def test_comment_saved_raw_skips(self):
+    """Line 85 — comment_saved with raw=True returns immediately."""
+    from locations.signals import comment_saved
+    from unittest.mock import MagicMock
+    comment = MagicMock()
+    with patch('locations.signals._recalculate') as mock:
+      comment_saved(sender=None, instance=comment, raw=True)
+    mock.assert_not_called()
+
   def test_comment_saved_non_location_content_object_skips(self):
-    """Line 85 — comment_saved skips if content_object is not a Location."""
+    """comment_saved skips if content_object is not a Location."""
     from locations.signals import comment_saved
     from unittest.mock import MagicMock
     comment = MagicMock()
