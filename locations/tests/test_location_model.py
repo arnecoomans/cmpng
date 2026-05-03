@@ -902,6 +902,104 @@ class TestLocationNearby:
     _, kwargs = mock.call_args
     assert kwargs.get('radius_km') == 50.0
 
+  def test_nearby_invalid_radius_param_falls_back_to_default(self, db):
+    from unittest.mock import patch, MagicMock
+    from django.conf import settings
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = True
+    request.GET.get = MagicMock(return_value='not-a-number')
+    location.request = request
+    expected = getattr(settings, 'NEARBY_RANGE', 75)
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[]) as mock:
+      location.nearby()
+    _, kwargs = mock.call_args
+    assert kwargs.get('radius_km') == expected
+
+  def test_nearby_propagates_request_to_result_locations(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = False
+    location.request = request
+    nearby_loc = MagicMock()
+    nearby_loc.is_visible_to = MagicMock(return_value=True)
+    with patch('locations.services.location_nearby.get_nearby_locations', return_value=[nearby_loc]):
+      result = location.nearby()
+    assert nearby_loc.request is request
+
+
+# ------------------------------------------------------------------ #
+#  similar
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationSimilar:
+
+  def test_similar_returns_list(self, db):
+    from unittest.mock import patch
+    location = LocationFactory()
+    with patch('locations.services.location_similar.get_similar_locations', return_value=[]):
+      result = location.similar()
+    assert result == []
+
+  def test_similar_anon_truncates_at_limit_and_appends_sentinel(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    # Build 6 mock locations (ANON_LIMIT=5, so 6 triggers truncation)
+    mock_locs = [MagicMock() for _ in range(6)]
+    with patch('locations.services.location_similar.get_similar_locations', return_value=mock_locs):
+      result = location.similar()
+    assert len(result) == 6  # 5 real + sentinel
+    assert result[-1] == {'more': True}
+
+  def test_similar_anon_no_sentinel_when_within_limit(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    mock_locs = [MagicMock() for _ in range(3)]
+    with patch('locations.services.location_similar.get_similar_locations', return_value=mock_locs):
+      result = location.similar()
+    assert {'more': True} not in result
+
+  def test_similar_propagates_request_to_result_locations(self, db):
+    from unittest.mock import patch, MagicMock
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = True
+    request.user.is_authenticated = True
+    location.request = request
+    mock_loc = MagicMock()
+    mock_loc.is_visible_to = MagicMock(return_value=True)
+    mock_loc.pk = 999
+    with patch('locations.services.location_similar.get_similar_locations', return_value=[mock_loc]):
+      with patch('locations.models.Visits.Visits.objects') as mock_visits_qs:
+        mock_visits_qs.filter.return_value.values_list.return_value = []
+        result = location.similar()
+    assert mock_loc.request is request
+
+  def test_similar_skips_dict_sentinels_when_assigning_request(self, db):
+    from unittest.mock import patch, MagicMock
+
+    # A dict subclass that passes the is_visible_to() filter so the
+    # isinstance(loc, dict) guard on line 635 is actually reached.
+    class VisibleDict(dict):
+      def is_visible_to(self, user): return True
+      pk = None
+
+    location = LocationFactory()
+    request = MagicMock()
+    request.user.is_authenticated = True
+    location.request = request
+    mock_loc = MagicMock()
+    mock_loc.is_visible_to = MagicMock(return_value=True)
+    mock_loc.pk = 998
+    sentinel = VisibleDict({'more': True})
+    with patch('locations.services.location_similar.get_similar_locations', return_value=[mock_loc, sentinel]):
+      with patch('locations.models.Visits.Visits.objects') as mock_visits_qs:
+        mock_visits_qs.filter.return_value.values_list.return_value = []
+        result = location.similar()
+    assert mock_loc.request is request
+
 
 # ------------------------------------------------------------------ #
 #  ajax_function delegates (topactions, contact_details)
