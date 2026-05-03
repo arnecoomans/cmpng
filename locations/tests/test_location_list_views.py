@@ -3,7 +3,13 @@ from django.test import RequestFactory
 from django.contrib.messages.storage.fallback import FallbackStorage
 
 from locations.models.Location import Location
-from locations.tests.factories import LocationFactory, RegionFactory, UserFactory
+from locations.tests.factories import (
+  LocationFactory,
+  RegionFactory,
+  CategoryFactory,
+  TagFactory,
+  UserFactory,
+)
 from locations.views.locations.locations_list import (
   AllLocationListView,
   AccommodationListView,
@@ -117,11 +123,11 @@ class TestActivityListView:
 
 
 # ------------------------------------------------------------------ #
-#  get_region_filter_options
+#  get_geo_filter_options
 # ------------------------------------------------------------------ #
 
 @pytest.mark.django_db
-class TestRegionFilterOptions:
+class TestGeoFilterOptions:
 
   def _view(self, request):
     view = AllLocationListView()
@@ -138,7 +144,7 @@ class TestRegionFilterOptions:
     LocationFactory(geo=dept_fr)
     qs = Location.objects.all()
 
-    result = self._view(_get()).get_region_filter_options(qs)
+    result = self._view(_get()).get_geo_filter_options(qs)
 
     assert result['key'] == 'country'
     assert len(result['options']) == 2
@@ -153,9 +159,9 @@ class TestRegionFilterOptions:
     LocationFactory(geo=dept_b)
     qs = Location.objects.all()
 
-    result = self._view(_get()).get_region_filter_options(qs)
+    result = self._view(_get()).get_geo_filter_options(qs)
 
-    assert result['key'] == 'geo__parent__slug'
+    assert result['key'] == 'region'
     assert len(result['options']) == 2
 
   def test_returns_department_key_when_single_region_multiple_departments(self, db):
@@ -167,9 +173,9 @@ class TestRegionFilterOptions:
     LocationFactory(geo=dept_b)
     qs = Location.objects.all()
 
-    result = self._view(_get()).get_region_filter_options(qs)
+    result = self._view(_get()).get_geo_filter_options(qs)
 
-    assert result['key'] == 'geo__slug'
+    assert result['key'] == 'department'
     assert len(result['options']) == 2
 
   def test_returns_empty_dict_when_single_department(self, db):
@@ -177,14 +183,13 @@ class TestRegionFilterOptions:
     LocationFactory(geo=dept)
     qs = Location.objects.all()
 
-    result = self._view(_get()).get_region_filter_options(qs)
+    result = self._view(_get()).get_geo_filter_options(qs)
 
     assert result == {}
 
   def test_options_are_sorted_by_name(self, db):
     dept_nl = _make_geo_hierarchy('nl', 'nh', 'amsterdam')
     dept_fr = _make_geo_hierarchy('fr', 'idf', 'paris')
-    # Ensure France sorts before Netherlands alphabetically
     dept_nl.parent.parent.name = 'Netherlands'
     dept_nl.parent.parent.save()
     dept_fr.parent.parent.name = 'France'
@@ -193,7 +198,231 @@ class TestRegionFilterOptions:
     LocationFactory(geo=dept_fr)
     qs = Location.objects.all()
 
-    result = self._view(_get()).get_region_filter_options(qs)
+    result = self._view(_get()).get_geo_filter_options(qs)
 
     names = [o['name'] for o in result['options']]
     assert names == sorted(names)
+
+
+# ------------------------------------------------------------------ #
+#  get_visibility_filter_options
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestVisibilityFilterOptions:
+
+  def _view(self, request):
+    view = AllLocationListView()
+    view.request = request
+    view.args = []
+    view.kwargs = {}
+    view.object_list = Location.objects.none()
+    return view
+
+  def test_sole_visibility_returns_sole_name(self, db):
+    LocationFactory(visibility='p')
+    LocationFactory(visibility='p')
+    qs = Location.objects.filter(status='p')
+
+    result = self._view(_get()).get_visibility_filter_options(qs)
+
+    assert result['sole_name'] is not None
+    assert result['options'] == []
+
+  def test_multiple_visibilities_returns_options(self, db):
+    LocationFactory(visibility='p')
+    LocationFactory(visibility='c')
+    qs = Location.objects.filter(status='p')
+
+    result = self._view(_get()).get_visibility_filter_options(qs)
+
+    assert 'sole_name' not in result
+    assert len(result['options']) == 2
+
+  def test_active_visibility_excluded_from_options(self, db):
+    LocationFactory(visibility='p')
+    LocationFactory(visibility='c')
+    qs = Location.objects.filter(status='p')
+    request = RequestFactory().get('/', {'visibility': 'p'})
+    from django.contrib.auth.models import AnonymousUser
+    from django.contrib.messages.storage.fallback import FallbackStorage
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    result = self._view(request).get_visibility_filter_options(qs)
+
+    keys = [o['key'] for o in result['options']]
+    assert 'p' not in keys
+    assert 'c' in keys
+
+  def test_active_name_set_when_visibility_filtered(self, db):
+    LocationFactory(visibility='p')
+    LocationFactory(visibility='c')
+    qs = Location.objects.filter(status='p')
+    request = RequestFactory().get('/', {'visibility': 'p'})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    result = self._view(request).get_visibility_filter_options(qs)
+
+    assert 'active_name' in result
+
+  def test_empty_queryset_returns_empty_dict(self, db):
+    qs = Location.objects.none()
+
+    result = self._view(_get()).get_visibility_filter_options(qs)
+
+    assert result == {}
+
+
+# ------------------------------------------------------------------ #
+#  get_status_filter_options / _check_extra_statuses
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStatusFilterOptions:
+
+  def _view(self, request):
+    view = AllLocationListView()
+    view.request = request
+    view.args = []
+    view.kwargs = {}
+    view.object_list = Location.objects.none()
+    return view
+
+  def test_no_extra_statuses_returns_empty_list(self, db):
+    LocationFactory(status='p')
+    qs = Location.objects.all()
+
+    view = self._view(_get())
+    view._check_extra_statuses(qs)
+
+    assert view.get_status_filter_options() == []
+
+  def test_owner_with_concept_gets_draft_option(self, db):
+    user = UserFactory()
+    user.save()
+    LocationFactory(status='c', user=user)
+    qs = Location.objects.all()
+    request = _get(user)
+
+    view = self._view(request)
+    view._check_extra_statuses(qs)
+    options = view.get_status_filter_options()
+
+    keys = [o['key'] for o in options]
+    assert 'p' in keys
+    assert 'c' in keys
+    assert 'r' not in keys
+
+  def test_staff_with_revoked_gets_revoked_option(self, db):
+    staff = UserFactory()
+    staff.is_staff = True
+    staff.save()
+    LocationFactory(status='r')
+    qs = Location.objects.all()
+    request = _get(staff)
+
+    view = self._view(request)
+    view._check_extra_statuses(qs)
+    options = view.get_status_filter_options()
+
+    keys = [o['key'] for o in options]
+    assert 'p' in keys
+    assert 'r' in keys
+
+  def test_anon_never_gets_extra_statuses(self, db):
+    LocationFactory(status='c')
+    LocationFactory(status='r')
+    qs = Location.objects.all()
+
+    view = self._view(_get())
+    view._check_extra_statuses(qs)
+
+    assert view.get_status_filter_options() == []
+
+
+# ------------------------------------------------------------------ #
+#  get_category_filter_options / get_tag_filter_options
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestCategoryTagFilterOptions:
+
+  def _view(self, request):
+    view = AllLocationListView()
+    view.request = request
+    view.args = []
+    view.kwargs = {}
+    view.object_list = Location.objects.none()
+    return view
+
+  def test_category_options_exclude_active(self, db):
+    camping = CategoryFactory(name='Camping')
+    hotel = CategoryFactory(name='Hotel')
+    loc = LocationFactory()
+    loc.categories.add(camping)
+    loc.categories.add(hotel)
+    qs = Location.objects.filter(status='p')
+    request = RequestFactory().get('/', {'category': camping.slug})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    result = self._view(request).get_category_filter_options(qs)
+
+    slugs = [o['slug'] for o in result['options']]
+    assert camping.slug not in slugs
+    assert hotel.slug in slugs
+
+  def test_category_options_include_precomputed_url(self, db):
+    cat = CategoryFactory(name='Camping')
+    loc = LocationFactory()
+    loc.categories.add(cat)
+    qs = Location.objects.filter(status='p')
+
+    result = self._view(_get()).get_category_filter_options(qs)
+
+    assert 'url' in result['options'][0]
+    assert cat.slug in result['options'][0]['url']
+
+  def test_tag_options_exclude_active(self, db):
+    pet = TagFactory(name='Pet Friendly')
+    pool = TagFactory(name='Pool')
+    loc = LocationFactory()
+    loc.tags.add(pet)
+    loc.tags.add(pool)
+    qs = Location.objects.filter(status='p')
+    request = RequestFactory().get('/', {'tag': pet.slug})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    result = self._view(request).get_tag_filter_options(qs)
+
+    slugs = [o['slug'] for o in result['options']]
+    assert pet.slug not in slugs
+    assert pool.slug in slugs
+
+  def test_second_category_appended_with_and_separator(self, db):
+    camping = CategoryFactory(name='Camping')
+    hotel = CategoryFactory(name='Hotel')
+    loc = LocationFactory()
+    loc.categories.add(camping)
+    loc.categories.add(hotel)
+    qs = Location.objects.filter(status='p')
+    request = RequestFactory().get('/', {'category': camping.slug})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    result = self._view(request).get_category_filter_options(qs)
+
+    hotel_option = next(o for o in result['options'] if o['slug'] == hotel.slug)
+    assert '__and__' in hotel_option['url']
