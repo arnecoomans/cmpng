@@ -4,7 +4,7 @@
 
 {% block template_css %}
   <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-locations-list.css' %}">
-  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-locations-sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-locations-filterbox.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -35,50 +35,18 @@
         </button>
       </div>
     </div>
-
-    <!-- ============================= -->
-    <!-- ACTIVE FILTER CHIPS -->
-    <!-- ============================= -->
-    {% if request.GET %}
-      <div class="cmpng-active-filters d-flex flex-wrap gap-2 align-items-center mt-3">
-        <span class="text-muted small">{% trans "Active filters:" %}</span>
-
-        {% for key, value in request.GET.items %}
-          {% if value %}
-            <a
-              href="{% update_query_params request remove=value to=key %}"
-              class="badge rounded-pill text-bg-light text-decoration-none"
-            >
-              {{ key|capfirst }}: {{ value }} ×
-            </a>
-          {% endif %}
-        {% endfor %}
-
-        <a href="?" class="ms-auto small text-decoration-none">
-          {% trans "Clear all" %}
-        </a>
-      </div>
-    {% endif %}
-
   </div>
 
 
   <!-- ============================= -->
   <!-- MAIN LAYOUT -->
   <!-- ============================= -->
-  <div class="row g-4">
+  <div class="row g-4" id="locationslist">
     {% include 'locations/locations_list_sidebar.html' %}
     <!-- ============================= -->
     <!-- CONTENT AREA -->
     <!-- ============================= -->
     <main class="col-lg-9">
-
-      <!-- Optional result counter -->
-      {% if page_obj %}
-        <div class="mb-2 text-muted small">
-          {{ page_obj.paginator.count }} {% trans "results" %}
-        </div>
-      {% endif %}
 
       <div class="cmpng-results list-group list-group-flush" id="LocationsContainer">
         {% include 'model/locations/list.html' %}
@@ -104,7 +72,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
   <div class="offcanvas-body cmpng-sidebar">
-    {% include 'locations/locations_list_filters.html' %}
+    {% include 'locations/locations_list_filterbox.html' %}
   </div>
 </div>
 </div>

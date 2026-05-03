@@ -1,0 +1,178 @@
+
+<div class="type-filter mb-3">
+  <h2 class="">{% translate 'type'|capfirst %}</h2>
+  <a href="{% url 'locations:all' %}{% copy_query_params request %}"{% if scope == 'all' %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{% url 'locations:accommodations' %}{% copy_query_params request %}"{% if scope == 'accommodations' %} class="active"{% endif %}>{% translate 'accommodations'|capfirst %}</a> &middot;
+  <a href="{% url 'locations:activities' %}{% copy_query_params request %}"{% if scope == 'activities' %} class="active"{% endif %}>{% translate 'activities'|capfirst %}</a>
+</div>
+
+{% if available_filters.geo or active_filters.country or active_filters.region or active_filters.department %}
+<div class="geo-filter mb-3">
+  <h2 class="">{% translate 'location'|capfirst %}</h2>
+
+  {% if active_filters.country or active_filters.region or active_filters.department %}
+  <nav class="geo-breadcrumb d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
+    {% if active_filters.country %}
+      {% if active_filters.region or active_filters.department %}
+        <span>{{ active_filters.country.0 }}</span>
+        <span aria-hidden="true">›</span>
+      {% else %}
+        <span>{{ active_filters.country.0 }}</span>
+        <a href="{{ request.path }}{% update_query_params request clear='1' to='country' %}" aria-label="{% translate 'remove' %}">
+          &times;
+        </a>
+      {% endif %}
+    {% endif %}
+
+    {% if active_filters.region %}
+      {% if active_filters.department %}
+        <span>{{ active_filters.region.0 }}</span>
+        <span aria-hidden="true">›</span>
+      {% else %}
+        <span>{{ active_filters.region.0 }}</span>
+        <a href="{{ request.path }}{% update_query_params request clear='1' to='region' %}" aria-label="{% translate 'remove' %}">
+          &times;
+        </a>
+      {% endif %}
+    {% endif %}
+
+    {% if active_filters.department %}
+      <span>{{ active_filters.department.0 }}</span>
+      <a href="{{ request.path }}{% update_query_params request clear='1' to='department' %}" aria-label="{% translate 'remove' %}">
+        &times;
+      </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% if available_filters.geo.options %}
+  <ul>
+    {% for option in available_filters.geo.options %}
+    <li>
+      <a href="{{ request.path }}{% update_query_params request replace=option.slug to=available_filters.geo.key %}">
+        {{ option.name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<div class="visited-filter mb-3">
+  <h2 class="">{% translate 'visited'|capfirst %}</h2>
+  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_visited' %}"{% if not request.GET.is_visited %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_visited' %}"{% if request.GET.is_visited == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_visited' %}"{% if request.GET.is_visited == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+</div>
+
+<div class="favorite-filter mb-3">
+  <h2 class="">{% translate 'favorited'|capfirst %}</h2>
+  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_favorite' %}"{% if not request.GET.is_favorite %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_favorite' %}"{% if request.GET.is_favorite == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_favorite' %}"{% if request.GET.is_favorite == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+</div>
+{% endif %}
+
+{% if available_filters.category or active_filters.category %}
+<div class="category-filter mb-3">
+  <h2 class="">{% translate 'categories'|capfirst %}</h2>
+
+  {% if active_filters.category %}
+  <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
+    {% for value in active_filters.category %}
+      <span>{{ value }}</span>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='category' %}" aria-label="{% translate 'remove' %}">
+        &times;
+      </a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% if available_filters.category.options %}
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    placeholder="{% translate 'filter by category'|capfirst %}"
+    data-autosuggest
+    data-local-source="{{ available_filters.category.options|tojson|escape }}"
+    data-field-input="name"
+    data-onclick-follow="url"
+    data-allow-create="0"
+    data-min="0"
+  >
+  {% endif %}
+</div>
+{% endif %}
+
+{% if available_filters.tag or active_filters.tag %}
+<div class="tag-filter mb-3">
+  <h2 class="">{% translate 'tags'|capfirst %}</h2>
+
+  {% if active_filters.tag %}
+  <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
+    {% for value in active_filters.tag %}
+      <span>{{ value }}</span>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='tag' %}" aria-label="{% translate 'remove' %}">
+        &times;
+      </a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% if available_filters.tag.options %}
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    placeholder="{% translate 'filter by tag'|capfirst %}"
+    data-autosuggest
+    data-local-source="{{ available_filters.tag.options|tojson|escape }}"
+    data-field-input="name"
+    data-onclick-follow="url"
+    data-allow-create="0"
+    data-min="0"
+  >
+  {% endif %}
+</div>
+{% endif %}
+
+{% if available_filters.visibility or active_filters.visibility %}
+<div class="visibility-filter mb-3">
+  <h2 class="">{% translate 'visibility'|capfirst %}</h2>
+
+  {% if available_filters.visibility.sole_name %}
+  <span class="active">{{ available_filters.visibility.sole_name }}</span>
+  {% elif active_filters.visibility %}
+  <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
+    <span>{{ available_filters.visibility.active_name|default:active_filters.visibility.0 }}</span>
+    <a href="{{ request.path }}{% update_query_params request clear='1' to='visibility' %}" aria-label="{% translate 'remove' %}">
+      &times;
+    </a>
+  </nav>
+  {% endif %}
+
+  {% if available_filters.visibility.options %}
+  <p class="mb-0 small">
+    {% for option in available_filters.visibility.options %}
+      {% if not forloop.first %}&middot;{% endif %}
+      <a href="{{ option.url }}">{{ option.name }}</a>
+    {% endfor %}
+  </p>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if available_filters.status %}
+<div class="status-filter mb-3">
+  <h2 class="">{% translate 'status'|capfirst %}</h2>
+  {% for option in available_filters.status %}
+    {% if not forloop.first %}&middot;{% endif %}
+    {% if option.key == 'p' %}
+      <a href="{{ request.path }}{% update_query_params request clear='1' to='status' %}"{% if not request.GET.status %} class="active"{% endif %}>{{ option.label }}</a>
+    {% else %}
+      <a href="{{ request.path }}{% update_query_params request replace=option.key to='status' %}"{% if request.GET.status == option.key %} class="active"{% endif %}>{{ option.label }}</a>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endif %}
