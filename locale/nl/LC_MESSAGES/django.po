@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 13:30+0000\n"
-"PO-Revision-Date: 2026-03-26 00:00+0100\n"
+"POT-Creation-Date: 2026-05-03 16:58+0200\n"
+"PO-Revision-Date: 2026-05-03 17:09+0200\n"
 "Last-Translator: Arne Coomans\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "Language: nl\n"
@@ -16,12 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
 
 #: cmnsd/admin.py:40
-#, fuzzy
-#| msgid "System Information"
 msgid "system information"
-msgstr "Systeeminformatie"
+msgstr "systeeminformatie"
 
 #: cmnsd/admin.py:47
 msgid "Recalculate computed fields (run save on selected items)"
@@ -31,15 +30,14 @@ msgstr "Berekende velden herberekenen (sla geselecteerde items opnieuw op)"
 #: locations/templates/element/reusable_description_form.html:17
 #: locations/templates/field/location/visibility.html:2
 #: locations/templates/locations/add_location.html:117
+#: locations/templates/locations/locations_list_filterbox.html:142
 #: locations/templates/media/manage_media.html:88
 msgid "visibility"
 msgstr "zichtbaarheid"
 
 #: cmnsd/admin.py:104
-#, fuzzy
-#| msgid "this location has images"
 msgid "translation aliases"
-msgstr "deze locatie heeft afbeeldingen"
+msgstr "vertaling aliassen"
 
 #: cmnsd/admin.py:108
 msgid ""
@@ -60,22 +58,16 @@ msgid "Last name"
 msgstr "Achternaam"
 
 #: cmnsd/forms/registration.py:9
-#, fuzzy
-#| msgid "Email address"
 msgid "email address"
-msgstr "E-mailadres"
+msgstr "e-mailadres"
 
 #: cmnsd/forms/registration.py:10
-#, fuzzy
-#| msgid "First name"
 msgid "first name"
-msgstr "Voornaam"
+msgstr "voornaam"
 
 #: cmnsd/forms/registration.py:11
-#, fuzzy
-#| msgid "Last name"
 msgid "last name"
-msgstr "Achternaam"
+msgstr "achternaam"
 
 #: cmnsd/mixins/FilterMixin.py:75
 msgid "You must be logged in to view these items"
@@ -86,12 +78,12 @@ msgstr "Je moet ingelogd zijn om deze items te bekijken"
 msgid "Field '{}' is not allowed for searching due to security reasons."
 msgstr "Veld '{}' mag om veiligheidsredenen niet worden doorzocht."
 
-#: cmnsd/mixins/FilterMixin.py:173 cmnsd/mixins/FilterMixin.py:453
+#: cmnsd/mixins/FilterMixin.py:173 cmnsd/mixins/FilterMixin.py:486
 #, python-brace-format
 msgid "An error occurred while searching{}"
 msgstr "Er is een fout opgetreden tijdens het zoeken{}"
 
-#: cmnsd/mixins/FilterMixin.py:526
+#: cmnsd/mixins/FilterMixin.py:559
 #, python-brace-format
 msgid "An error occurred while filtering{}"
 msgstr "Er is een fout opgetreden tijdens het filteren{}"
@@ -243,10 +235,8 @@ msgid "Language this page is written in"
 msgstr "Taal waarin deze pagina is geschreven"
 
 #: cmnsd/models/Page.py:28
-#, fuzzy
-#| msgid "markdown supported"
 msgid "Markdown supported"
-msgstr "markdown ondersteund"
+msgstr "Markdown wordt ondersteund"
 
 #: cmnsd/models/Tag.py:9 cmnsd/models/TagModel.py:12
 msgid "Name of tag"
@@ -945,11 +935,11 @@ msgstr "leeg"
 msgid "changed field '{}' from {} to {}"
 msgstr "veld '{}' gewijzigd van {} naar {}"
 
-#: cmnsd/views/auth/login.py:11
+#: cmnsd/views/auth/login.py:15
 msgid "You are already signed in."
 msgstr "Je bent al ingelogd."
 
-#: cmnsd/views/auth/login.py:17
+#: cmnsd/views/auth/login.py:21
 msgid "You have been signed in."
 msgstr "Je bent ingelogd."
 
@@ -962,7 +952,7 @@ msgid "Profile updated."
 msgstr "Profiel bijgewerkt."
 
 #: locations/admin.py:28 locations/admin.py:60 locations/admin.py:75
-#: locations/admin.py:88 locations/admin.py:114
+#: locations/admin.py:88 locations/admin.py:117
 msgid "Basic Information"
 msgstr "Basisinformatie"
 
@@ -982,95 +972,91 @@ msgstr "Classificatie"
 msgid "Score"
 msgstr "Score"
 
-#: locations/admin.py:101
+#: locations/admin.py:91
+msgid "Similarity"
+msgstr "Gelijkenis"
+
+#: locations/admin.py:104
 msgid "Link Information"
 msgstr "Linkinformatie"
 
-#: locations/admin.py:127
+#: locations/admin.py:130
 msgid "App Information"
 msgstr "App-informatie"
 
-#: locations/admin.py:139
+#: locations/admin.py:142
 msgid "User Preferences"
 msgstr "Gebruikersvoorkeuren"
 
-#: locations/admin.py:152
+#: locations/admin.py:155
 msgid "Visit Information"
 msgstr "Bezoekinfo"
 
-#: locations/admin.py:155
+#: locations/admin.py:158
 msgid "Start date"
 msgstr "Startdatum"
 
-#: locations/admin.py:158
+#: locations/admin.py:161
 msgid "End date"
 msgstr "Einddatum"
 
-#: locations/admin.py:160
+#: locations/admin.py:163
 msgid "Optional — leave blank for single-day or unknown duration visits."
 msgstr "Optioneel — laat leeg voor eendaagse of onbekende verblijfsduur."
 
-#: locations/admin.py:162 locations/admin.py:173
-#, fuzzy
-#| msgid "Accommodation"
+#: locations/admin.py:165 locations/admin.py:176
 msgid "Recommendation"
-msgstr "Accommodatie"
+msgstr "Aanbeveling"
 
-#: locations/admin.py:168
-#, fuzzy
-#| msgid "comments"
+#: locations/admin.py:171
 msgid "Recommended"
-msgstr "reacties"
+msgstr "Aangeraden"
 
-#: locations/admin.py:169
-#, fuzzy
-#| msgid "Australia"
+#: locations/admin.py:172
 msgid "Neutral"
-msgstr "Australië"
+msgstr "Neutraal"
 
-#: locations/admin.py:170
-#, fuzzy
-#| msgid "No comments found."
+#: locations/admin.py:173
 msgid "Not recommended"
-msgstr "Geen reacties gevonden."
+msgstr "Niet aangeraden"
 
-#: locations/admin.py:188
+#: locations/admin.py:191
 msgid "Comment"
 msgstr "Reactie"
 
-#: locations/admin.py:191
+#: locations/admin.py:194
 msgid "Attached to"
 msgstr "Gekoppeld aan"
 
-#: locations/admin.py:205
+#: locations/admin.py:208
 msgid "Media"
 msgstr "Media"
 
-#: locations/admin.py:235
+#: locations/admin.py:238
 msgid "List"
 msgstr "Lijst"
 
-#: locations/admin.py:250
+#: locations/admin.py:253
 msgid "Item"
 msgstr "Item"
 
-#: locations/admin.py:253
+#: locations/admin.py:256
 msgid "Accommodation"
 msgstr "Accommodatie"
 
-#: locations/admin.py:256
+#: locations/admin.py:259
 msgid "Media & Routing"
 msgstr "Media & Routering"
 
-#: locations/admin.py:269
+#: locations/admin.py:272
 msgid "Route"
 msgstr "Route"
 
-#: locations/admin.py:272
+#: locations/admin.py:275
 msgid "Cached result"
 msgstr "Gecached resultaat"
 
-#: locations/admin.py:286
+#: locations/admin.py:289
 msgid "Content"
 msgstr "Inhoud"
 
@@ -1152,10 +1138,8 @@ msgid "summary"
 msgstr "samenvatting"
 
 #: locations/models/Location.py:455
-#, fuzzy
-#| msgid "links"
 msgid "link"
-msgstr "links"
+msgstr "link"
 
 #: locations/models/Location.py:456
 #: locations/templates/field/location/categories.html:3
@@ -1163,49 +1147,39 @@ msgid "category"
 msgstr "categorie"
 
 #: locations/models/Location.py:457
-#, fuzzy
-#| msgid "categories"
 msgid "multiple categories"
-msgstr "categorieën"
+msgstr "meerdere categorieën"
 
 #: locations/models/Location.py:458
 #: locations/templates/field/location/description.html:11
 #: locations/templates/function/location/filtered_descriptions.html:9
-#: locations/templates/tags/edit_tag.html:49
+#: locations/templates/tags/edit_tag.html:52
 msgid "description"
 msgstr "beschrijving"
 
 #: locations/models/Location.py:459
-#, fuzzy
-#| msgid "Media"
 msgid "media"
-msgstr "Media"
+msgstr "media"
 
 #: locations/models/Location.py:460
-#, fuzzy
-#| msgid "tags"
 msgid "tag"
-msgstr "tags"
+msgstr "tag"
 
 #: locations/models/Location.py:461
 msgid "multiple tags"
 msgstr "meerdere tags"
 
 #: locations/models/Location.py:463
-#, fuzzy
-#| msgid "visited"
 msgid "visited (+10%)"
-msgstr "bezocht"
+msgstr "bezocht (+10%)"
 
 #: locations/models/Location.py:464
 msgid "on a list (+10%)"
 msgstr "op een lijst (+10%)"
 
 #: locations/models/Location.py:465
-#, fuzzy
-#| msgid "comments"
 msgid "comments (+5%)"
-msgstr "reacties"
+msgstr "reacties (+5%)"
 
 #: locations/models/Location.py:467
 msgid "size (+5%)"
@@ -1258,33 +1232,31 @@ msgstr "gemiddelde afstand van alle locaties/subregio's in deze regio"
 msgid "a region with this name already exists under the same parent."
 msgstr "een regio met deze naam bestaat al onder dezelfde bovenliggende regio."
 
+#: locations/models/Tag.py:18
+msgid ""
+"relative weight used in similarity scoring; increase for tags that strongly "
+"define a location (default: 100)"
+msgstr ""
+
 #: locations/models/Visits.py:23
 #: locations/templates/visits/manage_visits.html:10
-#, fuzzy
-#| msgid "comments"
 msgid "recommend"
-msgstr "reacties"
+msgstr "aangeraden"
 
 #: locations/models/Visits.py:24
 #: locations/templates/visits/manage_visits.html:13
-#, fuzzy
-#| msgid "Australia"
 msgid "neutral"
-msgstr "Australië"
+msgstr "neutraal"
 
 #: locations/models/Visits.py:25
 #: locations/templates/visits/manage_visits.html:16
-#, fuzzy
-#| msgid "add a comment"
 msgid "do not recommend"
-msgstr "reactie toevoegen"
+msgstr "niet aangeraden"
 
 #: locations/models/Visits.py:31
 #: locations/templates/visits/manage_visits.html:144
-#, fuzzy
-#| msgid "Accommodation"
 msgid "recommendation"
-msgstr "Accommodatie"
+msgstr "aangeraden"
 
 #: locations/models/Visits.py:35
 msgid "january"
@@ -1343,16 +1315,12 @@ msgid "day of visit"
 msgstr "dag van bezoek"
 
 #: locations/models/Visits.py:56
-#, fuzzy
-#| msgid "year of visit"
 msgid "year of last day of visit"
-msgstr "jaar van bezoek"
+msgstr "jaar van laatste dag van bezoek"
 
 #: locations/models/Visits.py:60
-#, fuzzy
-#| msgid "day of visit"
 msgid "day of last day of visit"
-msgstr "dag van bezoek"
+msgstr "laatste dag van bezoek"
 
 #: locations/models/Visits.py:77
 msgid "End year cannot be before start year."
@@ -1368,16 +1336,13 @@ msgstr "Einddag kan niet vóór de begindag liggen in dezelfde maand."
 
 #: locations/services/location_nearby.py:128
 #: locations/templates/locations/location_detail.html:40
-#, fuzzy
-#| msgid "Published"
 msgid "republish"
-msgstr "Gepubliceerd"
+msgstr "opnieuw publiceren"
 
 #: locations/services/location_nearby.py:134
-#, fuzzy, python-brace-format
-#| msgid "read more"
+#, python-brace-format
 msgid " and {} more"
-msgstr "lees meer"
+msgstr " en {} meer"
 
 #: locations/services/location_nearby.py:138
 #, python-format
@@ -1483,19 +1448,15 @@ msgstr "media beheren voor"
 #: locations/templates/element/location/topaction_revoke.html:8
 #: locations/templates/element/location/topaction_revoke.html:12
 #: locations/templates/locations/revoke_location_form.html:33
-#, fuzzy
-#| msgid "add location"
 msgid "revoke location"
-msgstr "locatie toevoegen"
+msgstr "locatie terugtrekken"
 
 #: locations/templates/element/location/topaction_revoke.html:8
 #: locations/templates/element/location/topaction_revoke.html:12
 #: locations/templates/locations/location_detail.html:39
 #: locations/templates/locations/revoke_location_form.html:37
-#, fuzzy
-#| msgid "add location"
 msgid "republish location"
-msgstr "locatie toevoegen"
+msgstr "locatie opnieuw publiceren"
 
 #: locations/templates/element/location/topactions_admin_view.html:1
 msgid "open this object in django&apos;s admin"
@@ -1513,7 +1474,7 @@ msgid "enter description here"
 msgstr "voer hier een beschrijving in"
 
 #: locations/templates/element/reusable_description_form.html:23
-#: locations/templates/tags/edit_tag.html:68
+#: locations/templates/tags/edit_tag.html:84
 msgid "save"
 msgstr "opslaan"
 
@@ -1554,6 +1515,7 @@ msgstr "kort onderwerp"
 
 #: locations/templates/element/reusable_form_comment.html:25
 #: locations/templates/function/location/filtered_descriptions.html:20
+#: locations/templates/model/locations/list.html:120
 #: locations/templates/object/comment.html:15
 msgid "visible to"
 msgstr "zichtbaar voor"
@@ -1570,9 +1532,10 @@ msgstr "plaatsen"
 #: locations/templates/field/location/categories.html:22
 #: locations/templates/field/location/chain.html:19
 #: locations/templates/field/location/links.html:24
+#: locations/templates/field/tag/parent.html:5
 #: locations/templates/field/userpreferences/home.html:30
 #: locations/templates/locations/add_location.html:99
-#: templates/navigation.html:72
+#: templates/navigation.html:73
 msgid "start typing"
 msgstr "begin met typen"
 
@@ -1582,6 +1545,7 @@ msgstr "adres van deze"
 
 #: locations/templates/field/location/categories.html:3
 #: locations/templates/locations/add_location.html:94
+#: locations/templates/locations/locations_list_filterbox.html:80
 msgid "categories"
 msgstr "categorieën"
 
@@ -1705,10 +1669,8 @@ msgstr "bezoekers raden deze plek niet aan"
 
 #: locations/templates/field/location/visitors.html:26
 #: locations/templates/field/location/visitors.html:57
-#, fuzzy
-#| msgid "you have visited this place"
 msgid "you recommend this place"
-msgstr "je hebt deze plek bezocht"
+msgstr "je raadt deze plek aan"
 
 #: locations/templates/field/location/visitors.html:26
 #: locations/templates/field/location/visitors.html:57
@@ -1732,17 +1694,13 @@ msgstr "jij raadt niet aan — community is neutraal"
 
 #: locations/templates/field/location/visitors.html:26
 #: locations/templates/field/location/visitors.html:65
-#, fuzzy
-#| msgid "you have visited this place"
 msgid "you visited this place"
 msgstr "je hebt deze plek bezocht"
 
 #: locations/templates/field/location/visitors.html:26
 #: locations/templates/field/location/visitors.html:61
-#, fuzzy
-#| msgid "you have visited this place"
 msgid "you visited and don't recommend this place"
-msgstr "je hebt deze plek bezocht"
+msgstr "je hebt deze plek bezocht maar raadt deze plek niet aan"
 
 #: locations/templates/field/location/visitors.html:26
 #: locations/templates/field/location/visitors.html:61
@@ -1767,13 +1725,15 @@ msgid "visits to"
 msgstr "bezoeken aan"
 
 #: locations/templates/field/location/visits.html:13
-#, fuzzy
-#| msgid "You need an account to love this location. Please login or register."
 msgid "You need an account to visit this location. Please login or register."
 msgstr ""
-"Je hebt een account nodig om deze locatie te bezoeken. Log in of "
+"Je hebt een account nodig om deze pagina te bezoeken. Log in of "
 "registreer.Je hebt een account nodig om deze locatie als favoriet te "
 "markeren. Log in of registreer."
+
+#: locations/templates/field/tag/parent.html:2
+msgid "parent"
+msgstr "ouder"
 
 #: locations/templates/field/userpreferences/all_apps.html:2
 msgid "links to apps"
@@ -1902,6 +1862,7 @@ msgid "add a description to"
 msgstr "beschrijving toevoegen aan"
 
 #: locations/templates/function/location/filtered_tags.html:2
+#: locations/templates/locations/locations_list_filterbox.html:111
 #: locations/templates/tags/edit_tag.html:12
 #: locations/templates/tags/manage_tag_visibility.html:32
 #: templates/navigation.html:20
@@ -1913,7 +1874,6 @@ msgid "no tags selected"
 msgstr "geen tags geselecteerd"
 
 #: locations/templates/function/location/filtered_tags.html:59
-#: locations/templates/locations/locations_list_filters.html:109
 msgid "select a tag"
 msgstr "selecteer een tag"
 
@@ -1970,6 +1930,9 @@ msgid "nearby"
 msgstr "in de buurt"
 
 #: locations/templates/function/location/nearby.html:7
+#: locations/templates/locations/locations_list_filterbox.html:4
+#: locations/templates/locations/locations_list_filterbox.html:65
+#: locations/templates/locations/locations_list_filterbox.html:72
 msgid "all"
 msgstr "alles"
 
@@ -1991,18 +1954,16 @@ msgid "logged in users see more"
 msgstr "ingelogde gebruikers zien meer"
 
 #: locations/templates/function/location/similar.html:15
-#: templates/navigation.html:61
+#: templates/navigation.html:62
 msgid "register"
 msgstr "registreren"
 
 #: locations/templates/function/location/similar.html:16
 #: locations/templates/locations/base.html:12
-#, fuzzy
-#| msgid "log out"
 msgid "log in"
-msgstr "uitloggen"
+msgstr "log in"
 
-#: locations/templates/function/location/topactions.html:31
+#: locations/templates/function/location/topactions.html:32
 msgid "refresh automatically detected data of"
 msgstr "automatisch gedetecteerde gegevens vernieuwen van"
 
@@ -2091,28 +2052,30 @@ msgid "url"
 msgstr "url"
 
 #: locations/templates/locations/add_location.html:91
-#, fuzzy
-#| msgid "optional — select one or more categories"
 msgid "optional — website or booking page"
-msgstr "optioneel — selecteer een of meer categorieën"
+msgstr "optioneel — website of boekingspagina"
 
 #: locations/templates/locations/add_location.html:114
 msgid "optional — select one or more categories"
 msgstr "optioneel — selecteer een of meer categorieën"
 
 #: locations/templates/locations/add_location.html:124
-#, fuzzy
-#| msgid "you have hidden this location"
 msgid "who can see this location"
-msgstr "je hebt deze locatie verborgen"
+msgstr "wie kan deze locatie zien"
 
 #: locations/templates/locations/add_location.html:131
 #: locations/templates/locations/revoke_location_form.html:29
-#: locations/templates/tags/edit_tag.html:69
+#: locations/templates/tags/edit_tag.html:85
 msgid "cancel"
 msgstr "annuleren"
 
 #: locations/templates/locations/add_location.html:164
+#: locations/templates/locations/locations_list_filterbox.html:21
+#: locations/templates/locations/locations_list_filterbox.html:33
+#: locations/templates/locations/locations_list_filterbox.html:41
+#: locations/templates/locations/locations_list_filterbox.html:86
+#: locations/templates/locations/locations_list_filterbox.html:117
+#: locations/templates/locations/locations_list_filterbox.html:149
 msgid "remove"
 msgstr "verwijderen"
 
@@ -2121,23 +2084,19 @@ msgid "adding…"
 msgstr "toevoegen…"
 
 #: locations/templates/locations/add_location.html:229
-#, fuzzy
-#| msgid "a region with this name already exists under the same parent."
 msgid "a location with this name already exists"
-msgstr ""
-"er bestaat al een locatie met deze naamer bestaat al een regio met deze naam "
-"onder hetzelfde bovenliggend item."
+msgstr "er bestaat al een locatie met deze naam"
 
 #: locations/templates/locations/add_location.html:230
-#, fuzzy
-#| msgid "you have visited this place"
 msgid "you have a draft with this name"
-msgstr "je hebt deze plek bezocht"
+msgstr "je hebt een concept met deze naam"
 
 #: locations/templates/locations/add_location.html:231
 msgid ""
 "you previously revoked a location with this name — do you want to restore it?"
 msgstr ""
+"je hebt eerder een locatie met deze naam teruggetrokken — wil je dat "
+"herstellen?"
 
 #: locations/templates/locations/add_location.html:232
 msgid "a deleted location with this name exists"
@@ -2169,12 +2128,12 @@ msgid ""
 "With a free account you see more accommodations and activities, mark visits, "
 "save favourites, build lists and more."
 msgstr ""
+"Met een gratis account zie je meer accommodaties en activiteiten, log je je "
+"bezoeken, sla je favorieten op, maak je lijsten en meer."
 
 #: locations/templates/locations/base.html:10
-#, fuzzy
-#| msgid "create account"
 msgid "Create an account"
-msgstr "account aanmaken"
+msgstr "Maak een account aan"
 
 #: locations/templates/locations/base.html:11
 msgid "or"
@@ -2196,10 +2155,8 @@ msgstr "nabijgelegen accommodaties en activiteiten laden"
 
 #: locations/templates/locations/location_detail.html:148
 #: locations/templates/locations/location_detail.html:171
-#, fuzzy
-#| msgid "upload image"
 msgid "loading"
-msgstr "afbeelding uploaden"
+msgstr "laden"
 
 #: locations/templates/locations/location_detail.html:216
 #: locations/templates/locations/location_detail.html:219
@@ -2211,95 +2168,71 @@ msgid "read less"
 msgstr "lees minder"
 
 #: locations/templates/locations/locations_list.html:34
-#: locations/templates/locations/locations_list.html:103
+#: locations/templates/locations/locations_list.html:71
 msgid "Filters"
 msgstr "Filters"
 
-#: locations/templates/locations/locations_list.html:44
-msgid "Active filters:"
-msgstr "Actieve filters:"
-
-#: locations/templates/locations/locations_list.html:58
-msgid "Clear all"
-msgstr "Alles wissen"
-
-#: locations/templates/locations/locations_list.html:79
-msgid "results"
-msgstr "resultaten"
-
-#: locations/templates/locations/locations_list_filters.html:3
+#: locations/templates/locations/locations_list_filterbox.html:3
 msgid "type"
 msgstr "type"
 
-#: locations/templates/locations/locations_list_filters.html:7
+#: locations/templates/locations/locations_list_filterbox.html:5
 msgid "accommodations"
 msgstr "accommodaties"
 
-#: locations/templates/locations/locations_list_filters.html:12
+#: locations/templates/locations/locations_list_filterbox.html:6
 msgid "activities"
 msgstr "activiteiten"
 
-#: locations/templates/locations/locations_list_filters.html:20
+#: locations/templates/locations/locations_list_filterbox.html:11
+msgid "location"
+msgstr "locatie"
+
+#: locations/templates/locations/locations_list_filterbox.html:64
 msgid "visited"
 msgstr "bezocht"
 
-#: locations/templates/locations/locations_list_filters.html:25
-#: locations/templates/preferences/preferences.html:90
-msgid "been there"
-msgstr "er geweest"
+#: locations/templates/locations/locations_list_filterbox.html:66
+#: locations/templates/locations/locations_list_filterbox.html:73
+msgid "yes"
+msgstr "ja"
 
-#: locations/templates/locations/locations_list_filters.html:31
-msgid "not yet"
-msgstr "nog niet"
+#: locations/templates/locations/locations_list_filterbox.html:67
+#: locations/templates/locations/locations_list_filterbox.html:74
+msgid "no"
+msgstr "nee"
 
-#: locations/templates/locations/locations_list_filters.html:39
-msgid "favorites"
-msgstr "favorieten"
+#: locations/templates/locations/locations_list_filterbox.html:71
+msgid "favorited"
+msgstr "gefavoriteerd"
 
-#: locations/templates/locations/locations_list_filters.html:44
-#: locations/templates/preferences/preferences.html:93
-msgid "loved"
-msgstr "geliked"
+#: locations/templates/locations/locations_list_filterbox.html:97
+msgid "filter by category"
+msgstr "filter op categorie"
 
-#: locations/templates/locations/locations_list_filters.html:50
-msgid "not yet loved"
-msgstr "nog niet geliked"
+#: locations/templates/locations/locations_list_filterbox.html:128
+msgid "filter by tag"
+msgstr "filter op tag"
 
-#: locations/templates/locations/locations_list_filters.html:80
-#, fuzzy
-#| msgid "select a tag"
-msgid "select a category"
-msgstr "selecteer een tag"
-
-#: locations/templates/locations/locations_list_filters.html:92
-#: locations/templates/locations/locations_list_filters.html:121
-#, fuzzy
-#| msgid "Filters"
-msgid "filter"
-msgstr "Filters"
-
-#: locations/templates/locations/locations_list_filters.html:129
-msgid "all statuses"
-msgstr "alle statussen"
-
-#: locations/templates/locations/locations_list_filters.html:134
-msgid "show all statuses"
-msgstr "toon alle statussen"
+#: locations/templates/locations/locations_list_filterbox.html:168
+#: locations/templates/tags/edit_tag.html:62
+msgid "status"
+msgstr "status"
 
 #: locations/templates/locations/revoke_location_form.html:11
 msgid ""
 "optionally leave a comment to explain why this location is being revoked"
 msgstr ""
+"optioneel: laat een reactie achter waarin je uitlegt waarom deze locatie "
+"wordt teruggetrokken"
 
 #: locations/templates/locations/revoke_location_form.html:11
 msgid "this helps when reconsidering it later"
 msgstr "dit helpt bij het heroverwegen later"
 
 #: locations/templates/locations/revoke_location_form.html:17
-#, fuzzy
-#| msgid "short description (optional)"
 msgid "revoke reason (optional)"
-msgstr "korte beschrijving (optioneel)"
+msgstr "terugtrekreden (optioneel)"
 
 #: locations/templates/locations/revoke_location_form.html:22
 msgid ""
@@ -2338,19 +2271,15 @@ msgstr "onderdeel van keten"
 msgid "is your home"
 msgstr "is jouw thuis"
 
-#: locations/templates/model/locations/list.html:120
-msgid "this is a private location"
-msgstr "dit is een privélocatie"
-
-#: locations/templates/model/locations/list.html:124
+#: locations/templates/model/locations/list.html:126
 msgid "this location has comments"
 msgstr "deze locatie heeft reacties"
 
-#: locations/templates/model/locations/list.html:128
+#: locations/templates/model/locations/list.html:130
 msgid "this location has images"
 msgstr "deze locatie heeft afbeeldingen"
 
-#: locations/templates/model/locations/list.html:134
+#: locations/templates/model/locations/list.html:136
 msgid "you have hidden this location"
 msgstr "je hebt deze locatie verborgen"
 
@@ -2383,10 +2312,8 @@ msgid "Download"
 msgstr "Downloaden"
 
 #: locations/templates/preferences/export_data.html:38
-#, fuzzy
-#| msgid "cancel"
 msgid "Cancel"
-msgstr "annuleren"
+msgstr "Annuleren"
 
 #: locations/templates/preferences/preferences.html:4
 #: locations/templates/preferences/preferences.html:13
@@ -2414,48 +2341,139 @@ msgstr ""
 msgid "my links"
 msgstr "mijn links"
 
+#: locations/templates/preferences/preferences.html:90
+msgid "been there"
+msgstr "er geweest"
+
+#: locations/templates/preferences/preferences.html:93
+msgid "loved"
+msgstr "geliked"
+
 #: locations/templates/preferences/preferences.html:96
 msgid "my comments"
 msgstr "mijn reacties"
 
+#: locations/templates/staff/dashboard.html:4
+#: locations/templates/staff/dashboard.html:101
+#: locations/templates/staff/dashboard.html:105 templates/navigation.html:42
+msgid "staff dashboard"
+msgstr "medwerkers dashboard"
+
+#: locations/templates/staff/dashboard.html:113
+msgid "problems"
+msgstr "problemen"
+
+#: locations/templates/staff/dashboard.html:121
+msgid "no address"
+msgstr "geen adres"
+
+#: locations/templates/staff/dashboard.html:123
+msgid "no region"
+msgstr "geen regio"
+
+#: locations/templates/staff/dashboard.html:128
+#: locations/templates/staff/dashboard.html:148
+#: locations/templates/staff/dashboard.html:174
+#: locations/templates/staff/dashboard.html:214
+#: locations/templates/staff/dashboard.html:261
+#: locations/templates/staff/dashboard.html:281
+#: locations/templates/staff/dashboard.html:309
+msgid "… and more"
+msgstr "… en meer"
+
+#: locations/templates/staff/dashboard.html:135
+msgid "lowest completeness"
+msgstr "laagste volledigheid"
+
+#: locations/templates/staff/dashboard.html:150
+#: locations/templates/staff/dashboard.html:196
+#: locations/templates/staff/dashboard.html:236
+#: locations/templates/staff/dashboard.html:283
+msgid "no locations found"
+msgstr "geen locaties gevonden"
+
+#: locations/templates/staff/dashboard.html:157
+msgid "missing or short summary"
+msgstr "geen of korte samenvatting"
+
+#: locations/templates/staff/dashboard.html:176
+msgid "all locations have a summary"
+msgstr "alle locaties hebben een samenvatting"
+
+#: locations/templates/staff/dashboard.html:183
+msgid "fewest tags"
+msgstr "minste tags"
+
+#: locations/templates/staff/dashboard.html:203
+msgid "missing description"
+msgstr "missende beschrijving"
+
+#: locations/templates/staff/dashboard.html:216
+msgid "all locations have a description"
+msgstr "alle locaties hebben een beschrijving"
+
+#: locations/templates/staff/dashboard.html:223
+msgid "fewest categories"
+msgstr "minste categorieën"
+
+#: locations/templates/staff/dashboard.html:243
+msgid "recently commented"
+msgstr "recente opmerkingen"
+
+#: locations/templates/staff/dashboard.html:263
+msgid "no recent comments"
+msgstr "geen recente opmerkingen"
+
+#: locations/templates/staff/dashboard.html:270
+msgid "recently added"
+msgstr "recent toegevoegd"
+
+#: locations/templates/staff/dashboard.html:290
+msgid "revoked locations"
+msgstr "teruggetrokken locaties"
+
+#: locations/templates/staff/dashboard.html:311
+msgid "no revoked locations"
+msgstr "geen teruggetrokken locaties"
+
+#: locations/templates/staff/dashboard.html:318
+msgid "tag management"
+msgstr ""
+
+#: locations/templates/staff/dashboard.html:319
+msgid "manage tag descriptions and visibility"
+msgstr "beheer tag omschrijvingen en zichtbaarheid"
+
 #: locations/templates/tags/edit_tag.html:4
 #: locations/templates/tags/edit_tag.html:18
-#, fuzzy
-#| msgid "edit"
 msgid "edit tag"
-msgstr "bewerken"
+msgstr "bewerk tag"
 
 #: locations/templates/tags/edit_tag.html:37
 msgid "slug"
 msgstr "slug"
 
-#: locations/templates/tags/edit_tag.html:59
-msgid "status"
-msgstr "status"
+#: locations/templates/tags/edit_tag.html:71
+msgid "similarity weight"
+msgstr ""
 
 #: locations/templates/tags/manage_tag_visibility.html:4
 #: locations/templates/tags/manage_tag_visibility.html:38
-#: templates/navigation.html:42
-#, fuzzy
-#| msgid "save visibility"
+#: templates/navigation.html:43
 msgid "manage tag visibility"
-msgstr "zichtbaarheid opslaan"
+msgstr "beheer zichtbaarheid van tag"
 
 #: locations/templates/tags/manage_tag_visibility.html:34
-#, fuzzy
-#| msgid "save visibility"
 msgid "manage visibility"
-msgstr "zichtbaarheid opslaan"
+msgstr "beheer zichtbaarheid"
 
 #: locations/templates/tags/manage_tag_visibility.html:39
 msgid "drag tags between columns to change their visibility"
 msgstr "sleep tags tussen kolommen om de zichtbaarheid te wijzigen"
 
 #: locations/templates/tags/manage_tag_visibility.html:56
-#, fuzzy
-#| msgid "tags"
 msgid "no tags"
-msgstr "tags"
+msgstr "geen tags"
 
 #: locations/templates/tags/manage_tag_visibility.html:120
 msgid "could not update tag"
@@ -2488,10 +2506,8 @@ msgstr "weet je zeker dat je dit bezoek wilt verwijderen"
 
 #: locations/templates/visits/manage_visits.html:102
 #: locations/templates/visits/manage_visits.html:124
-#, fuzzy
-#| msgid "may"
 msgid "day"
-msgstr "mei"
+msgstr "dag"
 
 #: locations/templates/visits/manage_visits.html:106
 #: locations/templates/visits/manage_visits.html:128
@@ -2853,51 +2869,49 @@ msgstr "deze pagina is niet beschikbaar."
 msgid "you might need to log in to see this."
 msgstr "je moet mogelijk inloggen om dit te zien."
 
+#: locations/views/locations/locations_list.py:85
+msgid "published"
+msgstr "gepubliceerd"
+
+#: locations/views/locations/locations_list.py:87
+msgid "my drafts"
+msgstr "mijn concepten"
+
+#: locations/views/locations/locations_list.py:89
+msgid "revoked"
+msgstr "ingetrokken"
+
 #: locations/views/locations/revoke_location.py:51
-#, fuzzy
-#| msgid "revoke"
 msgid "revoke reason"
-msgstr "intrekken"
+msgstr "intrekreden"
 
 #: locations/views/locations/revoke_location.py:59
-#, fuzzy
-#| msgid "locations"
 msgid "location revoked."
-msgstr "locaties"
+msgstr "locatie teruggetrokken."
 
 #: locations/views/locations/revoke_location.py:64
-#, fuzzy
-#| msgid "locations"
 msgid "location republished."
-msgstr "locaties"
+msgstr "locatie opnieuw gepubliceerd."
 
 #: locations/views/media/manage_media.py:54
 msgid "This image has already been uploaded for this location."
 msgstr "Deze afbeelding is al geüpload voor deze locatie."
 
 #: locations/views/profile/export_data.py:21
-#, fuzzy
-#| msgid "preferences"
 msgid "profile & preferences"
-msgstr "voorkeuren"
+msgstr "profiel & voorkeuren"
 
 #: locations/views/profile/export_data.py:22
-#, fuzzy
-#| msgid "visits to"
 msgid "visits"
-msgstr "bezoeken aan"
+msgstr "bezoeken"
 
 #: locations/views/profile/export_data.py:24
-#, fuzzy
-#| msgid "locations"
 msgid "locations added"
-msgstr "locaties"
+msgstr "locaties toegevoegd"
 
 #: locations/views/profile/export_data.py:25
-#, fuzzy
-#| msgid "media for"
 msgid "media added"
-msgstr "media voor"
+msgstr "media toegevoegd"
 
 #: templates/footer.html:3
 msgid "Arne Coomans on Github"
@@ -2938,30 +2952,54 @@ msgstr "jouw account"
 msgid "preferences"
 msgstr "voorkeuren"
 
-#: templates/navigation.html:45
+#: templates/navigation.html:46
 #, python-format
 msgid "Edit \"%(location)s\" in admin"
 msgstr "Bewerk \"%(location)s\" in beheer"
 
-#: templates/navigation.html:47
+#: templates/navigation.html:48
 msgid "open django admin"
 msgstr "Django-beheer openen"
 
-#: templates/navigation.html:50
+#: templates/navigation.html:51
 msgid "edit profile of"
 msgstr "profiel bewerken van"
 
-#: templates/navigation.html:54
+#: templates/navigation.html:55
 msgid "log out"
 msgstr "uitloggen"
 
-#: templates/navigation.html:64
+#: templates/navigation.html:65
 msgid "login"
 msgstr "inloggen"
 
-#: templates/navigation.html:84
+#: templates/navigation.html:85
 msgid "search"
 msgstr "zoeken"
+
+#~ msgid "Active filters:"
+#~ msgstr "Actieve filters:"
+
+#~ msgid "Clear all"
+#~ msgstr "Alles wissen"
+
+#~ msgid "results"
+#~ msgstr "resultaten"
+
+#~ msgid "not yet"
+#~ msgstr "nog niet"
+
+#~ msgid "not yet loved"
+#~ msgstr "nog niet geliked"
+
+#~ msgid "all statuses"
+#~ msgstr "alle statussen"
+
+#~ msgid "show all statuses"
+#~ msgstr "toon alle statussen"
+
+#~ msgid "this is a private location"
+#~ msgstr "dit is een privélocatie"
 
 #, python-format
 #~ msgid ""
@@ -2984,9 +3022,6 @@ msgstr "zoeken"
 
 #~ msgid "are you sure you want to delete this?"
 #~ msgstr "weet je zeker dat je dit wilt verwijderen?"
-
-#~ msgid "nearby locations and activities"
-#~ msgstr "locaties en activiteiten in de buurt"
 
 #~ msgid "action not allowed."
 #~ msgstr "actie niet toegestaan."

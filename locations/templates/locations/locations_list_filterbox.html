@@ -14,10 +14,10 @@
   <nav class="geo-breadcrumb d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
     {% if active_filters.country %}
       {% if active_filters.region or active_filters.department %}
-        <span>{{ active_filters.country.0 }}</span>
+        <span>{% translate active_filters.country.0 %}</span>
         <span aria-hidden="true">›</span>
       {% else %}
-        <span>{{ active_filters.country.0 }}</span>
+        <span>{% translate active_filters.country.0 %}</span>
         <a href="{{ request.path }}{% update_query_params request clear='1' to='country' %}" aria-label="{% translate 'remove' %}">
           &times;
         </a>
@@ -26,10 +26,10 @@
 
     {% if active_filters.region %}
       {% if active_filters.department %}
-        <span>{{ active_filters.region.0 }}</span>
+        <span>{% translate active_filters.region.0 %}</span>
         <span aria-hidden="true">›</span>
       {% else %}
-        <span>{{ active_filters.region.0 }}</span>
+        <span>{% translate active_filters.region.0 %}</span>
         <a href="{{ request.path }}{% update_query_params request clear='1' to='region' %}" aria-label="{% translate 'remove' %}">
           &times;
         </a>
@@ -37,7 +37,7 @@
     {% endif %}
 
     {% if active_filters.department %}
-      <span>{{ active_filters.department.0 }}</span>
+      <span>{% translate active_filters.department.0 %}</span>
       <a href="{{ request.path }}{% update_query_params request clear='1' to='department' %}" aria-label="{% translate 'remove' %}">
         &times;
       </a>
@@ -50,7 +50,7 @@
     {% for option in available_filters.geo.options %}
     <li>
       <a href="{{ request.path }}{% update_query_params request replace=option.slug to=available_filters.geo.key %}">
-        {{ option.name }}
+        {% translate option.name|capfirst %}
       </a>
     </li>
     {% endfor %}
@@ -82,7 +82,7 @@
   {% if active_filters.category %}
   <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
     {% for value in active_filters.category %}
-      <span>{{ value }}</span>
+      <span>{% translate value|capfirst %}</span>
       <a href="{{ request.path }}{% update_query_params request remove=value to='category' %}" aria-label="{% translate 'remove' %}">
         &times;
       </a>
@@ -113,7 +113,7 @@
   {% if active_filters.tag %}
   <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted">
     {% for value in active_filters.tag %}
-      <span>{{ value }}</span>
+      <span>{% translate value|capfirst %}</span>
       <a href="{{ request.path }}{% update_query_params request remove=value to='tag' %}" aria-label="{% translate 'remove' %}">
         &times;
       </a>
@@ -152,11 +152,11 @@
   </nav>
   {% endif %}
 
-  {% if available_filters.visibility.options and user.is_authenticated %}
+  {% if available_filters.visibility.options %}
   <p class="mb-0 small">
     {% for option in available_filters.visibility.options %}
       {% if not forloop.first %}&middot;{% endif %}
-      <a href="{{ option.url }}">{{ option.name }}</a>
+      <a href="{{ option.url }}">{% translate option.name|capfirst %}</a>
     {% endfor %}
   </p>
   {% endif %}
@@ -169,9 +169,9 @@
   {% for option in available_filters.status %}
     {% if not forloop.first %}&middot;{% endif %}
     {% if option.key == 'p' %}
-      <a href="{{ request.path }}{% update_query_params request clear='1' to='status' %}"{% if not request.GET.status %} class="active"{% endif %}>{{ option.label }}</a>
+      <a href="{{ request.path }}{% update_query_params request clear='1' to='status' %}"{% if not request.GET.status %} class="active"{% endif %}>{% translate option.label|capfirst %}</a>
     {% else %}
-      <a href="{{ request.path }}{% update_query_params request replace=option.key to='status' %}"{% if request.GET.status == option.key %} class="active"{% endif %}>{{ option.label }}</a>
+      <a href="{{ request.path }}{% update_query_params request replace=option.key to='status' %}"{% if request.GET.status == option.key %} class="active"{% endif %}>{% translate option.label|capfirst %}</a>
     {% endif %}
   {% endfor %}
 </div>
