@@ -166,3 +166,9 @@ class Region(BaseModel, VisibilityModel):
   @property
   def locality(self):
     return self.get_region_by_type('locality')
+
+  @property
+  def flag_emoji(self):
+    if self.level != 'country':
+      return ''
+    return ''.join(chr(0x1F1E6 + ord(c) - ord('a')) for c in self.slug[:2].lower())

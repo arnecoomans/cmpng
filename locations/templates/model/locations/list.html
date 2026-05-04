@@ -6,16 +6,10 @@
     {# Country (section header row)    #}
     {# ------------------------------- #}
     <div class="list-group-item cmpng-section cmpng-section--country">
-      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-        <h2 class="cmpng-section-title mb-0">
-          <a href="{% update_query_params request add=country_group.grouper.slug to='country' %}">{% translate country_group.grouper.name %}</a>
-        </h2>
-
-        {# optional: show count #}
-        <span class="cmpng-section-meta text-muted small">
-          {% comment %} {{ country_group.list|length }} {% translate "locations" %} {% endcomment %}
-        </span>
-      </div>
+      <span class="cmpng-section-flag" aria-hidden="true">{{ country_group.grouper.flag_emoji }}</span>
+      <h2 class="cmpng-section-title mb-0">
+        <a href="{% update_query_params request add=country_group.grouper.slug to='country' %}">{% translate country_group.grouper.name %}</a>
+      </h2>
     </div>
 
     {% regroup country_group.list by geo.parent as regions_list %}

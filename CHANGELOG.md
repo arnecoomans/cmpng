@@ -4,6 +4,7 @@
 
 ### Changed
 - Green accent reduced to interactive states, badges, and section indicators — page shell now white/light-gray. Results header bar is transparent with a gray count pill; country section headers are compact rounded pills (not full-width bars). ([#50](https://github.com/arnecoomans/cmpng/issues/50))
+- Geographic hierarchy in the location list is now visually distinct across all three levels: country (dark green chip with flag emoji), region (green left-rule, `font-weight: 700`, `--text-sm`), department (gray left-rule, uppercase, `--text-xs`, `--gray-600` for readable contrast). `Region.flag_emoji` property derives the flag from the ISO country slug. ([#53](https://github.com/arnecoomans/cmpng/issues/53))
 
 ## [26.04.5] - 2026-05-04
 
