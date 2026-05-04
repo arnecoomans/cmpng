@@ -1,21 +1,42 @@
-<nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+<nav class="navbar sticky-top navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'locations:home' %}">{% translate site_name|default:"vakantieplanner"|capfirst %}</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate "toggle navigation"|capfirst %}">
+
+    <!-- Brand: inline tent icon + name -->
+    <a class="navbar-brand" href="{% url 'locations:home' %}">
+      <svg class="navbar-brand__icon" width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 10 L10 90 Q50 95 90 90 Z" fill="currentColor" opacity="0.25"/>
+        <path d="M50 35 L35 90 Q50 93 65 90 Z" fill="currentColor"/>
+      </svg>
+      {% translate site_name|default:"vakantieplanner"|capfirst %}
+    </a>
+
+    <!-- Mobile toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="{% translate 'toggle navigation'|capfirst %}">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <span class="navbar-text">
-        {% translate "go somewhere"|capfirst context "navigation-slogan" %}
-      </span>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'locations:accommodations' %}">...{% translate "to stay" context "navigation-slogan" %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'locations:activities' %}">...{% translate "to do" context "navigation-slogan" %}</a>
-        </li>
-        <li class="mx-3"><!-- Spacer --></li>
+
+    <div class="collapse navbar-collapse" id="navbarMain">
+
+      <!-- Sentence nav -->
+      <div class="navbar-sentence">
+        <span class="navbar-sentence-prefix">
+          {% translate "go somewhere" context "navigation-slogan" %}
+        </span>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link nav-link--sentence{% if scope == 'accommodations' %} active{% endif %}" href="{% url 'locations:accommodations' %}">...{% translate "to stay" context "navigation-slogan" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link--sentence{% if scope == 'activities' %} active{% endif %}" href="{% url 'locations:activities' %}">...{% translate "to do" context "navigation-slogan" %}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Divider -->
+      <div class="navbar-divider d-none d-lg-block"></div>
+
+      <!-- Secondary nav -->
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'locations:tags' %}">{% translate "tags"|capfirst %}</a>
         </li>
@@ -25,65 +46,74 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'locations:lists' %}">{% translate "lists"|capfirst %}</a>
         </li>
-        <li class="mx-3"><!-- Spacer --></li>
-        {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'locations:add_location' %}"><i class="bi bi-plus-circle"></i></a>
-          </li>
-          <li class="mx-3"><!-- Spacer --></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {% translate "your account"|capfirst %}
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'locations:preferences' %}">{% translate 'preferences'|capfirst %}</a></li>
-              {% if user.is_staff %}
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'locations:staff_dashboard' %}">{% translate 'staff dashboard'|capfirst %}</a></li>
-                <li><a class="dropdown-item" href="{% url 'locations:manage_tag_visibility' %}">{% translate 'manage tag visibility'|capfirst %}</a></li>
-                {% if location %}
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/admin/locations/location/{{ location.id }}/change/" target="_blank">{% blocktranslate %}Edit "{{ location }}" in admin{% endblocktranslate %}</a></li>
-                {% endif %}
-                <li><a class="dropdown-item" href="/admin/" target="_blank">{% translate "open django admin"|capfirst %}</a></li>
-              {% endif %}
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'profile' %}">{% translate "edit profile of"|capfirst %} {{ user.full_name|default:user.username }}</a></li>
-              <li>
-                <form method="post" action="{% url 'logout' %}">
-                  {% csrf_token %}
-                  <button type="submit" class="dropdown-item">{% translate "log out"|capfirst %}</button>
-                </form>
-              </li>
-            </ul>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">{% translate "register"|capfirst %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% translate "login"|capfirst %}</a>
-          </li>
-        {% endif %}
       </ul>
-      <form class="d-flex" method="get" action="{% url 'locations:all' %}">
-        <input 
-          class="form-control me-2" 
-          name="{{ search_query_character }}" 
-          type="search" placeholder="{% translate "start typing"|capfirst %}..." 
-          aria-label="Search" 
-          value="{{ request.GET|get_item:search_query_character|default:'' }}"
-          data-autosuggest
-          data-url="{% url 'cmnsd:dispatch' 'locations' %}?format=json"
-          data-container="location"
-          data-field-input="name"
-          data-field-hidden="slug"
-          data-field-prefix=""
-          data-search-mode="true" 
-          data-onclick-follow="url"
-        >
-        <button class="btn btn-outline-success" type="submit"><img src="{% static 'img/bootstrap-icons/search.svg' %}" alt="{% translate "search"|capfirst %}"></button>
+
+      <!-- Auth + add -->
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'locations:add_location' %}"><i class="bi bi-plus-circle"></i></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% translate "your account"|capfirst %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'locations:preferences' %}">{% translate 'preferences'|capfirst %}</a></li>
+            {% if user.is_staff %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'locations:staff_dashboard' %}">{% translate 'staff dashboard'|capfirst %}</a></li>
+              <li><a class="dropdown-item" href="{% url 'locations:manage_tag_visibility' %}">{% translate 'manage tag visibility'|capfirst %}</a></li>
+              {% if location %}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/admin/locations/location/{{ location.id }}/change/" target="_blank">{% blocktranslate %}Edit "{{ location }}" in admin{% endblocktranslate %}</a></li>
+              {% endif %}
+              <li><a class="dropdown-item" href="/admin/" target="_blank">{% translate "open django admin"|capfirst %}</a></li>
+            {% endif %}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'profile' %}">{% translate "edit profile of"|capfirst %} {{ user.full_name|default:user.username }}</a></li>
+            <li>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">{% translate "log out"|capfirst %}</button>
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">{% translate "register"|capfirst %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% translate "login"|capfirst %}</a>
+        </li>
+      </ul>
+      {% endif %}
+
+      <!-- Search -->
+      <form class="d-flex ms-lg-3 mt-2 mt-lg-0" method="get" action="{% url 'locations:all' %}">
+        <div class="navbar-search-wrap">
+          <i class="bi bi-search navbar-search-icon"></i>
+          <input
+            class="navbar-search-input"
+            name="{{ search_query_character }}"
+            type="search"
+            placeholder="{% translate 'search'|capfirst %}..."
+            value="{{ request.GET|get_item:search_query_character|default:'' }}"
+            data-autosuggest
+            data-url="{% url 'cmnsd:dispatch' 'locations' %}?format=json"
+            data-container="location"
+            data-field-input="name"
+            data-field-hidden="slug"
+            data-field-prefix=""
+            data-search-mode="true"
+            data-onclick-follow="url"
+          >
+        </div>
       </form>
+
     </div>
   </div>
 </nav>

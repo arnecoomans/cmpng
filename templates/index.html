@@ -31,7 +31,7 @@
     <title>{% block title %}{{ site_name|default:"a cmnsd site" }}{% endblock %}</title>
   </head>
   <body>
-    {% include 'header.html' %}
+    {% block hero %}{% endblock %}
     {% include 'navigation.html' %}
     {% include 'messages.html' %}
     {% block announcement %}{% endblock %}

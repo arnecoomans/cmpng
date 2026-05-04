@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [26.04.5] - 2026-05-04
+
+### Changed
+- Removed the full-bleed green hero header — replaced with an opt-in `{% block hero %}` so other apps can keep it while cmpng renders nothing above the navbar. ([#49](https://github.com/arnecoomans/cmpng/issues/49))
+- Navbar redesigned as a single consolidated header: inline tent SVG in the brand link, sentence navigation ("Go somewhere …to stay …to do") with correct scope-based active state, pill-shaped search input with inline icon, white background with subtle border. Eliminates the duplicate brand name and the green gradient that dominated the palette. ([#49](https://github.com/arnecoomans/cmpng/issues/49))
+- "Go somewhere" prefix hides on viewports narrower than 900px; sentence links remain visible. ([#49](https://github.com/arnecoomans/cmpng/issues/49))
+
 ## [26.04.4] - 2026-05-04
 
 ### Changed

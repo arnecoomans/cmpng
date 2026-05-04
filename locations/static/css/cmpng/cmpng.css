@@ -16,45 +16,110 @@ code, pre, kbd, samp {
   font-family: var(--font-mono);
 }
 
-/** Header */
-body > header {
-  padding-top: 30px;
-  padding-bottom: 40px;
-  background: linear-gradient(135deg, var(--primary-extra-dark) 0%, var(--primary) 100%);
-}
-/* Specific styling for your header title */
-.site-header h1 {
-  font-weight: 800;
-  letter-spacing: -0.03em;
-}
-.site-header__watermark {
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 180px;
-  height: 180px;
-  opacity: 0.12;
-  pointer-events: none;
-}
-
 /** Navbar */
 .navbar {
+  height: 56px;
   font-size: var(--text-base);
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 0 16px;
 }
-a.navbar-brand {
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: var(--text-md);
   font-weight: 800;
   letter-spacing: var(--tracking-tight);
+  color: var(--primary-darkest) !important;
+  text-decoration: none;
+  margin-right: 20px;
+  flex-shrink: 0;
 }
-a.navbar-brand,
-span.navbar-text,
+.navbar-brand:hover { color: var(--primary-extra-dark) !important; }
+.navbar-brand__icon { color: var(--primary-dark); flex-shrink: 0; }
+
 ul.navbar-nav > li > a.nav-link {
   color: var(--primary-darkest) !important;
 }
-a.navbar-brand:hover,
 ul.navbar-nav > li > a.nav-link:hover {
   color: var(--primary-dark) !important;
+}
+
+/* Sentence nav */
+.navbar-sentence {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.navbar-sentence-prefix {
+  font-size: var(--text-sm);
+  color: var(--gray-400);
+  font-style: italic;
+  white-space: nowrap;
+  padding-right: 4px;
+}
+.nav-link--sentence {
+  font-style: italic;
+  font-weight: var(--fw-semibold);
+  color: var(--primary-darker) !important;
+  white-space: nowrap;
+  border-radius: 8px;
+}
+.nav-link--sentence:hover,
+.nav-link--sentence.active {
+  background: var(--primary-extra-light);
+  color: var(--primary-darkest) !important;
+}
+
+/* Divider */
+.navbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--gray-200);
+  margin: 0 12px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* Search */
+.navbar-search-wrap {
+  position: relative;
+}
+.navbar-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+.navbar-search-input {
+  width: 180px;
+  padding: 6px 12px 6px 30px;
+  border: 1px solid var(--gray-200);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  background: var(--gray-50);
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+.navbar-search-input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .navbar-sentence-prefix { display: none; }
+}
+@media (max-width: 991px) {
+  .navbar { height: auto; padding: 8px 16px; }
+  .navbar-search-input { width: 100%; }
 }
 
 /** Location List */
