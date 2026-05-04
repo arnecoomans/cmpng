@@ -38,9 +38,11 @@
 
     <!-- Main content -->
     <main>
+      {% block main_content %}
       <div class="container py-4">
         {% block content %}{% endblock %}
       </div>
+      {% endblock %}
     </main>
     
     {% include 'footer.html' %}

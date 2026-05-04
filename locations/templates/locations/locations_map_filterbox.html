@@ -1,0 +1,117 @@
+
+<div class="type-filter mb-3">
+  <h2 class="">{% translate 'type'|capfirst %}</h2>
+  <a href="{% url 'locations:all_map' %}{% copy_query_params request %}" data-type-scope="all"{% if scope == 'all' %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{% url 'locations:accommodations_map' %}{% copy_query_params request %}" data-type-scope="accommodations"{% if scope == 'accommodations' %} class="active"{% endif %}>{% translate 'accommodations'|capfirst %}</a> &middot;
+  <a href="{% url 'locations:activities_map' %}{% copy_query_params request %}" data-type-scope="activities"{% if scope == 'activities' %} class="active"{% endif %}>{% translate 'activities'|capfirst %}</a>
+</div>
+
+{% if request.user.is_authenticated %}
+<div class="visited-filter mb-3">
+  <h2 class="">{% translate 'visited'|capfirst %}</h2>
+  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_visited' %}" data-filter-param="is_visited" data-filter-value=""{% if not request.GET.is_visited %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_visited' %}" data-filter-param="is_visited" data-filter-value="true"{% if request.GET.is_visited == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_visited' %}" data-filter-param="is_visited" data-filter-value="false"{% if request.GET.is_visited == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+</div>
+
+<div class="favorite-filter mb-3">
+  <h2 class="">{% translate 'favorited'|capfirst %}</h2>
+  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value=""{% if not request.GET.is_favorite %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value="true"{% if request.GET.is_favorite == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
+  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value="false"{% if request.GET.is_favorite == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+</div>
+{% endif %}
+
+{% if available_filters.category or active_filters.category %}
+<div class="category-filter mb-3">
+  <h2 class="">{% translate 'categories'|capfirst %}</h2>
+
+  {% if active_filters.category %}
+  <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted" data-chip-nav="category">
+    {% for value in active_filters.category %}
+      <span data-chip-label="category:{{ value }}">{% translate value|capfirst %}</span>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='category' %}" data-chip-param="category" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">
+        &times;
+      </a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% if available_filters.category.options or available_filters.category.all_options %}
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    placeholder="{% translate 'filter by category'|capfirst %}"
+    data-autosuggest
+    data-local-source="{{ available_filters.category.options|tojson|escape }}"
+    data-all-options="{{ available_filters.category.all_options|tojson|escape }}"
+    data-filter-field="category"
+    data-field-input="name"
+    data-onclick-follow="url"
+    data-allow-create="0"
+    data-min="0"
+  >
+  {% endif %}
+</div>
+{% endif %}
+
+{% if available_filters.tag or active_filters.tag %}
+<div class="tag-filter mb-3">
+  <h2 class="">{% translate 'tags'|capfirst %}</h2>
+
+  {% if active_filters.tag %}
+  <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted" data-chip-nav="tag">
+    {% for value in active_filters.tag %}
+      <span data-chip-label="tag:{{ value }}">{% translate value|capfirst %}</span>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='tag' %}" data-chip-param="tag" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">
+        &times;
+      </a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% if available_filters.tag.options or available_filters.tag.all_options %}
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    placeholder="{% translate 'filter by tag'|capfirst %}"
+    data-autosuggest
+    data-local-source="{{ available_filters.tag.options|tojson|escape }}"
+    data-all-options="{{ available_filters.tag.all_options|tojson|escape }}"
+    data-filter-field="tag"
+    data-field-input="name"
+    data-onclick-follow="url"
+    data-allow-create="0"
+    data-min="0"
+  >
+  {% endif %}
+</div>
+{% endif %}
+
+{% if available_filters.visibility or active_filters.visibility %}
+<div class="visibility-filter mb-3">
+  <h2 class="">{% translate 'visibility'|capfirst %}</h2>
+
+  {% if available_filters.visibility.sole_name %}
+  <span class="active">{{ available_filters.visibility.sole_name }}</span>
+  {% else %}
+  <p class="mb-0 small">
+    <a href="{{ request.path }}{% update_query_params request clear='1' to='visibility' %}"
+       data-filter-param="visibility" data-filter-value=""
+       {% if not active_filters.visibility %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a>
+    {% if active_filters.visibility %}
+    &middot;
+    <span data-filter-param="visibility" data-filter-value="{{ active_filters.visibility.0 }}" class="active">{{ available_filters.visibility.active_name }}</span>
+    {% endif %}
+    {% for option in available_filters.visibility.options %}
+    &middot;
+    <a href="{{ option.url }}" data-filter-param="visibility" data-filter-value="{{ option.key }}">{% translate option.name|capfirst %}</a>
+    {% endfor %}
+  </p>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="mt-3 pt-2 border-top small" {% if not request.GET.is_visited and not request.GET.is_favorite and not request.GET.visibility and not request.GET.category and not request.GET.tag %}style="display:none"{% endif %}>
+  <a href="{% if scope == 'accommodations' %}{% url 'locations:accommodations_map' %}{% elif scope == 'activities' %}{% url 'locations:activities_map' %}{% else %}{% url 'locations:all_map' %}{% endif %}" data-filter-reset>{% translate 'reset filters'|capfirst %}</a>
+</div>

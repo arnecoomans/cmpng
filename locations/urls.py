@@ -9,8 +9,11 @@ urlpatterns = [
   
   # Location List Views (views/locations/locations_list.py)
   path('all/', views.AllLocationListView.as_view(), name='all'),
+  path('all/map/', views.AllLocationMapView.as_view(), name='all_map'),
   path('accommodations/', views.AccommodationListView.as_view(), name='accommodations'),
+  path('accommodations/map/', views.AccommodationMapView.as_view(), name='accommodations_map'),
   path('activities/', views.ActivityListView.as_view(), name='activities'),
+  path('activities/map/', views.ActivityMapView.as_view(), name='activities_map'),
 
   # Add Location View (views/locations/add_location.py)
   path('location/add/', views.AddLocationView.as_view(), name='add_location'),

@@ -1,4 +1,4 @@
-from .locations_list import AllLocationListView, AccommodationListView, ActivityListView
+from .locations_list import AllLocationListView, AccommodationListView, ActivityListView, AllLocationMapView, AccommodationMapView, ActivityMapView
 from .location_detail import LocationDetailView
 from .add_location import AddLocationView
 from .reenrich_location import ReEnrichLocationView

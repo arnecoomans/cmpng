@@ -170,6 +170,12 @@
   font-weight: 600;
 }
 
+.type-filter a.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: default;
+}
+
 /* ---------- Status toggles (concept / revoked) ---------- */
 
 .status-filter {

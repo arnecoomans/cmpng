@@ -1,0 +1,392 @@
+{% extends 'locations/base.html' %}
+
+{% block title %}{% translate scope|default:'locations'|capfirst %} — {% translate 'map'|capfirst %}{% endblock %}
+
+{% block template_css %}
+  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-locations-filterbox.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cmpng/cmpng-locations-map.css' %}">
+{% endblock %}
+
+{% block announcement %}{% endblock %}
+
+{% block main_content %}{% block content %}
+{% has_maps_consent as maps_consent %}
+
+<div class="cmpng-map-page">
+
+  {% if maps_consent %}
+
+  <!-- ============================= -->
+  <!-- MAP                          -->
+  <!-- ============================= -->
+  {% localize off %}
+  <div
+    id="locations-map"
+    data-dispatch-url="{% url 'cmnsd:dispatch' 'locations' %}"
+    data-fallback-lat="{{ DEPARTURE_CENTER_LAT|default:'46.5' }}"
+    data-fallback-lon="{{ DEPARTURE_CENTER_LON|default:'2.5' }}"
+  ></div>
+  {% endlocalize %}
+
+  <!-- ============================= -->
+  <!-- FILTERBOX OVERLAY            -->
+  <!-- ============================= -->
+  <div class="cmpng-map-filterbox" id="mapFilterbox">
+    <div class="cmpng-map-filterbox__header">
+      <span class="cmpng-map-filterbox__title">{% translate 'filters'|capfirst %}</span>
+      <div class="d-flex align-items-center gap-2">
+        <span id="mapLoadingIndicator" hidden>
+          <span class="spinner-border spinner-border-sm text-secondary" role="status" aria-hidden="true"></span>
+        </span>
+        <a href="{% if scope == 'accommodations' %}{% url 'locations:accommodations' %}{% elif scope == 'activities' %}{% url 'locations:activities' %}{% else %}{% url 'locations:all' %}{% endif %}{% copy_query_params request %}" class="btn btn-sm btn-outline-secondary" title="{% translate 'list view'|capfirst %}" data-list-toggle>
+          <i class="bi bi-list-ul"></i>
+        </a>
+        <button class="cmpng-map-filterbox__toggle btn btn-sm btn-outline-secondary" aria-label="{% translate 'toggle filters'|capfirst %}">
+          <i class="bi bi-funnel"></i>
+        </button>
+      </div>
+    </div>
+    <div class="cmpng-map-filterbox__body cmpng-sidebar">
+      {% include 'locations/locations_map_filterbox.html' %}
+    </div>
+  </div>
+
+  <!-- ============================= -->
+  <!-- GOOGLE MAPS SCRIPT           -->
+  <!-- ============================= -->
+  <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({key:"{{ GOOGLE_MAPS_API_KEY }}",v:"weekly"});</script>
+  <script>
+  (async function () {
+    const mapEl = document.getElementById('locations-map');
+    if (!mapEl) return;
+
+    const dispatchUrl = mapEl.dataset.dispatchUrl;
+    const fallbackLat = parseFloat(mapEl.dataset.fallbackLat);
+    const fallbackLon = parseFloat(mapEl.dataset.fallbackLon);
+
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary('marker');
+
+    const map = new Map(mapEl, {
+      center: { lat: fallbackLat, lng: fallbackLon },
+      zoom: 6,
+      mapId: 'locations-map',
+      mapTypeControl: false,
+      fullscreenControl: true,
+      streetViewControl: false,
+    });
+
+    const sharedInfoWindow = new google.maps.InfoWindow();
+    let activeMarkers = [];
+    let isInitialLoad = true;
+    let markersAbortController = null;
+
+    const FILLS = {
+      acc:         'rgba(0, 102, 255, 1)',
+      act:         'rgba(255, 223, 70, 1)',
+      default:     'rgba(16, 185, 129, 1)',
+    };
+
+    function clearMarkers() {
+      activeMarkers.forEach(m => { m.map = null; });
+      activeMarkers = [];
+    }
+
+    function makeDotElement(fill) {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        width: 14px; height: 14px; border-radius: 50%;
+        background: ${fill};
+        border: 2px solid #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,.35);
+        cursor: pointer;
+      `;
+      return el;
+    }
+
+    function addViewportParams(params) {
+      if (isInitialLoad) return;
+      const bounds = map.getBounds();
+      if (!bounds) return;
+      params.set('coord_lat__gte', bounds.getSouthWest().lat());
+      params.set('coord_lat__lte', bounds.getNorthEast().lat());
+      params.set('coord_lon__gte', bounds.getSouthWest().lng());
+      params.set('coord_lon__lte', bounds.getNorthEast().lng());
+    }
+
+    function getCurrentScope() {
+      const path = window.location.pathname;
+      if (path.includes('/accommodations/')) return 'accommodations';
+      if (path.includes('/activities/')) return 'activities';
+      return 'all';
+    }
+
+    function parseMultiParam(params, key) {
+      return (params.get(key) || '').split(/,|__and__|&&/).filter(Boolean);
+    }
+
+    function updateChips() {
+      const params = new URLSearchParams(window.location.search);
+      document.querySelectorAll('[data-chip-param]').forEach(link => {
+        const param = link.dataset.chipParam;
+        const value = link.dataset.chipValue;
+        if (parseMultiParam(params, param).includes(value)) return;
+        // Remove the preceding label span and the link itself
+        const label = link.previousElementSibling;
+        if (label?.dataset.chipLabel) label.remove();
+        link.remove();
+      });
+      // Remove empty chip navs
+      document.querySelectorAll('[data-chip-nav]').forEach(nav => {
+        if (!nav.children.length) nav.remove();
+      });
+    }
+
+    const FILTER_PARAMS = ['is_visited', 'is_favorite', 'visibility', 'category', 'tag'];
+
+    async function updateAutosuggests() {
+      const params = new URLSearchParams(window.location.search);
+      addViewportParams(params);
+      params.set('format', 'filters');
+      try {
+        const data = await fetch(window.location.pathname + '?' + params.toString()).then(r => r.json());
+        ['category', 'tag'].forEach(param => {
+          const input = document.querySelector(`[data-filter-field="${param}"]`);
+          if (!input || !data[param]) return;
+          input.dataset.allOptions = JSON.stringify(data[param].all_options || []);
+          input.dataset.localSource = JSON.stringify(data[param].options || []);
+        });
+        if (data.types) {
+          document.querySelectorAll('[data-type-scope]').forEach(link => {
+            const scope = link.dataset.typeScope;
+            const available = scope === 'all' || data.types[scope] === true;
+            link.classList.toggle('disabled', !available);
+            link.toggleAttribute('aria-disabled', !available);
+          });
+        }
+      } catch (err) {
+        console.warn('Filter options unavailable:', err);
+      }
+    }
+
+    function addMissingChips() {
+      const params = new URLSearchParams(window.location.search);
+      ['category', 'tag'].forEach(param => {
+        const active = parseMultiParam(params, param);
+        if (!active.length) return;
+        const input = document.querySelector(`[data-filter-field="${param}"]`);
+        const nameMap = Object.fromEntries(
+          JSON.parse(input?.dataset.allOptions || '[]').map(o => [o.slug, o.name])
+        );
+        let nav = document.querySelector(`[data-chip-nav="${param}"]`);
+        active.forEach(slug => {
+          if (document.querySelector(`[data-chip-param="${param}"][data-chip-value="${slug}"]`)) return;
+          // Create the nav if it doesn't exist yet
+          if (!nav) {
+            const filterDiv = document.querySelector(`.${param}-filter`);
+            if (!filterDiv) return;
+            nav = document.createElement('nav');
+            nav.className = 'd-flex align-items-center gap-1 flex-wrap mb-2 small text-muted';
+            nav.dataset.chipNav = param;
+            filterDiv.insertBefore(nav, filterDiv.querySelector('input'));
+          }
+          const displayName = nameMap[slug] || slug;
+          const span = document.createElement('span');
+          span.dataset.chipLabel = `${param}:${slug}`;
+          span.textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+          const remaining = active.filter(s => s !== slug);
+          const rp = new URLSearchParams(params);
+          remaining.length ? rp.set(param, remaining.join('__and__')) : rp.delete(param);
+          const a = document.createElement('a');
+          a.href = window.location.pathname + (rp.toString() ? '?' + rp.toString() : '');
+          a.dataset.chipParam = param;
+          a.dataset.chipValue = slug;
+          a.setAttribute('aria-label', 'remove');
+          a.textContent = '×';
+          nav.appendChild(span);
+          nav.appendChild(a);
+        });
+      });
+    }
+
+    function updateFilterActive() {
+      const params = new URLSearchParams(window.location.search);
+      const path = window.location.pathname;
+      // Type filter: active by pathname, href updated to carry current query params
+      document.querySelectorAll('.type-filter a').forEach(link => {
+        const linkPath = new URL(link.getAttribute('href'), window.location.href).pathname;
+        link.classList.toggle('active', linkPath === path);
+        link.href = linkPath + (params.toString() ? '?' + params.toString() : '');
+      });
+      // Param filters: rebuild href from current params, then toggle active class
+      document.querySelectorAll('[data-filter-param]').forEach(el => {
+        const param = el.dataset.filterParam;
+        const value = el.dataset.filterValue ?? '';
+        const current = params.get(param) ?? '';
+        el.classList.toggle('active', current === value);
+        if (el.tagName === 'A') {
+          const p = new URLSearchParams(params);
+          value === '' ? p.delete(param) : p.set(param, value);
+          el.href = path + (p.toString() ? '?' + p.toString() : '');
+        }
+      });
+      // List-view toggle: mirror current path (strip /map/) and query params
+      const listToggle = document.querySelector('[data-list-toggle]');
+      if (listToggle) {
+        const listPath = path.replace(/\/map\/?$/, '/');
+        listToggle.href = listPath + (params.toString() ? '?' + params.toString() : '');
+      }
+      // Reset link: point to current path (no query params), show only when filters active
+      const resetLink = document.querySelector('[data-filter-reset]');
+      if (resetLink) {
+        resetLink.href = path;
+        const hasFilters = FILTER_PARAMS.some(p => params.has(p));
+        resetLink.closest('div').style.display = hasFilters ? '' : 'none';
+      }
+    }
+
+    const loadingIndicator = document.getElementById('mapLoadingIndicator');
+
+    function loadMarkers() {
+      if (markersAbortController) markersAbortController.abort();
+      markersAbortController = new AbortController();
+      const signal = markersAbortController.signal;
+      loadingIndicator.hidden = false;
+
+      const params = new URLSearchParams(window.location.search);
+      addViewportParams(params);
+      params.set('format', 'json');
+      const url = dispatchUrl + '?' + params.toString();
+      const scope = getCurrentScope();
+      const fitOnLoad = isInitialLoad;
+
+      fetch(url, { signal })
+        .then(r => r.json())
+        .then(data => {
+          clearMarkers();
+          let locations = Object.values(data.payload?.location || {});
+          if (scope === 'accommodations') locations = locations.filter(loc => loc.is_accommodation);
+          else if (scope === 'activities') locations = locations.filter(loc => loc.is_activity);
+          const bounds = new google.maps.LatLngBounds();
+          let hasPoints = false;
+
+          locations.forEach(loc => {
+            if (!loc.coord_lat || !loc.coord_lon) return;
+            const pos = { lat: loc.coord_lat, lng: loc.coord_lon };
+            bounds.extend(pos);
+            hasPoints = true;
+
+            const fill = loc.is_accommodation ? FILLS.acc : loc.is_activity ? FILLS.act : FILLS.default;
+            const marker = new AdvancedMarkerElement({
+              position: pos,
+              map,
+              title: loc.name,
+              content: makeDotElement(fill),
+            });
+
+            marker.addListener('click', () => {
+              sharedInfoWindow.setContent(`
+                <div style="max-width:220px;font-family:inherit">
+                  <strong style="font-size:14px">${loc.name}</strong>
+                  ${loc.summary ? `<p style="margin:6px 0 0;font-size:12px;color:#555">${loc.summary}</p>` : ''}
+                  <p style="margin:8px 0 0"><a href="${loc.url}" style="font-size:12px">{% translate "view details"|capfirst %}</a></p>
+                </div>
+              `);
+              sharedInfoWindow.open({ anchor: marker, map });
+            });
+
+            activeMarkers.push(marker);
+          });
+
+          if (fitOnLoad && hasPoints) {
+            map.fitBounds(bounds, { top: 60, right: 20, bottom: 20, left: 340 });
+          }
+          loadingIndicator.hidden = true;
+        })
+        .catch(err => {
+          if (err.name !== 'AbortError') {
+            console.warn('Map markers unavailable:', err);
+            loadingIndicator.hidden = true;
+          }
+        });
+    }
+
+    // Filter links: pushState + reload markers instead of navigating
+    document.getElementById('mapFilterbox').addEventListener('click', e => {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      const linkUrl = new URL(href, window.location.href);
+      const samePathname = linkUrl.pathname === window.location.pathname;
+      const isMapView = linkUrl.pathname.endsWith('/map/');
+      // Let list-toggle and other non-map links navigate normally
+      if (!samePathname && !isMapView) return;
+      e.preventDefault();
+      window.history.pushState({}, '', href);
+      updateChips();
+      addMissingChips();
+      updateFilterActive();
+      updateAutosuggests();
+      loadMarkers();
+    });
+
+    // Intercept autosuggest follow navigation within the filterbox
+    document.getElementById('mapFilterbox').addEventListener('autosuggest:follow', e => {
+      e.preventDefault();
+      const url = e.detail.url;
+      if (!url) return;
+      window.history.pushState({}, '', url);
+      updateChips();
+      addMissingChips();
+      updateFilterActive();
+      updateAutosuggests();
+      loadMarkers();
+    });
+
+    // Filterbox collapse toggle
+    const filterbox = document.getElementById('mapFilterbox');
+    filterbox.querySelector('.cmpng-map-filterbox__toggle').addEventListener('click', () => {
+      filterbox.classList.toggle('cmpng-map-filterbox--collapsed');
+    });
+
+    let idleFired = false;
+    map.addListener('idle', () => {
+      if (!idleFired) {
+        idleFired = true;
+        isInitialLoad = false;
+        return;
+      }
+      loadMarkers();
+      updateAutosuggests();
+    });
+
+    loadMarkers();
+    updateAutosuggests();
+  })();
+  </script>
+
+  {% else %}
+
+  <!-- ============================= -->
+  <!-- CONSENT REQUIRED             -->
+  <!-- ============================= -->
+  <div class="cmpng-map-consent d-flex align-items-center justify-content-center">
+    <div class="text-center p-4">
+      <p class="text-muted">
+        {% translate 'this map loads content from an external provider'|capfirst %}.
+        {% translate 'to protect your privacy, you need to give your consent before loading the map'|capfirst %}.
+      </p>
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <a href="{% update_query_params request replace='once' to='external_maps_consent' %}" class="btn btn-sm btn-outline-secondary">{% translate 'once'|capfirst %}</a>
+        <a href="{% update_query_params request replace='session' to='external_maps_consent' %}" class="btn btn-sm btn-outline-secondary">{% translate 'for this session'|capfirst %}</a>
+        {% if request.user.is_authenticated %}
+        <a href="{% update_query_params request replace='always' to='external_maps_consent' %}" class="btn btn-sm btn-outline-secondary">{% translate 'always'|capfirst %}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>
+{% endblock %}{% endblock %}

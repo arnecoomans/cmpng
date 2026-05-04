@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.conf import settings
@@ -15,6 +16,37 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
   template_name = 'locations/locations_list.html'
   context_object_name = 'locations'
   # paginate_by = settings.ITEMS_PER_PAGE
+
+  def get(self, request, *args, **kwargs):
+    if request.GET.get('format') == 'filters':
+      return self._filters_json_response()
+    return super().get(request, *args, **kwargs)
+
+  _VIEWPORT_PARAMS = {'coord_lat__gte', 'coord_lat__lte', 'coord_lon__gte', 'coord_lon__lte'}
+
+  def _filters_json_response(self):
+    from django.http import JsonResponse
+    # Keep viewport params so the queryset is filtered to the current map area
+    with_viewport = self.request.GET.copy()
+    with_viewport.pop('format', None)
+    self.request.GET = with_viewport
+    qs = self.get_queryset()
+    base_qs = self._optimized_queryset
+    # Strip viewport params before building option URLs (they must not appear in filter link hrefs)
+    without_viewport = with_viewport.copy()
+    for p in self._VIEWPORT_PARAMS:
+      without_viewport.pop(p, None)
+    self.request.GET = without_viewport
+    cat = self.get_category_filter_options(qs)
+    tag = self.get_tag_filter_options(qs)
+    return JsonResponse({
+      'category': {'options': cat.get('options', []), 'all_options': cat.get('all_options', [])},
+      'tag': {'options': tag.get('options', []), 'all_options': tag.get('all_options', [])},
+      'types': {
+        'accommodations': base_qs.filter(is_accommodation=True).exists(),
+        'activities': base_qs.filter(is_activity=True).exists(),
+      },
+    })
 
   def get_queryset(self):
     if not hasattr(self, '_optimized_queryset'):
@@ -143,7 +175,9 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     categories_qs = Location.get_categories_from_queryset(qs, limit=limit, min_usage=min_usage)
     base_params = self.request.GET.copy()
     options = []
+    all_options = []
     for c in categories_qs:
+      all_options.append({'name': c['name'], 'slug': c['slug']})
       if c['slug'] in active_slugs:
         continue
       params = base_params.copy()
@@ -153,7 +187,7 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
       c = dict(c)
       c['url'] = self.request.path + '?' + params.urlencode()
       options.append(c)
-    return {'key': 'category', 'label': 'categories', 'options': options}
+    return {'key': 'category', 'label': 'categories', 'options': options, 'all_options': all_options}
 
   def get_tag_filter_options(self, qs, limit=10, min_usage=1):
     raw = self.request.GET.get('tag', '')
@@ -161,7 +195,9 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     tags_qs = Location.get_tags_from_queryset(qs, limit=limit, min_usage=min_usage)
     base_params = self.request.GET.copy()
     options = []
+    all_options = []
     for t in tags_qs:
+      all_options.append({'name': t['name'], 'slug': t['slug']})
       if t['slug'] in active_slugs:
         continue
       params = base_params.copy()
@@ -171,7 +207,7 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
       t = dict(t)
       t['url'] = self.request.path + '?' + params.urlencode()
       options.append(t)
-    return {'key': 'tag', 'label': 'tags', 'options': options}
+    return {'key': 'tag', 'label': 'tags', 'options': options, 'all_options': all_options}
 
 class AllLocationListView(LocationListMasterView):
   def get_queryset(self):
@@ -202,6 +238,31 @@ class ActivityListView(LocationListMasterView):
     queryset = queryset.filter(is_activity=True)
     return queryset
   def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)  
+    context = super().get_context_data(**kwargs)
+    context['scope'] = 'activities'
+    return context
+
+class AllLocationMapView(LoginRequiredMixin, LocationListMasterView):
+  template_name = 'locations/locations_map.html'
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['scope'] = 'all'
+    return context
+
+class AccommodationMapView(LoginRequiredMixin, LocationListMasterView):
+  template_name = 'locations/locations_map.html'
+  def get_queryset(self):
+    return super().get_queryset().filter(is_accommodation=True)
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['scope'] = 'accommodations'
+    return context
+
+class ActivityMapView(LoginRequiredMixin, LocationListMasterView):
+  template_name = 'locations/locations_map.html'
+  def get_queryset(self):
+    return super().get_queryset().filter(is_activity=True)
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
     context['scope'] = 'activities'
     return context

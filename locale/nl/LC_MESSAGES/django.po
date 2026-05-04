@@ -2977,6 +2977,22 @@ msgstr "inloggen"
 msgid "search"
 msgstr "zoeken"
 
+#: locations/templates/locations/locations_map.html
+msgid "filters"
+msgstr "filters"
+
+#: locations/templates/locations/locations_map.html
+msgid "list view"
+msgstr "lijstweergave"
+
+#: locations/templates/locations/locations_map.html
+msgid "toggle filters"
+msgstr "filters in-/uitklappen"
+
+#: locations/templates/locations/locations_map_filterbox.html
+msgid "reset filters"
+msgstr "filters resetten"
+
 #~ msgid "Active filters:"
 #~ msgstr "Actieve filters:"
 

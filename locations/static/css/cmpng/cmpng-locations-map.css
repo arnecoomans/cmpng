@@ -1,0 +1,99 @@
+/* ===================================================
+   cmpng-locations-map.css
+   Full-viewport map page + floating filterbox
+   =================================================== */
+
+/* ---------- Page container ---------- */
+
+.cmpng-map-page {
+  position: relative;
+  height: calc(100dvh - var(--navbar-height, 56px));
+  overflow: hidden;
+}
+
+#locations-map {
+  width: 100%;
+  height: 100%;
+}
+
+.cmpng-map-consent {
+  width: 100%;
+  height: 100%;
+  background: var(--gray-50, #f9fafb);
+}
+
+/* ---------- Floating filterbox ---------- */
+
+.cmpng-map-filterbox {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  width: 300px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 28px rgba(17, 24, 39, 0.12);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  overflow: hidden;
+  transition: width 200ms ease;
+}
+
+.cmpng-map-filterbox__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.07);
+  background: rgba(249, 250, 251, 0.9);
+}
+
+.cmpng-map-filterbox__title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.5);
+}
+
+.cmpng-map-filterbox__body {
+  max-height: calc(100dvh - var(--navbar-height, 56px) - 6rem);
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+}
+
+/* Scrollbar */
+.cmpng-map-filterbox__body::-webkit-scrollbar { width: 6px; }
+.cmpng-map-filterbox__body::-webkit-scrollbar-thumb {
+  background: rgba(17, 24, 39, 0.12);
+  border-radius: 999px;
+}
+
+/* ---------- Collapsed state ---------- */
+
+.cmpng-map-filterbox--collapsed {
+  width: auto;
+}
+
+.cmpng-map-filterbox--collapsed .cmpng-map-filterbox__body {
+  display: none;
+}
+
+.cmpng-map-filterbox--collapsed .cmpng-map-filterbox__title {
+  display: none;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 575px) {
+  .cmpng-map-filterbox {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    top: 0.5rem;
+  }
+
+  .cmpng-map-filterbox--collapsed {
+    width: auto;
+    right: auto;
+  }
+}
