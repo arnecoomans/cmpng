@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [26.04.3] - 2026-05-04
+
 ### Added
 - Interactive map view for location lists — full-viewport Google Maps interface with a floating filter panel for type (all / accommodations / activities), visited, favourited, visibility, category, and tag filters. Filter changes update markers in-place via `pushState` without a page reload. After the initial load (which auto-fits all results), panning or zooming triggers viewport-bounded marker fetches so only locations in the visible area are loaded. Filter options (category/tag autosuggests, type availability) also update to reflect the current viewport. Map views are restricted to authenticated users. Available at `/all/map/`, `/accommodations/map/`, `/activities/map/`. ([#37](https://github.com/arnecoomans/cmpng/issues/37))
 - Tag parent field on the tag edit form — autosuggest filtered to top-level tags only (`parent__isnull=true`); includes a × button to clear the parent via cmnsd.api without leaving the page. ([#43](https://github.com/arnecoomans/cmpng/issues/43))
