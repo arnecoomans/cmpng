@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [26.04.4] - 2026-05-04
+
+### Changed
+- Replaced system font stack with self-hosted **Geist** variable font (woff2, `font-display: swap`) for consistent rendering across all platforms. GeistMono applied to `code`, `pre`, `kbd`, `samp`. ([#56](https://github.com/arnecoomans/cmpng/issues/56))
+- Added complete type scale (`--text-xs` through `--text-3xl`), line-height (`--leading-tight` through `--leading-loose`), and letter-spacing (`--tracking-tight` through `--tracking-widest`) tokens to `root.css`. ([#56](https://github.com/arnecoomans/cmpng/issues/56))
+- Body text set to 15px (`--text-base`) with line-height 1.6 (`--leading-normal`) and font smoothing; headings use `--tracking-tight` and `--leading-tight` consistently. ([#56](https://github.com/arnecoomans/cmpng/issues/56))
+- `.location-summary` and `.description__body` constrained to `max-width: 68ch` for optimal line length; `font-weight: 550` replaced with `var(--fw-medium)`. ([#56](https://github.com/arnecoomans/cmpng/issues/56))
+- `.card__title` and `.cmpng-sidebar h2` migrated to type scale tokens — `--text-xs`, weight 800, `--tracking-wider`, uppercase — consistent section label pattern site-wide. ([#56](https://github.com/arnecoomans/cmpng/issues/56))
+
 ## [26.04.3] - 2026-05-04
 
 ### Added

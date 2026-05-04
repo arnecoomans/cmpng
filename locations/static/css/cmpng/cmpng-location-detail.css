@@ -189,10 +189,11 @@
 
 .location-summary {
   margin: 4px 0 0;
-  font-size: 15px;
+  font-size: var(--text-base);
   color: var(--gray-900);
-  line-height: 1.5;
-  font-weight: 550;
+  line-height: var(--leading-normal);
+  font-weight: var(--fw-medium);
+  max-width: 68ch;
 }
 .location-description {
   color: var(--gray-600);
@@ -213,6 +214,8 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  line-height: var(--leading-loose);
+  max-width: 68ch;
 }
 .description__body.is-expanded {
   display: block;
