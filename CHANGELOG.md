@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Green accent reduced to interactive states, badges, and section indicators — page shell now white/light-gray. Results header bar is transparent with a gray count pill; country section headers are compact rounded pills (not full-width bars). ([#50](https://github.com/arnecoomans/cmpng/issues/50))
+
 ## [26.04.5] - 2026-05-04
 
 ### Changed

@@ -16,9 +16,9 @@
   <!-- ============================= -->
   <div class="cmpng-header mb-3">
 
-    <div class="cmpng-header-bar p-3 rounded-4 text-white">
+    <div class="cmpng-header-bar">
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-        <h1 class="h3 mb-0">{% translate scope|default:'locations'|capfirst%} ({{ locations|length }}):</h1>
+        <h1 class="h3 mb-0">{% translate scope|default:'locations'|capfirst %} <span class="cmpng-result-count">{{ locations|length }}</span></h1>
 
         <div class="d-flex align-items-center gap-2">
           {% if request.user.is_authenticated %}
