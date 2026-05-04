@@ -650,6 +650,18 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     return ''
   
   # ================================================================
+  # Thumbnail helper
+  # ================================================================
+  @property
+  def thumb(self):
+    is_auth = hasattr(self, 'request') and self.request.user.is_authenticated
+    allowed = {'p', 'c'} if is_auth else {'p'}
+    try:
+      return next(m for m in self.media.all() if m.status == 'p' and m.visibility in allowed)
+    except StopIteration:
+      return None
+
+  # ================================================================
   # Shorthand access properties for related fields
   # ================================================================
   @property

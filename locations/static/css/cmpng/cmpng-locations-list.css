@@ -39,10 +39,14 @@
   background: transparent;
 }
 .cmpng-location-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  gap: 12px;
   background: #fff;
   border: 1px solid rgba(17, 24, 39, 0.10);
   border-radius: 14px;
-  padding: 0.9rem 1rem;
+  padding: 0.75rem 1rem;
   margin: 10px 12px;
   box-shadow: 0 1px 0 rgba(17, 24, 39, 0.03);
   transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
@@ -53,6 +57,46 @@
   border-color: rgba(16, 185, 129, 0.45);
   box-shadow: 0 10px 22px rgba(17, 24, 39, 0.10);
   transform: translateY(-1px);
+}
+
+/* ---------- Thumbnail ---------- */
+
+.cmpng-location-thumb {
+  width: 72px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gray-100);
+}
+.cmpng-location-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cmpng-location-thumb--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(135deg, var(--gray-300), var(--gray-400));
+}
+.cmpng-location-thumb--accommodation .cmpng-location-thumb--placeholder {
+  background: linear-gradient(135deg, #6ee7b7, #10b981);
+}
+.cmpng-location-thumb--activity .cmpng-location-thumb--placeholder {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+}
+
+/* ---------- Card body ---------- */
+
+.cmpng-location-body {
+  min-width: 0;
 }
 .cmpng-location-name {
   font-weight: 900;
@@ -72,7 +116,9 @@
 
 @media (max-width: 575.98px) {
   .cmpng-location-card {
+    grid-template-columns: 1fr;
     margin: 10px 10px;
-    padding: 0.85rem 0.9rem;
+    padding: 0.85rem 0.9rem !important;
   }
+  .cmpng-location-thumb { display: none; }
 }

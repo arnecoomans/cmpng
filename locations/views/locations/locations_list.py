@@ -78,12 +78,11 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
   
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    # Add preferences to context for template access
-    # Get active and applied filters from FilterMixin and add to context for template
     if hasattr(self, 'get_search_data_for_context'):
       context['active_filters'] = self.get_search_data_for_context()
     context['available_filters'] = self.get_available_filters_for_context()
-
+    for location in context['locations']:
+      location.request = self.request
     return context
   
   def get_available_filters_for_context(self):

@@ -54,96 +54,101 @@
         {% for location in department_group.list %}
           <div class="list-group-item cmpng-row cmpng-row--location">
             <div class="cmpng-location-card">
-              <div class="d-flex align-items-start justify-content-between gap-3">
 
-                {# Left: main content #}
-                <div class="flex-grow-1 min-w-0">
+              {# Thumbnail #}
+              <div class="cmpng-location-thumb{% if location.is_accommodation %} cmpng-location-thumb--accommodation{% elif location.is_activity %} cmpng-location-thumb--activity{% endif %}">
+                {% if location.thumb %}
+                  <img src="{{ location.thumb.source.url }}" alt="{{ location.name }}" loading="lazy">
+                {% else %}
+                  <div class="cmpng-location-thumb--placeholder">{{ location.name|slice:":1"|upper }}</div>
+                {% endif %}
+              </div>
 
-                  {# Name + tags should behave like one flowing line #}
-                  <div class="cmpng-title-inline">
-                    <a href="{{ location.get_absolute_url|default:'#' }}" class="cmpng-location-name">
-                      {{ location.name }}
-                    </a>
+              {# Body: title + actions + summary #}
+              <div class="cmpng-location-body">
+                <div class="d-flex align-items-start justify-content-between gap-3">
 
-                    <span class="cmpng-tags">
-                      {% if location.chain %}
-                        <span class="badge cmpng-badge cmpng-badge--tag" title="{% translate 'part of chain'|capfirst %} {{ location.chain }}">
-                          {{ location.chain.name }}
+                  {# Left: main content #}
+                  <div class="flex-grow-1 min-w-0">
+
+                    {# Name + tags should behave like one flowing line #}
+                    <div class="cmpng-title-inline">
+                      <a href="{{ location.get_absolute_url|default:'#' }}" class="cmpng-location-name">
+                        {{ location.name }}
+                      </a>
+
+                      <span class="cmpng-tags">
+                        {% if location.chain %}
+                          <span class="badge cmpng-badge cmpng-badge--tag" title="{% translate 'part of chain'|capfirst %} {{ location.chain }}">
+                            {{ location.chain.name }}
+                          </span>
+                        {% endif %}
+
+                        {% if location.size %}
+                          <span class="badge cmpng-badge cmpng-badge--size" data-bs-toggle="tooltip" data-bs-delay="1000" data-bs-title="{{ location.size.name }}{% if location.size.description %} - {% translate location.size.description %}{% endif %}">
+                            {{ location.size.name }}
+                          </span>
+                        {% endif %}
+
+                        {% if location.is_accommodation %}
+                          <span class="badge cmpng-badge cmpng-badge--type">
+                            {% translate 'accommodation'|capfirst %}
+                          </span>
+                        {% endif %}
+
+                        {% if location.is_activity %}
+                          <span class="badge cmpng-badge cmpng-badge--type">
+                            {% translate 'activity'|capfirst %}
+                          </span>
+                        {% endif %}
+
+                        {% for category in location.categories.all %}
+                          <span class="badge cmpng-badge cmpng-badge--tag">
+                            {% translate category.name %}
+                          </span>
+                        {% endfor %}
+                      </span>
+                    </div>
+
+                  </div>
+
+                  {# Right Icon List #}
+                  <div class="cmpng-row-actions d-flex align-items-center gap-2">
+                    {% if user.preferences in location.home_of.all %}
+                      <i class="bi bi-house-fill cmpng-icons" title="{% translate 'is your home'|capfirst %}"></i>
+                    {% else %}
+                      {% if location.visibility != 'p' %}
+                        <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'visible to'|capfirst %} {{ location.get_visibility_display|capfirst }}">
+                          {{ location.get_visibility_display|slice:":1" }}
                         </span>
                       {% endif %}
-
-                      {% if location.size %}
-                        <span class="badge cmpng-badge cmpng-badge--size" data-bs-toggle="tooltip" data-bs-delay="1000" data-bs-title="{{ location.size.name }}{% if location.size.description %} - {% translate location.size.description %}{% endif %}">
-                          {{ location.size.name }}
-                        </span>
+                      {% if location.prefetched_comments %}
+                        <i class="bi bi-chat-dots cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has comments'|capfirst %}"></i>
                       {% endif %}
-
-                      {% if location.is_accommodation %}
-                        <span class="badge cmpng-badge cmpng-badge--type">
-                          {% translate 'accommodation'|capfirst %}
-                        </span>
+                      {% if user.is_staff and location.media.all %}
+                        <i class="bi bi-image cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has images'|capfirst %}"></i>
                       {% endif %}
-
-                      {% if location.is_activity %}
-                        <span class="badge cmpng-badge cmpng-badge--type">
-                          {% translate 'activity'|capfirst %}
-                        </span>
+                      {% include 'field/location/visitors.html' %}
+                      {% if location in hidden_locations %}
+                        <i class="bi bi-eye-slash cmpng-favorite cmpng-favorite--hidden" title="{% translate 'you have hidden this location'|capfirst %}"></i>
+                      {% else %}
+                        {% include 'field/location/favorited.html' %}
                       {% endif %}
-
-                      {% for category in location.categories.all %}
-                        <span class="badge cmpng-badge cmpng-badge--tag">
-                          {% translate category.name %}
-                        </span>
-                      {% endfor %}
-                    </span>
+                    {% endif %}
+                    {% if location.status != 'p' %}
+                      <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate location.get_status_display|capfirst %}">
+                        {{ location.get_status_display|slice:":1" }}
+                      </span>
+                    {% endif %}
                   </div>
 
                 </div>
 
-                {# Right Icon List #}
-                <div class="cmpng-row-actions d-flex align-items-center gap-2">
-                  <!-- Home Icon-->
-                  {% if user.preferences in location.home_of.all %}<!-- Home Icon-->
-                    <i class="bi bi-house-fill cmpng-icons" title="{% translate 'is your home'|capfirst %}"></i>
-                  {% else %}
-                    <!-- Show Location Visibility for Private, Family and Community -->
-                    {% if location.visibility != 'p' %}
-                      <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'visible to'|capfirst %} {{ location.get_visibility_display|capfirst }}">
-                        {{ location.get_visibility_display|slice:":1" }}
-                      </span>
-                    {% endif %}
-                    <!-- Comments -->
-                    {% if location.prefetched_comments %}
-                      <i class="bi bi-chat-dots cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has comments'|capfirst %}"></i>
-                    {% endif %}
-                    <!-- Images -->
-                    {% if user.is_staff and location.media.all %}
-                      <i class="bi bi-image cmpng-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'this location has images'|capfirst %}"></i>
-                    {% endif %}
-                    <!-- Visitors -->
-                    {% include 'field/location/visitors.html' %}
-                    <!-- This location is not loved at all -->
-                    {% if location in hidden_locations %}
-                      <i class="bi bi-eye-slash cmpng-favorite cmpng-favorite--hidden" title="{% translate 'you have hidden this location'|capfirst %}"></i>
-                    {% else %}
-                      <!-- Love Icon-->
-                      {% include 'field/location/favorited.html' %}
-                    {% endif  %}
-                  {% endif %}
-                  {% if location.status != 'p' %}
-                    <!-- Status Badge for locations that are not published -->
-                    <span class="badge cmpng-badge cmpng-badge--status" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate location.get_status_display|capfirst %}">
-                      {{ location.get_status_display|slice:":1" }}
-                    </span>
-                  {% endif %}
-                </div>
-
+                {# Summary — full body width #}
+                {% if location.summary %}
+                  <div class="cmpng-location-meta text-muted small mt-1">{{ location.summary }}</div>
+                {% endif %}
               </div>
-
-              {# Summary — full card width #}
-              {% if location.summary %}
-                <div class="cmpng-location-meta text-muted small mt-1">{{ location.summary }}</div>
-              {% endif %}
 
             </div>
           </div>
