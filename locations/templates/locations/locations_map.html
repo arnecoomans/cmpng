@@ -360,6 +360,14 @@
       updateAutosuggests();
     });
 
+    window.addEventListener('popstate', () => {
+      updateChips();
+      addMissingChips();
+      updateFilterActive();
+      updateAutosuggests();
+      loadMarkers();
+    });
+
     loadMarkers();
     updateAutosuggests();
   })();
