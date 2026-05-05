@@ -1,38 +1,42 @@
 
 <div class="type-filter mb-3">
-  <h2 class="">{% translate 'type'|capfirst %}</h2>
-  <a href="{% url 'locations:all_map' %}{% copy_query_params request %}" data-type-scope="all"{% if scope == 'all' %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
-  <a href="{% url 'locations:accommodations_map' %}{% copy_query_params request %}" data-type-scope="accommodations"{% if scope == 'accommodations' %} class="active"{% endif %}>{% translate 'accommodations'|capfirst %}</a> &middot;
-  <a href="{% url 'locations:activities_map' %}{% copy_query_params request %}" data-type-scope="activities"{% if scope == 'activities' %} class="active"{% endif %}>{% translate 'activities'|capfirst %}</a>
+  <h2>{% translate 'type'|capfirst %}</h2>
+  <div class="filter-pill-row">
+    <a href="{% url 'locations:all_map' %}{% copy_query_params request %}" class="filter-pill{% if scope == 'all' %} active{% endif %}" data-type-scope="all">{% translate 'all'|capfirst %}</a>
+    <a href="{% url 'locations:accommodations_map' %}{% copy_query_params request %}" class="filter-pill{% if scope == 'accommodations' %} active{% endif %}{% if not available_filters.types.accommodations %} disabled{% endif %}" data-type-scope="accommodations">{% translate 'accommodations'|capfirst %}</a>
+    <a href="{% url 'locations:activities_map' %}{% copy_query_params request %}" class="filter-pill{% if scope == 'activities' %} active{% endif %}{% if not available_filters.types.activities %} disabled{% endif %}" data-type-scope="activities">{% translate 'activities'|capfirst %}</a>
+  </div>
 </div>
 
 {% if request.user.is_authenticated %}
 <div class="visited-filter mb-3">
-  <h2 class="">{% translate 'visited'|capfirst %}</h2>
-  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_visited' %}" data-filter-param="is_visited" data-filter-value=""{% if not request.GET.is_visited %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
-  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_visited' %}" data-filter-param="is_visited" data-filter-value="true"{% if request.GET.is_visited == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
-  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_visited' %}" data-filter-param="is_visited" data-filter-value="false"{% if request.GET.is_visited == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+  <h2>{% translate 'visited'|capfirst %}</h2>
+  <div class="filter-pill-row filter-pill-row--inline">
+    <a href="{{ request.path }}{% update_query_params request clear='1' to='is_visited' %}" class="filter-pill{% if not request.GET.is_visited %} active{% endif %}" data-filter-param="is_visited" data-filter-value="">{% translate 'all'|capfirst %}</a>
+    <a href="{{ request.path }}{% update_query_params request replace='true' to='is_visited' %}" class="filter-pill{% if request.GET.is_visited == 'true' %} active{% endif %}" data-filter-param="is_visited" data-filter-value="true">{% translate 'yes'|capfirst %}</a>
+    <a href="{{ request.path }}{% update_query_params request replace='false' to='is_visited' %}" class="filter-pill{% if request.GET.is_visited == 'false' %} active{% endif %}" data-filter-param="is_visited" data-filter-value="false">{% translate 'no'|capfirst %}</a>
+  </div>
 </div>
 
 <div class="favorite-filter mb-3">
-  <h2 class="">{% translate 'favorited'|capfirst %}</h2>
-  <a href="{{ request.path }}{% update_query_params request clear='1' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value=""{% if not request.GET.is_favorite %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a> &middot;
-  <a href="{{ request.path }}{% update_query_params request replace='true' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value="true"{% if request.GET.is_favorite == 'true' %} class="active"{% endif %}>{% translate 'yes'|capfirst %}</a> &middot;
-  <a href="{{ request.path }}{% update_query_params request replace='false' to='is_favorite' %}" data-filter-param="is_favorite" data-filter-value="false"{% if request.GET.is_favorite == 'false' %} class="active"{% endif %}>{% translate 'no'|capfirst %}</a>
+  <h2>{% translate 'favorited'|capfirst %}</h2>
+  <div class="filter-pill-row filter-pill-row--inline">
+    <a href="{{ request.path }}{% update_query_params request clear='1' to='is_favorite' %}" class="filter-pill{% if not request.GET.is_favorite %} active{% endif %}" data-filter-param="is_favorite" data-filter-value="">{% translate 'all'|capfirst %}</a>
+    <a href="{{ request.path }}{% update_query_params request replace='true' to='is_favorite' %}" class="filter-pill{% if request.GET.is_favorite == 'true' %} active{% endif %}" data-filter-param="is_favorite" data-filter-value="true">{% translate 'yes'|capfirst %}</a>
+    <a href="{{ request.path }}{% update_query_params request replace='false' to='is_favorite' %}" class="filter-pill{% if request.GET.is_favorite == 'false' %} active{% endif %}" data-filter-param="is_favorite" data-filter-value="false">{% translate 'no'|capfirst %}</a>
+  </div>
 </div>
 {% endif %}
 
 {% if available_filters.category or active_filters.category %}
 <div class="category-filter mb-3">
-  <h2 class="">{% translate 'categories'|capfirst %}</h2>
+  <h2>{% translate 'categories'|capfirst %}</h2>
 
   {% if active_filters.category %}
   <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted" data-chip-nav="category">
     {% for value in active_filters.category %}
       <span data-chip-label="category:{{ value }}">{% translate value|capfirst %}</span>
-      <a href="{{ request.path }}{% update_query_params request remove=value to='category' %}" data-chip-param="category" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">
-        &times;
-      </a>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='category' %}" data-chip-param="category" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">&times;</a>
     {% endfor %}
   </nav>
   {% endif %}
@@ -57,15 +61,13 @@
 
 {% if available_filters.tag or active_filters.tag %}
 <div class="tag-filter mb-3">
-  <h2 class="">{% translate 'tags'|capfirst %}</h2>
+  <h2>{% translate 'tags'|capfirst %}</h2>
 
   {% if active_filters.tag %}
   <nav class="d-flex align-items-center gap-1 flex-wrap mb-2 small text-muted" data-chip-nav="tag">
     {% for value in active_filters.tag %}
       <span data-chip-label="tag:{{ value }}">{% translate value|capfirst %}</span>
-      <a href="{{ request.path }}{% update_query_params request remove=value to='tag' %}" data-chip-param="tag" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">
-        &times;
-      </a>
+      <a href="{{ request.path }}{% update_query_params request remove=value to='tag' %}" data-chip-param="tag" data-chip-value="{{ value }}" aria-label="{% translate 'remove' %}">&times;</a>
     {% endfor %}
   </nav>
   {% endif %}
@@ -90,24 +92,24 @@
 
 {% if available_filters.visibility or active_filters.visibility %}
 <div class="visibility-filter mb-3">
-  <h2 class="">{% translate 'visibility'|capfirst %}</h2>
+  <h2>{% translate 'visibility'|capfirst %}</h2>
 
   {% if available_filters.visibility.sole_name %}
-  <span class="active">{{ available_filters.visibility.sole_name }}</span>
+  <div class="filter-pill-row">
+    <span class="filter-pill active">{{ available_filters.visibility.sole_name }}</span>
+  </div>
   {% else %}
-  <p class="mb-0 small">
+  <div class="filter-pill-row">
     <a href="{{ request.path }}{% update_query_params request clear='1' to='visibility' %}"
-       data-filter-param="visibility" data-filter-value=""
-       {% if not active_filters.visibility %} class="active"{% endif %}>{% translate 'all'|capfirst %}</a>
+       class="filter-pill{% if not active_filters.visibility %} active{% endif %}"
+       data-filter-param="visibility" data-filter-value="">{% translate 'all'|capfirst %}</a>
     {% if active_filters.visibility %}
-    &middot;
-    <span data-filter-param="visibility" data-filter-value="{{ active_filters.visibility.0 }}" class="active">{{ available_filters.visibility.active_name }}</span>
+      <span class="filter-pill active" data-filter-param="visibility" data-filter-value="{{ active_filters.visibility.0 }}">{{ available_filters.visibility.active_name }}</span>
     {% endif %}
     {% for option in available_filters.visibility.options %}
-    &middot;
-    <a href="{{ option.url }}" data-filter-param="visibility" data-filter-value="{{ option.key }}">{% translate option.name|capfirst %}</a>
+      <a href="{{ option.url }}" class="filter-pill" data-filter-param="visibility" data-filter-value="{{ option.key }}">{% translate option.name|capfirst %}</a>
     {% endfor %}
-  </p>
+  </div>
   {% endif %}
 </div>
 {% endif %}
