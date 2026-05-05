@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # Local apps first so their templates take precedence over django.contrib.admin
     'cmnsd',
     'locations',
+    'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

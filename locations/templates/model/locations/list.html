@@ -1,3 +1,4 @@
+{% load thumbnail %}
 {% with hidden_locations=user.preferences.hidden_locations.all %}
 {% regroup locations by geo.parent.parent as countries_list %}
 
@@ -58,7 +59,9 @@
               {# Thumbnail #}
               <div class="cmpng-location-thumb{% if location.is_accommodation %} cmpng-location-thumb--accommodation{% elif location.is_activity %} cmpng-location-thumb--activity{% endif %}">
                 {% if location.thumb %}
-                  <img src="{{ location.thumb.source.url }}" alt="{{ location.name }}" loading="lazy">
+                  {% thumbnail location.thumb.source "144x96" crop="center" as img %}
+                    <img src="{{ img.url }}" width="72" height="48" alt="{{ location.name }}" loading="lazy">
+                  {% endthumbnail %}
                 {% else %}
                   <div class="cmpng-location-thumb--placeholder">{{ location.name|slice:":1"|upper }}</div>
                 {% endif %}

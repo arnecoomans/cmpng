@@ -1,3 +1,4 @@
+{% load thumbnail %}
 <!-- SIMILAR LOCATIONS -->
 {% if location.similar %}
   <section id="section-similar">
@@ -20,7 +21,9 @@
         {% else %}
           <article class="list-item" data-type="{% if loc.is_accommodation %}accommodation {% endif %}{% if loc.is_activity %}activity{% endif %}">
             {% if loc.thumb %}
-              <img class="thumb" src="{{ loc.thumb.source.url }}" alt="{{ loc.name }}" loading="lazy">
+              {% thumbnail loc.thumb.source "144x96" crop="center" as img %}
+                <img class="thumb" src="{{ img.url }}" width="72" height="48" alt="{{ loc.name }}" loading="lazy">
+              {% endthumbnail %}
             {% else %}
               <div class="thumb thumb--empty"></div>
             {% endif %}
