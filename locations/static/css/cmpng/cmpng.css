@@ -4,6 +4,7 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--gray-900);
+  background: var(--gray-50);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -530,7 +531,7 @@ a.internal.tag {
 /* ---------- Section rows inside a list ---------- */
 
 .cmpng-section {
-  border-top: 1px solid rgba(17, 24, 39, 0.08);
+  border-top: 1px solid rgba(17, 24, 39, 0.12);
   position: relative;
 }
 .cmpng-section--country {
@@ -540,7 +541,7 @@ a.internal.tag {
   color: #fff;
   background: var(--primary-darker);
   border-top: 0;
-  border-radius: 10px;
+  border-radius: 10px !important;
   padding: 6px 14px;
   margin-top: 8px;
   font-size: var(--text-sm);
@@ -549,39 +550,39 @@ a.internal.tag {
 }
 .cmpng-section--country:first-child { margin-top: 0; }
 .cmpng-section--region {
-  background: transparent;
-  color: var(--primary-darkest);
-  font-weight: 700;
-  font-size: var(--text-sm);
-  padding: 7px 14px 7px calc(var(--location_indent) + 14px);
+  background: var(--gray-50) !important;
+  color: var(--primary-extra-dark);
+  font-weight: 800;
+  font-size: var(--text-base);
+  padding: 8px 14px 8px calc(var(--location_indent) + 14px);
 }
 .cmpng-section--region .cmpng-section-title {
-  font-size: var(--text-sm);
-  font-weight: 700;
+  font-size: var(--text-base);
+  font-weight: 800;
 }
 .cmpng-section--region::before {
   content: "";
   position: absolute;
   left: 14px; top: 6px; bottom: 6px;
-  width: 3px;
-  background: var(--primary-light);
+  width: 4px;
+  background: var(--primary);
   border-radius: 99px;
 }
 .cmpng-section--department {
-  background: transparent;
-  color: var(--gray-600);
-  font-weight: 600;
-  font-size: var(--text-xs);
+  background: var(--gray-50) !important;
+  color: var(--gray-700);
+  font-weight: 700;
+  font-size: 12px;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  padding: 4px 14px 4px calc(var(--location_indent) * 2 + 14px);
+  padding: 6px 14px 6px calc(var(--location_indent) * 2 + 14px);
 }
 .cmpng-section--department::before {
   content: "";
   position: absolute;
   left: calc(var(--location_indent) + 14px);
   top: 4px; bottom: 4px;
-  width: 2px;
+  width: 3px;
   background: var(--gray-300);
   border-radius: 99px;
 }
