@@ -142,7 +142,7 @@
               data-bs-target="#nearby-collapse"
               data-lazy-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'nearby' %}?format=html"
               data-lazy-map='{"nearby": "#nearby-body"}'
-            >{% translate "nearby"|capfirst %}</button>
+            >{% translate "nearby"|capfirst %}{% if nearby_count %}<span class="badge badge--muted ms-2">{{ nearby_count }}</span>{% endif %}</button>
           </h2>
           <div id="nearby-collapse" class="accordion-collapse collapse">
             <div class="accordion-body" id="nearby-body">
@@ -165,7 +165,7 @@
               data-bs-target="#similar-collapse"
               data-lazy-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'location' location.id location.slug 'similar' %}?format=html"
               data-lazy-map='{"similar": "#similar-body"}'
-            >{% translate "similar locations you might enjoy"|capfirst %}</button>
+            >{% translate "similar locations you might enjoy"|capfirst %}{% if similar_count %}<span class="badge badge--muted ms-2">{{ similar_count }}</span>{% endif %}</button>
           </h2>
           <div id="similar-collapse" class="accordion-collapse collapse">
             <div class="accordion-body" id="similar-body">

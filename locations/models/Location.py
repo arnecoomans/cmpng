@@ -595,6 +595,8 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       nearby_locations = [loc for loc in nearby_locations if loc.is_visible_to(user)]
       for loc in nearby_locations:
         loc.request = self.request
+    from django.core.cache import cache
+    cache.set(f'location_{self.pk}_nearby_count', len(nearby_locations), 3600)
     return nearby_locations
 
   @ajax_function
@@ -636,8 +638,10 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
         loc.request = self.request
 
     if not is_authenticated and len(similar_locations) > ANON_LIMIT:
-      return similar_locations[:ANON_LIMIT] + [{'more': True}]
+      similar_locations = similar_locations[:ANON_LIMIT] + [{'more': True}]
 
+    from django.core.cache import cache
+    cache.set(f'location_{self.pk}_similar_count', sum(1 for loc in similar_locations if not isinstance(loc, dict)), 3600)
     return similar_locations
 
   # ================================================================

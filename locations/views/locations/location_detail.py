@@ -59,4 +59,7 @@ class LocationDetailView(RequestMixin, FilterMixin, DetailView):
     context['filtered_media'] = self.object.ordered_media()
     context['scope'] = 'location'
     context.update(get_visit_context(self.object, self.request.user))
+    from django.core.cache import cache
+    context['nearby_count'] = cache.get(f'location_{self.object.pk}_nearby_count')
+    context['similar_count'] = cache.get(f'location_{self.object.pk}_similar_count')
     return context

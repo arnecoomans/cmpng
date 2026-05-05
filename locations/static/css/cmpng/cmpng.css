@@ -348,7 +348,7 @@ a.internal.tag {
 
 .fold {
   display: grid;
-  grid-template-columns: 1.15fr .85fr;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
   align-items: start;
   margin-top: 16px;

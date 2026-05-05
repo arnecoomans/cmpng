@@ -113,7 +113,8 @@
 .sw--main { background: var(--primary-dark) }
 .sw--near { background: #d4a72c }
 .sw--acc { background: var(--accent) }
-.map__canvas { height: 360px }
+.map__canvas { height: 260px }
+.map__canvas #map { height: 100% }
 .fake-map {
   height: 100%;
   position: relative;
