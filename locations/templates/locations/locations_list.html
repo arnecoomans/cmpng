@@ -53,6 +53,10 @@
     <!-- ============================= -->
     <main class="col-lg-9">
 
+      {% if request.user.is_authenticated and request.user.preferences.show_upcoming_visits %}
+        <div id="upcoming-visits-container" class="mb-3"></div>
+      {% endif %}
+      
       <div class="cmpng-results list-group list-group-flush" id="LocationsContainer">
         {% include 'model/locations/list.html' %}
       </div>
@@ -81,4 +85,19 @@
   </div>
 </div>
 </div>
+{% endblock %}
+
+{% block cmnsdPostInit %}
+  {% if request.user.is_authenticated and request.user.preferences.show_upcoming_visits %}
+    cmnsd.loadContent({
+      url: '{% url "cmnsd:dispatch_field_of_object_by_id_and_slug" "userpreferences" request.user.id request.user.username "upcoming_visits" %}?format=html',
+      map: { upcoming_visits: '#upcoming-visits-container' }
+    });
+    document.addEventListener('cmnsd:content:applied', (e) => {
+      const root = e.detail?.container || document;
+      root.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => {
+        bootstrap.Popover.getOrCreateInstance(el);
+      });
+    }, { once: true });
+  {% endif %}
 {% endblock %}

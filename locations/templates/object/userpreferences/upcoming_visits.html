@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if upcoming_visits %}
+  {% url 'locations:preferences' as prefs_url %}
+  <div class="upcoming-visits">
+    <div class="upcoming-visits__head">
+      <h2 class="cmpng-section-label">{% translate "upcoming visits"|capfirst %}</h2>
+      <button type="button" class="upcoming-visits__info-btn"
+              data-bs-toggle="popover"
+              data-bs-trigger="click"
+              data-bs-placement="bottom"
+              data-bs-html="true"
+              data-bs-content="{% translate 'these visits are only visible to you and are based on your location planned visits that you have added'|capfirst %}. {% translate 'we are showing visits for the next six months'|capfirst %}. {% translate 'disable showing upcoming visits in'|capfirst %} <a href='{{ prefs_url }}'>{% translate 'your preferences'|capfirst %}</a>.">
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+    <div class="upcoming-visits__list">
+      {% for visit in upcoming_visits %}
+        <div class="upcoming-visit">
+          <a href="{{ visit.location.get_absolute_url }}" class="upcoming-visit__name">{{ visit.location.name }}</a>
+          <span class="upcoming-visit__date text-muted small">
+            {% if visit.month %}
+              {{ visit.year }}-{% if visit.day %}{{ visit.day|stringformat:"02d" }}-{% endif %}{{ visit.month|stringformat:"02d" }}
+            {% else %}
+              {{ visit.year }}
+            {% endif %}
+            {% if visit.nights %}&middot; {{ visit.nights }} {% translate "nights" %}{% endif %}
+          </span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

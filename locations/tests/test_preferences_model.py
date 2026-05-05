@@ -1,8 +1,10 @@
+import datetime
 import pytest
 from unittest.mock import patch, MagicMock
 
 from locations.models.Preferences import App, UserPreferences
-from locations.tests.factories import UserFactory, LocationFactory, UserPreferencesFactory
+from locations.models.Visits import Visits
+from locations.tests.factories import UserFactory, LocationFactory, UserPreferencesFactory, VisitsFactory
 
 
 # ------------------------------------------------------------------ #
@@ -118,4 +120,58 @@ class TestUserPreferencesModel:
     ids = [u['id'] for u in result]
     assert other.pk in ids
 
+
+# ------------------------------------------------------------------ #
+#  UserPreferences.upcoming_visits()
+# ------------------------------------------------------------------ #
+
+FROZEN_TODAY = datetime.date(2026, 5, 5)
+
+
+@pytest.mark.django_db
+class TestPreferencesUpcomingVisits:
+
+  def _prefs_with_request(self, user, show=True):
+    prefs = UserPreferencesFactory(user=user, show_upcoming_visits=show)
+    request = MagicMock()
+    request.user = MagicMock()
+    request.user.is_authenticated = True
+    prefs.request = request
+    return prefs
+
+  def test_returns_queryset_when_enabled(self, db):
+    user = UserFactory()
+    user.save()
+    loc = LocationFactory()
+    VisitsFactory(user=user, location=loc, year=2026, month=8)
+    prefs = self._prefs_with_request(user, show=True)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      result = prefs.upcoming_visits()
+    assert hasattr(result, 'filter')
+    assert result.filter(year=2026, month=8).exists()
+
+  def test_returns_empty_queryset_when_disabled(self, db):
+    user = UserFactory()
+    user.save()
+    loc = LocationFactory()
+    VisitsFactory(user=user, location=loc, year=2026, month=8)
+    prefs = self._prefs_with_request(user, show=False)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      result = prefs.upcoming_visits()
+    assert not result.exists()
+
+  def test_only_returns_own_visits(self, db):
+    user = UserFactory()
+    user.save()
+    other = UserFactory()
+    other.save()
+    loc = LocationFactory()
+    VisitsFactory(user=other, location=loc, year=2026, month=8)
+    prefs = self._prefs_with_request(user, show=True)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      result = prefs.upcoming_visits()
+    assert not result.exists()
 

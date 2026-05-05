@@ -56,6 +56,11 @@
       {% include 'field/userpreferences/home.html' with home=preferences.home %}
     </div>
 
+    <!-- Upcoming visits -->
+    <div class="card card--pad" id="show_upcoming_visits">
+      {% include 'field/userpreferences/show_upcoming_visits.html' with show_upcoming_visits=preferences.show_upcoming_visits %}
+    </div>
+
     <!-- External maps -->
     <div class="card card--pad" id="external_maps_consent">
       {% include 'field/userpreferences/external_maps_consent.html' with external_maps_consent=preferences.external_maps_consent %}

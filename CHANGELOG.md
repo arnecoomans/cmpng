@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- **Upcoming visits widget** on the location list page — authenticated users with `show_upcoming_visits` enabled see a lazy-loaded ribbon above results showing planned visits within the next 6 months. `Visits.upcoming(user, months_ahead=6)` classmethod handles the date window including year wrap, filters `status='p'`, and orders by `year, month, day`. `UserPreferences.upcoming_visits` (`@ajax_login_required`) drives the cmnsd dispatch; the widget is injected via `cmnsd.loadContent` on `cmnsdPostInit` and Bootstrap popovers are re-initialised via `cmnsd:content:applied`. An `(i)` button on the right of the header opens a popover explaining visibility and linking to preferences. Toggle controlled by `show_upcoming_visits` BooleanField (default `True`). ([#45](https://github.com/arnecoomans/cmpng/issues/45))
 - **sorl-thumbnail** added for bandwidth-efficient thumbnails. List page, nearby, and similar templates now serve 144×96 px server-side crops (2× retina) instead of full-size images scaled in CSS. An empty migration (`0011_add_sorl_thumbnail`) with a dependency on sorl's own migration ensures `update.sh` triggers `manage.py migrate` on deploy without any script changes. ([#57](https://github.com/arnecoomans/cmpng/issues/57))
 
 ### Changed

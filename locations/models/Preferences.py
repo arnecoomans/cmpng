@@ -37,6 +37,8 @@ class UserPreferences(models.Model):
     home = models.ForeignKey('locations.Location', null=True, blank=True, on_delete=models.SET_NULL, related_name='home_of')
     family = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, help_text=_('family members'), related_name='family_of')
     external_maps_consent = models.BooleanField(default=False)
+    show_upcoming_visits = models.BooleanField(default=True)
+    # Related 
     favorites = models.ManyToManyField('locations.Location', related_name='favorited', blank=True)
     hidden_locations = models.ManyToManyField('locations.Location', related_name='hidden_by', blank=True)
     apps = models.ManyToManyField(App, related_name='users_with_app', blank=True)
@@ -71,3 +73,10 @@ class UserPreferences(models.Model):
       """Return list of users that can be added as family members (i.e. not already added)."""
       from django.contrib.auth import get_user_model
       return get_user_model().objects.exclude(pk__in=self.family.all()).exclude(pk=self.user.pk).values('id', 'username', 'first_name', 'last_name')
+
+    @ajax_login_required
+    def upcoming_visits(self):
+      from locations.models.Visits import Visits
+      if not self.show_upcoming_visits:
+        return Visits.objects.none()
+      return Visits.upcoming(self.user)

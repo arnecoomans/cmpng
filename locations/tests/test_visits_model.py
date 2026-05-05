@@ -1,4 +1,6 @@
+import datetime
 import pytest
+from unittest.mock import patch
 from django.core.exceptions import ValidationError
 
 from locations.models.Visits import Visits
@@ -151,3 +153,182 @@ class TestVisitsRecommendation:
     visit = VisitsFactory(recommendation=Visits.RECOMMENDATION_RECOMMEND)
     visit.refresh_from_db()
     assert visit.recommendation == Visits.RECOMMENDATION_RECOMMEND
+
+
+# ------------------------------------------------------------------ #
+#  upcoming() classmethod
+#  Frozen date: 2026-05-05 (mid-year, no year-wrap in default window)
+# ------------------------------------------------------------------ #
+
+FROZEN_TODAY = datetime.date(2026, 5, 5)
+
+
+def _freeze(fn):
+  """Decorator: patch datetime.date.today → FROZEN_TODAY inside fn."""
+  from functools import wraps
+  @wraps(fn)
+  def wrapper(*args, **kwargs):
+    with patch('datetime.date') as MockDate:
+      MockDate.today.return_value = FROZEN_TODAY
+      return fn(*args, **kwargs)
+  return wrapper
+
+
+@pytest.mark.django_db
+class TestVisitsUpcoming:
+
+  def _user_and_location(self):
+    user = UserFactory()
+    location = LocationFactory()
+    return user, location
+
+  # ---- current month ------------------------------------------------
+
+  def test_includes_current_month_no_day(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=5)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2026, month=5).exists()
+
+  def test_includes_current_month_on_today(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=5, day=5)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2026, month=5, day=5).exists()
+
+  def test_includes_current_month_after_today(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=5, day=20)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2026, month=5, day=20).exists()
+
+  def test_excludes_current_month_before_today(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=5, day=1)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2026, month=5, day=1).exists()
+
+  # ---- future months within window ---------------------------------
+
+  def test_includes_future_month_in_window(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=8)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2026, month=8).exists()
+
+  def test_excludes_month_beyond_window(self):
+    # 6 months ahead of May → Nov (month 11); Dec is outside
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=12)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2026, month=12).exists()
+
+  def test_excludes_past_month(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=3)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2026, month=3).exists()
+
+  def test_excludes_past_year(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2025, month=9)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2025).exists()
+
+  # ---- year-only visits --------------------------------------------
+
+  def test_includes_year_only_in_current_year(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=None)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2026, month__isnull=True).exists()
+
+  def test_excludes_year_only_past_year(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2025, month=None)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2025, month__isnull=True).exists()
+
+  # ---- year wrap (Oct → Apr next year) -----------------------------
+
+  def test_year_wrap_includes_next_year_month(self):
+    # Frozen: 2026-10-01; window: Oct–2026 to Apr-2027
+    oct_today = datetime.date(2026, 10, 1)
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2027, month=2)
+    with patch('datetime.date') as M:
+      M.today.return_value = oct_today
+      qs = Visits.upcoming(user)
+    assert qs.filter(year=2027, month=2).exists()
+
+  def test_year_wrap_excludes_month_beyond_window(self):
+    # Frozen: 2026-10-01; window ends Apr-2027; May-2027 is outside
+    oct_today = datetime.date(2026, 10, 1)
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2027, month=5)
+    with patch('datetime.date') as M:
+      M.today.return_value = oct_today
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2027, month=5).exists()
+
+  # ---- status / visibility -----------------------------------------
+
+  def test_excludes_revoked_visit(self):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=7, status='r')
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.filter(year=2026, month=7, status='r').exists()
+
+  def test_excludes_other_users_visits(self):
+    user, location = self._user_and_location()
+    other = UserFactory()
+    VisitsFactory(user=other, location=location, year=2026, month=7)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      qs = Visits.upcoming(user)
+    assert not qs.exists()
+
+  # ---- ordering & select_related -----------------------------------
+
+  def test_ordered_by_year_month_day(self):
+    user, _ = self._user_and_location()
+    loc = LocationFactory()
+    VisitsFactory(user=user, location=loc, year=2026, month=9, day=1)
+    VisitsFactory(user=user, location=loc, year=2026, month=6, day=1)
+    VisitsFactory(user=user, location=loc, year=2026, month=6, day=None)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      results = list(Visits.upcoming(user))
+    years_months = [(v.year, v.month) for v in results]
+    assert years_months == sorted(years_months, key=lambda x: (x[0], x[1] or 0))
+
+  def test_location_accessible_without_extra_query(self, django_assert_num_queries):
+    user, location = self._user_and_location()
+    VisitsFactory(user=user, location=location, year=2026, month=7)
+    with patch('datetime.date') as M:
+      M.today.return_value = FROZEN_TODAY
+      with django_assert_num_queries(1):
+        visits = list(Visits.upcoming(user))
+        _ = visits[0].location.name

@@ -1,0 +1,54 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <div>
+    <div class="fw-semibold">{% translate "upcoming visits"|capfirst %}</div>
+    <div class="cmpng-muted small">{% translate "show your upcoming visits in your feed"|capfirst %}.</div>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <div id="pref-upcoming-visits" class="form-check form-switch">
+      {% if ajax.editable %}
+        <div class="form-check form-switch">
+          <input  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  name="show_upcoming_visits"
+                  {% if show_upcoming_visits %}checked{% endif %}
+                  data-action
+                  data-body='{"show_upcoming_visits":"{% if show_upcoming_visits %}false{% else %}true{% endif %}"}'
+                  data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'show_upcoming_visits' %}"
+                  data-method="POST"
+                  data-map='{"show_upcoming_visits":"#show_upcoming_visits"}'
+                  >
+        </div>
+      {% else %}
+        {% if show_upcoming_visits %}
+          <span class="cmpng-badge cmpng-badge--type">{% translate "enabled"|capfirst %}</span>
+        {% else %}
+          <span class="cmpng-badge cmpng-badge--type cmpng-muted">{% translate "disabled"|capfirst %}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    <button
+      class="pref-edit-btn iconbtn"
+      aria-label="{% translate 'stop editing'|capfirst %}"
+      data-action
+      data-url="{% url 'cmnsd:dispatch_field_of_object_by_id_and_slug' 'userpreferences' user.id user.username 'show_upcoming_visits' %}"
+      {% if not ajax.editable %}data-params='{"editable": true}'{% endif %}
+      data-map='{"show_upcoming_visits": "#show_upcoming_visits"}'
+    >
+      <i class="bi bi-{% if ajax.editable %}x{% else %}pencil{% endif %}"></i>
+    </button>
+  </div>
+</div>
+{% if request.session.external_maps_consent %}
+  <div class="d-flex align-items-center justify-content-between mt-1">
+    <div class="cmpng-muted small">
+      <i class="bi bi-clock-history me-1"></i>{% translate "session consent active"|capfirst %}
+    </div>
+    <form method="post" action="{% url 'locations:revoke_maps_session' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm btn-link text-danger p-0 small">
+        {% translate "revoke"|capfirst %}
+      </button>
+    </form>
+  </div>
+{% endif %}

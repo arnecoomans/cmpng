@@ -103,3 +103,35 @@ class Visits(BaseModel):
   def get_months(cls):
     """Return list of month choices."""
     return list(cls.MONTHS)
+
+  @classmethod
+  def upcoming(cls, user, months_ahead=6):
+    """Return published visits planned within the next months_ahead months."""
+    from datetime import date
+    from django.db.models import Q
+
+    today = date.today()
+
+    window = []
+    for i in range(months_ahead + 1):
+      offset = today.month - 1 + i
+      window.append((today.year + offset // 12, offset % 12 + 1))
+
+    cutoff_year, _ = window[-1]
+
+    q = Q()
+    for y, m in window:
+      if y == today.year and m == today.month:
+        q |= Q(year=y, month=m, day__isnull=True) | Q(year=y, month=m, day__gte=today.day)
+      else:
+        q |= Q(year=y, month=m)
+    # Year-only visits within the range
+    q |= Q(month__isnull=True, year__gte=today.year, year__lte=cutoff_year)
+
+    return (
+      cls.objects
+      .filter(user=user, status='p')
+      .filter(q)
+      .select_related('location')
+      .order_by('year', 'month', 'day')
+    )

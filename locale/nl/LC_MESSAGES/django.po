@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-03 16:58+0200\n"
+"POT-Creation-Date: 2026-05-05 14:06+0000\n"
 "PO-Revision-Date: 2026-05-03 17:09+0200\n"
 "Last-Translator: Arne Coomans\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -30,7 +30,8 @@ msgstr "Berekende velden herberekenen (sla geselecteerde items opnieuw op)"
 #: locations/templates/element/reusable_description_form.html:17
 #: locations/templates/field/location/visibility.html:2
 #: locations/templates/locations/add_location.html:117
-#: locations/templates/locations/locations_list_filterbox.html:142
+#: locations/templates/locations/locations_list_filterbox.html:154
+#: locations/templates/locations/locations_map_filterbox.html:93
 #: locations/templates/media/manage_media.html:88
 msgid "visibility"
 msgstr "zichtbaarheid"
@@ -152,7 +153,7 @@ msgstr "veld '{}' niet gevonden in {} '{}'"
 msgid "unexpected error retrieving field '{}' from {} '{}': {}"
 msgstr "onverwachte fout bij ophalen van veld '{}' uit {} '{}': {}"
 
-#: cmnsd/mixins/ResponseMixin.py:324
+#: cmnsd/mixins/ResponseMixin.py:325
 msgid "Message template not found when rendering message"
 msgstr "Berichttemplate niet gevonden bij renderen van bericht"
 
@@ -268,8 +269,8 @@ msgid "family"
 msgstr "familie"
 
 #: cmnsd/models/VisibilityModel.py:10
-#: locations/templates/function/location/nearby.html:27
-#: locations/templates/function/location/similar.html:34
+#: locations/templates/function/location/nearby.html:30
+#: locations/templates/function/location/similar.html:37
 msgid "private"
 msgstr "privé"
 
@@ -1105,18 +1106,18 @@ msgid "distance in km from departure center"
 msgstr "afstand in km vanaf het vertrekpunt"
 
 #: locations/models/Location.py:335
-#: locations/templates/function/location/nearby.html:9
-#: locations/templates/function/location/nearby.html:26
-#: locations/templates/function/location/similar.html:33
-#: locations/templates/model/locations/list.html:98
+#: locations/templates/function/location/nearby.html:10
+#: locations/templates/function/location/nearby.html:29
+#: locations/templates/function/location/similar.html:36
+#: locations/templates/model/locations/list.html:106
 msgid "activity"
 msgstr "activiteit"
 
 #: locations/models/Location.py:337
-#: locations/templates/function/location/nearby.html:8
-#: locations/templates/function/location/nearby.html:25
-#: locations/templates/function/location/similar.html:32
-#: locations/templates/model/locations/list.html:92
+#: locations/templates/function/location/nearby.html:9
+#: locations/templates/function/location/nearby.html:28
+#: locations/templates/function/location/similar.html:35
+#: locations/templates/model/locations/list.html:100
 msgid "accommodation"
 msgstr "accommodatie"
 
@@ -1335,7 +1336,7 @@ msgid "End day cannot be before start day in the same month."
 msgstr "Einddag kan niet vóór de begindag liggen in dezelfde maand."
 
 #: locations/services/location_nearby.py:128
-#: locations/templates/locations/location_detail.html:40
+#: locations/templates/locations/location_detail.html:42
 msgid "republish"
 msgstr "opnieuw publiceren"
 
@@ -1453,7 +1454,7 @@ msgstr "locatie terugtrekken"
 
 #: locations/templates/element/location/topaction_revoke.html:8
 #: locations/templates/element/location/topaction_revoke.html:12
-#: locations/templates/locations/location_detail.html:39
+#: locations/templates/locations/location_detail.html:41
 #: locations/templates/locations/revoke_location_form.html:37
 msgid "republish location"
 msgstr "locatie opnieuw publiceren"
@@ -1488,6 +1489,7 @@ msgstr "toevoegen"
 #: locations/templates/field/userpreferences/external_maps_consent.html:32
 #: locations/templates/field/userpreferences/family.html:5
 #: locations/templates/field/userpreferences/home.html:5
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:32
 #: locations/templates/object/comment.html:22
 msgid "stop editing"
 msgstr "stoppen met bewerken"
@@ -1515,7 +1517,7 @@ msgstr "kort onderwerp"
 
 #: locations/templates/element/reusable_form_comment.html:25
 #: locations/templates/function/location/filtered_descriptions.html:20
-#: locations/templates/model/locations/list.html:120
+#: locations/templates/model/locations/list.html:126
 #: locations/templates/object/comment.html:15
 msgid "visible to"
 msgstr "zichtbaar voor"
@@ -1535,7 +1537,6 @@ msgstr "plaatsen"
 #: locations/templates/field/tag/parent.html:5
 #: locations/templates/field/userpreferences/home.html:30
 #: locations/templates/locations/add_location.html:99
-#: templates/navigation.html:73
 msgid "start typing"
 msgstr "begin met typen"
 
@@ -1545,7 +1546,8 @@ msgstr "adres van deze"
 
 #: locations/templates/field/location/categories.html:3
 #: locations/templates/locations/add_location.html:94
-#: locations/templates/locations/locations_list_filterbox.html:80
+#: locations/templates/locations/locations_list_filterbox.html:92
+#: locations/templates/locations/locations_map_filterbox.html:27
 msgid "categories"
 msgstr "categorieën"
 
@@ -1768,18 +1770,22 @@ msgid "loading external maps shares your data with the maps provider"
 msgstr "het laden van externe kaarten deelt je gegevens met de kaartaanbieder"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:24
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:24
 msgid "enabled"
 msgstr "ingeschakeld"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:26
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:26
 msgid "disabled"
 msgstr "uitgeschakeld"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:45
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:45
 msgid "session consent active"
 msgstr "sessietoestemming actief"
 
 #: locations/templates/field/userpreferences/external_maps_consent.html:50
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:50
 msgid "revoke"
 msgstr "intrekken"
 
@@ -1818,6 +1824,15 @@ msgstr "familielid toevoegen"
 msgid "No home location set"
 msgstr "Geen thuislocatie ingesteld"
 
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:3
+#: locations/templates/object/userpreferences/upcoming_visits.html:6
+msgid "upcoming visits"
+msgstr "aankomende bezoeken"
+
+#: locations/templates/field/userpreferences/show_upcoming_visits.html:4
+msgid "show your upcoming visits in your feed"
+msgstr "toon je aankomende bezoeken in je overzicht"
+
 #: locations/templates/function/location/contact_details.html:3
 #: locations/templates/function/location/contact_details.html:20
 msgid "contact"
@@ -1828,7 +1843,7 @@ msgid "save these changes"
 msgstr "deze wijzigingen opslaan"
 
 #: locations/templates/function/location/filtered_comments.html:7
-#: locations/views/profile/export_data.py:23 templates/navigation.html:23
+#: locations/views/profile/export_data.py:23 templates/navigation.html:44
 msgid "comments"
 msgstr "reacties"
 
@@ -1862,10 +1877,11 @@ msgid "add a description to"
 msgstr "beschrijving toevoegen aan"
 
 #: locations/templates/function/location/filtered_tags.html:2
-#: locations/templates/locations/locations_list_filterbox.html:111
+#: locations/templates/locations/locations_list_filterbox.html:123
+#: locations/templates/locations/locations_map_filterbox.html:60
 #: locations/templates/tags/edit_tag.html:12
 #: locations/templates/tags/manage_tag_visibility.html:32
-#: templates/navigation.html:20
+#: templates/navigation.html:41
 msgid "tags"
 msgstr "tags"
 
@@ -1882,37 +1898,44 @@ msgid "add tag"
 msgstr "tag toevoegen"
 
 #: locations/templates/function/location/google_maps_script.html:120
+#: locations/templates/locations/locations_map.html:292
 msgid "view details"
 msgstr "details bekijken"
 
 #: locations/templates/function/location/map.html:2
+#: locations/templates/locations/locations_map.html:3
 msgid "map"
 msgstr "kaart"
 
-#: locations/templates/function/location/map.html:17
+#: locations/templates/function/location/map.html:19
+#: locations/templates/locations/locations_map.html:376
 msgid "this map loads content from an external provider"
 msgstr "deze kaart laadt inhoud van een externe aanbieder"
 
-#: locations/templates/function/location/map.html:17
+#: locations/templates/function/location/map.html:19
+#: locations/templates/locations/locations_map.html:377
 msgid ""
 "to protect your privacy, you need to give your consent before loading the map"
 msgstr ""
 "ter bescherming van je privacy moet je toestemming geven voordat de kaart "
 "wordt geladen"
 
-#: locations/templates/function/location/map.html:21
+#: locations/templates/function/location/map.html:22
 msgid "show maps"
 msgstr "kaarten tonen"
 
-#: locations/templates/function/location/map.html:24
+#: locations/templates/function/location/map.html:23
+#: locations/templates/locations/locations_map.html:380
 msgid "once"
 msgstr "eenmalig"
 
-#: locations/templates/function/location/map.html:27
+#: locations/templates/function/location/map.html:24
+#: locations/templates/locations/locations_map.html:381
 msgid "for this session"
 msgstr "voor deze sessie"
 
-#: locations/templates/function/location/map.html:31
+#: locations/templates/function/location/map.html:26
+#: locations/templates/locations/locations_map.html:383
 msgid "always"
 msgstr "altijd"
 
@@ -1924,15 +1947,19 @@ msgstr "navigeren naar"
 msgid "using"
 msgstr "via"
 
-#: locations/templates/function/location/nearby.html:5
-#: locations/templates/locations/location_detail.html:143
+#: locations/templates/function/location/nearby.html:6
+#: locations/templates/locations/location_detail.html:145
 msgid "nearby"
 msgstr "in de buurt"
 
-#: locations/templates/function/location/nearby.html:7
-#: locations/templates/locations/locations_list_filterbox.html:4
-#: locations/templates/locations/locations_list_filterbox.html:65
-#: locations/templates/locations/locations_list_filterbox.html:72
+#: locations/templates/function/location/nearby.html:8
+#: locations/templates/locations/locations_list_filterbox.html:6
+#: locations/templates/locations/locations_list_filterbox.html:74
+#: locations/templates/locations/locations_list_filterbox.html:83
+#: locations/templates/locations/locations_map_filterbox.html:4
+#: locations/templates/locations/locations_map_filterbox.html:12
+#: locations/templates/locations/locations_map_filterbox.html:19
+#: locations/templates/locations/locations_map_filterbox.html:101
 msgid "all"
 msgstr "alles"
 
@@ -1944,33 +1971,33 @@ msgstr "gedeeld door"
 msgid "no image available"
 msgstr "geen afbeelding beschikbaar"
 
-#: locations/templates/function/location/similar.html:5
-#: locations/templates/locations/location_detail.html:166
+#: locations/templates/function/location/similar.html:6
+#: locations/templates/locations/location_detail.html:168
 msgid "similar locations you might enjoy"
 msgstr "vergelijkbare locaties die je misschien leuk vindt"
 
-#: locations/templates/function/location/similar.html:13
+#: locations/templates/function/location/similar.html:14
 msgid "logged in users see more"
 msgstr "ingelogde gebruikers zien meer"
 
-#: locations/templates/function/location/similar.html:15
-#: templates/navigation.html:62
+#: locations/templates/function/location/similar.html:16
+#: templates/navigation.html:87
 msgid "register"
 msgstr "registreren"
 
-#: locations/templates/function/location/similar.html:16
+#: locations/templates/function/location/similar.html:17
 #: locations/templates/locations/base.html:12
 msgid "log in"
 msgstr "log in"
 
-#: locations/templates/function/location/topactions.html:32
+#: locations/templates/function/location/topactions.html:36
 msgid "refresh automatically detected data of"
 msgstr "automatisch gedetecteerde gegevens vernieuwen van"
 
 #: locations/templates/lists/list_detail.html:12
 #: locations/templates/lists/lists_list.html:4
 #: locations/templates/lists/lists_list.html:11
-#: locations/views/profile/export_data.py:26 templates/navigation.html:26
+#: locations/views/profile/export_data.py:26 templates/navigation.html:47
 msgid "lists"
 msgstr "lijsten"
 
@@ -2070,12 +2097,14 @@ msgid "cancel"
 msgstr "annuleren"
 
 #: locations/templates/locations/add_location.html:164
-#: locations/templates/locations/locations_list_filterbox.html:21
-#: locations/templates/locations/locations_list_filterbox.html:33
+#: locations/templates/locations/locations_list_filterbox.html:29
 #: locations/templates/locations/locations_list_filterbox.html:41
-#: locations/templates/locations/locations_list_filterbox.html:86
-#: locations/templates/locations/locations_list_filterbox.html:117
-#: locations/templates/locations/locations_list_filterbox.html:149
+#: locations/templates/locations/locations_list_filterbox.html:49
+#: locations/templates/locations/locations_list_filterbox.html:98
+#: locations/templates/locations/locations_list_filterbox.html:129
+#: locations/templates/locations/locations_list_filterbox.html:164
+#: locations/templates/locations/locations_map_filterbox.html:33
+#: locations/templates/locations/locations_map_filterbox.html:66
 msgid "remove"
 msgstr "verwijderen"
 
@@ -2143,81 +2172,120 @@ msgstr "of"
 msgid "Close"
 msgstr "Sluiten"
 
-#: locations/templates/locations/location_detail.html:34
+#: locations/templates/locations/location_detail.html:18
+#, fuzzy
+#| msgid "locations"
+msgid "all locations"
+msgstr "locaties"
+
+#: locations/templates/locations/location_detail.html:36
 msgid "this location is currently revoked and not visible to the public"
 msgstr ""
 "deze locatie is momenteel ingetrokken en niet zichtbaar voor het publiekdeze "
 "locatie is momenteel ingetrokken en niet zichtbaar voor het publiek"
 
-#: locations/templates/locations/location_detail.html:68
+#: locations/templates/locations/location_detail.html:70
 msgid "loading nearby accomodations and activities"
 msgstr "nabijgelegen accommodaties en activiteiten laden"
 
-#: locations/templates/locations/location_detail.html:148
-#: locations/templates/locations/location_detail.html:171
+#: locations/templates/locations/location_detail.html:150
+#: locations/templates/locations/location_detail.html:173
 msgid "loading"
 msgstr "laden"
 
-#: locations/templates/locations/location_detail.html:216
-#: locations/templates/locations/location_detail.html:219
+#: locations/templates/locations/location_detail.html:218
+#: locations/templates/locations/location_detail.html:221
 msgid "read more"
 msgstr "lees meer"
 
-#: locations/templates/locations/location_detail.html:219
+#: locations/templates/locations/location_detail.html:221
 msgid "read less"
 msgstr "lees minder"
 
-#: locations/templates/locations/locations_list.html:34
-#: locations/templates/locations/locations_list.html:71
+#: locations/templates/locations/locations_list.html:25
+#, fuzzy
+#| msgid "view"
+msgid "map view"
+msgstr "bekijken"
+
+#: locations/templates/locations/locations_list.html:38
+#: locations/templates/locations/locations_list.html:80
 msgid "Filters"
 msgstr "Filters"
 
 #: locations/templates/locations/locations_list_filterbox.html:3
+#: locations/templates/locations/locations_map_filterbox.html:3
 msgid "type"
 msgstr "type"
 
-#: locations/templates/locations/locations_list_filterbox.html:5
+#: locations/templates/locations/locations_list_filterbox.html:9
+#: locations/templates/locations/locations_map_filterbox.html:5
 msgid "accommodations"
 msgstr "accommodaties"
 
-#: locations/templates/locations/locations_list_filterbox.html:6
+#: locations/templates/locations/locations_list_filterbox.html:12
+#: locations/templates/locations/locations_map_filterbox.html:6
 msgid "activities"
 msgstr "activiteiten"
 
-#: locations/templates/locations/locations_list_filterbox.html:11
+#: locations/templates/locations/locations_list_filterbox.html:19
 msgid "location"
 msgstr "locatie"
 
-#: locations/templates/locations/locations_list_filterbox.html:64
+#: locations/templates/locations/locations_list_filterbox.html:72
+#: locations/templates/locations/locations_map_filterbox.html:11
 msgid "visited"
 msgstr "bezocht"
 
-#: locations/templates/locations/locations_list_filterbox.html:66
-#: locations/templates/locations/locations_list_filterbox.html:73
+#: locations/templates/locations/locations_list_filterbox.html:75
+#: locations/templates/locations/locations_list_filterbox.html:84
+#: locations/templates/locations/locations_map_filterbox.html:13
+#: locations/templates/locations/locations_map_filterbox.html:20
 msgid "yes"
 msgstr "ja"
 
-#: locations/templates/locations/locations_list_filterbox.html:67
-#: locations/templates/locations/locations_list_filterbox.html:74
+#: locations/templates/locations/locations_list_filterbox.html:76
+#: locations/templates/locations/locations_list_filterbox.html:85
+#: locations/templates/locations/locations_map_filterbox.html:14
+#: locations/templates/locations/locations_map_filterbox.html:21
 msgid "no"
 msgstr "nee"
 
-#: locations/templates/locations/locations_list_filterbox.html:71
+#: locations/templates/locations/locations_list_filterbox.html:81
+#: locations/templates/locations/locations_map_filterbox.html:18
 msgid "favorited"
 msgstr "gefavoriteerd"
 
-#: locations/templates/locations/locations_list_filterbox.html:97
+#: locations/templates/locations/locations_list_filterbox.html:109
+#: locations/templates/locations/locations_map_filterbox.html:44
 msgid "filter by category"
 msgstr "filter op categorie"
 
-#: locations/templates/locations/locations_list_filterbox.html:128
+#: locations/templates/locations/locations_list_filterbox.html:140
+#: locations/templates/locations/locations_map_filterbox.html:77
 msgid "filter by tag"
 msgstr "filter op tag"
 
-#: locations/templates/locations/locations_list_filterbox.html:168
+#: locations/templates/locations/locations_list_filterbox.html:183
 #: locations/templates/tags/edit_tag.html:62
 msgid "status"
 msgstr "status"
+
+#: locations/templates/locations/locations_map.html:36
+msgid "filters"
+msgstr "filters"
+
+#: locations/templates/locations/locations_map.html:41
+msgid "list view"
+msgstr "lijstweergave"
+
+#: locations/templates/locations/locations_map.html:44
+msgid "toggle filters"
+msgstr "filters in-/uitklappen"
+
+#: locations/templates/locations/locations_map_filterbox.html:116
+msgid "reset filters"
+msgstr "filters resetten"
 
 #: locations/templates/locations/revoke_location_form.html:11
 msgid ""
@@ -2263,23 +2331,23 @@ msgstr "afbeelding"
 msgid "upload"
 msgstr "uploaden"
 
-#: locations/templates/model/locations/list.html:79
+#: locations/templates/model/locations/list.html:87
 msgid "part of chain"
 msgstr "onderdeel van keten"
 
-#: locations/templates/model/locations/list.html:116
+#: locations/templates/model/locations/list.html:123
 msgid "is your home"
 msgstr "is jouw thuis"
 
-#: locations/templates/model/locations/list.html:126
+#: locations/templates/model/locations/list.html:131
 msgid "this location has comments"
 msgstr "deze locatie heeft reacties"
 
-#: locations/templates/model/locations/list.html:130
+#: locations/templates/model/locations/list.html:134
 msgid "this location has images"
 msgstr "deze locatie heeft afbeeldingen"
 
-#: locations/templates/model/locations/list.html:136
+#: locations/templates/model/locations/list.html:138
 msgid "you have hidden this location"
 msgstr "je hebt deze locatie verborgen"
 
@@ -2295,9 +2363,34 @@ msgstr "weet je zeker dat je deze reactie wilt verwijderen?"
 msgid "are you sure you want to remove this tag"
 msgstr "weet je zeker dat je deze tag wilt verwijderen"
 
+#: locations/templates/object/userpreferences/upcoming_visits.html:12
+msgid ""
+"these visits are only visible to you and are based on your location planned "
+"visits that you have added"
+msgstr ""
+"deze bezoeken zijn alleen zichtbaar voor jou en zijn gebaseerd op de "
+"geplande bezoeken die je hebt toegevoegd"
+
+#: locations/templates/object/userpreferences/upcoming_visits.html:12
+msgid "we are showing visits for the next six months"
+msgstr "we tonen bezoeken voor de komende zes maanden"
+
+#: locations/templates/object/userpreferences/upcoming_visits.html:12
+msgid "disable showing upcoming visits in"
+msgstr "schakel aankomende bezoeken uit in"
+
+#: locations/templates/object/userpreferences/upcoming_visits.html:12
+msgid "your preferences"
+msgstr "je voorkeuren"
+
+#: locations/templates/object/userpreferences/upcoming_visits.html:26
+#: locations/templates/visits/manage_visits.html:34
+msgid "nights"
+msgstr "nachten"
+
 #: locations/templates/preferences/export_data.html:4
 #: locations/templates/preferences/export_data.html:13
-#: locations/templates/preferences/preferences.html:81
+#: locations/templates/preferences/preferences.html:86
 msgid "Download my data"
 msgstr "Mijn gegevens downloaden"
 
@@ -2328,34 +2421,34 @@ msgstr "Accountinstellingen"
 msgid "language"
 msgstr "taal"
 
-#: locations/templates/preferences/preferences.html:78
+#: locations/templates/preferences/preferences.html:83
 msgid "my data"
 msgstr "mijn gegevens"
 
-#: locations/templates/preferences/preferences.html:79
+#: locations/templates/preferences/preferences.html:84
 msgid "Download a copy of all data stored under your account."
 msgstr ""
 "Download een kopie van alle gegevens die onder jouw account zijn opgeslagen."
 
-#: locations/templates/preferences/preferences.html:87
+#: locations/templates/preferences/preferences.html:92
 msgid "my links"
 msgstr "mijn links"
 
-#: locations/templates/preferences/preferences.html:90
+#: locations/templates/preferences/preferences.html:95
 msgid "been there"
 msgstr "er geweest"
 
-#: locations/templates/preferences/preferences.html:93
+#: locations/templates/preferences/preferences.html:98
 msgid "loved"
 msgstr "geliked"
 
-#: locations/templates/preferences/preferences.html:96
+#: locations/templates/preferences/preferences.html:101
 msgid "my comments"
 msgstr "mijn reacties"
 
 #: locations/templates/staff/dashboard.html:4
 #: locations/templates/staff/dashboard.html:101
-#: locations/templates/staff/dashboard.html:105 templates/navigation.html:42
+#: locations/templates/staff/dashboard.html:105 templates/navigation.html:65
 msgid "staff dashboard"
 msgstr "medwerkers dashboard"
 
@@ -2459,7 +2552,7 @@ msgstr ""
 
 #: locations/templates/tags/manage_tag_visibility.html:4
 #: locations/templates/tags/manage_tag_visibility.html:38
-#: templates/navigation.html:43
+#: templates/navigation.html:66
 msgid "manage tag visibility"
 msgstr "beheer zichtbaarheid van tag"
 
@@ -2495,10 +2588,6 @@ msgstr "Geen tags gevonden."
 #: locations/templates/visits/manage_visits.html:6
 msgid "your visits to"
 msgstr "jouw bezoeken aan"
-
-#: locations/templates/visits/manage_visits.html:34
-msgid "nights"
-msgstr "nachten"
 
 #: locations/templates/visits/manage_visits.html:62
 msgid "are you sure you want to delete this visit"
@@ -2869,15 +2958,15 @@ msgstr "deze pagina is niet beschikbaar."
 msgid "you might need to log in to see this."
 msgstr "je moet mogelijk inloggen om dit te zien."
 
-#: locations/views/locations/locations_list.py:85
+#: locations/views/locations/locations_list.py:134
 msgid "published"
 msgstr "gepubliceerd"
 
-#: locations/views/locations/locations_list.py:87
+#: locations/views/locations/locations_list.py:136
 msgid "my drafts"
 msgstr "mijn concepten"
 
-#: locations/views/locations/locations_list.py:89
+#: locations/views/locations/locations_list.py:138
 msgid "revoked"
 msgstr "ingetrokken"
 
@@ -2925,73 +3014,57 @@ msgstr "CMPNG op GitHub"
 msgid "cookie statement"
 msgstr "cookieverklaring"
 
-#: templates/navigation.html:4
+#: templates/navigation.html:14
 msgid "toggle navigation"
 msgstr "navigatie in-/uitklappen"
 
-#: templates/navigation.html:9
+#: templates/navigation.html:23
 msgctxt "navigation-slogan"
 msgid "go somewhere"
 msgstr "ga"
 
-#: templates/navigation.html:13
+#: templates/navigation.html:27
 msgctxt "navigation-slogan"
 msgid "to stay"
 msgstr "slapen"
 
-#: templates/navigation.html:16
+#: templates/navigation.html:30
 msgctxt "navigation-slogan"
 msgid "to do"
 msgstr "iets doen"
 
-#: templates/navigation.html:36
+#: templates/navigation.html:59
 msgid "your account"
 msgstr "jouw account"
 
-#: templates/navigation.html:39
+#: templates/navigation.html:62
 msgid "preferences"
 msgstr "voorkeuren"
 
-#: templates/navigation.html:46
+#: templates/navigation.html:69
 #, python-format
 msgid "Edit \"%(location)s\" in admin"
 msgstr "Bewerk \"%(location)s\" in beheer"
 
-#: templates/navigation.html:48
+#: templates/navigation.html:71
 msgid "open django admin"
 msgstr "Django-beheer openen"
 
-#: templates/navigation.html:51
+#: templates/navigation.html:74
 msgid "edit profile of"
 msgstr "profiel bewerken van"
 
-#: templates/navigation.html:55
+#: templates/navigation.html:78
 msgid "log out"
 msgstr "uitloggen"
 
-#: templates/navigation.html:65
+#: templates/navigation.html:90
 msgid "login"
 msgstr "inloggen"
 
-#: templates/navigation.html:85
+#: templates/navigation.html:103
 msgid "search"
 msgstr "zoeken"
-
-#: locations/templates/locations/locations_map.html
-msgid "filters"
-msgstr "filters"
-
-#: locations/templates/locations/locations_map.html
-msgid "list view"
-msgstr "lijstweergave"
-
-#: locations/templates/locations/locations_map.html
-msgid "toggle filters"
-msgstr "filters in-/uitklappen"
-
-#: locations/templates/locations/locations_map_filterbox.html
-msgid "reset filters"
-msgstr "filters resetten"
 
 #~ msgid "Active filters:"
 #~ msgstr "Actieve filters:"
