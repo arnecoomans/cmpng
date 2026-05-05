@@ -124,63 +124,71 @@
   color: #dc2626;
 }
 
-/* ---------- Type / Visited / Favorite toggles (All · X · Y) ---------- */
+/* ---------- Unified filter pill row ---------- */
 
-.type-filter,
-.visited-filter,
-.favorite-filter,
-.visibility-filter {
-  font-size: 0.85rem;
-  color: var(--gray-300);
+.filter-pill-row {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
-.type-filter a,
-.visited-filter a,
-.favorite-filter a,
-.visibility-filter a,
-.visibility-filter span,
-.status-filter a {
-  display: inline-block;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
+.filter-pill-row--inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.75rem;
   text-decoration: none;
-  color: var(--gray-500);
-  border: 1px solid transparent;
-  transition: background 120ms, color 120ms, border-color 120ms;
+  color: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  background: rgba(249, 250, 251, 0.7);
+  font-size: 0.9rem;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
 }
 
-.type-filter a:hover,
-.visited-filter a:hover,
-.favorite-filter a:hover,
-.visibility-filter a:hover,
-.status-filter a:hover {
-  background: var(--gray-100);
-  color: var(--gray-800);
+.filter-pill:hover {
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.10);
+  transform: translateY(-1px);
+  color: rgba(17, 24, 39, 0.95);
 }
 
-.type-filter a.active,
-.visited-filter a.active,
-.favorite-filter a.active,
-.visibility-filter a.active,
-.visibility-filter span.active,
-.status-filter a.active {
-  background: var(--primary-extra-light);
-  border-color: var(--primary-light);
+.filter-pill.active {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.08);
   color: var(--primary-darker);
   font-weight: 600;
 }
 
-.type-filter a.disabled {
+.filter-pill.disabled {
   opacity: 0.35;
   pointer-events: none;
   cursor: default;
 }
 
-/* ---------- Status toggles (concept / revoked) ---------- */
+.filter-pill-count {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.55);
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+}
 
-.status-filter {
-  font-size: 0.85rem;
-  color: var(--gray-300);
+.filter-pill.active .filter-pill-count {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: var(--primary-darker);
 }
 
 /* ---------- Count chip ---------- */

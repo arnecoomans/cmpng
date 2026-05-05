@@ -92,6 +92,19 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     available_filters = {}
     # Geo: use get_geo_filter_options to fetch available geo filters based on the current queryset
     available_filters['geo'] = self.get_geo_filter_options(self.get_queryset())
+    # Resolve active geo slugs to Region display names for the breadcrumb
+    active_names = {}
+    for key in ('country', 'region', 'department'):
+      slug = self.request.GET.get(key, '')
+      if slug:
+        try:
+          active_names[key] = _(Region.objects.values_list('name', flat=True).get(slug=slug))
+        except Region.DoesNotExist:
+          active_names[key] = slug
+    if active_names:
+      if not available_filters['geo']:
+        available_filters['geo'] = {}
+      available_filters['geo']['active_names'] = active_names
     # Category: use get_category_filter_options to fetch available category filters based on the current queryset
     available_filters['category'] = self.get_category_filter_options(self.get_queryset(), limit=limit, min_usage=min_usage)
     # Tag: use get_tag_filter_options to fetch available tag filters based on the current queryset
@@ -100,6 +113,11 @@ class LocationListMasterView(RequestMixin, FilterMixin, ListView):
     available_filters['visibility'] = self.get_visibility_filter_options(self.get_queryset())
     # Status: extra statuses available to this user (concept, revoked)
     available_filters['status'] = self.get_status_filter_options()
+    # Types: use unscoped base queryset so scope pills are never wrongly disabled
+    available_filters['types'] = {
+      'accommodations': self._optimized_queryset.filter(is_accommodation=True).exists(),
+      'activities': self._optimized_queryset.filter(is_activity=True).exists(),
+    }
     return available_filters
 
 
