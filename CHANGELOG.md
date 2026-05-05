@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- **sorl-thumbnail** added for bandwidth-efficient thumbnails. List page, nearby, and similar templates now serve 144×96 px server-side crops (2× retina) instead of full-size images scaled in CSS. An empty migration (`0011_add_sorl_thumbnail`) with a dependency on sorl's own migration ensures `update.sh` triggers `manage.py migrate` on deploy without any script changes. ([#57](https://github.com/arnecoomans/cmpng/issues/57))
+
 ### Changed
 - Green accent reduced to interactive states, badges, and section indicators — page shell now white/light-gray. Results header bar is transparent with a gray count pill; country section headers are compact rounded pills (not full-width bars). ([#50](https://github.com/arnecoomans/cmpng/issues/50))
 - Geographic hierarchy in the location list is now visually distinct across all three levels: country (dark green chip with flag emoji), region (green left-rule, `font-weight: 700`, `--text-sm`), department (gray left-rule, uppercase, `--text-xs`, `--gray-600` for readable contrast). `Region.flag_emoji` property derives the flag from the ISO country slug. ([#53](https://github.com/arnecoomans/cmpng/issues/53))
