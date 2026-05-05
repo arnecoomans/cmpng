@@ -237,6 +237,7 @@ a.internal.tag {
 }
 .crumbs a { color: var(--gray-600); text-decoration: none }
 .crumbs a:hover { text-decoration: underline }
+.crumbs .crumb-back { color: var(--primary-darker); font-weight: 600 }
 .sep { opacity: .7 }
 .topactions { display: flex; flex-wrap: wrap; gap: 10px }
 .topactions__break { display: none }
@@ -267,7 +268,7 @@ a.internal.tag {
 .byline a { color: var(--gray-700) }
 .completeness-details { display: inline-block; margin-top: 8px }
 .completeness-details[open] .completeness-badge { border-radius: 999px 999px 0 0 }
-.completeness-badge { cursor: pointer; list-style: none }
+.completeness-badge { cursor: pointer; list-style: none; font-size: 11px; opacity: 0.6 }
 .completeness-badge--good { background: #d1fae5; color: #065f46; border-color: #6ee7b7 }
 .completeness-badge--mid  { background: #fef3c7; color: #92400e; border-color: #fcd34d }
 .completeness-badge--low  { background: #fee2e2; color: #991b1b; border-color: #fca5a5 }
@@ -347,7 +348,7 @@ a.internal.tag {
 
 .fold {
   display: grid;
-  grid-template-columns: 1.05fr .95fr;
+  grid-template-columns: 1.15fr .85fr;
   gap: 18px;
   align-items: start;
   margin-top: 16px;

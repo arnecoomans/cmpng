@@ -188,10 +188,10 @@
 /* ---------- Location-specific text ---------- */
 
 .location-summary {
-  margin: 4px 0 0;
-  font-size: var(--text-base);
-  color: var(--gray-900);
-  line-height: var(--leading-normal);
+  margin: 6px 0 16px;
+  font-size: var(--text-lg);
+  color: var(--gray-700);
+  line-height: var(--leading-relaxed);
   font-weight: var(--fw-medium);
   max-width: 68ch;
 }

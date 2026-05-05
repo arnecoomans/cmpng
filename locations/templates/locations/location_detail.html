@@ -15,6 +15,8 @@
     <!-- Breadcrumbs + actions -->
     <div class="toprow">
       <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{{ location.get_type_list_url }}" class="crumb-back">← {% translate 'all locations'|capfirst %}</a>
+        <span class="sep">›</span>
         <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}">{% translate location.country.name %}</a>
         <span class="sep">›</span>
         <a href="{{ location.get_type_list_url }}?country={{ location.country.slug }}&region={{ location.region.slug }}">{% translate location.region.name %}</a>
