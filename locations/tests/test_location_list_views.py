@@ -463,3 +463,103 @@ class TestCategoryTagFilterOptions:
 
     hotel_option = next(o for o in result['options'] if o['slug'] == hotel.slug)
     assert '__and__' in hotel_option['url']
+
+
+# ------------------------------------------------------------------ #
+#  available_filters.types (unscoped base queryset)
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestAvailableFilterTypes:
+
+  def test_accommodations_true_when_accommodations_exist(self, db):
+    LocationFactory(is_accommodation=True, is_activity=False)
+    request = _get()
+    response = AllLocationListView.as_view()(request)
+    assert response.context_data['available_filters']['types']['accommodations'] is True
+
+  def test_activities_true_when_activities_exist(self, db):
+    LocationFactory(is_accommodation=False, is_activity=True)
+    request = _get()
+    response = AllLocationListView.as_view()(request)
+    assert response.context_data['available_filters']['types']['activities'] is True
+
+  def test_accommodations_false_when_no_accommodations(self, db):
+    LocationFactory(is_accommodation=False, is_activity=True)
+    request = _get()
+    response = AllLocationListView.as_view()(request)
+    assert response.context_data['available_filters']['types']['accommodations'] is False
+
+  def test_activities_false_when_no_activities(self, db):
+    LocationFactory(is_accommodation=True, is_activity=False)
+    request = _get()
+    response = AllLocationListView.as_view()(request)
+    assert response.context_data['available_filters']['types']['activities'] is False
+
+  def test_accommodation_scope_still_shows_activities_available(self, db):
+    # On AccommodationListView the scoped queryset has no activities,
+    # but types should reflect the unscoped base queryset.
+    LocationFactory(is_accommodation=True, is_activity=False)
+    LocationFactory(is_accommodation=False, is_activity=True)
+    request = _get()
+    response = AccommodationListView.as_view()(request)
+    assert response.context_data['available_filters']['types']['activities'] is True
+
+
+# ------------------------------------------------------------------ #
+#  available_filters.geo.active_names (slug → Region name)
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestGeoActiveNames:
+
+  def test_country_slug_resolved_to_name(self, db):
+    dept = _make_geo_hierarchy('nl', 'nh', 'amsterdam')
+    dept.parent.parent.name = 'Netherlands'
+    dept.parent.parent.save()
+    LocationFactory(geo=dept)
+    request = RequestFactory().get('/', {'country': 'nl'})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    response = AllLocationListView.as_view()(request)
+    active_names = response.context_data['available_filters']['geo']['active_names']
+
+    assert active_names['country'] == 'Netherlands'
+
+  def test_unknown_slug_falls_back_to_slug(self, db):
+    request = RequestFactory().get('/', {'country': 'xx'})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    response = AllLocationListView.as_view()(request)
+    active_names = response.context_data['available_filters']['geo']['active_names']
+
+    assert active_names['country'] == 'xx'
+
+  def test_no_geo_params_no_active_names(self, db):
+    request = _get()
+    response = AllLocationListView.as_view()(request)
+    geo = response.context_data['available_filters']['geo']
+
+    assert 'active_names' not in geo
+
+  def test_region_slug_resolved_to_name(self, db):
+    dept = _make_geo_hierarchy('nl', 'nh', 'amsterdam')
+    dept.parent.name = 'Noord-Holland'
+    dept.parent.save()
+    LocationFactory(geo=dept)
+    request = RequestFactory().get('/', {'country': 'nl', 'region': 'nh'})
+    from django.contrib.auth.models import AnonymousUser
+    request.user = AnonymousUser()
+    request.session = {}
+    request._messages = FallbackStorage(request)
+
+    response = AllLocationListView.as_view()(request)
+    active_names = response.context_data['available_filters']['geo']['active_names']
+
+    assert active_names['region'] == 'Noord-Holland'
