@@ -392,6 +392,10 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       'tag_1':         5,  # at least one tag
       'tag_2':         5,  # two or more tags
     }
+    # Type-specific criteria added to both applicable_max and earned when applicable.
+    ACCOMMODATION_SCORES = {
+      'contact':  10,  # at least one of phone or email — required to act on the listing
+    }
     # Bonuses applied after normalisation, capped at 100.
     # These reward active use and conditional enrichment without affecting the base max.
     BONUSES = {
@@ -402,6 +406,8 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
     }
 
     applicable_max = sum(SCORES.values())  # 95
+    if self.is_accommodation:
+      applicable_max += sum(ACCOMMODATION_SCORES.values())  # +10 → 105
 
     category_count = self.categories.count()
     tag_count = self.tags.count()
@@ -426,6 +432,8 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       earned += SCORES['tag_1']
     if tag_count >= 2:
       earned += SCORES['tag_2']
+    if self.is_accommodation and (self.phone or self.email):
+      earned += ACCOMMODATION_SCORES['contact']
 
     score = round((earned / applicable_max) * 100) if applicable_max else 0
 
@@ -460,6 +468,8 @@ class Location(LocationAccessMixin, BaseModel, VisibilityModel):
       (_('tag'),                  'done' if tag_count >= 1 else 'missing'),
       (_('multiple tags'),        'done' if tag_count >= 2 else 'missing'),
     ]
+    if self.is_accommodation:
+      hints.append((_('contact detail'), 'done' if (self.phone or self.email) else 'missing'))
     hints.append((_('visited (+10%)'),    'bonus' if self.visitors.exists() else 'missing'))
     hints.append((_('on a list (+10%)'),  'bonus' if self.list_items.exists() else 'missing'))
     hints.append((_('comments (+5%)'),    'bonus' if self.comments.filter(status='p').exists() else 'missing'))
