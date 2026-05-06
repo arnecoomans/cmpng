@@ -66,9 +66,28 @@
     flex-shrink: 0;
     max-width: 55%;
   }
-  .score--high  { background: #d1fae5; color: #065f46 }
-  .score--mid   { background: #fef3c7; color: #92400e }
-  .score--low   { background: #fee2e2; color: #991b1b }
+  .score--high    { background: #d1fae5; color: #065f46 }
+  .score--mid     { background: #fef3c7; color: #92400e }
+  .score--low     { background: #fee2e2; color: #991b1b }
+  .score--perfect { background: #cffafe; color: #0e7490 }
+  .completeness-legend {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-top: .75rem;
+    font-size: .8125rem;
+  }
+  .completeness-legend__item {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+  }
+  .completeness-legend__dot {
+    width: .75rem;
+    height: .75rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
   .dashboard-card__more {
     font-size: .75rem;
     color: var(--gray-400);
@@ -129,12 +148,51 @@
       </div>
       {% endif %}
 
-      {# ── Lowest completeness ── #}
+      {# ── Completeness ── #}
       <div class="card card--pad dashboard-card">
         <div class="dashboard-card__header">
-          <p class="card__title mb-0">{% translate 'lowest completeness'|capfirst %}</p>
+          <p class="card__title mb-0">{% translate 'completeness'|capfirst %}</p>
+          <span class="dashboard-card__badge score--{% if completeness_avg >= 75 %}high{% elif completeness_avg >= 50 %}mid{% else %}low{% endif %}">
+            {% translate 'avg'|capfirst %} {{ completeness_avg }}%
+          </span>
         </div>
-        {% if lowest_completeness %}
+        {% if completeness_total %}
+          <div class="progress" style="height: 1.25rem; border-radius: .375rem; overflow: hidden;">
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{ completeness_low_pct }}%; background: #fca5a5;"
+                 title="&lt; 50%: {{ completeness_low_count }} {% translate 'locations' %}">
+            </div>
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{ completeness_mid_pct }}%; background: #fcd34d;"
+                 title="50–74%: {{ completeness_mid_count }} {% translate 'locations' %}">
+            </div>
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{ completeness_high_pct }}%; background: #6ee7b7;"
+                 title="75–99%: {{ completeness_high_count }} {% translate 'locations' %}">
+            </div>
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{ completeness_perfect_pct }}%; background: #67e8f9;"
+                 title="100%: {{ completeness_perfect_count }} {% translate 'locations' %}">
+            </div>
+          </div>
+          <div class="completeness-legend">
+            <div class="completeness-legend__item">
+              <span class="completeness-legend__dot" style="background: #fca5a5;"></span>
+              <span class="dashboard-card__badge score--low">&lt; 50 &mdash; {{ completeness_low_count }}</span>
+            </div>
+            <div class="completeness-legend__item">
+              <span class="completeness-legend__dot" style="background: #fcd34d;"></span>
+              <span class="dashboard-card__badge score--mid">50–74 &mdash; {{ completeness_mid_count }}</span>
+            </div>
+            <div class="completeness-legend__item">
+              <span class="completeness-legend__dot" style="background: #6ee7b7;"></span>
+              <span class="dashboard-card__badge score--high">75–99 &mdash; {{ completeness_high_count }}</span>
+            </div>
+            <div class="completeness-legend__item">
+              <span class="completeness-legend__dot" style="background: #67e8f9;"></span>
+              <span class="dashboard-card__badge score--perfect">100 &mdash; {{ completeness_perfect_count }}</span>
+            </div>
+          </div>
           <ul class="dashboard-card__list">
             {% for location in lowest_completeness %}
               <li>

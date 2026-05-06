@@ -14,16 +14,45 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
   template_name = 'staff/dashboard.html'
 
-  max_results = 15
+  max_results = 35
 
   def test_func(self):
     return self.request.user.is_staff
+
+  def _completeness_context(self, published):
+    from django.db.models import Avg
+    total = published.count()
+    stats = published.aggregate(
+      avg=Avg('completeness'),
+      low=Count('pk', filter=Q(completeness__lt=50)),
+      mid=Count('pk', filter=Q(completeness__gte=50, completeness__lt=75)),
+      high=Count('pk', filter=Q(completeness__gte=75, completeness__lt=100)),
+      perfect=Count('pk', filter=Q(completeness=100)),
+    )
+    ctx = {
+      'completeness_total': total,
+      'completeness_avg': round(stats['avg'] or 0),
+      'completeness_low_count': stats['low'],
+      'completeness_mid_count': stats['mid'],
+      'completeness_high_count': stats['high'],
+      'completeness_perfect_count': stats['perfect'],
+    }
+    if total:
+      ctx['completeness_low_pct'] = round(stats['low'] * 100 / total)
+      ctx['completeness_mid_pct'] = round(stats['mid'] * 100 / total)
+      ctx['completeness_high_pct'] = round(stats['high'] * 100 / total)
+      ctx['completeness_perfect_pct'] = round(stats['perfect'] * 100 / total)
+    else:
+      ctx['completeness_low_pct'] = ctx['completeness_mid_pct'] = 0
+      ctx['completeness_high_pct'] = ctx['completeness_perfect_pct'] = 0
+    return ctx
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context['max_results'] = self.max_results
 
     published = Location.objects.filter(status='p').exclude(categories__slug='home').select_related('geo')
+    context.update(self._completeness_context(published))
 
     problems_qs = published.filter(Q(address__isnull=True) | Q(address='') | Q(geo__isnull=True))
     context['problems_count'] = problems_qs.count()
