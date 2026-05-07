@@ -8,6 +8,7 @@ from locations.tests.factories import (
   CategoryFactory,
   CommentFactory,
   LocationFactory,
+  TagFactory,
   UserFactory,
 )
 
@@ -75,6 +76,7 @@ class TestStaffDashboardContext:
       'missing_description', 'missing_description_count',
       'fewest_tags', 'fewest_tags_boundary',
       'category_usage',
+      'tag_usage',
       'recently_commented',
       'recently_added',
       'revoked', 'revoked_count',
@@ -664,3 +666,76 @@ class TestStaffDashboardUsers:
     response = _get(client)
     pks = [u.pk for u in response.context['users']]
     assert never.pk in pks
+
+
+# ------------------------------------------------------------------ #
+#  Tag usage card
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardTagUsage:
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+
+  def test_tag_usage_in_context(self, client):
+    self._staff(client)
+    response = _get(client)
+    assert 'tag_usage' in response.context
+
+  def test_published_tag_appears(self, client):
+    tag = TagFactory()
+    self._staff(client)
+    response = _get(client)
+    slugs = [t.slug for t in response.context['tag_usage']]
+    assert tag.slug in slugs
+
+  def test_location_count_reflects_published_locations(self, client):
+    tag = TagFactory()
+    loc1 = LocationFactory()
+    loc2 = LocationFactory()
+    loc1.tags.add(tag)
+    loc2.tags.add(tag)
+    self._staff(client)
+    response = _get(client)
+    usage = {t.slug: t.location_count for t in response.context['tag_usage']}
+    assert usage[tag.slug] == 2
+
+  def test_revoked_locations_not_counted(self, client):
+    tag = TagFactory()
+    loc = LocationFactory(status='r')
+    loc.tags.add(tag)
+    self._staff(client)
+    response = _get(client)
+    usage = {t.slug: t.location_count for t in response.context['tag_usage']}
+    assert usage.get(tag.slug, 0) == 0
+
+  def test_sorted_by_location_count_ascending(self, client):
+    rare = TagFactory()
+    common = TagFactory()
+    for _ in range(3):
+      loc = LocationFactory()
+      loc.tags.add(common)
+    self._staff(client)
+    response = _get(client)
+    slugs = [t.slug for t in response.context['tag_usage']]
+    assert slugs.index(rare.slug) < slugs.index(common.slug)
+
+  def test_parent_tag_excluded_while_it_has_active_children(self, client):
+    parent = TagFactory()
+    TagFactory(parent=parent)
+    self._staff(client)
+    response = _get(client)
+    slugs = [t.slug for t in response.context['tag_usage']]
+    assert parent.slug not in slugs
+
+  def test_parent_tag_reappears_after_all_children_soft_deleted(self, client):
+    parent = TagFactory()
+    child = TagFactory(parent=parent)
+    child.status = 'x'
+    child.save(update_fields=['status'])
+    self._staff(client)
+    response = _get(client)
+    slugs = [t.slug for t in response.context['tag_usage']]
+    assert parent.slug in slugs

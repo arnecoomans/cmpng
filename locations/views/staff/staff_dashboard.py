@@ -93,8 +93,20 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     from locations.models.Category import Category
     context['category_usage'] = (
       Category.objects
-      .filter(status='p')
+      .filter(status='p', children__isnull=True)
       .annotate(location_count=Count('locations', filter=Q(locations__status='p')))
+      .order_by('location_count', 'name')
+    )
+    active_child_tags = Tag.objects.filter(parent=OuterRef('pk')).exclude(status='x')
+    context['tag_usage'] = (
+      Tag.objects
+      .filter(status='p')
+      .annotate(
+        has_active_child=Exists(active_child_tags),
+        location_count=Count('locations', filter=Q(locations__status='p')),
+        revoked_count=Count('locations', filter=Q(locations__status='r')),
+      )
+      .filter(has_active_child=False)
       .order_by('location_count', 'name')
     )
     location_ct = ContentType.objects.get_for_model(Location)

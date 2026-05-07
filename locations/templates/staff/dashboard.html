@@ -298,6 +298,38 @@
         {% endif %}
       </div>
 
+      {# ── Tag usage ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'tags'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ tag_usage|length }}</span>
+        </div>
+        {% if tag_usage %}
+          <ul class="dashboard-card__list">
+            {% for tag in tag_usage %}
+              <li>
+                <a href="{% url 'locations:all' %}?tag={{ tag.slug }}">{% if tag.parent %}{{ tag.parent.name }}: {% endif %}{{ tag.name }}</a>
+                <span class="d-flex align-items-center gap-1">
+                  <span class="dashboard-card__badge">{{ tag.location_count }}</span>
+                  {% if tag.revoked_count %}
+                    <a href="{% url 'locations:all' %}?tag={{ tag.slug }}&status=r" class="dashboard-card__badge score--low">{{ tag.revoked_count }} {% translate 'revoked' %}</a>
+                  {% endif %}
+                  <a href="{% url 'locations:all' %}?exclude=tags__slug:{{ tag.slug }}" class="dashboard-card__badge" title="{% translate 'locations without this tag' %}">∅</a>
+                  {% if tag.location_count == 0 %}
+                    <form method="post" action="{% url 'locations:delete_tag' tag.slug %}" style="margin:0;">
+                      {% csrf_token %}
+                      <button type="submit" class="dashboard-card__badge score--low" style="border:none;cursor:pointer;" onclick="return confirm('{% translate 'Delete tag' %} {{ tag.name }}?')">×</button>
+                    </form>
+                  {% endif %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no tags found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
       {# ── Recently commented ── #}
       <div class="card card--pad dashboard-card">
         <div class="dashboard-card__header">
