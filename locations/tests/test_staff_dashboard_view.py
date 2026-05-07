@@ -74,7 +74,7 @@ class TestStaffDashboardContext:
       'missing_summary', 'missing_summary_count',
       'missing_description', 'missing_description_count',
       'fewest_tags', 'fewest_tags_boundary',
-      'fewest_categories', 'fewest_categories_boundary',
+      'category_usage',
       'recently_commented',
       'recently_added',
       'revoked', 'revoked_count',
@@ -392,13 +392,6 @@ class TestStaffDashboardHomeCategoryExclusion:
     pks = [l.pk for l in response.context['fewest_tags']]
     assert home_loc.pk not in pks
 
-  def test_home_location_excluded_from_fewest_categories(self, client):
-    home_loc = self._home_location()
-    self._staff(client)
-    response = _get(client)
-    pks = [l.pk for l in response.context['fewest_categories']]
-    assert home_loc.pk not in pks
-
   def test_home_location_excluded_from_recently_commented(self, client):
     home_loc = self._home_location()
     ct = ContentType.objects.get_for_model(home_loc)
@@ -495,6 +488,65 @@ class TestStaffDashboardProblems:
     response = _get(client)
     pks = [l.pk for l in response.context['problems']]
     assert loc.pk not in pks
+
+
+# ------------------------------------------------------------------ #
+#  Category usage card
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardCategoryUsage:
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+
+  def test_category_usage_in_context(self, client):
+    self._staff(client)
+    response = _get(client)
+    assert 'category_usage' in response.context
+
+  def test_published_category_appears(self, client):
+    from locations.models import Category
+    cat = Category.objects.get_or_create(slug='test-cat', defaults={'name': 'Test Cat', 'status': 'p'})[0]
+    self._staff(client)
+    response = _get(client)
+    slugs = [c.slug for c in response.context['category_usage']]
+    assert cat.slug in slugs
+
+  def test_location_count_reflects_published_locations(self, client):
+    from locations.models import Category
+    cat = Category.objects.get_or_create(slug='count-cat', defaults={'name': 'Count Cat', 'status': 'p'})[0]
+    loc1 = LocationFactory()
+    loc2 = LocationFactory()
+    loc1.categories.add(cat)
+    loc2.categories.add(cat)
+    self._staff(client)
+    response = _get(client)
+    usage = {c.slug: c.location_count for c in response.context['category_usage']}
+    assert usage[cat.slug] == 2
+
+  def test_revoked_locations_not_counted(self, client):
+    from locations.models import Category
+    cat = Category.objects.get_or_create(slug='revoked-cat', defaults={'name': 'Revoked Cat', 'status': 'p'})[0]
+    loc = LocationFactory(status='r')
+    loc.categories.add(cat)
+    self._staff(client)
+    response = _get(client)
+    usage = {c.slug: c.location_count for c in response.context['category_usage']}
+    assert usage.get(cat.slug, 0) == 0
+
+  def test_sorted_by_location_count_ascending(self, client):
+    from locations.models import Category
+    rare = Category.objects.get_or_create(slug='rare-cat', defaults={'name': 'Rare Cat', 'status': 'p'})[0]
+    common = Category.objects.get_or_create(slug='common-cat', defaults={'name': 'Common Cat', 'status': 'p'})[0]
+    for _ in range(3):
+      loc = LocationFactory()
+      loc.categories.add(common)
+    self._staff(client)
+    response = _get(client)
+    slugs = [c.slug for c in response.context['category_usage']]
+    assert slugs.index(rare.slug) < slugs.index(common.slug)
 
 
 # ------------------------------------------------------------------ #

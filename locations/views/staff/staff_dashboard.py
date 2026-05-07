@@ -90,15 +90,13 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     tag_boundary = first_ten_tags[-1].tag_count if first_ten_tags else 0
     context['fewest_tags'] = fewest_tags_qs.filter(tag_count__lte=tag_boundary)
     context['fewest_tags_boundary'] = tag_boundary
-    fewest_cats_qs = (
-      published
-      .annotate(cat_count=Count('categories'))
-      .order_by('cat_count', 'name')
+    from locations.models.Category import Category
+    context['category_usage'] = (
+      Category.objects
+      .filter(status='p')
+      .annotate(location_count=Count('locations', filter=Q(locations__status='p')))
+      .order_by('location_count', 'name')
     )
-    first_ten_cats = list(fewest_cats_qs[:10])
-    cat_boundary = first_ten_cats[-1].cat_count if first_ten_cats else 0
-    context['fewest_categories'] = fewest_cats_qs.filter(cat_count__lte=cat_boundary)
-    context['fewest_categories_boundary'] = cat_boundary
     location_ct = ContentType.objects.get_for_model(Location)
     latest_comment_date = (
       Comment.objects

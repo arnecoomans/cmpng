@@ -275,23 +275,26 @@
         {% endif %}
       </div>
 
-      {# ── Fewest categories ── #}
+      {# ── Category usage ── #}
       <div class="card card--pad dashboard-card">
         <div class="dashboard-card__header">
-          <p class="card__title mb-0">{% translate 'fewest categories'|capfirst %}</p>
-          <span class="dashboard-card__badge">{{ fewest_categories|length }} &le; {{ fewest_categories_boundary }} {{ fewest_categories_boundary|pluralize:"category,categories" }}</span>
+          <p class="card__title mb-0">{% translate 'categories'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ category_usage|length }}</span>
         </div>
-        {% if fewest_categories %}
+        {% if category_usage %}
           <ul class="dashboard-card__list">
-            {% for location in fewest_categories %}
+            {% for cat in category_usage %}
               <li>
-                <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
-                <span class="dashboard-card__badge">{{ location.cat_count }}</span>
+                <a href="{% url 'locations:all' %}?category={{ cat.slug }}">{{ cat.name }}</a>
+                <span class="d-flex align-items-center gap-1">
+                  <span class="dashboard-card__badge">{{ cat.location_count }}</span>
+                  <a href="{% url 'locations:all' %}?exclude=categories__slug:{{ cat.slug }}" class="dashboard-card__badge" title="{% translate 'locations without this category' %}">∅</a>
+                </span>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="dashboard-card__empty">{% translate 'no locations found'|capfirst %}</p>
+          <p class="dashboard-card__empty">{% translate 'no categories found'|capfirst %}</p>
         {% endif %}
       </div>
 
