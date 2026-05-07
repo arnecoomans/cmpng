@@ -250,13 +250,15 @@ def resolve_geo(location, geocode_result, request=None):
     slug=slugify(data['country_slug']),
     defaults={**defaults_base, 'name': data['country']},
   )
-  region_obj, _ = Region.objects.get_or_create(
-    slug=slugify(data['region_slug']),
-    defaults={**defaults_base, 'name': data['region'], 'parent': country_obj},
+  region_obj = (
+    Region.objects.filter(slug=slugify(data['region_slug'])).first()
+    or Region.objects.filter(name=data['region'], parent=country_obj).first()
+    or Region.objects.create(slug=slugify(data['region_slug']), name=data['region'], parent=country_obj, **defaults_base)
   )
-  department_obj, _ = Region.objects.get_or_create(
-    slug=slugify(data['department_slug']),
-    defaults={**defaults_base, 'name': data['department'], 'parent': region_obj},
+  department_obj = (
+    Region.objects.filter(slug=slugify(data['department_slug'])).first()
+    or Region.objects.filter(name=data['department'], parent=region_obj).first()
+    or Region.objects.create(slug=slugify(data['department_slug']), name=data['department'], parent=region_obj, **defaults_base)
   )
 
   location.geo = department_obj

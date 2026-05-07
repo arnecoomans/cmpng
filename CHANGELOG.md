@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- [Bugfix] Region lookup in `_resolve_and_assign_region()` now falls back to name+parent match before creating — prevents a `unique_together` crash when Google's `short_name` is an abbreviation (e.g. `IDF` for Île-de-France, 2-letter codes for US states). Country keeps `get_or_create` on slug since ISO codes are reliable. ([#61](https://github.com/arnecoomans/cmpng/issues/61))
+
 ## [26.04.4] - 2026-05-06
 
 ### Added
