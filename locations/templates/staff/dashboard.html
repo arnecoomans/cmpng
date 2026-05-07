@@ -354,7 +354,7 @@
               <li class="flex-column align-items-start">
                 <div class="d-flex justify-content-between w-100">
                   <a href="{{ location.get_absolute_url }}">{{ location.name }}</a>
-                  <span class="dashboard-card__badge">{{ location.date_modified|date:"d M" }}</span>
+                  <span class="dashboard-card__badge">{{ location.date_modified|date:"d M" }}{% now "Y" as current_year %}{% if location.date_modified|date:"Y" != current_year %} {{ location.date_modified|date:"Y" }}{% endif %}</span>
                 </div>
                 {% with reason=location.revoke_comments|first %}
                   {% if reason %}
