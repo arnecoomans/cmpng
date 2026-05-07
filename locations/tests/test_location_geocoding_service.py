@@ -539,6 +539,58 @@ class TestResolveGeo:
 
     assert len(list(get_messages(request))) == 1
 
+  def test_region_slug_mismatch_falls_back_to_name_parent(self, db):
+    """Google returns short_name='IDF' but DB has slug='ile-de-france' — reuse by name+parent."""
+    from locations.models.Region import Region
+    country = RegionFactory(slug='fr', name='France', parent=None)
+    existing_region = RegionFactory(slug='ile-de-france', name='Île-de-France', parent=country)
+    location = LocationFactory()
+    geocode_result = _make_geocode_result(address_components=[
+      {'types': ['country'],                    'long_name': 'France',         'short_name': 'FR'},
+      {'types': ['administrative_area_level_1'],'long_name': 'Île-de-France',  'short_name': 'IDF'},
+      {'types': ['administrative_area_level_2'],'long_name': 'Yvelines',       'short_name': 'Yvelines'},
+    ])
+
+    resolve_geo(location, geocode_result)
+
+    location.refresh_from_db()
+    assert location.geo.parent == existing_region
+    assert Region.objects.filter(name='Île-de-France').count() == 1
+
+  def test_department_slug_mismatch_falls_back_to_name_parent(self, db):
+    """Department slug mismatch is also resolved by name+parent lookup."""
+    from locations.models.Region import Region
+    country = RegionFactory(slug='fr', name='France', parent=None)
+    region = RegionFactory(slug='idf', name='Île-de-France', parent=country)
+    existing_dept = RegionFactory(slug='yvelines-78', name='Yvelines', parent=region)
+    location = LocationFactory()
+    geocode_result = _make_geocode_result(address_components=[
+      {'types': ['country'],                    'long_name': 'France',        'short_name': 'FR'},
+      {'types': ['administrative_area_level_1'],'long_name': 'Île-de-France', 'short_name': 'IDF'},
+      {'types': ['administrative_area_level_2'],'long_name': 'Yvelines',      'short_name': '78'},
+    ])
+
+    resolve_geo(location, geocode_result)
+
+    location.refresh_from_db()
+    assert location.geo == existing_dept
+    assert Region.objects.filter(name='Yvelines').count() == 1
+
+  def test_creates_new_region_when_neither_slug_nor_name_match(self, db):
+    """When no existing region matches by slug or name+parent, a new one is created."""
+    from locations.models.Region import Region
+    location = LocationFactory()
+    geocode_result = _make_geocode_result(address_components=[
+      {'types': ['country'],                    'long_name': 'France',     'short_name': 'FR'},
+      {'types': ['administrative_area_level_1'],'long_name': 'Bretagne',   'short_name': 'BRE'},
+      {'types': ['administrative_area_level_2'],'long_name': 'Finistère',  'short_name': 'Finistère'},
+    ])
+
+    resolve_geo(location, geocode_result)
+
+    assert Region.objects.filter(name='Bretagne').exists()
+    assert Region.objects.filter(name='Finistère').exists()
+
 
 # ------------------------------------------------------------------ #
 #  helper functions

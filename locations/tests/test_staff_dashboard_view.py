@@ -79,6 +79,12 @@ class TestStaffDashboardContext:
       'recently_added',
       'revoked', 'revoked_count',
       'max_results',
+      'users',
+      'completeness_total', 'completeness_avg',
+      'completeness_low_count', 'completeness_mid_count',
+      'completeness_high_count', 'completeness_perfect_count',
+      'completeness_low_pct', 'completeness_mid_pct',
+      'completeness_high_pct', 'completeness_perfect_pct',
     ]
     for key in expected:
       assert key in response.context, f'missing context key: {key}'
@@ -489,3 +495,120 @@ class TestStaffDashboardProblems:
     response = _get(client)
     pks = [l.pk for l in response.context['problems']]
     assert loc.pk not in pks
+
+
+# ------------------------------------------------------------------ #
+#  Completeness card aggregate
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardCompletenessCard:
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+
+  def _set_completeness(self, loc, score):
+    from locations.models.Location import Location
+    Location.objects.filter(pk=loc.pk).update(completeness=score)
+
+  def test_completeness_avg_reflects_location_scores(self, client):
+    loc1 = LocationFactory()
+    loc2 = LocationFactory()
+    self._set_completeness(loc1, 40)
+    self._set_completeness(loc2, 80)
+    self._staff(client)
+    response = _get(client)
+    assert response.context['completeness_avg'] == round((40 + 80) / 2)
+
+  def test_low_count_counts_below_50(self, client):
+    locs = [LocationFactory() for _ in range(3)]
+    self._set_completeness(locs[0], 30)
+    self._set_completeness(locs[1], 49)
+    self._set_completeness(locs[2], 50)
+    self._staff(client)
+    response = _get(client)
+    assert response.context['completeness_low_count'] >= 2
+
+  def test_perfect_count_counts_exactly_100(self, client):
+    loc1 = LocationFactory()
+    loc2 = LocationFactory()
+    self._set_completeness(loc1, 100)
+    self._set_completeness(loc2, 99)
+    self._staff(client)
+    response = _get(client)
+    assert response.context['completeness_perfect_count'] >= 1
+
+  def test_percentages_sum_to_100_or_less(self, client):
+    locs = [LocationFactory() for _ in range(16)]
+    for loc in locs[:4]:   self._set_completeness(loc, 30)
+    for loc in locs[4:8]:  self._set_completeness(loc, 60)
+    for loc in locs[8:12]: self._set_completeness(loc, 85)
+    for loc in locs[12:]:  self._set_completeness(loc, 100)
+    self._staff(client)
+    response = _get(client)
+    total_pct = (
+      response.context['completeness_low_pct'] +
+      response.context['completeness_mid_pct'] +
+      response.context['completeness_high_pct'] +
+      response.context['completeness_perfect_pct']
+    )
+    assert total_pct <= 101  # allow 1 for rounding
+
+  def test_zero_percentages_when_no_published_locations(self, client):
+    LocationFactory(status='r')
+    self._staff(client)
+    response = _get(client)
+    assert response.context['completeness_total'] == 0
+    assert response.context['completeness_low_pct'] == 0
+    assert response.context['completeness_avg'] == 0
+
+
+# ------------------------------------------------------------------ #
+#  Users card
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestStaffDashboardUsers:
+
+  def _staff(self, client):
+    user = UserFactory(is_staff=True)
+    force_login(client, user)
+    return user
+
+  def test_users_context_key_present(self, client):
+    self._staff(client)
+    response = _get(client)
+    assert 'users' in response.context
+
+  def test_all_users_included(self, client):
+    staff = self._staff(client)
+    other = UserFactory()
+    other.save()
+    response = _get(client)
+    pks = [u.pk for u in response.context['users']]
+    assert staff.pk in pks
+    assert other.pk in pks
+
+  def test_sorted_by_last_login_descending(self, client):
+    from django.utils import timezone
+    from datetime import timedelta
+    self._staff(client)
+    early = UserFactory()
+    early.save()
+    late = UserFactory()
+    late.save()
+    early.__class__.objects.filter(pk=early.pk).update(last_login=timezone.now() - timedelta(days=5))
+    late.__class__.objects.filter(pk=late.pk).update(last_login=timezone.now())
+    response = _get(client)
+    pks = [u.pk for u in response.context['users']]
+    assert pks.index(late.pk) < pks.index(early.pk)
+
+  def test_user_who_never_logged_in_is_included(self, client):
+    self._staff(client)
+    never = UserFactory()
+    never.save()
+    never.__class__.objects.filter(pk=never.pk).update(last_login=None)
+    response = _get(client)
+    pks = [u.pk for u in response.context['users']]
+    assert never.pk in pks

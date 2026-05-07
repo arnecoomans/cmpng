@@ -848,6 +848,79 @@ class TestLocationCompletenessSize:
 
 
 # ------------------------------------------------------------------ #
+#  completeness — contact detail criterion (accommodation only)
+# ------------------------------------------------------------------ #
+
+@pytest.mark.django_db
+class TestLocationCompletenessContactDetail:
+
+  def _accommodation(self, **kwargs):
+    from locations.tests.factories import CategoryFactory
+    location = LocationFactory(**kwargs)
+    location.categories.add(CategoryFactory())
+    location.is_accommodation = True
+    location.save()
+    return location
+
+  def test_accommodation_without_contact_scores_lower_than_with_contact(self, db):
+    without = self._accommodation(phone=None, email=None)
+    with_phone = self._accommodation(phone='+31 20 123 4567', email=None)
+    without.calculate_completeness()
+    with_phone.calculate_completeness()
+    assert with_phone.completeness > without.completeness
+
+  def test_accommodation_with_email_only_earns_contact_points(self, db):
+    with_email = self._accommodation(phone=None, email='info@test.com')
+    without = self._accommodation(phone=None, email=None)
+    with_email.calculate_completeness()
+    without.calculate_completeness()
+    assert with_email.completeness > without.completeness
+
+  def test_activity_unaffected_by_contact_field(self, db):
+    act_with = LocationFactory(phone='+31 20 000 0000', is_activity=True, is_accommodation=False)
+    act_without = LocationFactory(phone=None, is_activity=True, is_accommodation=False)
+    act_with.calculate_completeness()
+    act_without.calculate_completeness()
+    assert act_with.completeness == act_without.completeness
+
+  def test_accommodation_can_reach_100_with_contact(self, db):
+    from locations.tests.factories import TagFactory
+    location = self._accommodation(
+      phone='+31 20 123 4567',
+      summary='A' * 60,
+      description='Full description',
+      address='Some Street 1',
+    )
+    tag1 = TagFactory()
+    tag2 = TagFactory()
+    location.tags.add(tag1, tag2)
+    location.calculate_completeness()
+    assert location.completeness <= 100
+
+  def test_completeness_hints_shows_contact_for_accommodation(self, db):
+    location = self._accommodation()
+    labels = [str(label).lower() for label, _ in location.completeness_hints()]
+    assert any('contact' in label for label in labels)
+
+  def test_completeness_hints_omits_contact_for_activity(self, db):
+    location = LocationFactory(is_activity=True, is_accommodation=False)
+    labels = [str(label).lower() for label, _ in location.completeness_hints()]
+    assert not any('contact' in label for label in labels)
+
+  def test_completeness_hints_contact_done_when_phone_set(self, db):
+    location = self._accommodation(phone='+31 20 000 0000')
+    hints = {str(k).lower(): v for k, v in location.completeness_hints()}
+    contact_status = next((v for k, v in hints.items() if 'contact' in k), None)
+    assert contact_status == 'done'
+
+  def test_completeness_hints_contact_missing_when_no_phone_or_email(self, db):
+    location = self._accommodation(phone=None, email=None)
+    hints = {str(k).lower(): v for k, v in location.completeness_hints()}
+    contact_status = next((v for k, v in hints.items() if 'contact' in k), None)
+    assert contact_status == 'missing'
+
+
+# ------------------------------------------------------------------ #
 #  nearby
 # ------------------------------------------------------------------ #
 
