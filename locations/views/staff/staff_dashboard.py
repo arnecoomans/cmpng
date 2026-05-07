@@ -147,4 +147,7 @@ class StaffDashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
       .order_by('has_revoke_reason', '-date_modified')
     )
 
+    from django.contrib.auth import get_user_model
+    context['users'] = get_user_model().objects.order_by('-last_login', 'username')
+
     return context

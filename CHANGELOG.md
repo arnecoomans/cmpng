@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- **User overview card** on the staff dashboard — lists all users sorted by last login. Each row shows two Bootstrap tooltip badges (*created*, *logged in*) with the full date revealed on hover; dates are not shown inline for privacy. Users who have never logged in get the *logged in* badge highlighted in red. Uses built-in Django `date_joined` and `last_login` fields, no migrations needed. ([#62](https://github.com/arnecoomans/cmpng/issues/62))
+
 ### Fixed
 - [Bugfix] Region lookup in `_resolve_and_assign_region()` now falls back to name+parent match before creating — prevents a `unique_together` crash when Google's `short_name` is an abbreviation (e.g. `IDF` for Île-de-France, 2-letter codes for US states). Country keeps `get_or_create` on slug since ISO codes are reliable. ([#61](https://github.com/arnecoomans/cmpng/issues/61))
 

@@ -370,6 +370,29 @@
         {% endif %}
       </div>
 
+      {# ── Users ── #}
+      <div class="card card--pad dashboard-card">
+        <div class="dashboard-card__header">
+          <p class="card__title mb-0">{% translate 'users'|capfirst %}</p>
+          <span class="dashboard-card__badge">{{ users|length }}</span>
+        </div>
+        {% if users %}
+          <ul class="dashboard-card__list">
+            {% for u in users %}
+              <li>
+                <span>{{ u.username }}</span>
+                <span class="d-flex gap-1">
+                  <span class="dashboard-card__badge" data-bs-toggle="tooltip" data-bs-title="{{ u.date_joined|date:'l j F Y' }}">{% translate 'created' %}</span>
+                  <span class="dashboard-card__badge{% if not u.last_login %} score--low{% endif %}" data-bs-toggle="tooltip" data-bs-title="{% if u.last_login %}{{ u.last_login|date:'l j F Y' }}{% else %}{% translate 'never logged in' %}{% endif %}">{% translate 'logged in' %}</span>
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="dashboard-card__empty">{% translate 'no users found'|capfirst %}</p>
+        {% endif %}
+      </div>
+
       {# ── Tag management (link card) ── #}
       <div class="card card--pad dashboard-card dashboard-card--action">
         <a href="{% url 'locations:manage_tag_visibility' %}">
@@ -381,4 +404,8 @@
     </div>
   </div>
 </main>
+{% endblock %}
+
+{% block cmnsdPostInit %}
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 {% endblock %}
