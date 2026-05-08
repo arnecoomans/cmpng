@@ -208,9 +208,11 @@
     cmnsd.loadContent({ url: btn.dataset.lazyUrl, map });
   });
 
-  // Description read-more toggle — deferred so CSS clamp is applied before measuring
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.description__body').forEach(body => {
+  // Description read-more toggle
+  function initDescriptionToggles(root = document) {
+    root.querySelectorAll('.description__body').forEach(body => {
+      if (body.dataset.toggleInit) return;
+      body.dataset.toggleInit = '1';
       if (body.scrollHeight <= body.clientHeight) return;
       const btn = document.createElement('button');
       btn.className = 'description__toggle';
@@ -221,6 +223,10 @@
       });
       body.insertAdjacentElement('afterend', btn);
     });
+  }
+  requestAnimationFrame(() => initDescriptionToggles());
+  document.addEventListener('cmnsd:content:applied', e => {
+    requestAnimationFrame(() => initDescriptionToggles(e.detail?.container || document));
   });
 
   // Type filters — delegated, works for both nearby and similar sections

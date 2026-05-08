@@ -216,12 +216,17 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   line-height: var(--leading-loose);
-  max-width: 68ch;
 }
 .description__body.is-expanded {
   display: block;
   -webkit-line-clamp: unset;
 }
+.description__body h1 { font-size: var(--text-xl);   font-weight: var(--fw-semibold); margin-top: 1.25em; margin-bottom: 0.25em; }
+.description__body h2 { font-size: var(--text-lg);   font-weight: var(--fw-semibold); margin-top: 1.25em; margin-bottom: 0.25em; }
+.description__body h3 { font-size: var(--text-md);   font-weight: var(--fw-semibold); margin-top: 1.25em; margin-bottom: 0.25em; }
+.description__body h4 { font-size: var(--text-base); font-weight: var(--fw-semibold); margin-top: 1em;    margin-bottom: 0.25em; }
+.description__body h5 { font-size: var(--text-sm);   font-weight: var(--fw-semibold); margin-top: 1em;    margin-bottom: 0.25em; }
+.description__body :is(h1, h2, h3, h4, h5):first-child { margin-top: 0; }
 .description__toggle {
   display: inline;
   background: none;
