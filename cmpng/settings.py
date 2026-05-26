@@ -162,6 +162,7 @@ SEARCH_QUERY_CHARACTER = 'q'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@localhost')
 REGISTRATION_NOTIFY_EMAIL = env('REGISTRATION_NOTIFY_EMAIL', default=None)
+REGISTER_DEFAULT_GROUPS = env.list('REGISTER_DEFAULT_GROUPS', default=[])
 
 # Logging
 _log_handlers = {
