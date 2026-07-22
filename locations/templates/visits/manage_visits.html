@@ -100,14 +100,14 @@
       <div class="segmented">
         <label class="segmented__cell">
           <span class="segmented__label">{% translate 'day'|capfirst %}</span>
-          <input class="segmented__input" name="visited_by__day" type="number" min="1" max="31" placeholder="—">
+          <input class="segmented__input" name="visited_by__day" type="number" min="1" max="31" placeholder="{% now 'd' %}">
         </label>
         <label class="segmented__cell">
           <span class="segmented__label">{% translate 'month'|capfirst %}</span>
           <select class="segmented__input" name="visited_by__month">
             <option value="">—</option>
             {% for month_num, month_name in months %}
-              <option value="{{ month_num }}">{% translate month_name %}</option>
+              <option value="{{ month_num }}">{% translate month_name %}{% now "n" as current_month %}{% if month_num|stringformat:"s" == current_month %} ({% translate 'current' %}){% endif %}</option>
             {% endfor %}
           </select>
         </label>
