@@ -264,12 +264,12 @@ def resolve_geo(location, geocode_result, request=None):
     defaults={**defaults_base, 'name': data['country']},
   )
   region_obj = (
-    Region.objects.filter(slug=slugify(data['region_slug'])).first()
+    Region.objects.filter(slug=slugify(data['region_slug']), parent=country_obj).first()
     or Region.objects.filter(name=data['region'], parent=country_obj).first()
     or Region.objects.create(slug=slugify(data['region_slug']), name=data['region'], parent=country_obj, **defaults_base)
   )
   department_obj = (
-    Region.objects.filter(slug=slugify(data['department_slug'])).first()
+    Region.objects.filter(slug=slugify(data['department_slug']), parent=region_obj).first()
     or Region.objects.filter(name=data['department'], parent=region_obj).first()
     or Region.objects.create(slug=slugify(data['department_slug']), name=data['department'], parent=region_obj, **defaults_base)
   )
