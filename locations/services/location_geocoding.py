@@ -204,6 +204,19 @@ def _extract_address_parts(geocode_result):
         result[target_slug] = component.get('short_name', '')
         filled.add(target_name)
         break
+  # Fallback: if region information is missing in the Google response,
+  # add a generic region for this country
+  if 'region' not in filled:
+    result['region'] = f"{result['country']} (region unknown)"
+    result['region_slug'] = f"{result['country_slug']}-unknown-region"
+    filled.add('region')
+
+  # Fallback: if department information is missing in the Google response,
+  # add a generic department for this region
+  if 'department' not in filled:
+    result['department'] = f"{result['region']} (department unknown)"
+    result['department_slug'] = f"{result['region_slug']}-unknown-dept"
+    filled.add('department')
 
   if getattr(settings, 'DEBUG', False):
     missing = [k for k, v in result.items() if v.startswith('(')]
